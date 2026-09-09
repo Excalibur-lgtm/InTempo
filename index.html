@@ -1,367 +1,415 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="hy">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>In Tempo — Italian Kitchen</title>
-<meta name="description" content="In Tempo. Итальянская кухня. Листайте меню как настоящую книгу.">
- 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>In Tempo — Իտալական խոհանոց · Երևան</title>
+<meta name="description" content="In Tempo — իտալական խոհանոց Երևանի կենտրոնում։ Բաց է 09:00–24:00։ Time to enjoy.">
+<script>
+  /* Страница ВСЕГДА открывается сверху */
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  document.addEventListener('DOMContentLoaded', function(){
+    document.documentElement.style.scrollBehavior = 'auto';
+    window.scrollTo(0, 0);
+    requestAnimationFrame(function(){ document.documentElement.style.scrollBehavior = ''; });
+  });
+  window.addEventListener('pageshow', function(){
+    document.documentElement.style.scrollBehavior = 'auto';
+    window.scrollTo(0, 0);
+    requestAnimationFrame(function(){ document.documentElement.style.scrollBehavior = ''; });
+  });
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Archivo:wght@500;600;800&display=swap" rel="stylesheet">
- 
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --tan: #c7a877;
-    --tan-deep: #ad8c5a;
-    --paper: #f6f1e6;
-    --ink: #241c15;
-    --ink-soft: #4a4038;
-    --red: #a63626;
-    --olive: #7f9438;
-    --line: rgba(36,28,21,.15);
+    --bg:#b79d74; --bg-deep:#a68c62; --menupage:#c9b18a; --paper:#f1efe9;
+    --ink:#2b2622; --muted:rgba(43,38,34,.66); --line:rgba(43,38,34,.16); --red:#d8432a;
+    --serif:'Noto Serif',Georgia,serif;
+    --sans:'Noto Sans',-apple-system,sans-serif;
   }
- 
-  *{ box-sizing: border-box; }
-  html{ scroll-behavior: smooth; }
- 
-  body{
-    margin:0;
-    background: var(--tan);
-    background-image:
-      radial-gradient(ellipse 900px 500px at 15% -10%, rgba(255,255,255,.18), transparent 60%),
-      radial-gradient(ellipse 700px 500px at 100% 10%, rgba(255,255,255,.10), transparent 55%);
-    color: var(--ink);
-    font-family: 'Archivo', sans-serif;
-    -webkit-font-smoothing: antialiased;
-  }
- 
-  a{ color: inherit; }
- 
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;scroll-padding-top:110px;}
+  body{background:var(--bg);background-image:radial-gradient(ellipse 900px 500px at 15% -10%,rgba(255,255,255,.16),transparent 60%);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+  a{color:inherit;text-decoration:none;} img{display:block;max-width:100%;}
+  ::selection{background:var(--red);color:#fff;}
+  body::-webkit-scrollbar{width:10px;} body::-webkit-scrollbar-track{background:var(--bg);} body::-webkit-scrollbar-thumb{background:var(--bg-deep);border-radius:99px;}
+  .kicker{font-family:var(--serif);font-style:italic;font-size:17px;color:#fff;text-shadow:0 1px 8px rgba(43,38,34,.35);}
+  h1,h2{font-family:var(--serif);font-weight:600;line-height:1.12;letter-spacing:-.01em;color:var(--ink);}
+  em{font-style:italic;color:var(--red);}
+
+  /* ---------- ЛОГО: карточка цвета #c9b18a, белая бумага растворяется ---------- */
+  .logo-sprite{width:240px;height:130px;background:url('page-01.jpg') no-repeat;background-size:1000px auto;background-position:-390px -1210px;mix-blend-mode:multiply;}
+  .logo-sprite--sm{width:132px;height:72px;background-size:550px auto;background-position:-215px -666px;}
+  .logo-card{display:inline-flex;flex-direction:column;align-items:center;gap:2px;background:var(--menupage);padding:6px 14px 6px;border-radius:12px;}
+  .slogan{font-family:var(--serif);font-style:italic;font-size:11px;letter-spacing:.14em;color:var(--muted);}
+
+  /* ---------- LOADER ---------- */
+  #loader{position:fixed;inset:0;z-index:100;background:var(--menupage);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;transition:transform .9s cubic-bezier(.76,0,.24,1),opacity .9s ease,visibility .9s;}
+  #loader.done{transform:translateY(-100%);opacity:0;visibility:hidden;}
+  #loader .logo-sprite{opacity:0;transform:scale(.9) translateY(14px);animation:logoIn 1s cubic-bezier(.22,1,.36,1) .15s forwards;}
+  #loader .slogan{opacity:0;transform:translateY(10px);animation:logoIn .8s cubic-bezier(.22,1,.36,1) .6s forwards;}
+  @keyframes logoIn{to{opacity:1;transform:none;}}
+
   /* ---------- NAV ---------- */
-  header.site{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding: 28px 6vw 0;
-  }
-  .brandmark{
-    font-family:'Fraunces', serif;
-    font-weight: 600;
-    font-size: 22px;
-    letter-spacing: .01em;
-  }
-  .brandmark em{
-    font-style: italic;
-    color: var(--red);
-  }
-  .nav-cta{
-    font-size: 14px;
-    font-weight: 600;
-    padding: 10px 20px;
-    border: 1.5px solid var(--ink);
-    border-radius: 999px;
-    text-decoration: none;
-    transition: background .25s ease, color .25s ease;
-    white-space: nowrap;
-  }
-  .nav-cta:hover{ background: var(--ink); color: var(--paper); }
- 
+  .nav{position:fixed;inset:0 0 auto;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:14px 6vw;transition:.4s;}
+  .nav.scrolled{background:rgba(201,177,138,.94);backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--line);}
+  .nav .logo-card{opacity:0;transform:translateY(-16px) scale(.94);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1);}
+  .nav.ready .logo-card{opacity:1;transform:none;}
+  .nav .nav-right{opacity:0;transform:translateY(-10px);transition:opacity .8s ease .2s,transform .8s cubic-bezier(.22,1,.36,1) .2s;}
+  .nav.ready .nav-right{opacity:1;transform:none;}
+  .nav-right{display:flex;align-items:center;gap:14px;}
+  .nav-link{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:rgba(241,239,233,.92);text-shadow:0 1px 6px rgba(43,38,34,.55);transition:.3s;}
+  .nav-link:hover{color:#fff;}
+  .nav.scrolled .nav-link{color:var(--muted);text-shadow:none;}
+  .nav.scrolled .nav-link:hover{color:var(--ink);}
+  .langs{display:flex;gap:5px;}
+  .lang-btn{font:inherit;font-size:11px;font-weight:600;letter-spacing:.1em;padding:7px 11px;border:1.5px solid rgba(241,239,233,.75);border-radius:999px;background:none;color:var(--paper);cursor:pointer;transition:.25s;text-shadow:0 1px 6px rgba(43,38,34,.55);}
+  .lang-btn.active{background:var(--ink);color:var(--menupage);border-color:var(--ink);text-shadow:none;}
+  .nav.scrolled .lang-btn{border-color:var(--line);color:var(--muted);text-shadow:none;}
+  .nav.scrolled .lang-btn.active{background:var(--ink);color:var(--menupage);border-color:var(--ink);}
+  .nav-soc{width:38px;height:38px;border-radius:50%;border:1.5px solid rgba(241,239,233,.75);display:inline-flex;align-items:center;justify-content:center;color:var(--paper);text-shadow:none;transition:.25s;flex-shrink:0;}
+  .nav-soc:hover{background:var(--menupage);color:var(--ink);}
+  .nav.scrolled .nav-soc{border-color:var(--line);color:var(--ink);}
+  .nav.scrolled .nav-soc:hover{background:var(--ink);color:var(--menupage);}
+  .nav-soc svg{width:17px;height:17px;}
+  .nav-tel{font-size:13px;font-weight:600;letter-spacing:.06em;padding:10px 20px;border:1.5px solid rgba(241,239,233,.85);border-radius:999px;color:var(--paper);text-shadow:0 1px 6px rgba(43,38,34,.55);transition:.3s;white-space:nowrap;}
+  .nav-tel:hover{background:var(--menupage);color:var(--ink);text-shadow:none;}
+  .nav.scrolled .nav-tel{border-color:var(--ink);color:var(--ink);text-shadow:none;}
+  .nav.scrolled .nav-tel:hover{background:var(--ink);color:var(--menupage);}
+
   /* ---------- HERO ---------- */
-  .hero{
-    padding: 9vh 6vw 6vh;
-    max-width: 900px;
+  .hero{position:relative;min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;background:url('page-01.jpg') center/cover no-repeat;}
+  .hero-media{position:absolute;inset:0;}
+  .hero-media video{width:100%;height:100%;object-fit:cover;animation:kb 26s ease-in-out infinite alternate;}
+  @keyframes kb{from{transform:scale(1);}to{transform:scale(1.09);}}
+  .hero::after{content:"";position:absolute;inset:0;background:radial-gradient(90% 70% at 50% 45%,rgba(43,38,34,.16),rgba(43,38,34,.6) 100%);}
+  .hero-in{position:relative;z-index:2;padding:0 6vw;max-width:980px;color:var(--paper);}
+  .hero h1{font-size:clamp(34px,6.4vw,80px);color:var(--paper);text-shadow:0 2px 24px rgba(43,38,34,.45);}
+  .hero h1 em{color:#e9d7b4;}
+  .line{display:block;overflow:hidden;}
+  .line-in{display:block;transform:translateY(110%);transition:transform 1.1s cubic-bezier(.22,1,.36,1);}
+  .hero.ready .line-in{transform:translateY(0);}
+  .hero.ready .line:nth-child(2) .line-in{transition-delay:.18s;}
+  .hero-sub{margin:24px auto 0;max-width:560px;color:rgba(241,239,233,.9);font-size:17px;line-height:1.7;opacity:0;transition:opacity 1s ease .6s;}
+  .hero.ready .hero-sub{opacity:1;}
+  .hero-actions{margin-top:32px;display:flex;gap:14px;flex-wrap:wrap;justify-content:center;opacity:0;transition:opacity 1s ease .8s;}
+  .hero.ready .hero-actions{opacity:1;}
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:16px 30px;border-radius:999px;font-weight:600;font-size:15px;border:0;cursor:pointer;transition:.25s;}
+  .btn-primary{background:var(--menupage);color:var(--ink);} .btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(43,38,34,.35);}
+  .btn-ghost{border:1.5px solid rgba(241,239,233,.7);background:none;color:var(--paper);} .btn-ghost:hover{background:rgba(241,239,233,.14);}
+  .scroll-cue{position:absolute;z-index:2;bottom:26px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;color:rgba(241,239,233,.8);font-size:11px;letter-spacing:.3em;text-transform:uppercase;}
+  .scroll-cue i{width:1px;height:40px;background:var(--paper);animation:cue 2s ease-in-out infinite;}
+  @keyframes cue{0%,100%{transform:scaleY(.35);opacity:.5;}50%{transform:scaleY(1);opacity:1;}}
+
+  /* ---------- ЛЕНТА ---------- */
+  .marquee{border-block:1px solid var(--line);background:var(--menupage);overflow:hidden;padding:14px 0;}
+  .mq-track{display:flex;width:max-content;animation:mq 34s linear infinite;}
+  .mq-track span{font-family:var(--serif);font-style:italic;font-size:16px;letter-spacing:.14em;color:var(--muted);white-space:nowrap;padding:0 24px;}
+  .mq-track b{color:var(--red);font-weight:500;}
+  @keyframes mq{to{transform:translateX(-50%);}}
+
+  /* ---------- КНИГА: точная пропорция разворота, без белых полос и растяжения ---------- */
+  .menu-sec{padding:clamp(70px,9vw,110px) 0 clamp(70px,9vw,120px);text-align:center;}
+  .jump-row{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin:0 auto clamp(30px,4vw,48px);padding:0 4vw;}
+  .jump{font:inherit;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);background:none;border:1.5px solid var(--line);border-radius:999px;padding:9px 16px;cursor:pointer;transition:.3s;}
+  .jump:hover{color:var(--menupage);background:var(--ink);border-color:var(--ink);}
+  .book-stage{perspective:1400px;margin:0 auto;}
+  /* Десктоп: разворот = ровно 4:3, вписан в ширину И в высоту экрана */
+  .book-frame{position:relative;width:min(97vw,1400px,106vh);aspect-ratio:4/3;margin:0 auto;opacity:0;transform:translateY(70px) rotateX(10deg);transition:opacity 1.1s cubic-bezier(.22,1,.36,1),transform 1.1s cubic-bezier(.22,1,.36,1);}
+  .book-frame.in{opacity:1;transform:translateY(0) rotateX(0);}
+  .book-frame::before{content:"";position:absolute;inset:0;background:transparent;box-shadow:0 40px 90px rgba(43,38,34,.4);border-radius:4px;}
+  #book{position:relative;z-index:1;width:100% !important;height:100% !important;touch-action:pan-y;cursor:pointer;background:var(--menupage);}
+  #book img{user-select:none;-webkit-user-drag:none;pointer-events:none;}
+  .page{background:var(--menupage);}
+  .book-controls{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;gap:22px;margin-top:42px;}
+  .flip-btn{width:54px;height:54px;border-radius:50%;border:1.5px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.25s;}
+  .flip-btn:hover{background:var(--ink);color:var(--menupage);transform:scale(1.06);}
+  .flip-btn:disabled{opacity:.3;transform:none;background:transparent;color:var(--ink);}
+  .flip-btn svg{width:20px;height:20px;}
+
+  /* ---------- КОНТАКТЫ ---------- */
+  .contact-sec{padding:clamp(80px,11vw,140px) 0;text-align:center;background:var(--menupage);border-top:1px solid var(--line);}
+  .contact-sec .kicker{color:var(--red);text-shadow:none;font-size:15px;}
+  .contact-sec h2{font-size:clamp(30px,5vw,58px);margin:14px 0 12px;}
+  .contact-sub{color:var(--muted);max-width:460px;margin:0 auto;line-height:1.7;}
+  .phones{margin:clamp(36px,5vw,56px) 0 10px;display:flex;flex-direction:column;gap:10px;align-items:center;}
+  .phone{font-family:var(--serif);font-size:clamp(30px,5.6vw,58px);line-height:1.15;color:var(--ink);transition:.3s;}
+  .phone:hover{color:var(--red);}
+  .addr{margin-top:26px;color:var(--muted);font-size:14px;line-height:2;letter-spacing:.06em;}
+  .soc-row{display:flex;gap:12px;justify-content:center;margin-top:28px;}
+  .soc{width:48px;height:48px;border-radius:50%;border:1.5px solid var(--line);display:inline-flex;align-items:center;justify-content:center;color:var(--ink);transition:.25s;}
+  .soc:hover{background:var(--ink);color:var(--menupage);transform:translateY(-3px);box-shadow:0 10px 22px rgba(43,38,34,.25);}
+  .soc svg{width:21px;height:21px;}
+
+  footer{border-top:1px solid var(--line);background:var(--menupage);padding:40px 6vw 30px;display:flex;flex-direction:column;align-items:center;gap:14px;color:var(--muted);font-size:13px;text-align:center;}
+  .foot-line{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;}
+
+  .rv{opacity:0;transform:translateY(30px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);}
+  .rv.in{opacity:1;transform:none;}
+
+  /* ---------- МОБИЛЬНАЯ: книга во всю ширину, не прячется под шапку ---------- */
+  @media (max-width:900px){
+    .nav{padding:12px 4vw;}
+    .nav-right{gap:10px;}
   }
-  .hero .kicker{
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-size: 19px;
-    color: var(--ink-soft);
-    margin: 0 0 10px;
+  @media (max-width:768px){
+    /* Портрет: одна страница 2:3 во всю ширину */
+    .book-frame{width:100%;aspect-ratio:2/3;}
+    .nav-link{display:none;}
+    .logo-sprite--sm{width:108px;height:59px;background-size:450px auto;background-position:-176px -545px;}
+    .menu-sec{padding-top:84px;}
   }
-  .hero h1{
-    font-family:'Fraunces', serif;
-    font-weight: 600;
-    font-size: clamp(44px, 8vw, 92px);
-    line-height: .98;
-    margin: 0 0 24px;
-    letter-spacing: -.01em;
+  @media (max-width:640px){
+    .nav{padding:10px 4vw;}
+    .nav-tel{padding:8px 14px;font-size:12px;}
+    .nav-soc{width:34px;height:34px;}
+    .nav-soc svg{width:15px;height:15px;}
+    .lang-btn{padding:6px 9px;font-size:10px;}
+    .logo-sprite--sm{width:96px;height:52px;background-size:400px auto;background-position:-156px -484px;}
+    .slogan{font-size:10px;}
+    .hero-in{padding:0 5vw;}
+    .hero h1{font-size:clamp(30px,9vw,44px);}
+    .hero-sub{font-size:15px;margin-top:18px;}
+    .hero-actions{flex-direction:column;width:100%;max-width:340px;margin:26px auto 0;}
+    .btn{width:100%;justify-content:center;padding:15px 24px;}
+    .mq-track span{font-size:14px;padding:0 16px;}
+    .menu-sec{padding:72px 0 60px;}
+    .jump-row{gap:8px;margin-bottom:22px;padding:0 3vw;}
+    .jump{font-size:11px;padding:8px 13px;}
+    .book-controls{gap:16px;margin-top:24px;}
+    .flip-btn{width:48px;height:48px;}
+    .flip-btn svg{width:18px;height:18px;}
+    .contact-sec{padding:64px 0;}
+    .contact-sub{font-size:14px;padding:0 6vw;}
+    .phone{font-size:clamp(26px,8vw,40px);}
+    .addr{font-size:13px;line-height:1.9;}
+    .soc{width:44px;height:44px;}
+    footer{padding:32px 5vw 24px;}
   }
-  .hero p{
-    font-size: 18px;
-    line-height: 1.55;
-    color: var(--ink-soft);
-    max-width: 480px;
-    margin: 0 0 34px;
+  @media (max-width:380px){
+    .nav-tel{display:none;}
+    .lang-btn{padding:5px 8px;font-size:9px;}
   }
-  .hero-actions{ display:flex; gap: 14px; flex-wrap: wrap; align-items:center; }
-  .btn-primary{
-    display:inline-block;
-    background: var(--ink);
-    color: var(--paper);
-    text-decoration:none;
-    font-weight:600;
-    font-size:15px;
-    padding: 15px 30px;
-    border-radius: 999px;
-    transition: transform .25s ease, box-shadow .25s ease;
-  }
-  .btn-primary:hover{ transform: translateY(-2px); box-shadow: 0 10px 24px rgba(36,28,21,.28); }
-  .hint{
-    font-size: 14px;
-    color: var(--ink-soft);
-  }
- 
-  /* ---------- BOOK SECTION ---------- */
-  .book-section{
-    padding: 2vh 4vw 12vh;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-  }
- 
-  .book-frame{
-    position: relative;
-    width: 100%;
-    max-width: 640px;
-    aspect-ratio: 2 / 3;
-    display:flex;
-    justify-content:center;
-  }
- 
-  /* torn paper backing, echoing the menu's own motif */
-  .book-frame::before{
-    content:"";
-    position:absolute;
-    inset: -20px -60px;
-    background: var(--paper);
-    border-radius: 6px;
-    box-shadow: 0 30px 60px rgba(36,28,21,.35);
-  }
- 
-  #book{
-    position: relative;
-    z-index: 1;
-    width: 100% !important;
-    height: 100% !important;
-    touch-action: pan-y;
-  }
-  #book img{
-    width:100%;
-    height:100%;
-    display:block;
-    object-fit: cover;
-    user-select: none;
-    -webkit-user-drag: none;
-    pointer-events: none;
-  }
-  .page{
-    background: white;
-  }
- 
-  .book-controls{
-    position: relative;
-    z-index: 2;
-    display:flex;
-    align-items:center;
-    gap: 22px;
-    margin-top: 34px;
-  }
-  .flip-btn{
-    width: 52px; height: 52px;
-    border-radius: 50%;
-    border: none;
-    background: var(--ink);
-    color: var(--paper);
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    transition: transform .2s ease, background .2s ease;
-    flex-shrink:0;
-  }
-  .flip-btn:hover{ transform: scale(1.08); background: var(--red); }
-  .flip-btn:disabled{ opacity: .3; cursor:default; transform:none; background: var(--ink); }
-  .flip-btn svg{ width: 20px; height:20px; }
- 
-  .page-counter{
-    font-family:'Fraunces', serif;
-    font-style: italic;
-    font-size: 16px;
-    color: var(--ink);
-    min-width: 90px;
-    text-align:center;
-  }
- 
-  .book-tip{
-    margin-top: 16px;
-    font-size: 13px;
-    color: var(--ink-soft);
-    text-align:center;
-  }
- 
-  /* ---------- FOOTER ---------- */
-  footer{
-    background: var(--ink);
-    color: var(--paper);
-    padding: 60px 6vw 40px;
-  }
-  .footer-grid{
-    display:grid;
-    grid-template-columns: 1.3fr 1fr 1fr;
-    gap: 40px;
-    max-width: 1100px;
-    margin: 0 auto 40px;
-  }
-  footer h3{
-    font-family:'Fraunces', serif;
-    font-weight:500;
-    font-style: italic;
-    font-size: 26px;
-    margin: 0 0 14px;
-  }
-  footer p, footer a{
-    color: rgba(246,241,230,.75);
-    font-size: 14.5px;
-    line-height: 1.9;
-    text-decoration: none;
-  }
-  footer a:hover{ color: var(--paper); }
-  .footer-col-title{
-    font-size: 12.5px;
-    color: rgba(246,241,230,.5);
-    margin-bottom: 12px;
-  }
-  .footer-bottom{
-    max-width:1100px;
-    margin: 0 auto;
-    padding-top: 26px;
-    border-top: 1px solid rgba(246,241,230,.15);
-    font-size: 13px;
-    color: rgba(246,241,230,.5);
-  }
- 
-  @media (max-width: 760px){
-    .footer-grid{ grid-template-columns: 1fr; gap: 26px; }
-    .hero{ padding-top: 6vh; }
-  }
- 
-  @media (prefers-reduced-motion: reduce){
-    *{ transition-duration: .01ms !important; animation-duration: .01ms !important; }
-  }
+  @media (prefers-reduced-motion:reduce){*{transition-duration:.01ms !important;animation-duration:.01ms !important;}}
 </style>
 </head>
 <body>
- 
-<header class="site">
-  <div class="brandmark">In <em>Tempo</em></div>
-  <a class="nav-cta" href="#book">Открыть меню</a>
+
+<div id="loader">
+  <div class="logo-sprite" aria-label="In Tempo"></div>
+  <span class="slogan">Time to enjoy</span>
+</div>
+
+<nav class="nav" id="nav">
+  <a class="logo-card" href="#top" aria-label="In Tempo — Time to enjoy">
+    <span class="logo-sprite logo-sprite--sm"></span>
+    <span class="slogan">Time to enjoy</span>
+  </a>
+  <div class="nav-right">
+    <a class="nav-link" href="#menu" data-i18n="nav_menu">Մենյու</a>
+    <a class="nav-link" href="#contact" data-i18n="nav_contact">Կապ</a>
+    <div class="langs">
+      <button class="lang-btn active" data-lang="hy">HY</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="ru">RU</button>
+    </div>
+    <a class="nav-soc" href="https://www.instagram.com/intempo_italian_restaurant?stkn=dmNidWlnbmxpbm12" target="_blank" rel="noopener" aria-label="Instagram">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"></circle></svg>
+    </a>
+    <a class="nav-tel" href="tel:+37477966933">+374 77 966 933</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="hero-media">
+    <video autoplay muted loop playsinline preload="metadata" poster="page-01.jpg">
+      <source src="hero.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="hero-in">
+    <h1>
+      <span class="line"><span class="line-in" data-i18n-html="hero_l1">Իտալական խոհանոց</span></span>
+      <span class="line"><span class="line-in" data-i18n-html="hero_l2">Երևանի <em>Կենտրոնում</em></span></span>
+    </h1>
+    <p class="hero-sub" data-i18n="hero_sub">Բաց է 09:00–24:00</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#menu" data-i18n="hero_b1">Բացել մենյուն →</a>
+      <a class="btn btn-ghost" href="#contact" data-i18n="hero_b2">Ամրագրել սեղան</a>
+    </div>
+  </div>
+  <div class="scroll-cue"><i></i><span data-i18n="cue">թերթեք</span></div>
 </header>
- 
-<section class="hero">
-  <p class="kicker">italian kitchen</p>
-  <h1>Меню читают,<br>как хорошую книгу.</h1>
-  <p>52 страницы блюд In Tempo — от закусок до дижестива. Переверните страницу пальцем или мышью, будто держите меню в руках.</p>
-  <div class="hero-actions">
-    <a class="btn-primary" href="#book">Листать меню →</a>
-    <span class="hint">Работает и с телефона</span>
+
+<div class="marquee"><div class="mq-track">
+  <span>Time To Enjoy. <b>·</b> Pizza And More. <b>·</b></span>
+  <span>Time To Enjoy. <b>·</b> Pizza And More. <b>·</b></span>
+  <span>Time To Enjoy. <b>·</b> Pizza And More. <b>·</b></span>
+  <span>Time To Enjoy. <b>·</b> Pizza And More. <b>·</b></span>
+  <span>Time To Enjoy. <b>·</b> Pizza And More. <b>·</b></span>
+  <span>Time To Enjoy. <b>·</b> Pizza And More. <b>·</b></span>
+</div></div>
+
+<section class="menu-sec" id="menu">
+  <div class="jump-row rv">
+    <button class="jump" data-page="4" data-i18n="j1">Նախուտեստներ</button>
+    <button class="jump" data-page="8" data-i18n="j2">Սալատներ</button>
+    <button class="jump" data-page="12" data-i18n="j3">Ապուրներ</button>
+    <button class="jump" data-page="18" data-i18n="j4">Պաստա</button>
+    <button class="jump" data-page="23" data-i18n="j5">Բուրգերներ և սենդվիչներ</button>
+    <button class="jump" data-page="27" data-i18n="j6">Պիադինա</button>
+    <button class="jump" data-page="31" data-i18n="j7">Հիմնական ուտեստներ</button>
+    <button class="jump" data-page="44" data-i18n="j8">Աղանդեր</button>
   </div>
-</section>
- 
-<section class="book-section" id="book">
-  <div class="book-frame">
-    <div id="book"></div>
+
+  <div class="book-stage">
+    <div class="book-frame" id="bookFrame">
+      <div id="book"></div>
+    </div>
   </div>
- 
+
   <div class="book-controls">
-    <button class="flip-btn" id="prevBtn" aria-label="Предыдущая страница">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-    </button>
-    <div class="page-counter"><span id="pageNow">1</span> / <span id="pageTotal">52</span></div>
-    <button class="flip-btn" id="nextBtn" aria-label="Следующая страница">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-    </button>
+    <button class="flip-btn" id="prevBtn" aria-label="Նախորդ էջ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+    <button class="flip-btn" id="nextBtn" aria-label="Հաջորդ էջ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
   </div>
-  <p class="book-tip">Свайпните страницу или используйте стрелки клавиатуры</p>
 </section>
- 
-<footer>
-  <div class="footer-grid">
-    <div>
-      <h3>Заглянуть в гости</h3>
-      <p>Ереван · улица, дом<br>Открыто ежедневно, 11:00–23:00</p>
-    </div>
-    <div>
-      <div class="footer-col-title">Контакты</div>
-      <p>
-        <a href="tel:+374000000">+374 00 000 000</a><br>
-        <a href="mailto:hello@intempo.am">hello@intempo.am</a>
-      </p>
-    </div>
-    <div>
-      <div class="footer-col-title">Соцсети</div>
-      <p>
-        <a href="#">Instagram</a><br>
-        <a href="#">Telegram</a>
-      </p>
-    </div>
+
+<section class="contact-sec" id="contact">
+  <span class="kicker rv" data-i18n="c_kick">սեղանի ամրագրում</span>
+  <h2 class="rv" data-i18n-html="c_h2">Զանգեք — և սեղանը <em>սպասում է</em></h2>
+  <p class="contact-sub rv" data-i18n="c_sub">Մեկ հպում — և մնացածը մենք կհոգանք։</p>
+  <div class="phones rv">
+    <a class="phone" href="tel:+37477966933">+374 77 966 933</a>
   </div>
-  <div class="footer-bottom">© 2026 In Tempo. Italian kitchen.</div>
+  <p class="addr rv"><span data-i18n="c_addr1">Երևան, Հյուսիսային 10/3</span><br><span data-i18n="c_addr2">Ամեն օր 09:00 – 24:00</span></p>
+  <div class="soc-row rv">
+    <a class="soc" href="https://www.instagram.com/intempo_italian_restaurant?stkn=dmNidWlnbmxpbm12" target="_blank" rel="noopener" aria-label="Instagram">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"></circle></svg>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="logo-card">
+    <span class="logo-sprite logo-sprite--sm"></span>
+    <span class="slogan">Time to enjoy</span>
+  </div>
+  <div class="foot-line">
+    <span data-i18n="f_line">© 2026 In Tempo · Իտալական խոհանոց</span>
+  </div>
 </footer>
- 
+
 <script src="page-flip.browser.js"></script>
 <script>
-  const TOTAL_PAGES = 52;
-  const pad = n => String(n).padStart(2, '0');
- 
-  const pageFlip = new St.PageFlip(document.getElementById('book'), {
-    width: 500,
-    height: 750,
-    size: 'stretch',
-    minWidth: 240,
-    maxWidth: 640,
-    minHeight: 360,
-    maxHeight: 960,
-    maxShadowOpacity: 0.4,
-    showCover: true,
-    mobileScrollSupport: true,
-    usePortrait: true,
-    autoSize: true,
-    flippingTime: 500,
-    disableFlipByClick: true,
-    swipeDistance: 20
-  });
- 
-  const imgs = [];
-  for (let i = 1; i <= TOTAL_PAGES; i++){
-    imgs.push(`page-${pad(i)}.png`);
+  /* ---------- 3 ЯЗЫКА: HY (основной) / EN / RU ---------- */
+  const DICT = {
+    hy:{title:'In Tempo — Իտալական խոհանոց · Երևան',nav_menu:'Մենյու',nav_contact:'Կապ',
+      hero_l1:'Իտալական խոհանոց',hero_l2:'Երևանի <em>Կենտրոնում</em>',hero_sub:'Բաց է 09:00–24:00',
+      hero_b1:'Բացել մենյուն →',hero_b2:'Ամրագրել սեղան',cue:'թերթեք',
+      j1:'Նախուտեստներ',j2:'Սալատներ',j3:'Ապուրներ',j4:'Պաստա',
+      j5:'Բուրգերներ և սենդվիչներ',j6:'Պիադինա',j7:'Հիմնական ուտեստներ',j8:'Աղանդեր',
+      c_kick:'սեղանի ամրագրում',c_h2:'Զանգեք — և սեղանը <em>սպասում է</em>',
+      c_sub:'Մեկ հպում — և մնացածը մենք կհոգանք։',
+      c_addr1:'Երևան, Հյուսիսային 10/3',c_addr2:'Ամեն օր 09:00 – 24:00',
+      f_line:'© 2026 In Tempo · Իտալական խոհանոց'},
+    en:{title:'In Tempo — Italian Kitchen · Yerevan',nav_menu:'Menu',nav_contact:'Contact',
+      hero_l1:'Italian kitchen',hero_l2:'in the heart of <em>Yerevan</em>',hero_sub:'Open 09:00 – 24:00',
+      hero_b1:'Open the menu →',hero_b2:'Book a table',cue:'scroll',
+      j1:'Starters',j2:'Salads',j3:'Soups',j4:'Pasta',
+      j5:'Burgers & Sandwiches',j6:'Piadina',j7:'Main Courses',j8:'Desserts',
+      c_kick:'table reservation',c_h2:'Call us — and the table <em>is waiting</em>',
+      c_sub:'One tap — and we will take care of the rest.',
+      c_addr1:'Yerevan, 10/3 Northern Avenue',c_addr2:'Daily 09:00 – 24:00',
+      f_line:'© 2026 In Tempo · Italian kitchen'},
+    ru:{title:'In Tempo — Итальянская кухня · Ереван',nav_menu:'Меню',nav_contact:'Контакты',
+      hero_l1:'Итальянская кухня',hero_l2:'в центре <em>Еревана</em>',hero_sub:'Открыта с 09:00 до 24:00',
+      hero_b1:'Открыть меню →',hero_b2:'Забронировать стол',cue:'листайте',
+      j1:'Закуски',j2:'Салаты',j3:'Супы',j4:'Паста',
+      j5:'Бургеры и сэндвичи',j6:'Пьядина',j7:'Основные блюда',j8:'Десерты',
+      c_kick:'бронь стола',c_h2:'Позвоните — и столик <em>ждёт</em>',
+      c_sub:'Одно касание — и мы позаботимся обо всём остальном.',
+      c_addr1:'Ереван, Северный проспект 10/3',c_addr2:'Ежедневно 09:00 – 24:00',
+      f_line:'© 2026 In Tempo · Итальянская кухня'}
+  };
+  function applyLang(lang){
+    const d = DICT[lang] || DICT.hy;
+    document.querySelectorAll('[data-i18n]').forEach(el=>{
+      const k = el.getAttribute('data-i18n'); if (d[k] !== undefined) el.textContent = d[k];
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(el=>{
+      const k = el.getAttribute('data-i18n-html'); if (d[k] !== undefined) el.innerHTML = d[k];
+    });
+    document.documentElement.lang = lang;
+    document.title = d.title;
+    document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active', b.dataset.lang===lang));
+    try{ localStorage.setItem('intempo_lang', lang); }catch(e){}
   }
- 
+  document.querySelectorAll('.lang-btn').forEach(b=>b.addEventListener('click', ()=>applyLang(b.dataset.lang)));
+  let savedLang = 'hy';
+  try{ savedLang = localStorage.getItem('intempo_lang') || 'hy'; }catch(e){}
+  applyLang(savedLang);
+
+  /* ---------- ОТКРЫТИЕ ---------- */
+  window.addEventListener('load', () => {
+    window.scrollTo(0, 0);
+    setTimeout(() => document.getElementById('loader').classList.add('done'), 1500);
+    setTimeout(() => document.getElementById('nav').classList.add('ready'), 1300);
+    setTimeout(() => document.querySelector('.hero').classList.add('ready'), 1600);
+  });
+
+  const nav = document.getElementById('nav');
+  addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40), {passive:true});
+
+  /* ---------- КНИГА ---------- */
+  const TOTAL_PAGES = 52;
+  const pad = n => String(n).padStart(2,'0');
+  const pageFlip = new St.PageFlip(document.getElementById('book'), {
+    width: 500, height: 750,
+    size: 'stretch',
+    minWidth: 300, maxWidth: 1400,
+    minHeight: 450, maxHeight: 1050,
+    showCover: false,
+    usePortrait: true,
+    mobileScrollSupport: true,
+    autoSize: true,
+    flippingTime: 650,
+    disableFlipByClick: false,
+    swipeDistance: 20,
+    maxShadowOpacity: 0.5
+  });
+  const imgs = [];
+  for (let i=1;i<=TOTAL_PAGES;i++) imgs.push('page-'+pad(i)+'.jpg');
   pageFlip.loadFromImages(imgs);
- 
-  const pageNowEl = document.getElementById('pageNow');
+
+  const bookFrame = document.getElementById('bookFrame');
   const prevBtn = document.getElementById('prevBtn');
   const nextBtn = document.getElementById('nextBtn');
- 
   function updateUI(){
     const idx = pageFlip.getCurrentPageIndex();
-    pageNowEl.textContent = idx + 1;
     prevBtn.disabled = idx === 0;
     nextBtn.disabled = idx >= TOTAL_PAGES - 1;
   }
- 
   pageFlip.on('flip', updateUI);
   pageFlip.on('init', updateUI);
- 
   prevBtn.addEventListener('click', () => pageFlip.flipPrev());
   nextBtn.addEventListener('click', () => pageFlip.flipNext());
- 
-  document.addEventListener('keydown', (e) => {
+  document.addEventListener('keydown', e => {
     if (e.key === 'ArrowLeft') pageFlip.flipPrev();
     if (e.key === 'ArrowRight') pageFlip.flipNext();
   });
+  document.querySelectorAll('.jump').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = parseInt(btn.dataset.page, 10);
+      bookFrame.scrollIntoView({behavior:'smooth', block:'center'});
+      setTimeout(() => { try { pageFlip.flip(idx); } catch(e){} }, 600);
+    });
+  });
+
+  const io = new IntersectionObserver(es => es.forEach(en => {
+    if (en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+  }), {threshold:.2});
+  document.querySelectorAll('.rv, .book-frame').forEach(el => io.observe(el));
 </script>
- 
 </body>
 </html>
- 
