@@ -2,7 +2,7 @@
 <html lang="hy">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
 <title>In Tempo — Իտալական խոհանոց · Երևան</title>
 <meta name="description" content="In Tempo — իտալական խոհանոց րևանի կենտրոնում։ Բաց է 09:00–24:00։ Time to enjoy.">
 <link rel="preload" href="page-01.jpg" as="image" type="image/jpeg">
@@ -144,10 +144,13 @@
   .jump-row{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin:0 auto clamp(30px,4vw,48px);padding:0 4vw;}
   .jump{font:inherit;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);background:none;border:1.5px solid var(--line);border-radius:999px;padding:9px 16px;cursor:pointer;transition:.3s;}
   .jump:hover{color:var(--menupage);background:var(--ink);border-color:var(--ink);}
-  .book-stage{perspective:1400px;margin:0 auto;}
+  .book-stage{perspective:1400px;margin:0 auto;width:100%;display:flex;justify-content:center;}
   .book-frame{
     position:relative;
-    width:min(95vw, 900px);
+    /* Ширина ограничена одновременно: шириной экрана, разумным максимумом И
+       доступной высотой экрана (переведённой в ширину через соотношение 2:3),
+       чтобы книга целиком помещалась на экране и на телефоне, и на компьютере. */
+    width:min(92vw, 620px, calc((100svh - 300px) * 2 / 3));
     aspect-ratio:2/3;
     margin:0 auto;
     opacity:0;
@@ -241,7 +244,7 @@
     .nav-link{display:none;}
     .logo-sprite--sm{width:108px;height:59px;background-size:450px auto;background-position:-176px -545px;}
     .menu-sec{padding-top:84px;}
-    .book-frame{width:95vw;}
+    .book-frame{width:min(94vw, calc((100svh - 250px) * 2 / 3));}
     .swipe-hint{display:block;}
     .logo-video-wrap{width:200px;height:110px;}
   }
@@ -262,6 +265,7 @@
     .menu-sec{padding:72px 0 60px;}
     .jump-row{gap:8px;margin-bottom:22px;padding:0 3vw;}
     .jump{font-size:11px;padding:8px 13px;}
+    .book-frame{width:min(95vw, calc((100svh - 210px) * 2 / 3));}
     .book-controls{gap:16px;margin-top:24px;}
     .flip-btn{width:48px;height:48px;}
     .flip-btn svg{width:18px;height:18px;}
@@ -277,6 +281,13 @@
     .nav-tel{display:none;}
     .lang-btn{padding:5px 8px;font-size:9px;}
     .logo-video-wrap{width:160px;height:90px;}
+    .book-frame{width:min(96vw, calc((100svh - 190px) * 2 / 3));}
+  }
+  @media (max-height:500px) and (orientation:landscape){
+    .menu-sec{padding:64px 0 30px;}
+    .jump-row{margin-bottom:14px;}
+    .book-frame{width:min(60vw, calc((100svh - 130px) * 2 / 3));}
+    .book-controls{margin-top:18px;}
   }
   @media (prefers-reduced-motion:reduce){*{transition-duration:.01ms !important;animation-duration:.01ms !important;}}
 </style>
