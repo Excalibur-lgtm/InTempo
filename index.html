@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
 <title>In Tempo — Իտալական խոհանոց · Երևան</title>
-<meta name="description" content="In Tempo — իտալական խոհանոց րևանի կենտրոնում։ Բաց է 09:00–24:00։ Time to enjoy.">
+<meta name="description" content="In Tempo — իտալական խոհանոց Երևանի կենտրոնում։ Բաց է 09:00–24:00։ Time to enjoy.">
 <link rel="preload" href="page-01.jpg" as="image" type="image/jpeg">
 <link rel="preload" href="page-02.jpg" as="image" type="image/jpeg">
 <link rel="preload" href="page-03.jpg" as="image" type="image/jpeg">
@@ -147,9 +147,6 @@
   .book-stage{perspective:1400px;margin:0 auto;width:100%;display:flex;justify-content:center;}
   .book-frame{
     position:relative;
-    /* Ширина ограничена одновременно: шириной экрана, разумным максимумом И
-       доступной высотой экрана (переведённой в ширину через соотношение 2:3),
-       чтобы книга целиком помещалась на экране и на телефоне, и на компьютере. */
     width:min(92vw, 620px, calc((100svh - 300px) * 2 / 3));
     aspect-ratio:2/3;
     margin:0 auto;
@@ -184,7 +181,6 @@
     width:100% !important;
     height:100% !important;
     object-fit:contain;
-    /* Улучшенное качество рендеринга */
     image-rendering: -webkit-optimize-contrast !important;
     image-rendering: crisp-edges !important;
     image-rendering: high-quality !important;
@@ -192,7 +188,6 @@
     -webkit-image-smoothing: auto !important;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
-    /* Убираем пикселизацию */
     -ms-interpolation-mode: bicubic;
   }
   .page{background:var(--menupage);}
@@ -244,7 +239,8 @@
     .nav-link{display:none;}
     .logo-sprite--sm{width:108px;height:59px;background-size:450px auto;background-position:-176px -545px;}
     .menu-sec{padding-top:84px;}
-    .book-frame{width:min(94vw, calc((100svh - 250px) * 2 / 3));}
+    /* МОБИЛЬНАЯ: книга уменьшена на 40% (×0.6) */
+    .book-frame{width:calc(min(94vw, (100svh - 250px) * 2 / 3) * 0.6);}
     .swipe-hint{display:block;}
     .logo-video-wrap{width:200px;height:110px;}
   }
@@ -265,7 +261,8 @@
     .menu-sec{padding:72px 0 60px;}
     .jump-row{gap:8px;margin-bottom:22px;padding:0 3vw;}
     .jump{font-size:11px;padding:8px 13px;}
-    .book-frame{width:min(95vw, calc((100svh - 210px) * 2 / 3));}
+    /* МОБИЛЬНАЯ: книга уменьшена на 40% (×0.6) */
+    .book-frame{width:calc(min(95vw, (100svh - 210px) * 2 / 3) * 0.6);}
     .book-controls{gap:16px;margin-top:24px;}
     .flip-btn{width:48px;height:48px;}
     .flip-btn svg{width:18px;height:18px;}
@@ -281,12 +278,20 @@
     .nav-tel{display:none;}
     .lang-btn{padding:5px 8px;font-size:9px;}
     .logo-video-wrap{width:160px;height:90px;}
-    .book-frame{width:min(96vw, calc((100svh - 190px) * 2 / 3));}
+    /* МОБИЛЬНАЯ: книга уменьшена на 40% (×0.6) */
+    .book-frame{width:calc(min(96vw, (100svh - 190px) * 2 / 3) * 0.6);}
+  }
+  /* КОМПЬЮТЕР (горизонтальный экран): книга ДВУХСТРАНИЧНАЯ (разворот 4:3) */
+  @media (min-width:769px) and (orientation:landscape){
+    .book-frame{
+      width:min(92vw, 1240px, calc((100svh - 300px) * 4 / 3));
+      aspect-ratio:4/3;
+    }
   }
   @media (max-height:500px) and (orientation:landscape){
     .menu-sec{padding:64px 0 30px;}
     .jump-row{margin-bottom:14px;}
-    .book-frame{width:min(60vw, calc((100svh - 130px) * 2 / 3));}
+    .book-frame{width:calc(min(60vw, (100svh - 130px) * 2 / 3) * 0.6);aspect-ratio:2/3;}
     .book-controls{margin-top:18px;}
   }
   @media (prefers-reduced-motion:reduce){*{transition-duration:.01ms !important;animation-duration:.01ms !important;}}
@@ -413,10 +418,10 @@
 <script src="page-flip.browser.js"></script>
 <script>
   const DICT = {
-    hy:{title:'In Tempo — Իտալական խոհանոց · րևան',nav_menu:'ենյու',nav_contact:'Կապ',
+    hy:{title:'In Tempo — Իտալական խոհանոց · Երևան',nav_menu:'Մենյու',nav_contact:'Կապ',
       hero_l1:'Իտալական խոհանոց',hero_l2:'Երևանի <em>Կենտրոնում</em>',hero_sub:'Բաց է 09:00–24:00',
-      hero_b1:'ացել մենյուն →',hero_b2:'Ամրագրել սեղան',cue:'թերթեք',swipe_hint:'👆 Սահեք թերթելու համար',
-      j1:'Նախուտեստներ',j2:'Սալատներ',j3:'Ապուրներ',j4:'աստա',
+      hero_b1:'Բացել մենյուն →',hero_b2:'Ամրագրել սեղան',cue:'թերթեք',swipe_hint:'👆 Սահեք թերթելու համար',
+      j1:'Նախուտեստներ',j2:'Սալատներ',j3:'Ապուրներ',j4:'Պաստա',
       j5:'Բուրգերներ և սենդվիչներ',j6:'Պիադինա',j7:'Հիմնական ուտեստներ',j8:'Աղանդեր',
       c_kick:'սեղանի ամրագրում',c_h2:'Զանգեք — և սեղանը <em>սպասում է</em>',
       c_sub:'Մեկ հպում — և մնացածը մենք կհոգանք։',
@@ -497,7 +502,6 @@
     oversize: 3,    /* Максимальная предзагрузка */
     className: 'page-flip',
     usePortraitMode: true,
-    // Отключаем все сжатия
     rendering: 'high'
   });
   
