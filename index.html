@@ -30,7 +30,6 @@
   :root{
     --bg:#b79d74; --bg-deep:#a68c62; --menupage:#c9b18a; --paper:#f1efe9;
     --ink:#2b2622; --muted:rgba(43,38,34,.66); --line:rgba(43,38,34,.16); --red:#d8432a;
-    /* Новый цвет для логотипа */
     --logo-bg:#b8a17e;
     --serif:'Noto Serif',Georgia,serif;
     --sans:'Noto Sans',-apple-system,sans-serif;
@@ -61,27 +60,15 @@
 
   #loader{position:fixed;inset:0;z-index:100;background:var(--logo-bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;transition:transform .9s cubic-bezier(.76,0,.24,1),opacity .9s ease,visibility .9s;}
   #loader.done{transform:translateY(-100%);opacity:0;visibility:hidden;}
-  
   .logo-video-wrap{
-    width:240px;
-    height:130px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    opacity:0;
-    transform:scale(.9) translateY(14px);
+    width:240px;height:130px;
+    display:flex;align-items:center;justify-content:center;
+    opacity:0;transform:scale(.9) translateY(14px);
     animation:logoIn 1s cubic-bezier(.22,1,.36,1) .15s forwards;
-    background:var(--logo-bg); /* НОВЫЙ ЦВЕТ #b8a17e */
-    border-radius:8px;
-    overflow:hidden;
+    background:var(--logo-bg);
+    border-radius:8px;overflow:hidden;
   }
-  .logo-video-wrap video{
-    width:100%;
-    height:100%;
-    object-fit:contain;
-    display:block;
-  }
-  
+  .logo-video-wrap video{width:100%;height:100%;object-fit:contain;display:block;}
   #loader .slogan{opacity:0;transform:translateY(10px);animation:logoIn .8s cubic-bezier(.22,1,.36,1) .6s forwards;}
   @keyframes logoIn{to{opacity:1;transform:none;}}
 
@@ -140,14 +127,16 @@
   .mq-track b{color:var(--red);font-weight:500;}
   @keyframes mq{to{transform:translateX(-50%);}}
 
+  /* ---------- КНИГА: НОВАЯ ЧИСТАЯ СИСТЕМА МАСШТАБОВ ---------- */
   .menu-sec{padding:clamp(70px,9vw,110px) 0 clamp(70px,9vw,120px);text-align:center;}
   .jump-row{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin:0 auto clamp(30px,4vw,48px);padding:0 4vw;}
   .jump{font:inherit;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);background:none;border:1.5px solid var(--line);border-radius:999px;padding:9px 16px;cursor:pointer;transition:.3s;}
   .jump:hover{color:var(--menupage);background:var(--ink);border-color:var(--ink);}
   .book-stage{perspective:1400px;margin:0 auto;width:100%;display:flex;justify-content:center;}
+  /* БАЗА: портрет (телефон/планшет) → ОДНА страница */
   .book-frame{
     position:relative;
-    width:min(92vw, 620px, calc((100svh - 300px) * 2 / 3));
+    width:min(88vw, 560px, calc((100svh - 260px) * 2 / 3));
     aspect-ratio:2/3;
     margin:0 auto;
     opacity:0;
@@ -156,24 +145,15 @@
   }
   .book-frame.in{opacity:1;transform:translateY(0) rotateX(0);}
   .book-frame::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    background:transparent;
-    box-shadow:0 40px 90px rgba(43,38,34,.4);
-    border-radius:4px;
-    pointer-events:none;
+    content:"";position:absolute;inset:0;background:transparent;
+    box-shadow:0 40px 90px rgba(43,38,34,.4);border-radius:4px;pointer-events:none;
   }
   #book{
-    position:relative;
-    z-index:1;
-    width:100% !important;
-    height:100% !important;
-    touch-action:pan-y;
-    cursor:pointer;
-    background:var(--menupage);
+    position:relative;z-index:1;
+    width:100% !important;height:100% !important;
+    touch-action:pan-y;cursor:pointer;background:var(--menupage);
   }
-  /* МАКСИМАЛЬНОЕ КАЧЕСТВО ИЗОБРАЖЕНИЙ */
+  /* ГЛАДКОЕ масштабирование без пикселизации (без crisp-edges!) */
   #book img, #book canvas{
     user-select:none;
     -webkit-user-drag:none;
@@ -181,14 +161,8 @@
     width:100% !important;
     height:100% !important;
     object-fit:contain;
-    image-rendering: -webkit-optimize-contrast !important;
-    image-rendering: crisp-edges !important;
-    image-rendering: high-quality !important;
-    image-smoothing: auto !important;
-    -webkit-image-smoothing: auto !important;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    -ms-interpolation-mode: bicubic;
+    -webkit-backface-visibility:hidden;
+    backface-visibility:hidden;
   }
   .page{background:var(--menupage);}
   .book-controls{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;gap:22px;margin-top:42px;}
@@ -196,21 +170,12 @@
   .flip-btn:hover{background:var(--ink);color:var(--menupage);transform:scale(1.06);}
   .flip-btn:disabled{opacity:.3;transform:none;background:transparent;color:var(--ink);}
   .flip-btn svg{width:20px;height:20px;}
-  
   .swipe-hint{
-    display:none;
-    margin-top:20px;
-    padding:12px 24px;
-    background:rgba(43,38,34,.08);
-    border-radius:999px;
-    font-size:13px;
-    color:var(--muted);
-    animation:pulse 2s ease-in-out infinite;
+    display:none;margin-top:20px;padding:12px 24px;
+    background:rgba(43,38,34,.08);border-radius:999px;
+    font-size:13px;color:var(--muted);animation:pulse 2s ease-in-out infinite;
   }
-  @keyframes pulse{
-    0%,100%{opacity:.6;}
-    50%{opacity:1;}
-  }
+  @keyframes pulse{0%,100%{opacity:.6;}50%{opacity:1;}}
 
   .contact-sec{padding:clamp(80px,11vw,140px) 0;text-align:center;background:var(--menupage);border-top:1px solid var(--line);}
   .contact-sec .kicker{color:var(--red);text-shadow:none;font-size:15px;}
@@ -231,6 +196,7 @@
   .rv{opacity:0;transform:translateY(30px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);}
   .rv.in{opacity:1;transform:none;}
 
+  /* ---------- АДАПТИВ ---------- */
   @media (max-width:900px){
     .nav{padding:12px 4vw;}
     .nav-right{gap:10px;}
@@ -239,8 +205,6 @@
     .nav-link{display:none;}
     .logo-sprite--sm{width:108px;height:59px;background-size:450px auto;background-position:-176px -545px;}
     .menu-sec{padding-top:84px;}
-    /* МОБИЛЬНАЯ: книга уменьшена на 40% (×0.6) */
-    .book-frame{width:calc(min(94vw, (100svh - 250px) * 2 / 3) * 0.6);}
     .swipe-hint{display:block;}
     .logo-video-wrap{width:200px;height:110px;}
   }
@@ -261,8 +225,8 @@
     .menu-sec{padding:72px 0 60px;}
     .jump-row{gap:8px;margin-bottom:22px;padding:0 3vw;}
     .jump{font-size:11px;padding:8px 13px;}
-    /* МОБИЛЬНАЯ: книга уменьшена на 40% (×0.6) */
-    .book-frame{width:calc(min(95vw, (100svh - 210px) * 2 / 3) * 0.6);}
+    /* телефон: одна страница, комфортно читается */
+    .book-frame{width:min(82vw, 440px, calc((100svh - 240px) * 2 / 3));}
     .book-controls{gap:16px;margin-top:24px;}
     .flip-btn{width:48px;height:48px;}
     .flip-btn svg{width:18px;height:18px;}
@@ -278,20 +242,20 @@
     .nav-tel{display:none;}
     .lang-btn{padding:5px 8px;font-size:9px;}
     .logo-video-wrap{width:160px;height:90px;}
-    /* МОБИЛЬНАЯ: книга уменьшена на 40% (×0.6) */
-    .book-frame{width:calc(min(96vw, (100svh - 190px) * 2 / 3) * 0.6);}
+    .book-frame{width:min(86vw, calc((100svh - 220px) * 2 / 3));}
   }
-  /* КОМПЬЮТЕР (горизонтальный экран): книга ДВУХСТРАНИЧНАЯ (разворот 4:3) */
+  /* КОМПЬЮТЕР / ноутбук (горизонтально): ДВЕ страницы (разворот) */
   @media (min-width:769px) and (orientation:landscape){
     .book-frame{
-      width:min(92vw, 1240px, calc((100svh - 300px) * 4 / 3));
+      width:min(90vw, 1160px, calc((100svh - 280px) * 4 / 3));
       aspect-ratio:4/3;
     }
   }
+  /* очень низкий экран (телефон лёжа): одна страница компактно */
   @media (max-height:500px) and (orientation:landscape){
     .menu-sec{padding:64px 0 30px;}
     .jump-row{margin-bottom:14px;}
-    .book-frame{width:calc(min(60vw, (100svh - 130px) * 2 / 3) * 0.6);aspect-ratio:2/3;}
+    .book-frame{width:min(60vw, calc((100svh - 140px) * 2 / 3));aspect-ratio:2/3;}
     .book-controls{margin-top:18px;}
   }
   @media (prefers-reduced-motion:reduce){*{transition-duration:.01ms !important;animation-duration:.01ms !important;}}
@@ -301,14 +265,7 @@
 
 <div id="loader">
   <div class="logo-video-wrap">
-    <video 
-      id="loaderVideo"
-      autoplay 
-      muted 
-      loop 
-      playsinline
-      preload="auto"
-      aria-label="In Tempo animated logo">
+    <video id="loaderVideo" autoplay muted loop playsinline preload="auto" aria-label="In Tempo animated logo">
       <source src="logo-animation.mp4" type="video/mp4">
     </video>
   </div>
@@ -386,7 +343,7 @@
     <button class="flip-btn" id="prevBtn" aria-label="Նախորդ էջ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
     <button class="flip-btn" id="nextBtn" aria-label="Հաջորդ էջ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
   </div>
-  
+
   <div class="swipe-hint" data-i18n="swipe_hint">👆 Свайпните для перелистывания</div>
 </section>
 
@@ -474,65 +431,53 @@
   const nav = document.getElementById('nav');
   addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40), {passive:true});
 
-  /* МАКСИМАЛЬНОЕ КАЧЕСТВО МЕНЮ */
+  /* ---------- КНИГА: чистые настройки без конфликтов ---------- */
   const TOTAL_PAGES = 52;
   const pad = n => String(n).padStart(2,'0');
   const imgs = [];
-  for (let i=1;i<=TOTAL_PAGES;i++) {
-    imgs.push('page-'+pad(i)+'.jpg');
-  }
-  
+  for (let i=1;i<=TOTAL_PAGES;i++) imgs.push('page-'+pad(i)+'.jpg');
+
   const pageFlip = new St.PageFlip(document.getElementById('book'), {
-    width: 2000,   /* МАКСИМАЛЬНОЕ качество: 2000px */
-    height: 3000,  /* Для четкого текста */
+    width: 1000,          // пропорция страницы 2:3
+    height: 1500,
     size: 'stretch',
-    minWidth: 800,
-    maxWidth: 3000,
-    minHeight: 1200,
-    maxHeight: 4500,
+    minWidth: 200,        // адекватные лимиты: книга может быть и маленькой, и большой
+    maxWidth: 1400,
+    minHeight: 300,
+    maxHeight: 2100,
     showCover: false,
-    usePortrait: true,
+    usePortrait: true,    // портрет → 1 стр., ландшафт → 2 стр. (автоматически)
     mobileScrollSupport: true,
-    autoSize: true,
-    flippingTime: 650,
+    flippingTime: 600,
     disableFlipByClick: false,
-    swipeDistance: 30,
-    maxShadowOpacity: 0.5,
-    startPage: 0,
-    oversize: 3,    /* Максимальная предзагрузка */
-    className: 'page-flip',
-    usePortraitMode: true,
-    rendering: 'high'
+    swipeDistance: 30,    // родной свайп библиотеки
+    useMouseEvents: true,
+    clickEventForward: true,
+    maxShadowOpacity: 0.4,
+    startPage: 0
   });
-  
   pageFlip.loadFromImages(imgs);
 
   const bookFrame = document.getElementById('bookFrame');
   const prevBtn = document.getElementById('prevBtn');
   const nextBtn = document.getElementById('nextBtn');
-  
+
   function updateUI(){
     const idx = pageFlip.getCurrentPageIndex();
     prevBtn.disabled = idx === 0;
     nextBtn.disabled = idx >= TOTAL_PAGES - 1;
   }
-  
   pageFlip.on('flip', updateUI);
   pageFlip.on('init', () => {
     updateUI();
-    setTimeout(() => {
-      bookFrame.classList.add('in');
-    }, 100);
+    setTimeout(() => bookFrame.classList.add('in'), 100);
   });
-  
   prevBtn.addEventListener('click', () => pageFlip.flipPrev());
   nextBtn.addEventListener('click', () => pageFlip.flipNext());
-  
   document.addEventListener('keydown', e => {
     if (e.key === 'ArrowLeft') pageFlip.flipPrev();
     if (e.key === 'ArrowRight') pageFlip.flipNext();
   });
-  
   document.querySelectorAll('.jump').forEach(btn => {
     btn.addEventListener('click', () => {
       const idx = parseInt(btn.dataset.page, 10);
@@ -540,56 +485,6 @@
       setTimeout(() => { try { pageFlip.flip(idx); } catch(e){} }, 600);
     });
   });
-
-  const book = document.getElementById('book');
-  let touchStartX = 0;
-  let touchStartY = 0;
-  let touchEndX = 0;
-  let touchEndY = 0;
-  let isSwiping = false;
-
-  book.addEventListener('touchstart', (e) => {
-    touchStartX = e.changedTouches[0].screenX;
-    touchStartY = e.changedTouches[0].screenY;
-    isSwiping = true;
-  }, {passive: true});
-
-  book.addEventListener('touchmove', (e) => {
-    if (!isSwiping) return;
-    touchEndX = e.changedTouches[0].screenX;
-    touchEndY = e.changedTouches[0].screenY;
-  }, {passive: true});
-
-  book.addEventListener('touchend', (e) => {
-    if (!isSwiping) return;
-    isSwiping = false;
-    
-    touchEndX = e.changedTouches[0].screenX;
-    touchEndY = e.changedTouches[0].screenY;
-    
-    const deltaX = touchEndX - touchStartX;
-    const deltaY = touchEndY - touchStartY;
-    const absDeltaX = Math.abs(deltaX);
-    const absDeltaY = Math.abs(deltaY);
-    
-    if (absDeltaX > absDeltaY && absDeltaX > 50) {
-      if (deltaX > 0) {
-        pageFlip.flipPrev();
-      } else {
-        pageFlip.flipNext();
-      }
-    }
-  }, {passive: true});
-
-  book.addEventListener('touchmove', (e) => {
-    if (isSwiping) {
-      const deltaX = Math.abs(e.changedTouches[0].screenX - touchStartX);
-      const deltaY = Math.abs(e.changedTouches[0].screenY - touchStartY);
-      if (deltaX > deltaY && deltaX > 10) {
-        e.preventDefault();
-      }
-    }
-  }, {passive: false});
 
   const io = new IntersectionObserver(es => es.forEach(en => {
     if (en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
