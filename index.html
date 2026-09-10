@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>In Tempo — Իտալական խոհանոց · Երևան</title>
-<meta name="description" content="In Tempo — իտալական խոհանոց Երևանի կենտրոնում։ Բաց է 09:00–24:00։ Time to enjoy.">
+<meta name="description" content="In Tempo — իտալական խոհանոց րևանի կենտրոնում։ Բաց է 09:00–24:00։ Time to enjoy.">
 <link rel="preload" href="page-01.jpg" as="image" type="image/jpeg">
 <link rel="preload" href="page-02.jpg" as="image" type="image/jpeg">
 <link rel="preload" href="page-03.jpg" as="image" type="image/jpeg">
@@ -30,7 +30,7 @@
   :root{
     --bg:#b79d74; --bg-deep:#a68c62; --menupage:#c9b18a; --paper:#f1efe9;
     --ink:#2b2622; --muted:rgba(43,38,34,.66); --line:rgba(43,38,34,.16); --red:#d8432a;
-    /* Цвет фона под логотипом */
+    /* Новый цвет для логотипа */
     --logo-bg:#b8a17e;
     --serif:'Noto Serif',Georgia,serif;
     --sans:'Noto Sans',-apple-system,sans-serif;
@@ -59,7 +59,6 @@
   .logo-card{display:inline-flex;flex-direction:column;align-items:center;gap:2px;background:var(--logo-bg);padding:6px 14px 6px;border-radius:12px;}
   .slogan{font-family:var(--serif);font-style:italic;font-size:11px;letter-spacing:.14em;color:var(--muted);}
 
-  /* ---------- LOADER С ПРОЗРАЧНЫМ ЛОГОТИПОМ (canvas real-time chromakey) ---------- */
   #loader{position:fixed;inset:0;z-index:100;background:var(--logo-bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;transition:transform .9s cubic-bezier(.76,0,.24,1),opacity .9s ease,visibility .9s;}
   #loader.done{transform:translateY(-100%);opacity:0;visibility:hidden;}
   
@@ -72,12 +71,11 @@
     opacity:0;
     transform:scale(.9) translateY(14px);
     animation:logoIn 1s cubic-bezier(.22,1,.36,1) .15s forwards;
-    background:var(--logo-bg); /* цвет #b8a17e, запасной фон пока канвас не отрисовался */
+    background:var(--logo-bg); /* НОВЫЙ ЦВЕТ #b8a17e */
     border-radius:8px;
     overflow:hidden;
-    position:relative;
   }
-  .logo-video-wrap canvas{
+  .logo-video-wrap video{
     width:100%;
     height:100%;
     object-fit:contain;
@@ -175,6 +173,7 @@
     cursor:pointer;
     background:var(--menupage);
   }
+  /* МАКСИМАЛЬНОЕ КАЧЕСТВО ИЗОБРАЖЕНИЙ */
   #book img, #book canvas{
     user-select:none;
     -webkit-user-drag:none;
@@ -182,6 +181,7 @@
     width:100% !important;
     height:100% !important;
     object-fit:contain;
+    /* Улучшенное качество рендеринга */
     image-rendering: -webkit-optimize-contrast !important;
     image-rendering: crisp-edges !important;
     image-rendering: high-quality !important;
@@ -189,6 +189,7 @@
     -webkit-image-smoothing: auto !important;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
+    /* Убираем пикселизацию */
     -ms-interpolation-mode: bicubic;
   }
   .page{background:var(--menupage);}
@@ -282,21 +283,18 @@
 </head>
 <body>
 
-<!-- LOADER: прозрачный логотип через canvas real-time chromakey -->
 <div id="loader">
   <div class="logo-video-wrap">
     <video 
-      id="loaderVideoSrc"
+      id="loaderVideo"
       autoplay 
       muted 
       loop 
       playsinline
       preload="auto"
-      style="display:none;"
       aria-label="In Tempo animated logo">
       <source src="logo-animation.mp4" type="video/mp4">
     </video>
-    <canvas id="loaderCanvas"></canvas>
   </div>
   <span class="slogan">Time to enjoy</span>
 </div>
@@ -404,10 +402,10 @@
 <script src="page-flip.browser.js"></script>
 <script>
   const DICT = {
-    hy:{title:'In Tempo — Իտալական խոհանոց · Երևան',nav_menu:'Մենյու',nav_contact:'Կապ',
+    hy:{title:'In Tempo — Իտալական խոհանոց · րևան',nav_menu:'ենյու',nav_contact:'Կապ',
       hero_l1:'Իտալական խոհանոց',hero_l2:'Երևանի <em>Կենտրոնում</em>',hero_sub:'Բաց է 09:00–24:00',
-      hero_b1:'Բացել մենյուն →',hero_b2:'Ամրագրել սեղան',cue:'թերթեք',swipe_hint:'👆 Սահեք թերթելու համար',
-      j1:'Նախուտեստներ',j2:'Սալատներ',j3:'Ապուրներ',j4:'Պաստա',
+      hero_b1:'ացել մենյուն →',hero_b2:'Ամրագրել սեղան',cue:'թերթեք',swipe_hint:'👆 Սահեք թերթելու համար',
+      j1:'Նախուտեստներ',j2:'Սալատներ',j3:'Ապուրներ',j4:'աստա',
       j5:'Բուրգերներ և սենդվիչներ',j6:'Պիադինա',j7:'Հիմնական ուտեստներ',j8:'Աղանդեր',
       c_kick:'սեղանի ամրագրում',c_h2:'Զանգեք — և սեղանը <em>սպասում է</em>',
       c_sub:'Մեկ հպում — և մնացածը մենք կհոգանք։',
@@ -457,65 +455,10 @@
     setTimeout(() => document.querySelector('.hero').classList.add('ready'), 1600);
   });
 
-  /* ---------- REAL-TIME CHROMAKEY ДЛЯ ЛОГОТИПА (canvas) ----------
-     Вырезает фон #CAB28D (бежевый) из logo-animation.mp4 прямо в браузере,
-     без необходимости в WebM с альфа-каналом. Работает во всех браузерах,
-     включая Safari/iOS. */
-  (function(){
-    const video = document.getElementById('loaderVideoSrc');
-    const canvas = document.getElementById('loaderCanvas');
-    const ctx = canvas.getContext('2d', { willReadFrequently: true });
-
-    // Цвет фона видео (замерен пипеткой из исходника: RGB 202,178,141 / #CAB28D)
-    const keyColor = { r: 202, g: 178, b: 141 };
-    const threshold = 55;  // ниже этого расстояния — полностью прозрачно
-    const feather   = 40;  // зона плавного перехода (антиалиасинг краёв)
-
-    let rafId = null;
-
-    function sizeCanvas(){
-      const w = video.videoWidth || 1280;
-      const h = video.videoHeight || 720;
-      canvas.width = w;
-      canvas.height = h;
-    }
-
-    function processFrame(){
-      if (video.paused || video.ended){ rafId = null; return; }
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-      const frame = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      const data = frame.data;
-      for (let i = 0; i < data.length; i += 4){
-        const dr = data[i]   - keyColor.r;
-        const dg = data[i+1] - keyColor.g;
-        const db = data[i+2] - keyColor.b;
-        const dist = Math.sqrt(dr*dr + dg*dg + db*db);
-        if (dist < threshold){
-          data[i+3] = 0;
-        } else if (dist < threshold + feather){
-          data[i+3] = Math.round(255 * (dist - threshold) / feather);
-        }
-      }
-      ctx.putImageData(frame, 0, 0);
-      rafId = requestAnimationFrame(processFrame);
-    }
-
-    video.addEventListener('loadedmetadata', sizeCanvas);
-    video.addEventListener('play', () => {
-      sizeCanvas();
-      if (!rafId) processFrame();
-    });
-
-    // На случай если play() сработал раньше подписки (autoplay)
-    if (video.readyState >= 2){
-      sizeCanvas();
-      video.play().catch(()=>{});
-    }
-  })();
-
   const nav = document.getElementById('nav');
   addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40), {passive:true});
 
+  /* МАКСИМАЛЬНОЕ КАЧЕСТВО МЕНЮ */
   const TOTAL_PAGES = 52;
   const pad = n => String(n).padStart(2,'0');
   const imgs = [];
@@ -524,8 +467,8 @@
   }
   
   const pageFlip = new St.PageFlip(document.getElementById('book'), {
-    width: 2000,
-    height: 3000,
+    width: 2000,   /* МАКСИМАЛЬНОЕ качество: 2000px */
+    height: 3000,  /* Для четкого текста */
     size: 'stretch',
     minWidth: 800,
     maxWidth: 3000,
@@ -540,9 +483,10 @@
     swipeDistance: 30,
     maxShadowOpacity: 0.5,
     startPage: 0,
-    oversize: 3,
+    oversize: 3,    /* Максимальная предзагрузка */
     className: 'page-flip',
     usePortraitMode: true,
+    // Отключаем все сжатия
     rendering: 'high'
   });
   
