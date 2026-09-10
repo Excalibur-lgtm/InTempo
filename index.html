@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>In Tempo — Իտալական ոհանոց · Երևան</title>
-<meta name="description" content="In Tempo — իտալական խոհանոց Երևանի կենտրոնում։ Բաց է 09:00–24:00։ Time to enjoy.">
+<title>In Tempo — Իտալական խոհանոց · Երևան</title>
+<meta name="description" content="In Tempo — իտալական խոհանոց րևանի կենտրոնում։ Բաց է 09:00–24:00։ Time to enjoy.">
 <link rel="preload" href="page-01.jpg" as="image" type="image/jpeg">
 <link rel="preload" href="page-02.jpg" as="image" type="image/jpeg">
 <link rel="preload" href="page-03.jpg" as="image" type="image/jpeg">
@@ -30,6 +30,8 @@
   :root{
     --bg:#b79d74; --bg-deep:#a68c62; --menupage:#c9b18a; --paper:#f1efe9;
     --ink:#2b2622; --muted:rgba(43,38,34,.66); --line:rgba(43,38,34,.16); --red:#d8432a;
+    /* Новый цвет для логотипа */
+    --logo-bg:#b8a17e;
     --serif:'Noto Serif',Georgia,serif;
     --sans:'Noto Sans',-apple-system,sans-serif;
   }
@@ -54,10 +56,10 @@
 
   .logo-sprite{width:240px;height:130px;background:url('page-01.jpg') no-repeat;background-size:1000px auto;background-position:-390px -1210px;mix-blend-mode:multiply;}
   .logo-sprite--sm{width:132px;height:72px;background-size:550px auto;background-position:-215px -666px;}
-  .logo-card{display:inline-flex;flex-direction:column;align-items:center;gap:2px;background:var(--menupage);padding:6px 14px 6px;border-radius:12px;}
+  .logo-card{display:inline-flex;flex-direction:column;align-items:center;gap:2px;background:var(--logo-bg);padding:6px 14px 6px;border-radius:12px;}
   .slogan{font-family:var(--serif);font-style:italic;font-size:11px;letter-spacing:.14em;color:var(--muted);}
 
-  #loader{position:fixed;inset:0;z-index:100;background:var(--menupage);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;transition:transform .9s cubic-bezier(.76,0,.24,1),opacity .9s ease,visibility .9s;}
+  #loader{position:fixed;inset:0;z-index:100;background:var(--logo-bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;transition:transform .9s cubic-bezier(.76,0,.24,1),opacity .9s ease,visibility .9s;}
   #loader.done{transform:translateY(-100%);opacity:0;visibility:hidden;}
   
   .logo-video-wrap{
@@ -69,7 +71,7 @@
     opacity:0;
     transform:scale(.9) translateY(14px);
     animation:logoIn 1s cubic-bezier(.22,1,.36,1) .15s forwards;
-    background:var(--menupage);
+    background:var(--logo-bg); /* НОВЫЙ ЦВЕТ #b8a17e */
     border-radius:8px;
     overflow:hidden;
   }
@@ -330,7 +332,7 @@
     </h1>
     <p class="hero-sub" data-i18n="hero_sub">Բաց է 09:00–24:00</p>
     <div class="hero-actions">
-      <a class="btn btn-primary" href="#menu" data-i18n="hero_b1">ացել մենյուն →</a>
+      <a class="btn btn-primary" href="#menu" data-i18n="hero_b1">Բացել մենյուն →</a>
       <a class="btn btn-ghost" href="#contact" data-i18n="hero_b2">Ամրագրել սեղան</a>
     </div>
   </div>
@@ -351,7 +353,7 @@
     <button class="jump" data-page="4" data-i18n="j1">Նախուտեստներ</button>
     <button class="jump" data-page="8" data-i18n="j2">Սալատներ</button>
     <button class="jump" data-page="12" data-i18n="j3">Ապուրներ</button>
-    <button class="jump" data-page="18" data-i18n="j4">աստա</button>
+    <button class="jump" data-page="18" data-i18n="j4">Պաստա</button>
     <button class="jump" data-page="23" data-i18n="j5">Բուրգերներ և սենդվիչներ</button>
     <button class="jump" data-page="27" data-i18n="j6">Պիադինա</button>
     <button class="jump" data-page="31" data-i18n="j7">Հիմնական ուտեստներ</button>
@@ -375,7 +377,7 @@
 <section class="contact-sec" id="contact">
   <span class="kicker rv" data-i18n="c_kick">սեղանի ամրագրում</span>
   <h2 class="rv" data-i18n-html="c_h2">Զանգեք — և սեղանը <em>սպասում է</em></h2>
-  <p class="contact-sub rv" data-i18n="c_sub">եկ հպում — և մնացածը մենք կհոգանք։</p>
+  <p class="contact-sub rv" data-i18n="c_sub">Մեկ հպում — և մնացածը մենք կհոգանք։</p>
   <div class="phones rv">
     <a class="phone" href="tel:+37477966933">+374 77 966 933</a>
   </div>
@@ -400,10 +402,10 @@
 <script src="page-flip.browser.js"></script>
 <script>
   const DICT = {
-    hy:{title:'In Tempo — Իտալական խոհանոց · Երևան',nav_menu:'Մենյու',nav_contact:'Կապ',
+    hy:{title:'In Tempo — Իտալական խոհանոց · րևան',nav_menu:'ենյու',nav_contact:'Կապ',
       hero_l1:'Իտալական խոհանոց',hero_l2:'Երևանի <em>Կենտրոնում</em>',hero_sub:'Բաց է 09:00–24:00',
-      hero_b1:'Բացել մենյուն →',hero_b2:'Ամրագրել սեղան',cue:'թերթեք',swipe_hint:'👆 Սահեք թերթելու համար',
-      j1:'Նախուտեստներ',j2:'Սալատներ',j3:'Ապուրներ',j4:'Պաստա',
+      hero_b1:'ացել մենյուն →',hero_b2:'Ամրագրել սեղան',cue:'թերթեք',swipe_hint:'👆 Սահեք թերթելու համար',
+      j1:'Նախուտեստներ',j2:'Սալատներ',j3:'Ապուրներ',j4:'աստա',
       j5:'Բուրգերներ և սենդվիչներ',j6:'Պիադինա',j7:'Հիմնական ուտեստներ',j8:'Աղանդեր',
       c_kick:'սեղանի ամրագրում',c_h2:'Զանգեք — և սեղանը <em>սպասում է</em>',
       c_sub:'Մեկ հպում — և մնացածը մենք կհոգանք։',
