@@ -4,7 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>In Tempo — Իտալական խոհանոց · Երևան</title>
-<meta name="description" content="In Tempo — իտալական խոհանոց Երևանի կենտրոնում։ Բաց է 09:00–24:00։ Time to enjoy.">
+<meta name="description" content="In Tempo — տալական խոհանոց Երևանի կենտրոնում։ Բաց է 09:00–24:00։ Time to enjoy.">
+<!-- Preload критических изображений -->
+<link rel="preload" href="page-01.jpg" as="image" type="image/jpeg">
+<link rel="preload" href="page-02.jpg" as="image" type="image/jpeg">
+<link rel="preload" href="page-03.jpg" as="image" type="image/jpeg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
 <script>
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
   document.addEventListener('DOMContentLoaded', function(){
@@ -18,9 +25,6 @@
     requestAnimationFrame(function(){ document.documentElement.style.scrollBehavior = ''; });
   });
 </script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#b79d74; --bg-deep:#a68c62; --menupage:#c9b18a; --paper:#f1efe9;
@@ -38,20 +42,20 @@
   h1,h2{font-family:var(--serif);font-weight:600;line-height:1.12;letter-spacing:-.01em;color:var(--ink);}
   em{font-style:italic;color:var(--red);}
 
-  /* ---------- ЛОГОТИП из page-01.pdf ---------- */
-  .logo-sprite{width:240px;height:130px;background:url('page-01.pdf') no-repeat;background-size:1000px auto;background-position:-390px -1210px;mix-blend-mode:multiply;}
+  /* Логотип с оптимизацией */
+  .logo-sprite{width:240px;height:130px;background:url('page-01.jpg') no-repeat;background-size:1000px auto;background-position:-390px -1210px;mix-blend-mode:multiply;}
   .logo-sprite--sm{width:132px;height:72px;background-size:550px auto;background-position:-215px -666px;}
   .logo-card{display:inline-flex;flex-direction:column;align-items:center;gap:2px;background:var(--menupage);padding:6px 14px 6px;border-radius:12px;}
   .slogan{font-family:var(--serif);font-style:italic;font-size:11px;letter-spacing:.14em;color:var(--muted);}
 
-  /* ---------- LOADER ---------- */
+  /* LOADER */
   #loader{position:fixed;inset:0;z-index:100;background:var(--menupage);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;transition:transform .9s cubic-bezier(.76,0,.24,1),opacity .9s ease,visibility .9s;}
   #loader.done{transform:translateY(-100%);opacity:0;visibility:hidden;}
   #loader .logo-sprite{opacity:0;transform:scale(.9) translateY(14px);animation:logoIn 1s cubic-bezier(.22,1,.36,1) .15s forwards;}
   #loader .slogan{opacity:0;transform:translateY(10px);animation:logoIn .8s cubic-bezier(.22,1,.36,1) .6s forwards;}
   @keyframes logoIn{to{opacity:1;transform:none;}}
 
-  /* ---------- NAV ---------- */
+  /* NAV */
   .nav{position:fixed;inset:0 0 auto;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:14px 6vw;transition:.4s;}
   .nav.scrolled{background:rgba(201,177,138,.94);backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--line);}
   .nav .logo-card{opacity:0;transform:translateY(-16px) scale(.94);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1);}
@@ -78,8 +82,8 @@
   .nav.scrolled .nav-tel{border-color:var(--ink);color:var(--ink);text-shadow:none;}
   .nav.scrolled .nav-tel:hover{background:var(--ink);color:var(--menupage);}
 
-  /* ---------- HERO ---------- */
-  .hero{position:relative;min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;background:url('page-01.pdf') center/cover no-repeat;}
+  /* HERO с оптимизацией */
+  .hero{position:relative;min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;background:url('page-01.jpg') center/cover no-repeat;}
   .hero-media{position:absolute;inset:0;}
   .hero-media video{width:100%;height:100%;object-fit:cover;animation:kb 26s ease-in-out infinite alternate;}
   @keyframes kb{from{transform:scale(1);}to{transform:scale(1.09);}}
@@ -102,14 +106,14 @@
   .scroll-cue i{width:1px;height:40px;background:var(--paper);animation:cue 2s ease-in-out infinite;}
   @keyframes cue{0%,100%{transform:scaleY(.35);opacity:.5;}50%{transform:scaleY(1);opacity:1;}}
 
-  /* ---------- ЛЕНТА ---------- */
+  /* ЛЕНТА */
   .marquee{border-block:1px solid var(--line);background:var(--menupage);overflow:hidden;padding:14px 0;}
   .mq-track{display:flex;width:max-content;animation:mq 34s linear infinite;}
   .mq-track span{font-family:var(--serif);font-style:italic;font-size:16px;letter-spacing:.14em;color:var(--muted);white-space:nowrap;padding:0 24px;}
   .mq-track b{color:var(--red);font-weight:500;}
   @keyframes mq{to{transform:translateX(-50%);}}
 
-  /* ---------- КНИГА ---------- */
+  /* КНИГА с оптимизацией */
   .menu-sec{padding:clamp(70px,9vw,110px) 0 clamp(70px,9vw,120px);text-align:center;}
   .jump-row{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin:0 auto clamp(30px,4vw,48px);padding:0 4vw;}
   .jump{font:inherit;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);background:none;border:1.5px solid var(--line);border-radius:999px;padding:9px 16px;cursor:pointer;transition:.3s;}
@@ -160,7 +164,7 @@
   .flip-btn:disabled{opacity:.3;transform:none;background:transparent;color:var(--ink);}
   .flip-btn svg{width:20px;height:20px;}
 
-  /* ---------- КОНТАКТЫ ---------- */
+  /* КОНТАКТЫ */
   .contact-sec{padding:clamp(80px,11vw,140px) 0;text-align:center;background:var(--menupage);border-top:1px solid var(--line);}
   .contact-sec .kicker{color:var(--red);text-shadow:none;font-size:15px;}
   .contact-sec h2{font-size:clamp(30px,5vw,58px);margin:14px 0 12px;}
@@ -180,7 +184,7 @@
   .rv{opacity:0;transform:translateY(30px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);}
   .rv.in{opacity:1;transform:none;}
 
-  /* ---------- МОБИЛЬНАЯ ---------- */
+  /* МОБИЛЬНАЯ */
   @media (max-width:900px){
     .nav{padding:12px 4vw;}
     .nav-right{gap:10px;}
@@ -253,13 +257,13 @@
 
 <header class="hero" id="top">
   <div class="hero-media">
-    <video autoplay muted loop playsinline preload="metadata" poster="page-01.pdf">
+    <video autoplay muted loop playsinline preload="metadata" poster="page-01.jpg">
       <source src="hero.mp4" type="video/mp4">
     </video>
   </div>
   <div class="hero-in">
     <h1>
-      <span class="line"><span class="line-in" data-i18n-html="hero_l1">Իտալական ոհանոց</span></span>
+      <span class="line"><span class="line-in" data-i18n-html="hero_l1">Իտալական խոհանոց</span></span>
       <span class="line"><span class="line-in" data-i18n-html="hero_l2">Երևանի <em>Կենտրոնում</em></span></span>
     </h1>
     <p class="hero-sub" data-i18n="hero_sub">Բաց է 09:00–24:00</p>
@@ -329,21 +333,19 @@
   </div>
 </footer>
 
-<!-- Подключаем PDF.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script src="page-flip.browser.js"></script>
 <script>
-  /* ---------- 3 ЯЗЫКА ---------- */
+  /* ЯЗЫКИ */
   const DICT = {
     hy:{title:'In Tempo — Իտալական խոհանոց · Երևան',nav_menu:'Մենյու',nav_contact:'Կապ',
       hero_l1:'Իտալական խոհանոց',hero_l2:'Երևանի <em>Կենտրոնում</em>',hero_sub:'Բաց է 09:00–24:00',
-      hero_b1:'ացել մենյուն →',hero_b2:'Ամրագրել սեղան',cue:'թերթեք',
-      j1:'Նախուտեստներ',j2:'Սալատներ',j3:'Ապուրներ',j4:'Պաստա',
-      j5:'Բուրգերներ և սենդվիչներ',j6:'իադինա',j7:'Հիմնական ուտեստներ',j8:'Աղանդեր',
+      hero_b1:'Բացել մենյուն →',hero_b2:'Ամրագրել սեղան',cue:'թերթեք',
+      j1:'Նախուտեստներ',j2:'Սալատներ',j3:'Ապուրներ',j4:'աստա',
+      j5:'Բուրգերներ և սենդվիչներ',j6:'Պիադինա',j7:'Հիմնական ուտեստներ',j8:'Աղանդեր',
       c_kick:'սեղանի ամրագրում',c_h2:'Զանգեք — և սեղանը <em>սպասում է</em>',
       c_sub:'Մեկ հպում — և մնացածը մենք կհոգանք։',
       c_addr1:'Երևան, Հյուսիսային 10/3',c_addr2:'Ամեն օր 09:00 – 24:00',
-      f_line:'© 2026 In Tempo · տալական խոհանոց'},
+      f_line:'© 2026 In Tempo · Իտալական խոհանոց'},
     en:{title:'In Tempo — Italian Kitchen · Yerevan',nav_menu:'Menu',nav_contact:'Contact',
       hero_l1:'Italian kitchen',hero_l2:'in the heart of <em>Yerevan</em>',hero_sub:'Open 09:00 – 24:00',
       hero_b1:'Open the menu →',hero_b2:'Book a table',cue:'scroll',
@@ -381,7 +383,7 @@
   try{ savedLang = localStorage.getItem('intempo_lang') || 'hy'; }catch(e){}
   applyLang(savedLang);
 
-  /* ---------- ОТКРЫТИЕ ---------- */
+  /* ОТКРЫТИЕ */
   window.addEventListener('load', () => {
     window.scrollTo(0, 0);
     setTimeout(() => document.getElementById('loader').classList.add('done'), 1500);
@@ -392,13 +394,17 @@
   const nav = document.getElementById('nav');
   addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40), {passive:true});
 
-  /* ---------- КНИГА С PDF (через PDF.js) ---------- */
+  /* ОПТИМИЗИРОВАННАЯ ЗАГРУЗКА КНИГИ */
   const TOTAL_PAGES = 52;
   const pad = n => String(n).padStart(2,'0');
   
-  // Инициализация PDF.js
-  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  // Создаем массив URL с оптимизацией
+  const imgs = [];
+  for (let i=1;i<=TOTAL_PAGES;i++) {
+    imgs.push('page-'+pad(i)+'.jpg');
+  }
   
+  // Инициализация книги с оптимизированными настройками
   const pageFlip = new St.PageFlip(document.getElementById('book'), {
     width: 800,
     height: 1200,
@@ -414,50 +420,16 @@
     flippingTime: 650,
     disableFlipByClick: false,
     swipeDistance: 20,
-    maxShadowOpacity: 0.5
+    maxShadowOpacity: 0.5,
+    // Оптимизация: загружаем сразу несколько страниц
+    startPage: 0,
+    oversize: 1.5,
+    // Включаем кэширование
+    className: 'page-flip'
   });
-
-  // Функция для конвертации PDF страниц в изображения
-  async function loadPDFPages() {
-    const pdfUrls = [];
-    for (let i = 1; i <= TOTAL_PAGES; i++) {
-      pdfUrls.push('page-' + pad(i) + '.pdf');
-    }
-    
-    const images = [];
-    
-    // Загружаем каждую страницу PDF и конвертируем в canvas/image
-    for (const url of pdfUrls) {
-      try {
-        const pdf = await pdfjsLib.getDocument(url).promise;
-        const page = await pdf.getPage(1); // Берем первую страницу каждого PDF
-        
-        const viewport = page.getViewport({ scale: 2 }); // Увеличиваем scale для качества
-        const canvas = document.createElement('canvas');
-        const context = canvas.getContext('2d');
-        canvas.height = viewport.height;
-        canvas.width = viewport.width;
-        
-        await page.render({
-          canvasContext: context,
-          viewport: viewport
-        }).promise;
-        
-        // Конвертируем canvas в Data URL
-        images.push(canvas.toDataURL('image/jpeg', 0.9));
-      } catch (error) {
-        console.error('Ошибка загрузки PDF:', url, error);
-        // Если PDF не загрузился, используем заглушку
-        images.push('data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7');
-      }
-    }
-    
-    // Загружаем изображения в книгу
-    pageFlip.loadFromImages(images);
-  }
-
-  // Запускаем загрузку PDF
-  loadPDFPages();
+  
+  // Быстрая загрузка изображений
+  pageFlip.loadFromImages(imgs);
 
   const bookFrame = document.getElementById('bookFrame');
   const prevBtn = document.getElementById('prevBtn');
@@ -470,7 +442,13 @@
   }
   
   pageFlip.on('flip', updateUI);
-  pageFlip.on('init', updateUI);
+  pageFlip.on('init', () => {
+    updateUI();
+    // Показываем книгу после инициализации
+    setTimeout(() => {
+      bookFrame.classList.add('in');
+    }, 100);
+  });
   
   prevBtn.addEventListener('click', () => pageFlip.flipPrev());
   nextBtn.addEventListener('click', () => pageFlip.flipNext());
