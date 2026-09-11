@@ -6,10 +6,6 @@
 <title>In Tempo — Իտալական խոհանոց · Երևան</title>
 <meta name="description" content="In Tempo — իտալական խոհանոց Երևանի կենտրոնում։ Բաց է 09:00–24:00։ Time to enjoy.">
 <link rel="preload" href="Images/page-01.jpg" as="image" type="image/jpeg">
-<link rel="preload" href="Images/page-02.jpg" as="image" type="image/jpeg">
-<link rel="preload" href="Images/page-03.jpg" as="image" type="image/jpeg">
-<link rel="preload" href="Images/page-04.jpg" as="image" type="image/jpeg">
-<link rel="preload" href="Images/page-05.jpg" as="image" type="image/jpeg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
@@ -52,34 +48,20 @@
   h1,h2{font-family:var(--serif);font-weight:600;line-height:1.12;letter-spacing:-.01em;color:var(--ink);}
   em{font-style:italic;color:var(--red);}
 
-  /* ============ ЛОГОТИП: БЕЗ БЛОКА, СЛИВАЕТСЯ С ЛЮБЫМ ФОНОМ ============ */
   .logo-sprite,
   .logo-sprite--sm{
     background:url('Images/page-01.jpg') no-repeat;
     mix-blend-mode:multiply;
-    /* Бежевый фон картинки становится почти белым → multiply делает его прозрачным */
     filter:brightness(1.8) contrast(1.5) saturate(1.2);
   }
   .logo-sprite{width:240px;height:130px;background-size:1000px auto;background-position:-390px -1210px;}
   .logo-sprite--sm{width:132px;height:72px;background-size:550px auto;background-position:-215px -666px;}
-  /* БЛОК-ПОДЛОЖКА УБРАН: полностью прозрачный всегда */
-  .logo-card{
-    display:inline-flex;flex-direction:column;align-items:center;gap:2px;
-    background:transparent !important;
-    padding:6px 14px 6px;border-radius:12px;
-  }
+  .logo-card{display:inline-flex;flex-direction:column;align-items:center;gap:2px;background:transparent !important;padding:6px 14px 6px;border-radius:12px;}
   .slogan{font-family:var(--serif);font-style:italic;font-size:11px;letter-spacing:.14em;color:var(--muted);}
 
   #loader{position:fixed;inset:0;z-index:100;background:var(--logo-bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;transition:transform .9s cubic-bezier(.76,0,.24,1),opacity .9s ease,visibility .9s;}
   #loader.done{transform:translateY(-100%);opacity:0;visibility:hidden;}
-  .logo-video-wrap{
-    width:240px;height:130px;
-    display:flex;align-items:center;justify-content:center;
-    opacity:0;transform:scale(.9) translateY(14px);
-    animation:logoIn 1s cubic-bezier(.22,1,.36,1) .15s forwards;
-    background:var(--logo-bg);
-    border-radius:8px;overflow:hidden;
-  }
+  .logo-video-wrap{width:240px;height:130px;display:flex;align-items:center;justify-content:center;opacity:0;transform:scale(.9) translateY(14px);animation:logoIn 1s cubic-bezier(.22,1,.36,1) .15s forwards;background:var(--logo-bg);border-radius:8px;overflow:hidden;}
   .logo-video-wrap video{width:100%;height:100%;object-fit:contain;display:block;}
   #loader .slogan{opacity:0;transform:translateY(10px);animation:logoIn .8s cubic-bezier(.22,1,.36,1) .6s forwards;}
   @keyframes logoIn{to{opacity:1;transform:none;}}
@@ -110,7 +92,6 @@
   .nav.scrolled .nav-tel{border-color:var(--ink);color:var(--ink);text-shadow:none;}
   .nav.scrolled .nav-tel:hover{background:var(--ink);color:var(--menupage);}
 
-  /* ============ HERO: ФОТО ИЗ Images/ ============ */
   .hero{position:relative;min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;background:url('Images/page-01.jpg') center/cover no-repeat;}
   .hero-media{position:absolute;inset:0;}
   .hero-media video{width:100%;height:100%;object-fit:cover;animation:kb 26s ease-in-out infinite alternate;}
@@ -141,19 +122,9 @@
   @keyframes mq{to{transform:translateX(-50%);}}
 
   .menu-sec{padding:clamp(60px,8vw,100px) 0 clamp(70px,9vw,120px);}
-  .menu-nav{
-    position:sticky;top:64px;z-index:50;
-    background:rgba(183,157,116,.94);
-    backdrop-filter:blur(12px);
-    padding:14px 4vw;
-    border-block:1px solid var(--line);
-  }
+  .menu-nav{position:sticky;top:64px;z-index:50;background:rgba(183,157,116,.94);backdrop-filter:blur(12px);padding:14px 4vw;border-block:1px solid var(--line);}
   .menu-nav-inner{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;max-width:1400px;margin:0 auto;}
-  .menu-nav-btn{
-    font:inherit;font-size:12px;letter-spacing:.14em;text-transform:uppercase;
-    color:var(--muted);background:none;border:1.5px solid var(--line);
-    border-radius:999px;padding:9px 18px;cursor:pointer;transition:.3s;
-  }
+  .menu-nav-btn{font:inherit;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);background:none;border:1.5px solid var(--line);border-radius:999px;padding:9px 18px;cursor:pointer;transition:.3s;}
   .menu-nav-btn:hover,.menu-nav-btn.active{color:var(--menupage);background:var(--ink);border-color:var(--ink);}
 
   .menu-category{max-width:1400px;margin:0 auto;padding:clamp(50px,7vw,90px) 4vw 0;scroll-margin-top:140px;}
@@ -165,21 +136,25 @@
   .cat-line::before,.cat-line::after{content:"";height:1px;width:clamp(30px,6vw,80px);background:var(--line);}
 
   .menu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:clamp(20px,2.6vw,36px);}
-  .menu-item{
-    background:rgba(241,239,233,.42);
-    border:1px solid var(--line);
-    border-radius:6px;
-    overflow:hidden;
-    cursor:pointer;
-    opacity:0;transform:translateY(50px);
-    transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1),box-shadow .4s ease,border-color .4s ease,background .4s ease;
-  }
+  .menu-item{background:rgba(241,239,233,.42);border:1px solid var(--line);border-radius:6px;overflow:hidden;cursor:pointer;opacity:0;transform:translateY(50px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1),box-shadow .4s ease,border-color .4s ease,background .4s ease;}
   .menu-item.in{opacity:1;transform:translateY(0);}
   .menu-item:hover{transform:translateY(-8px);box-shadow:0 22px 50px rgba(43,38,34,.22);border-color:rgba(43,38,34,.3);background:rgba(241,239,233,.6);}
   .menu-item-img{aspect-ratio:4/3;overflow:hidden;background:var(--menupage);position:relative;}
   .menu-item-img::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 0 1px rgba(43,38,34,.08);}
   .menu-item-img img{width:100%;height:100%;object-fit:cover;transition:transform .9s cubic-bezier(.22,1,.36,1);}
   .menu-item:hover .menu-item-img img{transform:scale(1.07);}
+
+  /* ЗАГЛУШКА, ЕСЛИ ФОТО НЕ НАЙДЕНО */
+  .menu-item-img.no-img::after,.modal-img.no-img::after{
+    content:'In Tempo · լուսանկարը շուտով';
+    position:absolute;inset:0;
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--serif);font-style:italic;font-size:15px;letter-spacing:.12em;
+    color:var(--muted);
+    background:repeating-linear-gradient(45deg, rgba(43,38,34,.05) 0 14px, transparent 14px 28px), var(--menupage);
+    box-shadow:none;
+  }
+
   .menu-item-info{padding:20px 22px 22px;}
   .menu-item-name{font-family:var(--serif);font-weight:600;font-size:19px;line-height:1.3;color:var(--ink);margin-bottom:6px;letter-spacing:.01em;}
   .menu-item-desc{font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:16px;min-height:42px;}
@@ -194,7 +169,7 @@
   .modal-close{position:absolute;top:16px;right:16px;width:44px;height:44px;border-radius:50%;background:rgba(241,239,233,.9);border:1px solid var(--line);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.3s;z-index:10;color:var(--ink);}
   .modal-close:hover{background:var(--ink);color:var(--menupage);transform:rotate(90deg);}
   .modal-close svg{width:22px;height:22px;}
-  .modal-img{width:100%;aspect-ratio:16/10;background:var(--menupage);overflow:hidden;}
+  .modal-img{width:100%;aspect-ratio:16/10;background:var(--menupage);overflow:hidden;position:relative;}
   .modal-img img{width:100%;height:100%;object-fit:cover;}
   .modal-body{padding:clamp(24px,4vw,40px);}
   .modal-kicker{font-family:var(--serif);font-style:italic;color:var(--red);font-size:15px;letter-spacing:.14em;display:block;margin-bottom:8px;}
@@ -379,8 +354,9 @@
 
 <script>
 /* ============================================================
-   МЕНЮ: ВСЕ ФОТО ИЗ ПАПКИ Images/
-   img  — имя файла в Images/ (например Images/dish-01.jpg)
+   МЕНЮ: ФОТО ИЗ ПАПКИ Images/
+   Если фото не найдено — карточка покажет заглушку,
+   а в консоли (F12) появится список ненайденных файлов
    ============================================================ */
 const MENU = [
   { id:'starters', t:{hy:'Նախուտեստներ',en:'Starters',ru:'Закуски'}, items:[
@@ -467,6 +443,25 @@ const DICT = {
 let currentLang = 'hy';
 const fmtPrice = n => String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' ') + ' ֏';
 
+/* Если фото не загрузилось — показываем заглушку */
+function attachImgFallback(imgEl){
+  imgEl.addEventListener('error', () => {
+    const wrap = imgEl.closest('.menu-item-img') || imgEl.closest('.modal-img');
+    if (wrap) wrap.classList.add('no-img');
+    imgEl.style.display = 'none';
+    console.warn('❌ Фото не найдено:', imgEl.getAttribute('src'));
+  }, {once:true});
+}
+
+/* Диагностика: проверяет все фото из MENU и пишет в консоль (F12) чего не хватает */
+function checkImages(){
+  MENU.forEach(cat => cat.items.forEach(it => {
+    fetch(it.img, {method:'HEAD'}).then(r => {
+      if (!r.ok) console.warn('❌ НЕТ ФАЙЛА:', it.img, '(код ' + r.status + ')');
+    }).catch(() => console.warn('❌ НЕТ ФАЙЛА:', it.img));
+  }));
+}
+
 const io = new IntersectionObserver(es => es.forEach(en => {
   if (en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
 }), {threshold:.12, rootMargin:'0px 0px -40px 0px'});
@@ -476,7 +471,7 @@ function renderMenu(lang){
   const root = document.getElementById('menuRoot');
   nav.innerHTML = '';
   root.innerHTML = '';
-  MENU.forEach((cat, ci) => {
+  MENU.forEach((cat) => {
     const b = document.createElement('button');
     b.className = 'menu-nav-btn';
     b.textContent = cat.t[lang];
@@ -509,6 +504,7 @@ function renderMenu(lang){
             '<span class="menu-item-weight">' + it.weight + ' ' + DICT[lang].gram + '</span>' +
           '</div>' +
         '</div>';
+      attachImgFallback(card.querySelector('img'));
       card.addEventListener('click', () => openModal(cat, it, lang));
       grid.appendChild(card);
       io.observe(card);
@@ -520,7 +516,11 @@ function renderMenu(lang){
 
 const modal = document.getElementById('itemModal');
 function openModal(cat, it, lang){
-  document.getElementById('modalImg').src = it.img;
+  const mImg = document.getElementById('modalImg');
+  mImg.style.display = '';
+  document.querySelector('.modal-img').classList.remove('no-img');
+  mImg.src = it.img;
+  attachImgFallback(mImg);
   document.getElementById('modalKicker').textContent = cat.t[lang];
   document.getElementById('modalName').textContent = it.n[lang];
   document.getElementById('modalDesc').textContent = it.d[lang];
@@ -559,6 +559,7 @@ window.addEventListener('load', () => {
   setTimeout(() => document.getElementById('loader').classList.add('done'), 1500);
   setTimeout(() => document.getElementById('nav').classList.add('ready'), 1300);
   setTimeout(() => document.querySelector('.hero').classList.add('ready'), 1600);
+  checkImages();
 });
 
 const nav = document.getElementById('nav');
