@@ -323,8 +323,8 @@
 
 <script>
 /* ============================================================================
-   МЕНЮ: реальные данные с фото. 3-я карточка закусок (Grilled Vegetables)
-   УДАЛЕНА по запросу. ph() — заглушки для страниц без распознанных данных.
+   МЕНЮ: закуски — новый порядок:
+   1) page-04 Crudo · 2) page-03 две брускетты · 3) page-05 (НОВАЯ) овощи гриль
    ============================================================================ */
 const TBA = {hy:'Անունը ճշտվում է', en:'Name to be confirmed', ru:'Название уточняется'};
 const ph = (img, count) => ({
@@ -338,8 +338,13 @@ const ph = (img, count) => ({
 });
 
 const MENU = [
-  /* ================= ЗАКУСКИ (без 3-й карточки) ================= */
+  /* ================= ЗАКУСКИ ================= */
   { id:'starters', t:{hy:'Նախուտեստներ',en:'Starters',ru:'Закуски'}, scenes:[
+    { img:'images/page-04.jpg', dishes:[
+      { x:50, y:48, price:2700,
+        n:{hy:'Բրուսկետտա պրոշուտտոյով և տապենադով',en:'Bruschetta Crudo with Tapenade',ru:'Брускетта с прошутто и тапенадом'},
+        d:{hy:'Պրոշուտտո, կալամատա, սերուցքային պանիր, բազիլիկ',en:'Crudo, kalamata olives, cream cheese, basil',ru:'Прошутто, каламата, сливочный сыр, базилик'} },
+    ]},
     { img:'images/page-03.jpg', dishes:[
       { x:50, y:26, price:2100,
         n:{hy:'Բրուսկետտա լոլիկով ոչ ավանդական',en:'Bruschetta with Tomatoes Non-Traditional',ru:'Брускетта с помидорами нетрадиционная'},
@@ -348,10 +353,10 @@ const MENU = [
         n:{hy:'Բրուսկետտա մորտադելլայով և պիստակի կրեմով',en:'Bruschetta Mortadella with Pistachio Cream',ru:'Брускетта с мортаделлой и фисташковым кремом'},
         d:{hy:'Մորտադելլա, պիստակի կրեմ, բազիլիկ',en:'Mortadella, pistachio cream, basil',ru:'Мортаделла, фисташковый крем, базилик'} },
     ]},
-    { img:'images/page-04.jpg', dishes:[
-      { x:50, y:48, price:2700,
-        n:{hy:'Բրուսկետտա պրոշուտտոյով և տապենադով',en:'Bruschetta Crudo with Tapenade',ru:'Брускетта с прошутто и тапенадом'},
-        d:{hy:'Պրոշուտտո, կալամատա, սերուցքային պանիր, բազիլիկ',en:'Crudo, kalamata olives, cream cheese, basil',ru:'Прошутто, каламата, сливочный сыр, базилик'} },
+    { img:'images/page-05.jpg', dishes:[
+      { x:50, y:52, price:2400,
+        n:{hy:'Գրիլ վրայի բանջարեղեն',en:'Grilled Vegetables',ru:'Овощи на гриле'},
+        d:{hy:'Պղպեղ, դդմիկ, սունկ, չերի լոլիկ, ֆարմեր սոուս',en:'Pepper, zucchini, mushroom, cherry tomatoes, Farmer sauce',ru:'Перец, кабачки, грибы, черри, фермерский соус'} },
     ]},
     { img:'images/page-06.jpg', dishes:[
       { x:50, y:45, price:2100,
