@@ -48,13 +48,15 @@
   h1,h2{font-family:var(--serif);font-weight:600;line-height:1.12;letter-spacing:-.01em;color:var(--ink);}
   em{font-style:italic;color:var(--red);}
 
-  .logo-img{height:69px;width:auto;display:block;}
+  /* ЛОГОТИП В ШАПКЕ +30% */
+  .logo-img{height:90px;width:auto;display:block;}
   .logo-card{display:inline-flex;flex-direction:column;align-items:center;gap:2px;background:transparent;padding:4px 10px;border-radius:12px;}
   .slogan{font-family:var(--serif);font-style:italic;font-size:11px;letter-spacing:.14em;color:var(--muted);}
 
+  /* ЛОГОТИП В ЗАГРУЗЧИКЕ +50% */
   #loader{position:fixed;inset:0;z-index:100;background:var(--logo-bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;transition:transform .9s cubic-bezier(.76,0,.24,1),opacity .9s ease,visibility .9s;}
   #loader.done{transform:translateY(-100%);opacity:0;visibility:hidden;}
-  #loader .logo-img{height:180px;opacity:0;transform:scale(.9) translateY(14px);animation:logoIn 1s cubic-bezier(.22,1,.36,1) .15s forwards;}
+  #loader .logo-img{height:270px;opacity:0;transform:scale(.9) translateY(14px);animation:logoIn 1s cubic-bezier(.22,1,.36,1) .15s forwards;}
   #loader .slogan{opacity:0;transform:translateY(10px);animation:logoIn .8s cubic-bezier(.22,1,.36,1) .6s forwards;}
   @keyframes logoIn{to{opacity:1;transform:none;}}
 
@@ -129,7 +131,6 @@
 
   .menu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:clamp(20px,2.6vw,36px);}
 
-  /* ============ КАРТОЧКА = ФОТО + ХОТСПОТЫ (размер фиксирован → не зависит от языка) ============ */
   .menu-item{
     position:relative;
     background:rgba(241,239,233,.42);border:1px solid var(--line);border-radius:6px;overflow:hidden;
@@ -156,7 +157,6 @@
   .scene-tag i{width:5px;height:5px;border-radius:50%;background:var(--red);animation:pulse 2s ease-in-out infinite;}
   @keyframes pulse{0%,100%{opacity:.5;}50%{opacity:1;}}
 
-  /* ---- ХОТСПОТ (точка на блюде) ---- */
   .hotspot{
     position:absolute;transform:translate(-50%,-50%);
     width:44px;height:44px;border:0;background:none;cursor:pointer;z-index:4;
@@ -177,7 +177,6 @@
   @keyframes ping{0%{transform:scale(.5);opacity:1;}100%{transform:scale(1.5);opacity:0;}}
   .hotspot:hover .hs-dot,.hotspot.open .hs-dot{transform:scale(1.3);}
 
-  /* ---- Всплывающая карточка блюда (оверлей → layout не двигается) ---- */
   .hs-pop{
     position:absolute;width:236px;
     bottom:calc(100% + 12px);left:50%;margin-left:-118px;
@@ -199,7 +198,6 @@
   }
   .hotspot.open .hs-pop{opacity:1;visibility:visible;pointer-events:auto;}
   .hotspot.open .hs-pop-in{transform:translateY(0) scale(1);}
-  /* позиция всплывашки относительно точки */
   .hotspot.pop-below .hs-pop{bottom:auto;top:calc(100% + 12px);}
   .hotspot.pop-below .hs-pop-in{transform-origin:top center;transform:translateY(-8px) scale(.94);}
   .hotspot.pop-below.open .hs-pop-in{transform:translateY(0) scale(1);}
@@ -240,10 +238,10 @@
   @media (max-width:900px){.nav{padding:12px 4vw;}.nav-right{gap:10px;}}
   @media (max-width:768px){
     .nav-link{display:none;}
-    .logo-img{height:57px;}
+    .logo-img{height:74px;}
     .menu-nav{top:58px;}
     .menu-nav-btn{font-size:11px;padding:8px 14px;}
-    #loader .logo-img{height:150px;}
+    #loader .logo-img{height:225px;}
   }
   @media (max-width:640px){
     .nav{padding:10px 4vw;}
@@ -251,7 +249,7 @@
     .nav-soc{width:34px;height:34px;}
     .nav-soc svg{width:15px;height:15px;}
     .lang-btn{padding:6px 9px;font-size:10px;}
-    .logo-img{height:51px;}
+    .logo-img{height:66px;}
     .slogan{font-size:10px;}
     .hero-in{padding:0 5vw;}
     .hero h1{font-size:clamp(30px,9vw,44px);}
@@ -269,7 +267,7 @@
     .soc{width:44px;height:44px;}
     footer{padding:32px 5vw 24px;}
     footer .logo-img{height:54px;}
-    #loader .logo-img{height:132px;}
+    #loader .logo-img{height:198px;}
   }
   @media (max-width:380px){
     .nav-tel{display:none;}
@@ -370,8 +368,8 @@
 
 <script>
 /* ============================================================================
-   КАРТОЧКИ = «умная фотография»: хотспоты на блюдах.
-   Карточка = только фото (фикс. пропорция 3:4) → раскладка НЕ зависит от языка.
+   ЗАКУСКИ: фото 1-й и 2-й карточек ПОМЕНЯНЫ МЕСТАМИ (исправлено).
+   Карточка 1 = page-03 + блюдо Крудо (HY дано вами, EN/RU — перевод).
    ============================================================================ */
 const TBA = {hy:'Անունը ճշտվում է', en:'Name to be confirmed', ru:'Название уточняется'};
 const ph = (img, count) => ({
@@ -387,12 +385,12 @@ const ph = (img, count) => ({
 const MENU = [
   /* ================= ЗАКУСКИ ================= */
   { id:'starters', t:{hy:'Նախուտեստներ',en:'Starters',ru:'Закуски'}, scenes:[
-    { img:'images/page-04.jpg', dishes:[
-      { x:50, y:48, price:2700,
-        n:{hy:'Բրուսկետտա պրոշուտտոյով և տապենադով',en:'Bruschetta Crudo with Tapenade',ru:'Брускетта с прошутто и тапенадом'},
-        d:{hy:'Պրոշուտտո, կալամատա, սերուցքային պանիր, բազիլիկ',en:'Crudo, kalamata olives, cream cheese, basil',ru:'Прошутто, каламата, сливочный сыр, базилик'} },
-    ]},
     { img:'images/page-03.jpg', dishes:[
+      { x:50, y:50, price:2700,
+        n:{hy:'Բրուսկետտա պրոշուտտոյով և տապենադով',en:'Bruschetta Crudo with Tapenade',ru:'Брускетта с прошутто и тапенадом'},
+        d:{hy:'Պրոշուտո, կալամատա, սերուցքային պանիր, բազիլիկ',en:'Crudo, kalamata olives, cream cheese, basil',ru:'Прошутто, каламата, сливочный сыр, базилик'} },
+    ]},
+    { img:'images/page-04.jpg', dishes:[
       { x:55, y:26, price:2100,
         n:{hy:'Բրուսկետտա լոլիկով ոչ ավանդական',en:'Bruschetta with Tomatoes Non-Traditional',ru:'Брускетта с помидорами нетрадиционная'},
         d:{hy:'Լոլիկ, սերուցքային պանիր, բազիլիկ',en:'Tomatoes, cream cheese, basil',ru:'Помидор, сливочный сыр, базилик'} },
@@ -648,7 +646,6 @@ function renderMenu(lang){
       attachImgFallback(img);
       scene.appendChild(img);
 
-      /* хотспоты на каждом блюде */
       sc.dishes.forEach((d) => {
         const hs = document.createElement('button');
         hs.className = 'hotspot';
