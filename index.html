@@ -5,7 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
 <title>In Tempo — Իտալական խոհանոց · Երևան</title>
 <meta name="description" content="In Tempo — իտալական խոհանոց Երևանի կենտրոնում։ Բաց է 09:00–24:00։ Time to enjoy.">
-<link rel="preload" href="page-01.jpg" as="image" type="image/jpeg">
+<link rel="preload" href="Images/page-01.jpg" as="image" type="image/jpeg">
+<link rel="preload" href="Images/page-02.jpg" as="image" type="image/jpeg">
+<link rel="preload" href="Images/page-03.jpg" as="image" type="image/jpeg">
+<link rel="preload" href="Images/page-04.jpg" as="image" type="image/jpeg">
+<link rel="preload" href="Images/page-05.jpg" as="image" type="image/jpeg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
@@ -48,16 +52,22 @@
   h1,h2{font-family:var(--serif);font-weight:600;line-height:1.12;letter-spacing:-.01em;color:var(--ink);}
   em{font-style:italic;color:var(--red);}
 
-  .logo-sprite{
-    width:240px;height:130px;
-    background:url('page-01.jpg') no-repeat;
-    background-size:1000px auto;background-position:-390px -1210px;
+  /* ============ ЛОГОТИП: БЕЗ БЛОКА, СЛИВАЕТСЯ С ЛЮБЫМ ФОНОМ ============ */
+  .logo-sprite,
+  .logo-sprite--sm{
+    background:url('Images/page-01.jpg') no-repeat;
     mix-blend-mode:multiply;
-    filter:brightness(1.6) contrast(2);
+    /* Бежевый фон картинки становится почти белым → multiply делает его прозрачным */
+    filter:brightness(1.8) contrast(1.5) saturate(1.2);
   }
+  .logo-sprite{width:240px;height:130px;background-size:1000px auto;background-position:-390px -1210px;}
   .logo-sprite--sm{width:132px;height:72px;background-size:550px auto;background-position:-215px -666px;}
-  .logo-card{display:inline-flex;flex-direction:column;align-items:center;gap:2px;background:transparent;padding:6px 14px 6px;border-radius:12px;}
-  .nav:not(.scrolled) .logo-card{background:var(--menupage);}
+  /* БЛОК-ПОДЛОЖКА УБРАН: полностью прозрачный всегда */
+  .logo-card{
+    display:inline-flex;flex-direction:column;align-items:center;gap:2px;
+    background:transparent !important;
+    padding:6px 14px 6px;border-radius:12px;
+  }
   .slogan{font-family:var(--serif);font-style:italic;font-size:11px;letter-spacing:.14em;color:var(--muted);}
 
   #loader{position:fixed;inset:0;z-index:100;background:var(--logo-bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;transition:transform .9s cubic-bezier(.76,0,.24,1),opacity .9s ease,visibility .9s;}
@@ -100,7 +110,8 @@
   .nav.scrolled .nav-tel{border-color:var(--ink);color:var(--ink);text-shadow:none;}
   .nav.scrolled .nav-tel:hover{background:var(--ink);color:var(--menupage);}
 
-  .hero{position:relative;min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;background:url('page-01.jpg') center/cover no-repeat;}
+  /* ============ HERO: ФОТО ИЗ Images/ ============ */
+  .hero{position:relative;min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;background:url('Images/page-01.jpg') center/cover no-repeat;}
   .hero-media{position:absolute;inset:0;}
   .hero-media video{width:100%;height:100%;object-fit:cover;animation:kb 26s ease-in-out infinite alternate;}
   @keyframes kb{from{transform:scale(1);}to{transform:scale(1.09);}}
@@ -129,10 +140,7 @@
   .mq-track b{color:var(--red);font-weight:500;}
   @keyframes mq{to{transform:translateX(-50%);}}
 
-  /* ================= МЕНЮ В СТИЛЕ СТРАНИЦЫ ================= */
   .menu-sec{padding:clamp(60px,8vw,100px) 0 clamp(70px,9vw,120px);}
-
-  /* Липкая навигация-пилюли как у .jump */
   .menu-nav{
     position:sticky;top:64px;z-index:50;
     background:rgba(183,157,116,.94);
@@ -149,23 +157,14 @@
   .menu-nav-btn:hover,.menu-nav-btn.active{color:var(--menupage);background:var(--ink);border-color:var(--ink);}
 
   .menu-category{max-width:1400px;margin:0 auto;padding:clamp(50px,7vw,90px) 4vw 0;scroll-margin-top:140px;}
-
-  /* Заголовок категории — как в самой книге меню */
   .category-header{text-align:center;margin-bottom:clamp(32px,4vw,56px);opacity:0;transform:translateY(40px);transition:opacity 1s ease,transform 1s cubic-bezier(.22,1,.36,1);}
   .category-header.in{opacity:1;transform:none;}
   .cat-kicker{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--red);letter-spacing:.14em;display:block;margin-bottom:10px;}
   .category-header h2{font-size:clamp(28px,4.6vw,52px);text-transform:uppercase;letter-spacing:.04em;}
-  .cat-line{
-    display:flex;align-items:center;justify-content:center;gap:16px;
-    margin-top:16px;color:var(--muted);
-    font-size:12px;letter-spacing:.22em;text-transform:uppercase;
-  }
+  .cat-line{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:16px;color:var(--muted);font-size:12px;letter-spacing:.22em;text-transform:uppercase;}
   .cat-line::before,.cat-line::after{content:"";height:1px;width:clamp(30px,6vw,80px);background:var(--line);}
 
-  /* Сетка блюд */
   .menu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:clamp(20px,2.6vw,36px);}
-
-  /* Карточка в стиле страницы: полупрозрачная бумага, тонкая линия, сериф */
   .menu-item{
     background:rgba(241,239,233,.42);
     border:1px solid var(--line);
@@ -176,37 +175,21 @@
     transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1),box-shadow .4s ease,border-color .4s ease,background .4s ease;
   }
   .menu-item.in{opacity:1;transform:translateY(0);}
-  .menu-item:hover{
-    transform:translateY(-8px);
-    box-shadow:0 22px 50px rgba(43,38,34,.22);
-    border-color:rgba(43,38,34,.3);
-    background:rgba(241,239,233,.6);
-  }
+  .menu-item:hover{transform:translateY(-8px);box-shadow:0 22px 50px rgba(43,38,34,.22);border-color:rgba(43,38,34,.3);background:rgba(241,239,233,.6);}
   .menu-item-img{aspect-ratio:4/3;overflow:hidden;background:var(--menupage);position:relative;}
   .menu-item-img::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 0 1px rgba(43,38,34,.08);}
   .menu-item-img img{width:100%;height:100%;object-fit:cover;transition:transform .9s cubic-bezier(.22,1,.36,1);}
   .menu-item:hover .menu-item-img img{transform:scale(1.07);}
   .menu-item-info{padding:20px 22px 22px;}
-  .menu-item-name{
-    font-family:var(--serif);font-weight:600;font-size:19px;line-height:1.3;
-    color:var(--ink);margin-bottom:6px;letter-spacing:.01em;
-  }
+  .menu-item-name{font-family:var(--serif);font-weight:600;font-size:19px;line-height:1.3;color:var(--ink);margin-bottom:6px;letter-spacing:.01em;}
   .menu-item-desc{font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:16px;min-height:42px;}
-  .menu-item-footer{
-    display:flex;justify-content:space-between;align-items:baseline;
-    border-top:1px solid var(--line);padding-top:12px;
-  }
+  .menu-item-footer{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--line);padding-top:12px;}
   .menu-item-price{font-family:var(--serif);font-style:italic;font-weight:700;font-size:21px;color:var(--red);letter-spacing:.02em;}
   .menu-item-weight{font-size:12px;color:var(--muted);letter-spacing:.1em;}
 
-  /* Модальное окно в стиле страницы */
   .modal{position:fixed;inset:0;z-index:1000;background:rgba(43,38,34,.9);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;visibility:hidden;transition:opacity .4s ease,visibility .4s;}
   .modal.active{opacity:1;visibility:visible;}
-  .modal-content{
-    background:var(--paper);border-radius:6px;max-width:860px;width:100%;
-    max-height:90vh;overflow-y:auto;position:relative;
-    transform:scale(.92) translateY(30px);transition:transform .45s cubic-bezier(.22,1,.36,1);
-  }
+  .modal-content{background:var(--paper);border-radius:6px;max-width:860px;width:100%;max-height:90vh;overflow-y:auto;position:relative;transform:scale(.92) translateY(30px);transition:transform .45s cubic-bezier(.22,1,.36,1);}
   .modal.active .modal-content{transform:scale(1) translateY(0);}
   .modal-close{position:absolute;top:16px;right:16px;width:44px;height:44px;border-radius:50%;background:rgba(241,239,233,.9);border:1px solid var(--line);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.3s;z-index:10;color:var(--ink);}
   .modal-close:hover{background:var(--ink);color:var(--menupage);transform:rotate(90deg);}
@@ -228,11 +211,7 @@
   .phone{font-family:var(--serif);font-size:clamp(30px,5.6vw,58px);line-height:1.15;color:var(--ink);transition:.3s;}
   .phone:hover{color:var(--red);}
   .addr{margin-top:26px;color:var(--muted);font-size:14px;line-height:2;letter-spacing:.06em;}
-  .delivery-note{
-    margin:28px auto 0;max-width:620px;
-    background:rgba(241,239,233,.55);border:1px solid var(--line);border-radius:14px;
-    padding:18px 26px;font-size:14px;line-height:1.75;color:var(--ink);
-  }
+  .delivery-note{margin:28px auto 0;max-width:620px;background:rgba(241,239,233,.55);border:1px solid var(--line);border-radius:14px;padding:18px 26px;font-size:14px;line-height:1.75;color:var(--ink);}
   .delivery-note b{color:var(--red);font-weight:600;}
   .delivery-note .delivery-title{display:block;font-family:var(--serif);font-style:italic;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
   .soc-row{display:flex;gap:12px;justify-content:center;margin-top:28px;}
@@ -246,10 +225,7 @@
   .rv{opacity:0;transform:translateY(30px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);}
   .rv.in{opacity:1;transform:none;}
 
-  @media (max-width:900px){
-    .nav{padding:12px 4vw;}
-    .nav-right{gap:10px;}
-  }
+  @media (max-width:900px){.nav{padding:12px 4vw;}.nav-right{gap:10px;}}
   @media (max-width:768px){
     .nav-link{display:none;}
     .logo-sprite--sm{width:108px;height:59px;background-size:450px auto;background-position:-176px -545px;}
@@ -295,7 +271,7 @@
 <div id="loader">
   <div class="logo-video-wrap">
     <video id="loaderVideo" autoplay muted loop playsinline preload="auto" aria-label="In Tempo animated logo">
-      <source src="logo-animation.mp4" type="video/mp4">
+      <source src="Images/logo-animation.mp4" type="video/mp4">
     </video>
   </div>
   <span class="slogan">Time to enjoy</span>
@@ -323,8 +299,8 @@
 
 <header class="hero" id="top">
   <div class="hero-media">
-    <video autoplay muted loop playsinline preload="metadata" poster="page-01.jpg">
-      <source src="hero.mp4" type="video/mp4">
+    <video autoplay muted loop playsinline preload="metadata" poster="Images/page-01.jpg">
+      <source src="Images/hero.mp4" type="video/mp4">
     </video>
   </div>
   <div class="hero-in">
@@ -403,58 +379,56 @@
 
 <script>
 /* ============================================================
-   МЕНЮ: РЕДАКТИРУЙТЕ ТОЛЬКО ЭТОТ БЛОК
-   img  — имя файла фото на GitHub (например dish-01.jpg)
-   price— цена числом, weight — вес в граммах
-   n    — название {hy, en, ru},  d — описание {hy, en, ru}
+   МЕНЮ: ВСЕ ФОТО ИЗ ПАПКИ Images/
+   img  — имя файла в Images/ (например Images/dish-01.jpg)
    ============================================================ */
 const MENU = [
   { id:'starters', t:{hy:'Նախուտեստներ',en:'Starters',ru:'Закуски'}, items:[
-    {img:'page-04.jpg', price:2700, weight:180,
+    {img:'Images/page-04.jpg', price:2700, weight:180,
      n:{hy:'Բրուսկետտա Կրուդո տապենադով',en:'Bruschetta Crudo with Tapenade',ru:'Брускетта Крудо с тапенадой'},
      d:{hy:'Պրոշուտտո, կալամատա, սերուցքային պանիր, բազիլիկ',en:'Crudo, kalamata olives, cream cheese, basil',ru:'Прошутто, каламата, сливочный сыр, базилик'}},
-    {img:'page-04.jpg', price:2300, weight:170,
+    {img:'Images/page-04.jpg', price:2300, weight:170,
      n:{hy:'Բրուսկետտա Մորտադելլա ֆիստակի կրեմով',en:'Bruschetta Mortadella with Pistachio Cream',ru:'Брускетта с мортаделлой и фисташковым кремом'},
      d:{hy:'Մորտադելլա, ֆիստակի կրեմ, բազիլիկ',en:'Mortadella, pistachio cream, basil',ru:'Мортаделла, фисташковый крем, базилик'}},
   ]},
   { id:'salads', t:{hy:'Սալատներ',en:'Salads',ru:'Салаты'}, items:[
-    {img:'page-08.jpg', price:3400, weight:320,
+    {img:'Images/page-08.jpg', price:3400, weight:320,
      n:{hy:'Հավի մսով և ավոկադոյով սալատ',en:'Chicken and Avocado Salad',ru:'Салат из курицы и авокадо'},
      d:{hy:'Հավի կուրծք, ավոկադո, կարմիր կաղամբ, միքս սալատ',en:'Chicken breast, avocado, red cabbage, mixed salad',ru:'Куриная грудка, авокадо, красная капуста, микс салат'}},
-    {img:'page-08.jpg', price:2900, weight:300,
+    {img:'Images/page-08.jpg', price:2900, weight:300,
      n:{hy:'Կինոա և ավոկադո սալատ',en:'Quinoa & Avocado Salad',ru:'Салат из киноа и авокадо'},
      d:{hy:'Ավոկադո, կինոա, կաղամբ, դդում, ռուկոլա',en:'Avocado, quinoa, cabbage, pumpkin, arugula',ru:'Авокадо, киноа, капуста, тыква, рукола'}},
   ]},
   { id:'soups', t:{hy:'Ապուրներ',en:'Soups',ru:'Супы'}, items:[
-    {img:'page-12.jpg', price:1900, weight:350,
+    {img:'Images/page-12.jpg', price:1900, weight:350,
      n:{hy:'Սնկով կրեմ-ապուր',en:'Mushroom Cream Soup',ru:'Грибной крем-суп'},
      d:{hy:'Սնկեր, սերուցք, պարմեզան',en:'Mushrooms, cream, parmesan',ru:'Грибы, сливки, пармезан'}},
-    {img:'page-12.jpg', price:1900, weight:350,
+    {img:'Images/page-12.jpg', price:1900, weight:350,
      n:{hy:'Պապպա ալ Պոմոդորո լոլիկի ապուր',en:'Pappa al Pomodoro Tomato Soup',ru:'Томатный суп Паппа аль Помодоро'},
      d:{hy:'Սան Մարցանո լոլիկներ, պարմեզան, բազիլիկ',en:'San Marzano tomatoes, parmesan, basil',ru:'Томаты Сан Марцано, пармезан, базилик'}},
   ]},
   { id:'pasta', t:{hy:'Պաստա',en:'Pasta',ru:'Паста'}, items:[
-    {img:'page-18.jpg', price:4200, weight:320,
+    {img:'Images/page-18.jpg', price:4200, weight:320,
      n:{hy:'Կարբոնարա',en:'Carbonara',ru:'Карбонара'},
      d:{hy:'Գուանչիալե, պեկորինո, ձու, սև պղպեղ',en:'Guanciale, pecorino, egg, black pepper',ru:'Гуанчиале, пекорино, яйцо, чёрный перец'}},
   ]},
   { id:'burgers', t:{hy:'Բուրգերներ և սենդվիչներ',en:'Burgers & Sandwiches',ru:'Бургеры и сэндвичи'}, items:[
-    {img:'page-23.jpg', price:4500, weight:380,
+    {img:'Images/page-23.jpg', price:4500, weight:380,
      n:{hy:'Դասական բուրգեր',en:'Classic Burger',ru:'Классический бургер'},
      d:{hy:'Տավարի միս, չեդեր, թարմ բանջարեղեն',en:'Beef, cheddar, fresh vegetables',ru:'Говядина, чеддер, свежие овощи'}},
   ]},
   { id:'piadina', t:{hy:'Պիադինա',en:'Piadina',ru:'Пьядина'}, items:[
-    {img:'page-27.jpg', price:3600, weight:280,
+    {img:'Images/page-27.jpg', price:3600, weight:280,
      n:{hy:'Պիադինա մոցարելլայով',en:'Piadina with Mozzarella',ru:'Пьядина с моцареллой'},
      d:{hy:'Մոցարելլա, լոլիկ, բազիլիկ',en:'Mozzarella, tomato, basil',ru:'Моцарелла, томат, базилик'}},
   ]},
   { id:'mains', t:{hy:'Հիմնական ուտեստներ',en:'Main Courses',ru:'Основные блюда'}, items:[
-    {img:'page-31.jpg', price:5800, weight:400,
+    {img:'Images/page-31.jpg', price:5800, weight:400,
      n:{hy:'Տոսկանայի տավարի ստեյկ',en:'Tuscan Beef Steak',ru:'Стейк по-тоскански'},
      d:{hy:'Տավարի միս, ռոզմարին, ձիթապտղի ձեթ',en:'Beef, rosemary, olive oil',ru:'Говядина, розмарин, оливковое масло'}},
   ]},
   { id:'desserts', t:{hy:'Աղանդեր',en:'Desserts',ru:'Десерты'}, items:[
-    {img:'page-44.jpg', price:2800, weight:150,
+    {img:'Images/page-44.jpg', price:2800, weight:150,
      n:{hy:'Տիրամիսու',en:'Tiramisu',ru:'Тирамису'},
      d:{hy:'Մասկարպոնե, էսպրեսո, կակաո',en:'Mascarpone, espresso, cocoa',ru:'Маскарпоне, эспрессо, какао'}},
   ]},
@@ -493,7 +467,6 @@ const DICT = {
 let currentLang = 'hy';
 const fmtPrice = n => String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' ') + ' ֏';
 
-/* ---------- отрисовка меню ---------- */
 const io = new IntersectionObserver(es => es.forEach(en => {
   if (en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
 }), {threshold:.12, rootMargin:'0px 0px -40px 0px'});
@@ -545,7 +518,6 @@ function renderMenu(lang){
   });
 }
 
-/* ---------- модальное окно ---------- */
 const modal = document.getElementById('itemModal');
 function openModal(cat, it, lang){
   document.getElementById('modalImg').src = it.img;
@@ -562,7 +534,6 @@ document.getElementById('modalClose').addEventListener('click', closeModal);
 modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-/* ---------- языки ---------- */
 function applyLang(lang){
   currentLang = lang;
   const d = DICT[lang] || DICT.hy;
