@@ -7,9 +7,6 @@
 <meta name="description" content="In Tempo — իտալական խոհանոց Երևանի կենտրոնում։ Բաց է 09:00–24:00։ Time to enjoy.">
 <link rel="preload" href="page-01.jpg" as="image" type="image/jpeg">
 <link rel="preload" href="page-02.jpg" as="image" type="image/jpeg">
-<link rel="preload" href="page-03.jpg" as="image" type="image/jpeg">
-<link rel="preload" href="page-04.jpg" as="image" type="image/jpeg">
-<link rel="preload" href="page-05.jpg" as="image" type="image/jpeg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
@@ -50,7 +47,7 @@
   ::selection{background:var(--red);color:#fff;}
   body::-webkit-scrollbar{width:10px;} body::-webkit-scrollbar-track{background:var(--bg);} body::-webkit-scrollbar-thumb{background:var(--bg-deep);border-radius:99px;}
   .kicker{font-family:var(--serif);font-style:italic;font-size:17px;color:#fff;text-shadow:0 1px 8px rgba(43,38,34,.35);}
-  h1,h2{font-family:var(--serif);font-weight:600;line-height:1.12;letter-spacing:-.01em;color:var(--ink);}
+  h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.12;letter-spacing:-.01em;color:var(--ink);}
   em{font-style:italic;color:var(--red);}
 
   .logo-sprite{
@@ -80,7 +77,6 @@
   @keyframes logoIn{to{opacity:1;transform:none;}}
 
   .nav{position:fixed;inset:0 0 auto;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:14px 6vw;transition:.4s;}
-  /* ШАПКА ТЕПЕРЬ ТОГО ЖЕ ЦВЕТА, ЧТО ФОН ЛОГОТИПА (#b8a17e) */
   .nav.scrolled{background:rgba(184,161,126,.96);backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--line);}
   .nav .logo-card{opacity:0;transform:translateY(-16px) scale(.94);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1);}
   .nav.ready .logo-card{opacity:1;transform:none;}
@@ -135,87 +131,238 @@
   .mq-track b{color:var(--red);font-weight:500;}
   @keyframes mq{to{transform:translateX(-50%);}}
 
-  /* ================= КНИГА: МАКСИМАЛЬНЫЙ РАЗМЕР ================= */
-  .menu-sec{padding:clamp(70px,9vw,110px) 0 clamp(70px,9vw,120px);text-align:center;}
-  .jump-row{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin:0 auto clamp(30px,4vw,48px);padding:0 4vw;}
-  .jump{font:inherit;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);background:none;border:1.5px solid var(--line);border-radius:999px;padding:9px 16px;cursor:pointer;transition:.3s;}
-  .jump:hover{color:var(--menupage);background:var(--ink);border-color:var(--ink);}
-
-  .book-stage{perspective:1600px;margin:0 auto;width:100%;display:flex;justify-content:center;}
-
-  .book-frame{
-    position:relative;
-    width:min(92vw, 730px, calc((100svh - 260px) * 2 / 3));
-    aspect-ratio:2/3;
+  /* ================= СОВРЕМЕННОЕ МЕНЮ С АНИМАЦИЯМИ ================= */
+  .menu-sec{padding:clamp(60px,8vw,100px) 0 clamp(70px,9vw,120px);text-align:center;}
+  
+  /* Навигация по категориям */
+  .menu-nav{
+    position:sticky;
+    top:80px;
+    z-index:50;
+    background:rgba(184,161,126,.95);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);
+    padding:16px 4vw;
+    margin-bottom:48px;
+  }
+  .menu-nav-inner{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:10px;
+    max-width:1400px;
     margin:0 auto;
-    opacity:0;
-    transform:translateY(60px);
-    transition:opacity 1.1s cubic-bezier(.22,1,.36,1),transform 1.1s cubic-bezier(.22,1,.36,1);
-    filter: drop-shadow(0 35px 45px rgba(43,38,34,.32)) drop-shadow(0 10px 18px rgba(43,38,34,.2));
   }
-  .book-frame.in{opacity:1;transform:translateY(0);}
-
-  #book{
-    position:relative;z-index:1;
-    width:100% !important;height:100% !important;
-    touch-action:pan-y;cursor:pointer;
-    background:var(--menupage);
-    border-radius:4px;
-    overflow:hidden;
-    box-shadow: inset 0 0 0 1px rgba(43,38,34,.08);
+  .menu-nav-btn{
+    font:inherit;
+    font-size:13px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--muted);
+    background:var(--paper);
+    border:1.5px solid var(--line);
+    border-radius:999px;
+    padding:10px 20px;
+    cursor:pointer;
+    transition:.3s;
+    font-weight:500;
   }
-  #book img, #book canvas{
-    user-select:none;
-    -webkit-user-drag:none;
-    pointer-events:none;
-    width:100% !important;
-    height:100% !important;
-    object-fit:contain;
-    -webkit-backface-visibility:hidden;
-    backface-visibility:hidden;
-  }
-  .page{background:var(--menupage);}
-  .stf__item{box-shadow: 0 0 30px rgba(43,38,34,.15);}
-
-  .book-controls{
-    position:relative;z-index:2;
-    display:flex;align-items:center;justify-content:center;
-    gap:28px;margin-top:40px;
-  }
-  .flip-btn{
-    width:58px;height:58px;border-radius:50%;
-    border:1.5px solid var(--ink);background:var(--paper);
-    color:var(--ink);cursor:pointer;
-    display:flex;align-items:center;justify-content:center;
-    transition:all .25s ease;
-    box-shadow:0 4px 12px rgba(43,38,34,.15);
-  }
-  .flip-btn:hover:not(:disabled){
-    background:var(--ink);color:var(--menupage);
+  .menu-nav-btn:hover{
+    color:var(--menupage);
+    background:var(--ink);
+    border-color:var(--ink);
     transform:translateY(-2px);
-    box-shadow:0 8px 20px rgba(43,38,34,.25);
   }
-  .flip-btn:active:not(:disabled){transform:translateY(0);}
-  .flip-btn:disabled{opacity:.3;cursor:not-allowed;background:var(--paper);}
-  .flip-btn svg{width:22px;height:22px;}
 
-  .swipe-hint{
-    display:none;margin-top:18px;padding:12px 24px;
-    background:rgba(43,38,34,.08);border-radius:999px;
-    font-size:13px;color:var(--muted);
-    animation:pulse 2s ease-in-out infinite;
+  /* Секции категорий */
+  .menu-category{
+    max-width:1400px;
+    margin:0 auto 80px;
+    padding:0 4vw;
   }
-  @keyframes pulse{0%,100%{opacity:.6;}50%{opacity:1;}}
+  .category-header{
+    text-align:center;
+    margin-bottom:48px;
+    opacity:0;
+    transform:translateY(40px);
+    transition:opacity 1s ease,transform 1s cubic-bezier(.22,1,.36,1);
+  }
+  .category-header.in{opacity:1;transform:none;}
+  .category-header h2{
+    font-size:clamp(28px,5vw,48px);
+    margin-bottom:12px;
+    position:relative;
+    display:inline-block;
+  }
+  .category-header h2::after{
+    content:"";
+    display:block;
+    width:60px;
+    height:3px;
+    background:var(--red);
+    margin:16px auto 0;
+    border-radius:2px;
+  }
+  .category-header p{
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:16px;
+    color:var(--muted);
+  }
 
-  .contact-sec{padding:clamp(80px,11vw,140px) 0;text-align:center;background:var(--menupage);border-top:1px solid var(--line);}
-  .contact-sec h2{font-size:clamp(30px,5vw,58px);margin:14px 0 12px;}
-  .contact-sub{color:var(--muted);max-width:460px;margin:0 auto;line-height:1.7;}
-  .phones{margin:clamp(36px,5vw,56px) 0 10px;display:flex;flex-direction:column;gap:10px;align-items:center;}
-  .phone{font-family:var(--serif);font-size:clamp(30px,5.6vw,58px);line-height:1.15;color:var(--ink);transition:.3s;}
-  .phone:hover{color:var(--red);}
-  .addr{margin-top:26px;color:var(--muted);font-size:14px;line-height:2;letter-spacing:.06em;}
+  /* Сетка блюд */
+  .menu-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+    gap:32px;
+  }
 
-  /* НОВЫЙ БЛОК: ДОСТАВКА */
+  /* Карточка блюда */
+  .menu-item{
+    background:var(--paper);
+    border-radius:12px;
+    overflow:hidden;
+    cursor:pointer;
+    transition:transform .4s cubic-bezier(.22,1,.36,1),box-shadow .4s ease;
+    opacity:0;
+    transform:translateY(50px);
+    box-shadow:0 4px 20px rgba(43,38,34,.08);
+  }
+  .menu-item.in{
+    opacity:1;
+    transform:translateY(0);
+  }
+  .menu-item:hover{
+    transform:translateY(-8px) scale(1.02);
+    box-shadow:0 20px 50px rgba(43,38,34,.2);
+  }
+  .menu-item-img{
+    width:100%;
+    aspect-ratio:4/3;
+    background:linear-gradient(135deg,var(--menupage) 0%,var(--bg) 100%);
+    position:relative;
+    overflow:hidden;
+  }
+  .menu-item-img img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:transform .6s cubic-bezier(.22,1,.36,1);
+  }
+  .menu-item:hover .menu-item-img img{
+    transform:scale(1.1);
+  }
+  .menu-item-info{
+    padding:24px;
+    text-align:left;
+  }
+  .menu-item-name{
+    font-family:var(--serif);
+    font-size:20px;
+    font-weight:600;
+    color:var(--ink);
+    margin-bottom:8px;
+    line-height:1.3;
+  }
+  .menu-item-desc{
+    font-size:14px;
+    color:var(--muted);
+    line-height:1.6;
+    margin-bottom:16px;
+    min-height:44px;
+  }
+  .menu-item-footer{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding-top:16px;
+    border-top:1px solid var(--line);
+  }
+  .menu-item-price{
+    font-family:var(--serif);
+    font-size:24px;
+    font-weight:700;
+    color:var(--red);
+    letter-spacing:.5px;
+  }
+  .menu-item-weight{
+    font-size:13px;
+    color:var(--muted);
+    letter-spacing:.05em;
+  }
+
+  /* Модальное окно */
+  .modal{
+    position:fixed;
+    inset:0;
+    z-index:1000;
+    background:rgba(43,38,34,.92);
+    backdrop-filter:blur(8px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    opacity:0;
+    visibility:hidden;
+    transition:opacity .4s ease,visibility .4s;
+  }
+  .modal.active{opacity:1;visibility:visible;}
+  .modal-content{
+    background:var(--paper);
+    border-radius:16px;
+    max-width:900px;
+    width:100%;
+    max-height:90vh;
+    overflow-y:auto;
+    position:relative;
+    transform:scale(.9) translateY(30px);
+    transition:transform .4s cubic-bezier(.22,1,.36,1);
+  }
+  .modal.active .modal-content{transform:scale(1) translateY(0);}
+  .modal-close{
+    position:absolute;
+    top:20px;
+    right:20px;
+    width:44px;
+    height:44px;
+    border-radius:50%;
+    background:rgba(43,38,34,.1);
+    border:0;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:.3s;
+    z-index:10;
+  }
+  .modal-close:hover{background:var(--ink);color:var(--menupage);transform:rotate(90deg);}
+  .modal-close svg{width:24px;height:24px;}
+  .modal-img{
+    width:100%;
+    aspect-ratio:16/9;
+    background:var(--menupage);
+    overflow:hidden;
+  }
+  .modal-img img{width:100%;height:100%;object-fit:cover;}
+  .modal-body{padding:32px;}
+  .modal-body h3{
+    font-size:32px;
+    margin-bottom:16px;
+  }
+  .modal-body p{
+    font-size:16px;
+    line-height:1.8;
+    color:var(--muted);
+    margin-bottom:24px;
+  }
+  .modal-price{
+    font-family:var(--serif);
+    font-size:36px;
+    font-weight:700;
+    color:var(--red);
+    margin-bottom:24px;
+  }
+
   .delivery-note{
     margin:28px auto 0;
     max-width:620px;
@@ -239,6 +386,14 @@
     margin-bottom:8px;
   }
 
+  .contact-sec{padding:clamp(80px,11vw,140px) 0;text-align:center;background:var(--menupage);border-top:1px solid var(--line);}
+  .contact-sec h2{font-size:clamp(30px,5vw,58px);margin:14px 0 12px;}
+  .contact-sub{color:var(--muted);max-width:460px;margin:0 auto;line-height:1.7;}
+  .phones{margin:clamp(36px,5vw,56px) 0 10px;display:flex;flex-direction:column;gap:10px;align-items:center;}
+  .phone{font-family:var(--serif);font-size:clamp(30px,5.6vw,58px);line-height:1.15;color:var(--ink);transition:.3s;}
+  .phone:hover{color:var(--red);}
+  .addr{margin-top:26px;color:var(--muted);font-size:14px;line-height:2;letter-spacing:.06em;}
+
   .soc-row{display:flex;gap:12px;justify-content:center;margin-top:28px;}
   .soc{width:48px;height:48px;border-radius:50%;border:1.5px solid var(--line);display:inline-flex;align-items:center;justify-content:center;color:var(--ink);transition:.25s;}
   .soc:hover{background:var(--ink);color:var(--menupage);transform:translateY(-3px);box-shadow:0 10px 22px rgba(43,38,34,.25);}
@@ -253,12 +408,16 @@
   @media (max-width:900px){
     .nav{padding:12px 4vw;}
     .nav-right{gap:10px;}
+    .menu-grid{grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px;}
   }
   @media (max-width:768px){
     .nav-link{display:none;}
     .logo-sprite--sm{width:108px;height:59px;background-size:450px auto;background-position:-176px -545px;}
     .menu-sec{padding-top:84px;}
-    .swipe-hint{display:block;}
+    .menu-nav{top:70px;margin-bottom:32px;}
+    .menu-nav-btn{font-size:12px;padding:8px 16px;}
+    .menu-category{margin-bottom:60px;}
+    .category-header{margin-bottom:32px;}
     .logo-video-wrap{width:200px;height:110px;}
   }
   @media (max-width:640px){
@@ -275,13 +434,11 @@
     .hero-actions{flex-direction:column;width:100%;max-width:340px;margin:26px auto 0;}
     .btn{width:100%;justify-content:center;padding:15px 24px;}
     .mq-track span{font-size:14px;padding:0 16px;}
-    .menu-sec{padding:72px 0 60px;}
-    .jump-row{gap:8px;margin-bottom:22px;padding:0 3vw;}
-    .jump{font-size:11px;padding:8px 13px;}
-    .book-frame{width:min(94vw, 560px, calc((100svh - 220px) * 2 / 3));}
-    .book-controls{gap:20px;margin-top:26px;}
-    .flip-btn{width:52px;height:52px;}
-    .flip-btn svg{width:20px;height:20px;}
+    .menu-grid{grid-template-columns:1fr;gap:20px;}
+    .menu-item-info{padding:20px;}
+    .menu-item-name{font-size:18px;}
+    .menu-item-desc{font-size:13px;min-height:40px;}
+    .menu-item-price{font-size:22px;}
     .contact-sec{padding:64px 0;}
     .contact-sub{font-size:14px;padding:0 6vw;}
     .phone{font-size:clamp(26px,8vw,40px);}
@@ -290,29 +447,15 @@
     .soc{width:44px;height:44px;}
     footer{padding:32px 5vw 24px;}
     .logo-video-wrap{width:180px;height:100px;}
+    .modal-body{padding:24px;}
+    .modal-body h3{font-size:26px;}
+    .modal-price{font-size:30px;}
   }
   @media (max-width:380px){
     .nav-tel{display:none;}
     .lang-btn{padding:5px 8px;font-size:9px;}
     .logo-video-wrap{width:160px;height:90px;}
-    .book-frame{width:min(96vw, calc((100svh - 200px) * 2 / 3));}
-  }
-
-  /* ДЕСКТОП: КНИГА НА ВСЮ ВЫСОТУ ЭКРАНА (минимальный резерв 200px, без лимита px) */
-  @media (min-width:769px) and (orientation:landscape){
-    .menu-sec{padding:24px 0 24px;}
-    .jump-row{margin-bottom:18px;}
-    .book-frame{
-      width:min(98vw, calc((100svh - 200px) * 4 / 3));
-      aspect-ratio:4/3;
-    }
-    .book-controls{margin-top:22px;}
-  }
-  @media (max-height:500px) and (orientation:landscape){
-    .menu-sec{padding:64px 0 30px;}
-    .jump-row{margin-bottom:14px;}
-    .book-frame{width:min(70vw, calc((100svh - 130px) * 2 / 3));aspect-ratio:2/3;}
-    .book-controls{margin-top:18px;}
+    .menu-nav-btn{font-size:11px;padding:7px 14px;}
   }
   @media (prefers-reduced-motion:reduce){*{transition-duration:.01ms !important;animation-duration:.01ms !important;}}
 </style>
@@ -378,30 +521,105 @@
 </div></div>
 
 <section class="menu-sec" id="menu">
-  <div class="jump-row rv">
-    <button class="jump" data-page="4" data-i18n="j1">Նախուտեստներ</button>
-    <button class="jump" data-page="8" data-i18n="j14">Սալաթներ</button>
-    <button class="jump" data-page="12" data-i18n="j19">Ապուրներ</button>
-    <button class="jump" data-page="18" data-i18n="j20">Պաստա</button>
-    <button class="jump" data-page="23" data-i18n="j26">Բուրգերներ և սենդվիչներ</button>
-    <button class="jump" data-page="27" data-i18n="j32">Պիադինա</button>
-    <button class="jump" data-page="31" data-i18n="j34">Հիմնական ուտեստներ</button>
-    <button class="jump" data-page="44" data-i18n="j41">Աղանդեր</button>
-  </div>
+  <nav class="menu-nav">
+    <div class="menu-nav-inner">
+      <button class="menu-nav-btn" data-category="starters" data-i18n="j1">Նախուտեստներ</button>
+      <button class="menu-nav-btn" data-category="salads" data-i18n="j14">Սալաթներ</button>
+      <button class="menu-nav-btn" data-category="soups" data-i18n="j19">Ապուրներ</button>
+      <button class="menu-nav-btn" data-category="pasta" data-i18n="j20">Պաստա</button>
+      <button class="menu-nav-btn" data-category="burgers" data-i18n="j26">Բուրգերներ և սենդվիչներ</button>
+      <button class="menu-nav-btn" data-category="piadina" data-i18n="j32">Պիադինա</button>
+      <button class="menu-nav-btn" data-category="mains" data-i18n="j34">Հիմնական ուտեստներ</button>
+      <button class="menu-nav-btn" data-category="desserts" data-i18n="j41">Աղանդեր</button>
+    </div>
+  </nav>
 
-  <div class="book-stage">
-    <div class="book-frame" id="bookFrame">
-      <div id="book"></div>
+  <div class="menu-category" id="starters">
+    <div class="category-header">
+      <h2 data-i18n="j1">Նախուտեստներ</h2>
+      <p data-i18n="cat_starters">Սկսեք ճանապարհորդությունը</p>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-item" data-img="page-05.jpg" data-name="Bruschetta Classica" data-name-ru="Брускетта Классика" data-name-en="Bruschetta Classica" data-desc="Թարմ լոլիկ, բազիլիկ, սխտոր, ձիթապտղի ձեթ" data-price="2 800">
+        <div class="menu-item-img"><img src="page-05.jpg" alt="Bruschetta" loading="lazy"></div>
+        <div class="menu-item-info">
+          <div class="menu-item-name">Bruschetta Classica</div>
+          <div class="menu-item-desc">Թարմ լոլիկ, բազիլիկ, սխտոր, ձիթապտղի ձեթ</div>
+          <div class="menu-item-footer">
+            <span class="menu-item-price">2 800 ֏</span>
+            <span class="menu-item-weight">180 գ</span>
+          </div>
+        </div>
+      </div>
+      <div class="menu-item" data-img="page-06.jpg" data-name="Caprese" data-name-ru="Капрезе" data-name-en="Caprese" data-desc="Մոցարելա, լոլիկ, բազիլիկ, բալզամիկ" data-price="3 200">
+        <div class="menu-item-img"><img src="page-06.jpg" alt="Caprese" loading="lazy"></div>
+        <div class="menu-item-info">
+          <div class="menu-item-name">Caprese</div>
+          <div class="menu-item-desc">Մոցարելա, լոլիկ, բազիլիկ, բալզամիկ</div>
+          <div class="menu-item-footer">
+            <span class="menu-item-price">3 200 ֏</span>
+            <span class="menu-item-weight">220 գ</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="book-controls">
-    <button class="flip-btn" id="prevBtn" aria-label="Նախորդ էջ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
-    <button class="flip-btn" id="nextBtn" aria-label="Հաջորդ էջ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+  <div class="menu-category" id="salads">
+    <div class="category-header">
+      <h2 data-i18n="j14">Սալաթներ</h2>
+      <p data-i18n="cat_salads">Թարմություն և համ</p>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-item" data-img="page-09.jpg" data-name="Caesar" data-name-ru="Цезарь" data-name-en="Caesar" data-desc="Հավի միս, ռոմենո, պարմեզան, կրուտոններ" data-price="3 800">
+        <div class="menu-item-img"><img src="page-09.jpg" alt="Caesar" loading="lazy"></div>
+        <div class="menu-item-info">
+          <div class="menu-item-name">Caesar</div>
+          <div class="menu-item-desc">Հավի միս, ռոմենո, պարմեզան, կրուտոններ</div>
+          <div class="menu-item-footer">
+            <span class="menu-item-price">3 800 ֏</span>
+            <span class="menu-item-weight">280 գ</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="swipe-hint" data-i18n="swipe_hint">👆 Свайпните для перелистывания</div>
+  <div class="menu-category" id="pasta">
+    <div class="category-header">
+      <h2 data-i18n="j20">Պաստա</h2>
+      <p data-i18n="cat_pasta">Իտալական դասական</p>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-item" data-img="page-19.jpg" data-name="Carbonara" data-name-ru="Карбонара" data-name-en="Carbonara" data-desc="Գուանչիալե, պեկորինո, ձու, սև պղպեղ" data-price="4 200">
+        <div class="menu-item-img"><img src="page-19.jpg" alt="Carbonara" loading="lazy"></div>
+        <div class="menu-item-info">
+          <div class="menu-item-name">Carbonara</div>
+          <div class="menu-item-desc">Գուանչիալե, պեկորինո, ձու, սև պղպեղ</div>
+          <div class="menu-item-footer">
+            <span class="menu-item-price">4 200 ֏</span>
+            <span class="menu-item-weight">320 գ</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </section>
+
+<div class="modal" id="itemModal">
+  <div class="modal-content">
+    <button class="modal-close" id="modalClose">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    </button>
+    <div class="modal-img"><img id="modalImg" src="" alt=""></div>
+    <div class="modal-body">
+      <h3 id="modalName"></h3>
+      <p id="modalDesc"></p>
+      <div class="modal-price" id="modalPrice"></div>
+    </div>
+  </div>
+</div>
 
 <section class="contact-sec" id="contact">
   <h2 class="rv" data-i18n-html="c_h2">Զանգեք — և սեղանը <em>սպասում է</em></h2>
@@ -433,14 +651,14 @@
   </div>
 </footer>
 
-<script src="page-flip.browser.js"></script>
 <script>
   const DICT = {
     hy:{title:'In Tempo — Իտալական խոհանոց · Երևան',nav_menu:'Մենյու',nav_contact:'Կապ',
       hero_l1:'Իտալական խոհանոց',hero_l2:'Երևանի <em>Կենտրոնում</em>',hero_sub:'Բաց է 09:00–24:00',
-      hero_b1:'Բացել մենյուն →',hero_b2:'Ամրագրել սեղան',cue:'թերթեք',swipe_hint:'👆 Սահեք թերթելու համար',
-      j1:'Նախուտեստներ',j2:'Սալատներ',j3:'Ապուրներ',j4:'Պաստա',
-      j5:'Բուրգերներ և սենդվիչներ',j6:'Պիադինա',j7:'Հիմնական ուտեստներ',j8:'Աղանդեր',
+      hero_b1:'Բացել մենյուն →',hero_b2:'Ամրագրել սեղան',cue:'թերթեք',
+      j1:'Նախուտեստներ',j14:'Սալաթներ',j19:'Ապուրներ',j20:'Պաստա',
+      j26:'Բուրգերներ և սենդվիչներ',j32:'Պիադինա',j34:'Հիմնական ուտեստներ',j41:'Աղանդեր',
+      cat_starters:'Սկսեք ճանապարհորդությունը',cat_salads:'Թարմություն և համ',cat_pasta:'Իտալական դասական',
       c_h2:'Զանգեք — և սեղանը <em>սպասում է</em>',
       c_sub:'Մեկ հպում — և մնացածը մենք կհոգանք։',
       c_addr1:'Երևան, Հյուսիսային 10/3',c_addr2:'Ամեն օր 09:00 – 24:00',
@@ -449,9 +667,10 @@
       f_line:'© 2026 In Tempo · Իտալական խոհանոց'},
     en:{title:'In Tempo — Italian Kitchen · Yerevan',nav_menu:'Menu',nav_contact:'Contact',
       hero_l1:'Italian kitchen',hero_l2:'in the heart of <em>Yerevan</em>',hero_sub:'Open 09:00 – 24:00',
-      hero_b1:'Open the menu →',hero_b2:'Book a table',cue:'scroll',swipe_hint:'👆 Swipe to flip pages',
-      j1:'Starters',j2:'Salads',j3:'Soups',j4:'Pasta',
-      j5:'Burgers & Sandwiches',j6:'Piadina',j7:'Main Courses',j8:'Desserts',
+      hero_b1:'Open the menu →',hero_b2:'Book a table',cue:'scroll',
+      j1:'Starters',j14:'Salads',j19:'Soups',j20:'Pasta',
+      j26:'Burgers & Sandwiches',j32:'Piadina',j34:'Main Courses',j41:'Desserts',
+      cat_starters:'Begin your journey',cat_salads:'Freshness and flavor',cat_pasta:'Italian classics',
       c_h2:'Call us — and the table <em>is waiting</em>',
       c_sub:'One tap — and we will take care of the rest.',
       c_addr1:'Yerevan, 10/3 Northern Avenue',c_addr2:'Daily 09:00 – 24:00',
@@ -460,9 +679,10 @@
       f_line:'© 2026 In Tempo · Italian kitchen'},
     ru:{title:'In Tempo — Итальянская кухня · Ереван',nav_menu:'Меню',nav_contact:'Контакты',
       hero_l1:'Итальянская кухня',hero_l2:'в центре <em>Еревана</em>',hero_sub:'Открыта с 09:00 до 24:00',
-      hero_b1:'Открыть меню →',hero_b2:'Забронировать стол',cue:'листайте',swipe_hint:'👆 Свайпните для перелистывания',
-      j1:'Закуски',j2:'Салаты',j3:'Супы',j4:'Паста',
-      j5:'Бургеры и сэндвичи',j6:'Пьядина',j7:'Основные блюда',j8:'Десерты',
+      hero_b1:'Открыть меню →',hero_b2:'Забронировать стол',cue:'листайте',
+      j1:'Закуски',j14:'Салаты',j19:'Супы',j20:'Паста',
+      j26:'Бургеры и сэндвичи',j32:'Пьядина',j34:'Основные блюда',j41:'Десерты',
+      cat_starters:'Начните путешествие',cat_salads:'Свежесть и вкус',cat_pasta:'Итальянская классика',
       c_h2:'Позвоните — и столик <em>ждёт</em>',
       c_sub:'Одно касание — и мы позаботимся обо всём остальном.',
       c_addr1:'Ереван, Северный проспект 10/3',c_addr2:'Ежедневно 09:00 – 24:00',
@@ -498,68 +718,52 @@
   const nav = document.getElementById('nav');
   addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40), {passive:true});
 
-  const TOTAL_PAGES = 52;
-  const pad = n => String(n).padStart(2,'0');
-  const imgs = [];
-  for (let i=1;i<=TOTAL_PAGES;i++) imgs.push('page-'+pad(i)+'.jpg');
+  // Анимация появления элементов
+  const io = new IntersectionObserver(es => es.forEach(en => {
+    if (en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+  }), {threshold:.15,rootMargin:'0px 0px -50px 0px'});
+  
+  document.querySelectorAll('.rv, .category-header, .menu-item').forEach(el => io.observe(el));
 
-  const pageFlip = new St.PageFlip(document.getElementById('book'), {
-    width: 1400,
-    height: 2100,
-    size: 'stretch',
-    minWidth: 280,
-    maxWidth: 3000,
-    minHeight: 420,
-    maxHeight: 4000,
-    showCover: true,
-    usePortrait: true,
-    mobileScrollSupport: true,
-    autoSize: true,
-    flippingTime: 750,
-    disableFlipByClick: false,
-    swipeDistance: 25,
-    useMouseEvents: true,
-    clickEventForward: true,
-    maxShadowOpacity: 0.7,
-    drawShadow: true,
-    startPage: 0,
-    oversize: 1.5,
-    showPageCorners: true
-  });
-  pageFlip.loadFromImages(imgs);
-
-  const bookFrame = document.getElementById('bookFrame');
-  const prevBtn = document.getElementById('prevBtn');
-  const nextBtn = document.getElementById('nextBtn');
-
-  function updateUI(){
-    const idx = pageFlip.getCurrentPageIndex();
-    prevBtn.disabled = idx === 0;
-    nextBtn.disabled = idx >= TOTAL_PAGES - 1;
-  }
-  pageFlip.on('flip', updateUI);
-  pageFlip.on('init', () => {
-    updateUI();
-    setTimeout(() => bookFrame.classList.add('in'), 100);
-  });
-  prevBtn.addEventListener('click', () => pageFlip.flipPrev());
-  nextBtn.addEventListener('click', () => pageFlip.flipNext());
-  document.addEventListener('keydown', e => {
-    if (e.key === 'ArrowLeft') pageFlip.flipPrev();
-    if (e.key === 'ArrowRight') pageFlip.flipNext();
-  });
-  document.querySelectorAll('.jump').forEach(btn => {
+  // Навигация по категориям
+  document.querySelectorAll('.menu-nav-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      const idx = parseInt(btn.dataset.page, 10);
-      bookFrame.scrollIntoView({behavior:'smooth', block:'center'});
-      setTimeout(() => { try { pageFlip.flip(idx); } catch(e){} }, 600);
+      const cat = btn.dataset.category;
+      document.getElementById(cat).scrollIntoView({behavior:'smooth',block:'start'});
     });
   });
 
-  const io = new IntersectionObserver(es => es.forEach(en => {
-    if (en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
-  }), {threshold:.2});
-  document.querySelectorAll('.rv, .book-frame').forEach(el => io.observe(el));
+  // Модальное окно
+  const modal = document.getElementById('itemModal');
+  const modalClose = document.getElementById('modalClose');
+  const modalImg = document.getElementById('modalImg');
+  const modalName = document.getElementById('modalName');
+  const modalDesc = document.getElementById('modalDesc');
+  const modalPrice = document.getElementById('modalPrice');
+
+  document.querySelectorAll('.menu-item').forEach(item => {
+    item.addEventListener('click', () => {
+      modalImg.src = item.dataset.img;
+      modalName.textContent = item.dataset.name;
+      modalDesc.textContent = item.dataset.desc;
+      modalPrice.textContent = item.dataset.price + ' ֏';
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  modalClose.addEventListener('click', closeModal);
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+  });
+
+  function closeModal(){
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
 </script>
 </body>
 </html>
