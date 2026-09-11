@@ -48,7 +48,6 @@
   h1,h2{font-family:var(--serif);font-weight:600;line-height:1.12;letter-spacing:-.01em;color:var(--ink);}
   em{font-style:italic;color:var(--red);}
 
-  /* ЛОГОТИП: папка images/ (маленькая буква!) */
   .logo-sprite,
   .logo-sprite--sm{
     background:url('images/page-01.jpg') no-repeat;
@@ -136,48 +135,119 @@
   .cat-line{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:16px;color:var(--muted);font-size:12px;letter-spacing:.22em;text-transform:uppercase;}
   .cat-line::before,.cat-line::after{content:"";height:1px;width:clamp(30px,6vw,80px);background:var(--line);}
 
-  .menu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:clamp(20px,2.6vw,36px);}
-  .menu-item{background:rgba(241,239,233,.42);border:1px solid var(--line);border-radius:6px;overflow:hidden;cursor:pointer;opacity:0;transform:translateY(50px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1),box-shadow .4s ease,border-color .4s ease,background .4s ease;}
-  .menu-item.in{opacity:1;transform:translateY(0);}
-  .menu-item:hover{transform:translateY(-8px);box-shadow:0 22px 50px rgba(43,38,34,.22);border-color:rgba(43,38,34,.3);background:rgba(241,239,233,.6);}
-  .menu-item-img{aspect-ratio:4/3;overflow:hidden;background:var(--menupage);position:relative;}
-  .menu-item-img::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 0 1px rgba(43,38,34,.08);}
-  .menu-item-img img{width:100%;height:100%;object-fit:cover;transition:transform .9s cubic-bezier(.22,1,.36,1);}
-  .menu-item:hover .menu-item-img img{transform:scale(1.07);}
+  .menu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:clamp(20px,2.6vw,36px);}
 
-  .menu-item-img.no-img::after,.modal-img.no-img::after{
+  /* ============ КАРТОЧКА-СЦЕНА С ХОТСПОТАМИ ============ */
+  .menu-item{
+    background:rgba(241,239,233,.42);
+    border:1px solid var(--line);
+    border-radius:6px;
+    overflow:hidden;
+    opacity:0;transform:translateY(50px);
+    transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1),box-shadow .4s ease,border-color .4s ease,background .4s ease;
+  }
+  .menu-item.in{opacity:1;transform:translateY(0);}
+  .menu-item:hover{transform:translateY(-6px);box-shadow:0 22px 50px rgba(43,38,34,.22);border-color:rgba(43,38,34,.3);background:rgba(241,239,233,.6);}
+
+  .scene{position:relative;aspect-ratio:3/4;overflow:hidden;background:var(--menupage);}
+  .scene img{width:100%;height:100%;object-fit:cover;transition:transform 1.4s cubic-bezier(.22,1,.36,1);}
+  .menu-item:hover .scene img{transform:scale(1.05);}
+  .scene.no-img::after{
     content:'In Tempo · լուսանկարը շուտով';
     position:absolute;inset:0;
     display:flex;align-items:center;justify-content:center;
-    font-family:var(--serif);font-style:italic;font-size:15px;letter-spacing:.12em;
-    color:var(--muted);
+    font-family:var(--serif);font-style:italic;font-size:15px;letter-spacing:.12em;color:var(--muted);
     background:repeating-linear-gradient(45deg, rgba(43,38,34,.05) 0 14px, transparent 14px 28px), var(--menupage);
-    box-shadow:none;
   }
+  .scene-hint{
+    position:absolute;left:0;right:0;bottom:0;
+    padding:30px 16px 12px;
+    background:linear-gradient(to top,rgba(43,38,34,.6),transparent);
+    color:rgba(241,239,233,.92);
+    font-size:10px;letter-spacing:.26em;text-transform:uppercase;
+    display:flex;justify-content:center;align-items:center;gap:8px;
+    pointer-events:none;
+  }
+  .scene-hint i{width:5px;height:5px;border-radius:50%;background:var(--red);display:inline-block;}
 
-  .menu-item-info{padding:20px 22px 22px;}
-  .menu-item-name{font-family:var(--serif);font-weight:600;font-size:19px;line-height:1.3;color:var(--ink);margin-bottom:6px;letter-spacing:.01em;}
-  .menu-item-desc{font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:16px;min-height:42px;}
-  .menu-item-footer{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--line);padding-top:12px;}
-  .menu-item-price{font-family:var(--serif);font-style:italic;font-weight:700;font-size:21px;color:var(--red);letter-spacing:.02em;}
-  .menu-item-weight{font-size:12px;color:var(--muted);letter-spacing:.1em;}
+  /* ---- ХОТСПОТ (точка на блюде) ---- */
+  .hotspot{
+    position:absolute;
+    transform:translate(-50%,-50%);
+    width:34px;height:34px;border-radius:50%;
+    background:rgba(241,239,233,.92);
+    border:1.5px solid var(--red);
+    cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    transition:background .25s,transform .25s;
+    z-index:4;
+  }
+  .hotspot::before{
+    content:"";position:absolute;inset:-9px;border-radius:50%;
+    border:1.5px solid rgba(216,67,42,.55);
+    animation:ping 2.4s ease-out infinite;
+  }
+  @keyframes ping{0%{transform:scale(.55);opacity:1;}100%{transform:scale(1.5);opacity:0;}}
+  .hotspot i{width:8px;height:8px;border-radius:50%;background:var(--red);transition:background .25s;}
+  .hotspot:hover,.hotspot.open{background:var(--red);transform:translate(-50%,-50%) scale(1.12);}
+  .hotspot:hover i,.hotspot.open i{background:var(--paper);}
 
-  .modal{position:fixed;inset:0;z-index:1000;background:rgba(43,38,34,.9);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;visibility:hidden;transition:opacity .4s ease,visibility .4s;}
-  .modal.active{opacity:1;visibility:visible;}
-  .modal-content{background:var(--paper);border-radius:6px;max-width:860px;width:100%;max-height:90vh;overflow-y:auto;position:relative;transform:scale(.92) translateY(30px);transition:transform .45s cubic-bezier(.22,1,.36,1);}
-  .modal.active .modal-content{transform:scale(1) translateY(0);}
-  .modal-close{position:absolute;top:16px;right:16px;width:44px;height:44px;border-radius:50%;background:rgba(241,239,233,.9);border:1px solid var(--line);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.3s;z-index:10;color:var(--ink);}
-  .modal-close:hover{background:var(--ink);color:var(--menupage);transform:rotate(90deg);}
-  .modal-close svg{width:22px;height:22px;}
-  .modal-img{width:100%;aspect-ratio:16/10;background:var(--menupage);overflow:hidden;position:relative;}
-  .modal-img img{width:100%;height:100%;object-fit:cover;}
-  .modal-body{padding:clamp(24px,4vw,40px);}
-  .modal-kicker{font-family:var(--serif);font-style:italic;color:var(--red);font-size:15px;letter-spacing:.14em;display:block;margin-bottom:8px;}
-  .modal-body h3{font-family:var(--serif);font-size:clamp(24px,3.4vw,36px);margin-bottom:14px;line-height:1.2;}
-  .modal-body p{font-size:15px;line-height:1.8;color:var(--muted);margin-bottom:22px;}
-  .modal-meta{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--line);padding-top:18px;}
-  .modal-price{font-family:var(--serif);font-style:italic;font-weight:700;font-size:clamp(26px,3vw,34px);color:var(--red);}
-  .modal-weight{font-size:13px;color:var(--muted);letter-spacing:.12em;}
+  /* ---- Всплывающая карточка блюда ---- */
+  .popup{
+    position:absolute;
+    left:50%;bottom:calc(100% + 16px);
+    width:236px;
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:14px 16px 12px;
+    box-shadow:0 18px 44px rgba(43,38,34,.4);
+    text-align:left;
+    opacity:0;visibility:hidden;
+    transform:translateX(-50%) translateY(8px) scale(.92);
+    transform-origin:bottom center;
+    transition:opacity .3s cubic-bezier(.22,1,.36,1),transform .3s cubic-bezier(.22,1,.36,1),visibility .3s;
+    pointer-events:none;
+    z-index:6;
+  }
+  .popup::after{
+    content:"";position:absolute;top:100%;left:50%;margin-left:-7px;
+    border:7px solid transparent;border-top-color:var(--paper);
+  }
+  .hotspot.open .popup{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0) scale(1);pointer-events:auto;}
+  /* точка у верхнего края → карточка снизу */
+  .hotspot.below .popup{bottom:auto;top:calc(100% + 16px);transform:translateX(-50%) translateY(-8px) scale(.92);transform-origin:top center;}
+  .hotspot.below .popup::after{top:auto;bottom:100%;border-top-color:transparent;border-bottom-color:var(--paper);}
+  .hotspot.below.open .popup{transform:translateX(-50%) translateY(0) scale(1);}
+  /* точка у левого/правого края → карточка не вылезает за фото */
+  .hotspot.al-left .popup{left:-12px;transform:translateY(8px) scale(.92);transform-origin:bottom left;}
+  .hotspot.al-left .popup::after{left:29px;margin-left:0;}
+  .hotspot.al-left.open .popup{transform:translateY(0) scale(1);}
+  .hotspot.al-left.below .popup{transform:translateY(-8px) scale(.92);transform-origin:top left;}
+  .hotspot.al-left.below.open .popup{transform:translateY(0) scale(1);}
+  .hotspot.al-right .popup{left:auto;right:-12px;transform:translateY(8px) scale(.92);transform-origin:bottom right;}
+  .hotspot.al-right .popup::after{left:auto;right:22px;margin-left:0;}
+  .hotspot.al-right.open .popup{transform:translateY(0) scale(1);}
+  .hotspot.al-right.below .popup{transform:translateY(-8px) scale(.92);transform-origin:top right;}
+  .hotspot.al-right.below.open .popup{transform:translateY(0) scale(1);}
+
+  .pp-name{font-family:var(--serif);font-weight:600;font-size:15px;line-height:1.3;color:var(--ink);margin-bottom:6px;}
+  .pp-desc{font-size:12px;line-height:1.55;color:var(--muted);margin-bottom:10px;}
+  .pp-meta{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--line);padding-top:8px;}
+  .pp-price{font-family:var(--serif);font-style:italic;font-weight:700;font-size:18px;color:var(--red);}
+  .pp-weight{font-size:11px;color:var(--muted);letter-spacing:.1em;}
+
+  /* ---- Список блюд под фото (классическое меню с пунктиром) ---- */
+  .dish-list{padding:14px 18px 18px;display:flex;flex-direction:column;gap:9px;}
+  .dish-row{
+    display:flex;align-items:baseline;gap:10px;
+    background:none;border:0;font:inherit;text-align:left;
+    padding:2px 0;cursor:pointer;transition:.25s;width:100%;
+  }
+  .dish-row .nm{font-family:var(--serif);font-size:15px;font-weight:600;color:var(--ink);transition:color .25s;}
+  .dish-row .lead{flex:1;border-bottom:1px dotted rgba(43,38,34,.4);transform:translateY(-4px);}
+  .dish-row .pr{font-family:var(--serif);font-style:italic;font-weight:700;color:var(--red);font-size:16px;white-space:nowrap;}
+  .dish-row:hover .nm,.dish-row.open .nm{color:var(--red);}
 
   .contact-sec{padding:clamp(80px,11vw,140px) 0;text-align:center;background:var(--menupage);border-top:1px solid var(--line);}
   .contact-sec h2{font-size:clamp(30px,5vw,58px);margin:14px 0 12px;}
@@ -223,7 +293,6 @@
     .btn{width:100%;justify-content:center;padding:15px 24px;}
     .mq-track span{font-size:14px;padding:0 16px;}
     .menu-grid{grid-template-columns:1fr;}
-    .menu-item-desc{min-height:0;}
     .contact-sec{padding:64px 0;}
     .contact-sub{font-size:14px;padding:0 6vw;}
     .phone{font-size:clamp(26px,8vw,40px);}
@@ -232,6 +301,7 @@
     .soc{width:44px;height:44px;}
     footer{padding:32px 5vw 24px;}
     .logo-video-wrap{width:180px;height:100px;}
+    .popup{width:210px;}
   }
   @media (max-width:380px){
     .nav-tel{display:none;}
@@ -308,24 +378,6 @@
   <div id="menuRoot"></div>
 </section>
 
-<div class="modal" id="itemModal">
-  <div class="modal-content">
-    <button class="modal-close" id="modalClose">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-    </button>
-    <div class="modal-img"><img id="modalImg" src="" alt=""></div>
-    <div class="modal-body">
-      <span class="modal-kicker" id="modalKicker"></span>
-      <h3 id="modalName"></h3>
-      <p id="modalDesc"></p>
-      <div class="modal-meta">
-        <span class="modal-price" id="modalPrice"></span>
-        <span class="modal-weight" id="modalWeight"></span>
-      </div>
-    </div>
-  </div>
-</div>
-
 <section class="contact-sec" id="contact">
   <h2 class="rv" data-i18n-html="c_h2">Զանգեք — և սեղանը <em>սպասում է</em></h2>
   <p class="contact-sub rv" data-i18n="c_sub">Մեկ հպում — և մնացածը մենք կհոգանք։</p>
@@ -355,59 +407,78 @@
 </footer>
 
 <script>
-/* ============================================================
-   МЕНЮ: ФОТО ИЗ ПАПКИ images/ (маленькая буква!)
-   Файлы: page-01.jpg ... page-52.jpg (двухзначные номера)
-   ============================================================ */
+/* ============================================================================
+   МЕНЮ С ХОТСПОТАМИ
+   scenes: фото-сцены. В каждой сцене dishes[]:
+     x, y — координаты точки НА ФОТО в процентах (0–100).
+            Например x:50, y:30 → центр верхней тарелки.
+            Подвиньте точки под свои фото.
+   ============================================================================ */
 const MENU = [
-  { id:'starters', t:{hy:'Նախուտեստներ',en:'Starters',ru:'Закуски'}, items:[
-    {img:'images/page-04.jpg', price:2700, weight:180,
-     n:{hy:'Բրուսկետտա Կրուդո տապենադով',en:'Bruschetta Crudo with Tapenade',ru:'Брускетта Крудо с тапенадой'},
-     d:{hy:'Պրոշուտտո, կալամատա, սերուցքային պանիր, բազիլիկ',en:'Crudo, kalamata olives, cream cheese, basil',ru:'Прошутто, каламата, сливочный сыр, базилик'}},
-    {img:'images/page-05.jpg', price:2300, weight:170,
-     n:{hy:'Բրուսկետտա Մորտադելլա ֆիստակի կրեմով',en:'Bruschetta Mortadella with Pistachio Cream',ru:'Брускетта с мортаделлой и фисташковым кремом'},
-     d:{hy:'Մորտադելլա, ֆիստակի կրեմ, բազիլիկ',en:'Mortadella, pistachio cream, basil',ru:'Мортаделла, фисташковый крем, базилик'}},
+  { id:'starters', t:{hy:'Նախուտեստներ',en:'Starters',ru:'Закуски'}, scenes:[
+    { img:'images/page-04.jpg', dishes:[
+      { x:50, y:28, price:2700, weight:180,
+        n:{hy:'Բրուսկետտա Կրուդո տապենադով',en:'Bruschetta Crudo with Tapenade',ru:'Брускетта Крудо с тапенадой'},
+        d:{hy:'Պրոշուտտո, կալամատա, սերուցքային պանիր, բազիլիկ',en:'Crudo, kalamata olives, cream cheese, basil',ru:'Прошутто, каламата, сливочный сыр, базилик'}},
+      { x:48, y:68, price:2300, weight:170,
+        n:{hy:'Բրուսկետտա Մորտադելլա ֆիստակի կրեմով',en:'Bruschetta Mortadella with Pistachio Cream',ru:'Брускетта с мортаделлой и фисташковым кремом'},
+        d:{hy:'Մորտադելլա, ֆիստակի կրեմ, բազիլիկ',en:'Mortadella, pistachio cream, basil',ru:'Мортаделла, фисташковый крем, базилик'}},
+    ]},
   ]},
-  { id:'salads', t:{hy:'Սալատներ',en:'Salads',ru:'Салаты'}, items:[
-    {img:'images/page-08.jpg', price:3400, weight:320,
-     n:{hy:'Հավի մսով և ավոկադոյով սալատ',en:'Chicken and Avocado Salad',ru:'Салат из курицы и авокадо'},
-     d:{hy:'Հավի կուրծք, ավոկադո, կարմիր կաղամբ, միքս սալատ',en:'Chicken breast, avocado, red cabbage, mixed salad',ru:'Куриная грудка, авокадо, красная капуста, микс салат'}},
-    {img:'images/page-09.jpg', price:2900, weight:300,
-     n:{hy:'Կինոա և ավոկադո սալատ',en:'Quinoa & Avocado Salad',ru:'Салат из киноа и авокадо'},
-     d:{hy:'Ավոկադո, կինոա, կաղամբ, դդում, ռուկոլա',en:'Avocado, quinoa, cabbage, pumpkin, arugula',ru:'Авокадо, киноа, капуста, тыква, рукола'}},
+  { id:'salads', t:{hy:'Սալատներ',en:'Salads',ru:'Салаты'}, scenes:[
+    { img:'images/page-08.jpg', dishes:[
+      { x:52, y:30, price:3400, weight:320,
+        n:{hy:'Հավի մսով և ավոկադոյով սալատ',en:'Chicken and Avocado Salad',ru:'Салат из курицы и авокадо'},
+        d:{hy:'Հավի կուրծք, ավոկադո, կարմիր կաղամբ, միքս սալատ',en:'Chicken breast, avocado, red cabbage, mixed salad',ru:'Куриная грудка, авокадо, красная капуста, микс салат'}},
+      { x:46, y:70, price:2900, weight:300,
+        n:{hy:'Կինոա և ավոկադո սալատ',en:'Quinoa & Avocado Salad',ru:'Салат из киноа и авокадо'},
+        d:{hy:'Ավոկադո, կինոա, կաղամբ, դդում, ռուկոլա',en:'Avocado, quinoa, cabbage, pumpkin, arugula',ru:'Авокадо, киноа, капуста, тыква, рукола'}},
+    ]},
   ]},
-  { id:'soups', t:{hy:'Ապուրներ',en:'Soups',ru:'Супы'}, items:[
-    {img:'images/page-12.jpg', price:1900, weight:350,
-     n:{hy:'Սնկով կրեմ-ապուր',en:'Mushroom Cream Soup',ru:'Грибной крем-суп'},
-     d:{hy:'Սնկեր, սերուցք, պարմեզան',en:'Mushrooms, cream, parmesan',ru:'Грибы, сливки, пармезан'}},
-    {img:'images/page-13.jpg', price:1900, weight:350,
-     n:{hy:'Պապպա ալ Պոմոդորո լոլիկի ապուր',en:'Pappa al Pomodoro Tomato Soup',ru:'Томатный суп Паппа аль Помодоро'},
-     d:{hy:'Սան Մարցանո լոլիկներ, պարմեզան, բազիլիկ',en:'San Marzano tomatoes, parmesan, basil',ru:'Томаты Сан Марцано, пармезан, базилик'}},
+  { id:'soups', t:{hy:'Ապուրներ',en:'Soups',ru:'Супы'}, scenes:[
+    { img:'images/page-12.jpg', dishes:[
+      { x:62, y:32, price:1900, weight:350,
+        n:{hy:'Սնկով կրեմ-ապուր',en:'Mushroom Cream Soup',ru:'Грибной крем-суп'},
+        d:{hy:'Սնկեր, սերուցք, պարմեզան',en:'Mushrooms, cream, parmesan',ru:'Грибы, сливки, пармезан'}},
+      { x:55, y:72, price:1900, weight:350,
+        n:{hy:'Պապպա ալ Պոմոդորո լոլիկի ապուր',en:'Pappa al Pomodoro Tomato Soup',ru:'Томатный суп Паппа аль Помодоро'},
+        d:{hy:'Սան Մարցանո լոլիկներ, պարմեզան, բազիլիկ',en:'San Marzano tomatoes, parmesan, basil',ru:'Томаты Сан Марцано, пармезан, базилик'}},
+    ]},
   ]},
-  { id:'pasta', t:{hy:'Պաստա',en:'Pasta',ru:'Паста'}, items:[
-    {img:'images/page-16.jpg', price:4200, weight:320,
-     n:{hy:'Կարբոնարա',en:'Carbonara',ru:'Карбонара'},
-     d:{hy:'Գուանչիալե, պեկորինո, ձու, սև պղպեղ',en:'Guanciale, pecorino, egg, black pepper',ru:'Гуанчиале, пекорино, яйцо, чёрный перец'}},
+  { id:'pasta', t:{hy:'Պաստա',en:'Pasta',ru:'Паста'}, scenes:[
+    { img:'images/page-16.jpg', dishes:[
+      { x:50, y:50, price:4200, weight:320,
+        n:{hy:'Կարբոնարա',en:'Carbonara',ru:'Карбонара'},
+        d:{hy:'Գուանչիալե, պեկորինո, ձու, սև պղպեղ',en:'Guanciale, pecorino, egg, black pepper',ru:'Гуанчиале, пекорино, яйцо, чёрный перец'}},
+    ]},
   ]},
-  { id:'burgers', t:{hy:'Բուրգերներ և սենդվիչներ',en:'Burgers & Sandwiches',ru:'Бургеры и сэндвичи'}, items:[
-    {img:'images/page-16.jpg', price:4500, weight:380,
-     n:{hy:'Դասական բուրգեր',en:'Classic Burger',ru:'Классический бургер'},
-     d:{hy:'Տավարի միս, չեդեր, թարմ բանջարեղեն',en:'Beef, cheddar, fresh vegetables',ru:'Говядина, чеддер, свежие овощи'}},
+  { id:'burgers', t:{hy:'Բուրգերներ և սենդվիչներ',en:'Burgers & Sandwiches',ru:'Бургеры и сэндвичи'}, scenes:[
+    { img:'images/page-16.jpg', dishes:[
+      { x:50, y:50, price:4500, weight:380,
+        n:{hy:'Դասական բուրգեր',en:'Classic Burger',ru:'Классический бургер'},
+        d:{hy:'Տավարի միս, չեդեր, թարմ բանջարեղեն',en:'Beef, cheddar, fresh vegetables',ru:'Говядина, чеддер, свежие овощи'}},
+    ]},
   ]},
-  { id:'piadina', t:{hy:'Պիադինա',en:'Piadina',ru:'Пьядина'}, items:[
-    {img:'images/page-16.jpg', price:3600, weight:280,
-     n:{hy:'Պիադինա մոցարելլայով',en:'Piadina with Mozzarella',ru:'Пьядина с моцареллой'},
-     d:{hy:'Մոցարելլա, լոլիկ, բազիլիկ',en:'Mozzarella, tomato, basil',ru:'Моцарелла, томат, базилик'}},
+  { id:'piadina', t:{hy:'Պիադինա',en:'Piadina',ru:'Пьядина'}, scenes:[
+    { img:'images/page-16.jpg', dishes:[
+      { x:50, y:50, price:3600, weight:280,
+        n:{hy:'Պիադինա մոցարելլայով',en:'Piadina with Mozzarella',ru:'Пьядина с моцареллой'},
+        d:{hy:'Մոցարելլա, լոլիկ, բազիլիկ',en:'Mozzarella, tomato, basil',ru:'Моцарелла, томат, базилик'}},
+    ]},
   ]},
-  { id:'mains', t:{hy:'Հիմնական ուտեստներ',en:'Main Courses',ru:'Основные блюда'}, items:[
-    {img:'images/page-16.jpg', price:5800, weight:400,
-     n:{hy:'Տոսկանայի տավարի ստեյկ',en:'Tuscan Beef Steak',ru:'Стейк по-тоскански'},
-     d:{hy:'Տավարի միս, ռոզմարին, ձիթապտղի ձեթ',en:'Beef, rosemary, olive oil',ru:'Говядина, розмарин, оливковое масло'}},
+  { id:'mains', t:{hy:'Հիմնական ուտեստներ',en:'Main Courses',ru:'Основные блюда'}, scenes:[
+    { img:'images/page-16.jpg', dishes:[
+      { x:50, y:50, price:5800, weight:400,
+        n:{hy:'Տոսկանայի տավարի ստեյկ',en:'Tuscan Beef Steak',ru:'Стейк по-тоскански'},
+        d:{hy:'Տավարի միս, ռոզմարին, ձիթապտղի ձեթ',en:'Beef, rosemary, olive oil',ru:'Говядина, розмарин, оливковое масло'}},
+    ]},
   ]},
-  { id:'desserts', t:{hy:'Աղանդեր',en:'Desserts',ru:'Десерты'}, items:[
-    {img:'images/page-16.jpg', price:2800, weight:150,
-     n:{hy:'Տիրամիսու',en:'Tiramisu',ru:'Тирамису'},
-     d:{hy:'Մասկարպոնե, էսպրեսո, կակաո',en:'Mascarpone, espresso, cocoa',ru:'Маскарпоне, эспрессо, какао'}},
+  { id:'desserts', t:{hy:'Աղանդեր',en:'Desserts',ru:'Десерты'}, scenes:[
+    { img:'images/page-16.jpg', dishes:[
+      { x:50, y:50, price:2800, weight:150,
+        n:{hy:'Տիրամիսու',en:'Tiramisu',ru:'Тирамису'},
+        d:{hy:'Մասկարպոնե, էսպրեսո, կակաո',en:'Mascarpone, espresso, cocoa',ru:'Маскарпоне, эспрессо, какао'}},
+    ]},
   ]},
 ];
 
@@ -415,6 +486,7 @@ const DICT = {
   hy:{title:'In Tempo — Իտալական խոհանոց · Երևան',nav_menu:'Մենյու',nav_contact:'Կապ',
     hero_l1:'Իտալական խոհանոց',hero_l2:'Երևանի <em>Կենտրոնում</em>',hero_sub:'Բաց է 09:00–24:00',
     hero_b1:'Բացել մենյուն →',hero_b2:'Ամրագրել սեղան',cue:'թերթեք',
+    tap:'Սեղմեք կետերին',
     c_h2:'Զանգեք — և սեղանը <em>սպասում է</em>',
     c_sub:'Մեկ հպում — և մնացածը մենք կհոգանք։',
     c_addr1:'Երևան, Հյուսիսային 10/3',c_addr2:'Ամեն օր 09:00 – 24:00',
@@ -424,6 +496,7 @@ const DICT = {
   en:{title:'In Tempo — Italian Kitchen · Yerevan',nav_menu:'Menu',nav_contact:'Contact',
     hero_l1:'Italian kitchen',hero_l2:'in the heart of <em>Yerevan</em>',hero_sub:'Open 09:00 – 24:00',
     hero_b1:'Open the menu →',hero_b2:'Book a table',cue:'scroll',
+    tap:'Tap the points',
     c_h2:'Call us — and the table <em>is waiting</em>',
     c_sub:'One tap — and we will take care of the rest.',
     c_addr1:'Yerevan, 10/3 Northern Avenue',c_addr2:'Daily 09:00 – 24:00',
@@ -433,6 +506,7 @@ const DICT = {
   ru:{title:'In Tempo — Итальянская кухня · Ереван',nav_menu:'Меню',nav_contact:'Контакты',
     hero_l1:'Итальянская кухня',hero_l2:'в центре <em>Еревана</em>',hero_sub:'Открыта с 09:00 до 24:00',
     hero_b1:'Открыть меню →',hero_b2:'Забронировать стол',cue:'листайте',
+    tap:'Нажимайте на точки',
     c_h2:'Позвоните — и столик <em>ждёт</em>',
     c_sub:'Одно касание — и мы позаботимся обо всём остальном.',
     c_addr1:'Ереван, Северный проспект 10/3',c_addr2:'Ежедневно 09:00 – 24:00',
@@ -443,22 +517,27 @@ const DICT = {
 
 let currentLang = 'hy';
 const fmtPrice = n => String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' ') + ' ֏';
+const canHover = window.matchMedia('(hover:hover)').matches;
 
 function attachImgFallback(imgEl){
   imgEl.addEventListener('error', () => {
-    const wrap = imgEl.closest('.menu-item-img') || imgEl.closest('.modal-img');
+    const wrap = imgEl.closest('.scene');
     if (wrap) wrap.classList.add('no-img');
     imgEl.style.display = 'none';
     console.warn('❌ Фото не найдено:', imgEl.getAttribute('src'));
   }, {once:true});
 }
-
 function checkImages(){
-  MENU.forEach(cat => cat.items.forEach(it => {
-    fetch(it.img, {method:'HEAD'}).then(r => {
-      if (!r.ok) console.warn('❌ НЕТ ФАЙЛА:', it.img, '(код ' + r.status + ')');
-    }).catch(() => console.warn('❌ НЕТ ФАЙЛА:', it.img));
+  MENU.forEach(cat => cat.scenes.forEach(sc => {
+    fetch(sc.img, {method:'HEAD'}).then(r => {
+      if (!r.ok) console.warn('❌ НЕТ ФАЙЛА:', sc.img, '(код ' + r.status + ')');
+    }).catch(() => console.warn('❌ НЕТ ФАЙЛА:', sc.img));
   }));
+}
+
+function closeAllHotspots(){
+  document.querySelectorAll('.hotspot.open').forEach(h => h.classList.remove('open'));
+  document.querySelectorAll('.dish-row.open').forEach(r => r.classList.remove('open'));
 }
 
 const io = new IntersectionObserver(es => es.forEach(en => {
@@ -470,6 +549,7 @@ function renderMenu(lang){
   const root = document.getElementById('menuRoot');
   nav.innerHTML = '';
   root.innerHTML = '';
+
   MENU.forEach((cat) => {
     const b = document.createElement('button');
     b.className = 'menu-nav-btn';
@@ -489,49 +569,95 @@ function renderMenu(lang){
       '</div>' +
       '<div class="menu-grid"></div>';
     const grid = sec.querySelector('.menu-grid');
-    cat.items.forEach((it, ii) => {
+
+    cat.scenes.forEach((sc, si) => {
       const card = document.createElement('div');
       card.className = 'menu-item';
-      card.style.transitionDelay = (ii % 4) * 90 + 'ms';
-      card.innerHTML =
-        '<div class="menu-item-img"><img src="' + it.img + '" alt="' + it.n[lang] + '" loading="lazy"></div>' +
-        '<div class="menu-item-info">' +
-          '<div class="menu-item-name">' + it.n[lang] + '</div>' +
-          '<div class="menu-item-desc">' + it.d[lang] + '</div>' +
-          '<div class="menu-item-footer">' +
-            '<span class="menu-item-price">' + fmtPrice(it.price) + '</span>' +
-            '<span class="menu-item-weight">' + it.weight + ' ' + DICT[lang].gram + '</span>' +
-          '</div>' +
-        '</div>';
-      attachImgFallback(card.querySelector('img'));
-      card.addEventListener('click', () => openModal(cat, it, lang));
+      card.style.transitionDelay = (si % 4) * 90 + 'ms';
+
+      /* --- сцена: фото + хотспоты --- */
+      const scene = document.createElement('div');
+      scene.className = 'scene';
+      const img = document.createElement('img');
+      img.src = sc.img;
+      img.alt = cat.t[lang];
+      img.loading = 'lazy';
+      attachImgFallback(img);
+      scene.appendChild(img);
+
+      const hotspots = [];
+      const rows = [];
+      sc.dishes.forEach((d, di) => {
+        const hs = document.createElement('button');
+        hs.className = 'hotspot';
+        hs.style.left = d.x + '%';
+        hs.style.top = d.y + '%';
+        if (d.y < 42) hs.classList.add('below');
+        if (d.x < 26) hs.classList.add('al-left');
+        else if (d.x > 74) hs.classList.add('al-right');
+        hs.setAttribute('aria-label', d.n[lang]);
+        hs.innerHTML =
+          '<i></i>' +
+          '<div class="popup">' +
+            '<div class="pp-name">' + d.n[lang] + '</div>' +
+            '<div class="pp-desc">' + d.d[lang] + '</div>' +
+            '<div class="pp-meta">' +
+              '<span class="pp-price">' + fmtPrice(d.price) + '</span>' +
+              '<span class="pp-weight">' + d.weight + ' ' + DICT[lang].gram + '</span>' +
+            '</div>' +
+          '</div>';
+        hs.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const was = hs.classList.contains('open');
+          closeAllHotspots();
+          if (!was){ hs.classList.add('open'); rows[di].classList.add('open'); }
+        });
+        if (canHover){
+          hs.addEventListener('mouseenter', () => { closeAllHotspots(); hs.classList.add('open'); rows[di].classList.add('open'); });
+          hs.addEventListener('mouseleave', () => { hs.classList.remove('open'); rows[di].classList.remove('open'); });
+        }
+        scene.appendChild(hs);
+        hotspots.push(hs);
+      });
+
+      const hint = document.createElement('div');
+      hint.className = 'scene-hint';
+      hint.innerHTML = '<i></i><span>' + DICT[lang].tap + '</span><i></i>';
+      scene.appendChild(hint);
+      card.appendChild(scene);
+
+      /* --- список блюд под фото --- */
+      const list = document.createElement('div');
+      list.className = 'dish-list';
+      sc.dishes.forEach((d, di) => {
+        const row = document.createElement('button');
+        row.className = 'dish-row';
+        row.innerHTML =
+          '<span class="nm">' + d.n[lang] + '</span>' +
+          '<span class="lead"></span>' +
+          '<span class="pr">' + fmtPrice(d.price) + '</span>';
+        row.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const was = row.classList.contains('open');
+          closeAllHotspots();
+          if (!was){ row.classList.add('open'); hotspots[di].classList.add('open'); }
+        });
+        list.appendChild(row);
+        rows.push(row);
+      });
+      card.appendChild(list);
+
       grid.appendChild(card);
       io.observe(card);
     });
+
     io.observe(sec.querySelector('.category-header'));
     root.appendChild(sec);
   });
 }
 
-const modal = document.getElementById('itemModal');
-function openModal(cat, it, lang){
-  const mImg = document.getElementById('modalImg');
-  mImg.style.display = '';
-  document.querySelector('.modal-img').classList.remove('no-img');
-  mImg.src = it.img;
-  attachImgFallback(mImg);
-  document.getElementById('modalKicker').textContent = cat.t[lang];
-  document.getElementById('modalName').textContent = it.n[lang];
-  document.getElementById('modalDesc').textContent = it.d[lang];
-  document.getElementById('modalPrice').textContent = fmtPrice(it.price);
-  document.getElementById('modalWeight').textContent = it.weight + ' ' + DICT[lang].gram;
-  modal.classList.add('active');
-  document.body.style.overflow = 'hidden';
-}
-function closeModal(){ modal.classList.remove('active'); document.body.style.overflow = ''; }
-document.getElementById('modalClose').addEventListener('click', closeModal);
-modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+/* клик в любом месте закрывает всплывающие карточки */
+document.addEventListener('click', closeAllHotspots);
 
 function applyLang(lang){
   currentLang = lang;
@@ -562,7 +688,7 @@ window.addEventListener('load', () => {
 });
 
 const nav = document.getElementById('nav');
-addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40), {passive:true});
+addEventListener('scroll', () => { nav.classList.toggle('scrolled', scrollY > 40); closeAllHotspots(); }, {passive:true});
 
 document.querySelectorAll('.rv').forEach(el => io.observe(el));
 </script>
