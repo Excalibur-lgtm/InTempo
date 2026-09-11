@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
 <title>In Tempo — Իտալական խոհանոց · Երևան</title>
 <meta name="description" content="In Tempo — իտալական խոհանոց Երևանի կենտրոնում։ Բաց է 09:00–24:00։ Time to enjoy.">
-<link rel="preload" href="Images/page-01.jpg" as="image" type="image/jpeg">
+<link rel="preload" href="images/page-01.jpg" as="image" type="image/jpeg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
@@ -48,9 +48,10 @@
   h1,h2{font-family:var(--serif);font-weight:600;line-height:1.12;letter-spacing:-.01em;color:var(--ink);}
   em{font-style:italic;color:var(--red);}
 
+  /* ЛОГОТИП: папка images/ (маленькая буква!) */
   .logo-sprite,
   .logo-sprite--sm{
-    background:url('Images/page-01.jpg') no-repeat;
+    background:url('images/page-01.jpg') no-repeat;
     mix-blend-mode:multiply;
     filter:brightness(1.8) contrast(1.5) saturate(1.2);
   }
@@ -92,7 +93,7 @@
   .nav.scrolled .nav-tel{border-color:var(--ink);color:var(--ink);text-shadow:none;}
   .nav.scrolled .nav-tel:hover{background:var(--ink);color:var(--menupage);}
 
-  .hero{position:relative;min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;background:url('Images/page-01.jpg') center/cover no-repeat;}
+  .hero{position:relative;min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;background:url('images/page-01.jpg') center/cover no-repeat;}
   .hero-media{position:absolute;inset:0;}
   .hero-media video{width:100%;height:100%;object-fit:cover;animation:kb 26s ease-in-out infinite alternate;}
   @keyframes kb{from{transform:scale(1);}to{transform:scale(1.09);}}
@@ -144,7 +145,6 @@
   .menu-item-img img{width:100%;height:100%;object-fit:cover;transition:transform .9s cubic-bezier(.22,1,.36,1);}
   .menu-item:hover .menu-item-img img{transform:scale(1.07);}
 
-  /* ЗАГЛУШКА, ЕСЛИ ФОТО НЕ НАЙДЕНО */
   .menu-item-img.no-img::after,.modal-img.no-img::after{
     content:'In Tempo · լուսանկարը շուտով';
     position:absolute;inset:0;
@@ -246,7 +246,8 @@
 <div id="loader">
   <div class="logo-video-wrap">
     <video id="loaderVideo" autoplay muted loop playsinline preload="auto" aria-label="In Tempo animated logo">
-      <source src="Images/logo-animation.mp4" type="video/mp4">
+      <source src="images/logo-animation.mp4" type="video/mp4">
+      <source src="logo-animation.mp4" type="video/mp4">
     </video>
   </div>
   <span class="slogan">Time to enjoy</span>
@@ -274,8 +275,9 @@
 
 <header class="hero" id="top">
   <div class="hero-media">
-    <video autoplay muted loop playsinline preload="metadata" poster="Images/page-01.jpg">
-      <source src="Images/hero.mp4" type="video/mp4">
+    <video autoplay muted loop playsinline preload="metadata" poster="images/page-01.jpg">
+      <source src="images/hero.mp4" type="video/mp4">
+      <source src="hero.mp4" type="video/mp4">
     </video>
   </div>
   <div class="hero-in">
@@ -354,57 +356,56 @@
 
 <script>
 /* ============================================================
-   МЕНЮ: ФОТО ИЗ ПАПКИ Images/
-   Если фото не найдено — карточка покажет заглушку,
-   а в консоли (F12) появится список ненайденных файлов
+   МЕНЮ: ФОТО ИЗ ПАПКИ images/ (маленькая буква!)
+   Файлы: page-01.jpg ... page-52.jpg (двухзначные номера)
    ============================================================ */
 const MENU = [
   { id:'starters', t:{hy:'Նախուտեստներ',en:'Starters',ru:'Закуски'}, items:[
-    {img:'Images/page-04.jpg', price:2700, weight:180,
+    {img:'images/page-04.jpg', price:2700, weight:180,
      n:{hy:'Բրուսկետտա Կրուդո տապենադով',en:'Bruschetta Crudo with Tapenade',ru:'Брускетта Крудо с тапенадой'},
      d:{hy:'Պրոշուտտո, կալամատա, սերուցքային պանիր, բազիլիկ',en:'Crudo, kalamata olives, cream cheese, basil',ru:'Прошутто, каламата, сливочный сыр, базилик'}},
-    {img:'Images/page-04.jpg', price:2300, weight:170,
+    {img:'images/page-05.jpg', price:2300, weight:170,
      n:{hy:'Բրուսկետտա Մորտադելլա ֆիստակի կրեմով',en:'Bruschetta Mortadella with Pistachio Cream',ru:'Брускетта с мортаделлой и фисташковым кремом'},
      d:{hy:'Մորտադելլա, ֆիստակի կրեմ, բազիլիկ',en:'Mortadella, pistachio cream, basil',ru:'Мортаделла, фисташковый крем, базилик'}},
   ]},
   { id:'salads', t:{hy:'Սալատներ',en:'Salads',ru:'Салаты'}, items:[
-    {img:'Images/page-08.jpg', price:3400, weight:320,
+    {img:'images/page-08.jpg', price:3400, weight:320,
      n:{hy:'Հավի մսով և ավոկադոյով սալատ',en:'Chicken and Avocado Salad',ru:'Салат из курицы и авокадо'},
      d:{hy:'Հավի կուրծք, ավոկադո, կարմիր կաղամբ, միքս սալատ',en:'Chicken breast, avocado, red cabbage, mixed salad',ru:'Куриная грудка, авокадо, красная капуста, микс салат'}},
-    {img:'Images/page-08.jpg', price:2900, weight:300,
+    {img:'images/page-09.jpg', price:2900, weight:300,
      n:{hy:'Կինոա և ավոկադո սալատ',en:'Quinoa & Avocado Salad',ru:'Салат из киноа и авокадо'},
      d:{hy:'Ավոկադո, կինոա, կաղամբ, դդում, ռուկոլա',en:'Avocado, quinoa, cabbage, pumpkin, arugula',ru:'Авокадо, киноа, капуста, тыква, рукола'}},
   ]},
   { id:'soups', t:{hy:'Ապուրներ',en:'Soups',ru:'Супы'}, items:[
-    {img:'Images/page-12.jpg', price:1900, weight:350,
+    {img:'images/page-12.jpg', price:1900, weight:350,
      n:{hy:'Սնկով կրեմ-ապուր',en:'Mushroom Cream Soup',ru:'Грибной крем-суп'},
      d:{hy:'Սնկեր, սերուցք, պարմեզան',en:'Mushrooms, cream, parmesan',ru:'Грибы, сливки, пармезан'}},
-    {img:'Images/page-12.jpg', price:1900, weight:350,
+    {img:'images/page-13.jpg', price:1900, weight:350,
      n:{hy:'Պապպա ալ Պոմոդորո լոլիկի ապուր',en:'Pappa al Pomodoro Tomato Soup',ru:'Томатный суп Паппа аль Помодоро'},
      d:{hy:'Սան Մարցանո լոլիկներ, պարմեզան, բազիլիկ',en:'San Marzano tomatoes, parmesan, basil',ru:'Томаты Сан Марцано, пармезан, базилик'}},
   ]},
   { id:'pasta', t:{hy:'Պաստա',en:'Pasta',ru:'Паста'}, items:[
-    {img:'Images/page-18.jpg', price:4200, weight:320,
+    {img:'images/page-16.jpg', price:4200, weight:320,
      n:{hy:'Կարբոնարա',en:'Carbonara',ru:'Карбонара'},
      d:{hy:'Գուանչիալե, պեկորինո, ձու, սև պղպեղ',en:'Guanciale, pecorino, egg, black pepper',ru:'Гуанчиале, пекорино, яйцо, чёрный перец'}},
   ]},
   { id:'burgers', t:{hy:'Բուրգերներ և սենդվիչներ',en:'Burgers & Sandwiches',ru:'Бургеры и сэндвичи'}, items:[
-    {img:'Images/page-23.jpg', price:4500, weight:380,
+    {img:'images/page-16.jpg', price:4500, weight:380,
      n:{hy:'Դասական բուրգեր',en:'Classic Burger',ru:'Классический бургер'},
      d:{hy:'Տավարի միս, չեդեր, թարմ բանջարեղեն',en:'Beef, cheddar, fresh vegetables',ru:'Говядина, чеддер, свежие овощи'}},
   ]},
   { id:'piadina', t:{hy:'Պիադինա',en:'Piadina',ru:'Пьядина'}, items:[
-    {img:'Images/page-27.jpg', price:3600, weight:280,
+    {img:'images/page-16.jpg', price:3600, weight:280,
      n:{hy:'Պիադինա մոցարելլայով',en:'Piadina with Mozzarella',ru:'Пьядина с моцареллой'},
      d:{hy:'Մոցարելլա, լոլիկ, բազիլիկ',en:'Mozzarella, tomato, basil',ru:'Моцарелла, томат, базилик'}},
   ]},
   { id:'mains', t:{hy:'Հիմնական ուտեստներ',en:'Main Courses',ru:'Основные блюда'}, items:[
-    {img:'Images/page-31.jpg', price:5800, weight:400,
+    {img:'images/page-16.jpg', price:5800, weight:400,
      n:{hy:'Տոսկանայի տավարի ստեյկ',en:'Tuscan Beef Steak',ru:'Стейк по-тоскански'},
      d:{hy:'Տավարի միս, ռոզմարին, ձիթապտղի ձեթ',en:'Beef, rosemary, olive oil',ru:'Говядина, розмарин, оливковое масло'}},
   ]},
   { id:'desserts', t:{hy:'Աղանդեր',en:'Desserts',ru:'Десерты'}, items:[
-    {img:'Images/page-44.jpg', price:2800, weight:150,
+    {img:'images/page-16.jpg', price:2800, weight:150,
      n:{hy:'Տիրամիսու',en:'Tiramisu',ru:'Тирамису'},
      d:{hy:'Մասկարպոնե, էսպրեսո, կակաո',en:'Mascarpone, espresso, cocoa',ru:'Маскарпоне, эспрессо, какао'}},
   ]},
@@ -443,7 +444,6 @@ const DICT = {
 let currentLang = 'hy';
 const fmtPrice = n => String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' ') + ' ֏';
 
-/* Если фото не загрузилось — показываем заглушку */
 function attachImgFallback(imgEl){
   imgEl.addEventListener('error', () => {
     const wrap = imgEl.closest('.menu-item-img') || imgEl.closest('.modal-img');
@@ -453,7 +453,6 @@ function attachImgFallback(imgEl){
   }, {once:true});
 }
 
-/* Диагностика: проверяет все фото из MENU и пишет в консоль (F12) чего не хватает */
 function checkImages(){
   MENU.forEach(cat => cat.items.forEach(it => {
     fetch(it.img, {method:'HEAD'}).then(r => {
