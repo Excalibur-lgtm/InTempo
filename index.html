@@ -6,201 +6,613 @@ html_content = """
 <head>
 <meta charset="UTF-8">
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;600&display=swap');
+
+    /* ============ ОБЩИЕ СТИЛИ СТРАНИЦЫ ============ */
     @page {
         size: A4;
-        margin: 20mm 15mm;
+        margin: 25mm 20mm 30mm 20mm;
         background-color: #F8F5F0;
-        @bottom-right {
-            content: counter(page);
-            font-family: 'Helvetica Neue', Arial, sans-serif;
+        @bottom-center {
+            content: "— " counter(page) " —";
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
             font-size: 9pt;
             color: #7A7267;
+            letter-spacing: 2px;
+        }
+        @bottom-left {
+            content: "InTempo";
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 8pt;
+            color: #9A8F82;
         }
     }
+    /* Обложка без номера страницы */
+    @page :first {
+        margin: 0;
+        background: linear-gradient(135deg, #1A1613 0%, #2C2622 100%);
+        @bottom-center { content: none; }
+        @bottom-left { content: none; }
+    }
+
     *, *::before, *::after { box-sizing: border-box; }
+
     body {
-        font-family: 'Helvetica Neue', Arial, sans-serif;
+        font-family: 'Inter', sans-serif;
         color: #2C2622;
         background-color: #F8F5F0;
         margin: 0;
         padding: 0;
-        line-height: 1.5;
-        font-size: 11pt;
+        line-height: 1.65;
+        font-size: 10.5pt;
+        font-weight: 300;
     }
-    h1, h2, h3 {
+
+    /* ============ ТИПОГРАФИКА ============ */
+    h1, h2, h3, h4 {
+        font-family: 'Playfair Display', serif;
         color: #1A1613;
         font-weight: 700;
         margin-top: 0;
+        letter-spacing: 0.5px;
     }
     h1 {
-        font-size: 24pt;
+        font-size: 28pt;
         text-transform: uppercase;
-        letter-spacing: 1px;
-        margin-bottom: 5px;
+        letter-spacing: 3px;
+        margin-bottom: 8px;
     }
     h2 {
-        font-size: 16pt;
-        border-left: 4px solid #D33F2E;
-        padding-left: 10px;
-        margin-top: 25px;
-        margin-bottom: 12px;
-        page-break-after: avoid;
+        font-size: 20pt;
+        text-align: center;
+        margin-top: 0;
+        margin-bottom: 30px;
+        position: relative;
+        padding-bottom: 18px;
+    }
+    h2::after {
+        content: "❦";
+        display: block;
+        text-align: center;
+        color: #D33F2E;
+        font-size: 14pt;
+        margin-top: 10px;
+        letter-spacing: 8px;
     }
     h3 {
-        font-size: 12pt;
-        margin-top: 15px;
-        margin-bottom: 5px;
+        font-size: 14pt;
+        margin-top: 25px;
+        margin-bottom: 10px;
         color: #D33F2E;
+        font-style: italic;
+        text-align: center;
         page-break-after: avoid;
     }
+    h3::before, h3::after {
+        content: "✦";
+        margin: 0 12px;
+        font-size: 10pt;
+        vertical-align: middle;
+        color: #9A8F82;
+    }
     p {
-        margin-bottom: 10px;
+        margin-bottom: 12px;
+        text-align: justify;
+        hyphens: auto;
     }
-    .header-banner {
-        background-color: #1A1613;
-        color: #F8F5F0;
-        padding: 30px;
-        border-radius: 6px;
-        margin-bottom: 25px;
-        text-align: center;
-    }
-    .header-banner h1 {
-        color: #FFFFFF;
-        margin-bottom: 5px;
-    }
-    .subtitle {
-        font-size: 13pt;
-        color: #D9C3A9;
+    .italic {
+        font-family: 'Lora', serif;
         font-style: italic;
+        color: #5A5148;
     }
+
+    /* ============ ОБЛОЖКА ============ */
+    .cover {
+        height: 297mm;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: #F8F5F0;
+        padding: 40mm 20mm;
+        page-break-after: always;
+    }
+    .cover-ornament {
+        font-size: 18pt;
+        letter-spacing: 12px;
+        color: #D9C3A9;
+        margin-bottom: 40px;
+    }
+    .cover h1 {
+        font-size: 72pt;
+        color: #FFFFFF;
+        letter-spacing: 8px;
+        margin-bottom: 15px;
+        font-weight: 400;
+    }
+    .cover .cover-divider {
+        width: 60px;
+        height: 2px;
+        background: #D33F2E;
+        margin: 25px auto;
+    }
+    .cover .cover-subtitle {
+        font-family: 'Lora', serif;
+        font-style: italic;
+        font-size: 16pt;
+        color: #D9C3A9;
+        margin-top: 20px;
+        letter-spacing: 1px;
+    }
+    .cover .cover-tagline {
+        font-family: 'Playfair Display', serif;
+        font-style: italic;
+        font-size: 11pt;
+        color: #9A8F82;
+        margin-top: 50px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+    }
+
+    /* ============ КОНТЕНТНЫЕ БЛОКИ ============ */
     .card {
         background-color: #FFFFFF;
         border: 1px solid #E5E0D8;
-        border-radius: 6px;
-        padding: 15px 20px;
-        margin-bottom: 15px;
+        border-radius: 4px;
+        padding: 20px 25px;
+        margin-bottom: 20px;
+        page-break-inside: avoid;
+        box-shadow: 0 2px 8px rgba(26, 22, 19, 0.04);
+    }
+    .section {
+        page-break-before: always;
+        padding-top: 10mm;
+    }
+    .section:first-of-type {
+        page-break-before: auto;
+    }
+
+    /* ============ ЦВЕТОВАЯ ПАЛИТРА ============ */
+    .palette {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        margin: 20px 0;
+    }
+    .color-swatch {
+        display: flex;
+        align-items: center;
+        padding: 12px 15px;
+        background: #FFFFFF;
+        border: 1px solid #E5E0D8;
+        border-radius: 4px;
         page-break-inside: avoid;
     }
     .color-box {
-        display: inline-block;
-        width: 24px;
-        height: 24px;
-        border-radius: 4px;
-        vertical-align: middle;
-        margin-right: 8px;
-        border: 1px solid rgba(0,0,0,0.1);
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        margin-right: 12px;
+        border: 2px solid rgba(0,0,0,0.05);
+        flex-shrink: 0;
     }
+    .color-info strong {
+        display: block;
+        font-family: 'Playfair Display', serif;
+        font-size: 11pt;
+        color: #1A1613;
+        margin-bottom: 2px;
+    }
+    .color-info .hex {
+        font-family: 'Inter', monospace;
+        font-size: 9pt;
+        color: #9A8F82;
+        letter-spacing: 1px;
+    }
+    .color-info .desc {
+        font-size: 9pt;
+        color: #5A5148;
+        margin-top: 4px;
+        line-height: 1.3;
+    }
+
+    /* ============ ТАБЛИЦА-СТРУКТУРА ============ */
     table {
         width: 100%;
         border-collapse: collapse;
-        margin-top: 10px;
-        margin-bottom: 15px;
+        margin: 15px 0;
         page-break-inside: avoid;
     }
     th, td {
-        padding: 10px 12px;
+        padding: 12px 14px;
         text-align: left;
         border-bottom: 1px solid #E5E0D8;
-        font-size: 10pt;
+        font-size: 9.5pt;
+        vertical-align: top;
     }
     th {
-        background-color: #EBDBC4;
-        color: #1A1613;
-        font-weight: bold;
+        background-color: #1A1613;
+        color: #F8F5F0;
+        font-family: 'Playfair Display', serif;
+        font-weight: 400;
+        font-size: 10pt;
+        letter-spacing: 1px;
+        text-transform: uppercase;
     }
-    ul {
-        margin: 5px 0 10px 20px;
-        padding: 0;
+    tr:nth-child(even) td {
+        background-color: #FAF7F2;
     }
-    li {
-        margin-bottom: 4px;
+    td:first-child {
+        font-family: 'Playfair Display', serif;
+        font-style: italic;
+        color: #D33F2E;
+        font-size: 14pt;
+        width: 40px;
+        text-align: center;
     }
+
+    /* ============ ТЕГИ ============ */
     .tag {
         display: inline-block;
         background-color: #EBDBC4;
         color: #1A1613;
-        padding: 3px 8px;
-        border-radius: 4px;
+        padding: 4px 10px;
+        border-radius: 3px;
+        font-size: 8.5pt;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        margin-right: 6px;
+        margin-bottom: 6px;
+    }
+    ul {
+        margin: 10px 0 15px 0;
+        padding: 0;
+        list-style: none;
+    }
+    li {
+        margin-bottom: 10px;
+        padding-left: 25px;
+        position: relative;
+    }
+    li::before {
+        content: "❦";
+        position: absolute;
+        left: 0;
+        color: #D33F2E;
+        font-size: 11pt;
+    }
+
+    /* ============ КАРТОЧКИ МЕНЮ (примеры блюд) ============ */
+    .menu-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+        margin: 20px 0;
+    }
+    .dish-card {
+        background: #FFFFFF;
+        border: 1px solid #E5E0D8;
+        border-radius: 6px;
+        overflow: hidden;
+        page-break-inside: avoid;
+    }
+    .dish-img {
+        height: 120px;
+        background: linear-gradient(135deg, #D9C3A9 0%, #EBDBC4 100%);
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Playfair Display', serif;
+        font-style: italic;
+        font-size: 14pt;
+        color: #FFFFFF;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    .dish-info {
+        padding: 14px 16px;
+    }
+    .dish-info h4 {
+        font-family: 'Playfair Display', serif;
+        font-size: 13pt;
+        margin: 0 0 6px 0;
+        color: #1A1613;
+    }
+    .dish-info .dish-desc {
+        font-family: 'Lora', serif;
+        font-style: italic;
         font-size: 9pt;
-        font-weight: bold;
-        margin-right: 5px;
-        margin-bottom: 5px;
+        color: #7A7267;
+        margin-bottom: 10px;
+        line-height: 1.4;
+    }
+    .dish-info .dish-price {
+        font-family: 'Playfair Display', serif;
+        font-weight: 700;
+        font-size: 13pt;
+        color: #D33F2E;
+        letter-spacing: 1px;
+    }
+    .dish-info .dish-weight {
+        font-size: 8.5pt;
+        color: #9A8F82;
+        float: right;
+        margin-top: 4px;
+    }
+
+    /* ============ ЦИТАТА-МАНИФЕСТ ============ */
+    .manifesto {
+        text-align: center;
+        padding: 30px 40px;
+        margin: 30px 0;
+        border-top: 1px solid #D9C3A9;
+        border-bottom: 1px solid #D9C3A9;
+    }
+    .manifesto p {
+        font-family: 'Lora', serif;
+        font-style: italic;
+        font-size: 13pt;
+        color: #5A5148;
+        text-align: center;
+        line-height: 1.7;
+        margin: 0;
+    }
+    .manifesto .author {
+        font-family: 'Playfair Display', serif;
+        font-size: 10pt;
+        color: #D33F2E;
+        margin-top: 15px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+    }
+
+    /* ============ ФИНАЛЬНАЯ СТРАНИЦА ============ */
+    .final-page {
+        text-align: center;
+        padding: 30mm 20mm;
+    }
+    .final-page h2 {
+        font-size: 32pt;
+        letter-spacing: 4px;
+    }
+    .final-contacts {
+        margin-top: 40px;
+        font-family: 'Lora', serif;
+        font-size: 12pt;
+        color: #5A5148;
+        line-height: 2;
+    }
+    .final-contacts strong {
+        display: block;
+        font-family: 'Playfair Display', serif;
+        color: #1A1613;
+        font-size: 14pt;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 15px;
+    }
+
+    /* ============ УТИЛИТЫ ============ */
+    .center { text-align: center; }
+    .accent { color: #D33F2E; font-weight: 600; }
+    .subtitle {
+        font-family: 'Lora', serif;
+        font-style: italic;
+        color: #7A7267;
+        font-size: 10pt;
+        text-align: center;
+        margin-top: -20px;
+        margin-bottom: 30px;
     }
 </style>
 </head>
 <body>
 
-<div class="header-banner">
-    <h1>InTempo Cafe</h1>
-    <div class="subtitle">Brand Book & Landing Page Strategy (Гибрид Вариантов 1 и 3)</div>
+<!-- ============ ОБЛОЖКА ============ -->
+<div class="cover">
+    <div class="cover-ornament">✦ ✦ ✦</div>
+    <h1>InTempo</h1>
+    <div class="cover-divider"></div>
+    <div class="cover-subtitle">Italian Kitchen · Yerevan</div>
+    <div class="cover-tagline">— Brand Book & Menu Strategy —</div>
 </div>
 
-<h2>1. Айдентика и Микро-Брендбук</h2>
-<div class="card">
-    <p><strong>Название:</strong> InTempo</p>
-    <p><strong>Слоганы:</strong> <em>«Time to enjoy»</em> (основной слоган), <em>«Pizza & more...»</em> (дескриптор кухни).</p>
-    <p><strong>Философия бренда:</strong> Итальянская эстетика момента, гедонизм, уютная атмосфера дровяной печи, свежие ингредиенты и авторская подача.</p>
-    
-    <h3>Цветовая палитра</h3>
-    <p><span class="color-box" style="background-color: #D9C3A9;"></span><strong>Песочно-кремовый (Background):</strong> Основной фон, создающий ощущение тепла, крафта и теста.</p>
-    <p><span class="color-box" style="background-color: #1A1613;"></span><strong>Антрацитово-черный (Dark):</strong> Для контрастных текстов, заголовков и премиального шарма.</p>
-    <p><span class="color-box" style="background-color: #D33F2E;"></span><strong>Кораллово-красный (Accent):</strong> Сигнальный цвет логотипа, кнопок и акцентов.</p>
-    <p><span class="color-box" style="background-color: #FFFFFF;"></span><strong>Чистый белый (Card Base):</strong> Подложки для меню и карточек блюд.</p>
+<!-- ============ СТРАНИЦА 1: ФИЛОСОФИЯ ============ -->
+<div class="section">
+    <h2>О бренде</h2>
+    <p class="subtitle">Time to enjoy</p>
 
-    <h3>Типографика</h3>
-    <p><strong>Заголовки и логотип:</strong> Выразительный рукописный шрифт с динамикой (Script/Brush стиль).</p>
-    <p><strong>Основной текст и цены:</strong> Строгий геометрический гротеск (например, <em>Montserrat</em> или <em>Inter</em>) для максимальной чистоты и читаемости.</p>
+    <div class="manifesto">
+        <p>«Итальянская эстетика момента,<br>
+        гедонизм и уютная атмосфера дровяной печи.<br>
+        Свежие ингредиенты, авторская подача<br>
+        и тепло настоящего теста.»</p>
+        <div class="author">— Философия InTempo</div>
+    </div>
+
+    <div class="card">
+        <h3>Айдентика</h3>
+        <p><strong>Название:</strong> <span class="accent">InTempo</span> — с итальянского «во времени», «в моменте».</p>
+        <p><strong>Основной слоган:</strong> <em>«Time to enjoy»</em></p>
+        <p><strong>Дескриптор кухни:</strong> <em>«Pizza & more...»</em></p>
+    </div>
 </div>
 
-<h2>2. Пошаговая структура лендинга (Порядок блоков)</h2>
-<div class="card">
-    <table>
-        <tr>
-            <th>№</th>
-            <th>Блок лендинга</th>
-            <th>Содержание и дизайн</th>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td><strong>Главный экран (Hero Section)</strong></td>
-            <td>Полноэкранное аппетитное фото (как паста с беконом), логотип InTempo, слоган <em>«Time to enjoy»</em>. Крупная кнопка «Смотреть меню».</td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td><strong>О нас / Атмосфера</strong></td>
-            <td>Короткий эмоциональный манифест в журнальном стиле. Теплые оттенки фона, акцент на традиции итальянской кухни и качество продуктов.</td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td><strong>ГЛАВНАЯ ОСОБЕННОСТЬ: Большое Меню</strong></td>
-            <td>Интерактивные вкладки (Пицца, Паста, Закуски, Напитки). Огромные сочные карточки блюд (в 2 колонки), крупные фото, детальное описание и цены.</td>
-        </tr>
-        <tr>
-            <td>4</td>
-            <td><strong>Спецпредложения / Хиты</strong></td>
-            <td>Карусель или баннеры шеф-повара (сезонные новинки, комбо-наборы).</td>
-        </tr>
-        <tr>
-            <td>5</td>
-            <td><strong>Интерьер & Гости (Галерея)</strong></td>
-            <td>Эстетичные фотографии атмосферы кафе в стиле Editorial (журнал о моде и еде).</td>
-        </tr>
-        <tr>
-            <td>6</td>
-            <td><strong>Бронирование & Контакты</strong></td>
-            <td>Удобная форма брони столика, интерактивная карта проезда, часы работы и ссылки на соцсети.</td>
-        </tr>
-    </table>
+<!-- ============ СТРАНИЦА 2: ПАЛИТРА ============ -->
+<div class="section">
+    <h2>Цветовая палитра</h2>
+    <p class="subtitle">Четыре оттенка итальянского лета</p>
+
+    <div class="palette">
+        <div class="color-swatch">
+            <div class="color-box" style="background-color: #D9C3A9;"></div>
+            <div class="color-info">
+                <strong>Песочно-кремовый</strong>
+                <div class="hex">#D9C3A9</div>
+                <div class="desc">Основной фон. Тепло крафта и теста.</div>
+            </div>
+        </div>
+        <div class="color-swatch">
+            <div class="color-box" style="background-color: #1A1613;"></div>
+            <div class="color-info">
+                <strong>Антрацитово-чёрный</strong>
+                <div class="hex">#1A1613</div>
+                <div class="desc">Заголовки и премиальный шарм.</div>
+            </div>
+        </div>
+        <div class="color-swatch">
+            <div class="color-box" style="background-color: #D33F2E;"></div>
+            <div class="color-info">
+                <strong>Кораллово-красный</strong>
+                <div class="hex">#D33F2E</div>
+                <div class="desc">Сигнальный акцент: кнопки и логотип.</div>
+            </div>
+        </div>
+        <div class="color-swatch">
+            <div class="color-box" style="background-color: #FFFFFF;"></div>
+            <div class="color-info">
+                <strong>Чистый белый</strong>
+                <div class="hex">#FFFFFF</div>
+                <div class="desc">Подложки для карточек меню.</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Типографика</h3>
+        <p><strong>Заголовки и логотип:</strong> <em class="italic">Playfair Display</em> — выразительный serif с итальянской элегантностью.</p>
+        <p><strong>Цитаты и описания:</strong> <em class="italic">Lora</em> — утончённый serif для эмоциональных блоков.</p>
+        <p><strong>Основной текст и цены:</strong> <em>Inter</em> — строгий геометрический гротеск для максимальной чистоты.</p>
+    </div>
 </div>
 
-<h2>3. Рекомендации по реализации меню</h2>
-<div class="card">
-    <p>Поскольку главная фишка сайта — <strong>большое меню</strong>, важно соблюсти следующие правила при верстке:</p>
-    <ul>
-        <li><span class="tag">Визуал 50/50</span> Фотографии блюд занимают не менее половины площади карточки, вызывая мгновенный аппетит.</li>
-        <li><span class="tag">Интерактив</span> При клике на карточку открывается модальное окно с увеличенным фото, граммовкой, КБЖУ и полным составом ингредиентов.</li>
-        <li><span class="tag">Адаптивность</span> На смартфонах карточки меню должны быть на всю ширину экрана с крупными кнопками и легко читаемым шрифтом цен.</li>
-    </ul>
+<!-- ============ СТРАНИЦА 3: СТРУКТУРА ЛЕНДИНГА ============ -->
+<div class="section">
+    <h2>Структура лендинга</h2>
+    <p class="subtitle">Порядок блоков сверху вниз</p>
+
+    <div class="card">
+        <table>
+            <tr>
+                <th>№</th>
+                <th>Блок</th>
+                <th>Содержание</th>
+            </tr>
+            <tr>
+                <td>01</td>
+                <td><strong>Hero Section</strong></td>
+                <td>Полноэкранное фото (паста с беконом), логотип, слоган <em>«Time to enjoy»</em>. CTA-кнопка «Смотреть меню».</td>
+            </tr>
+            <tr>
+                <td>02</td>
+                <td><strong>О нас</strong></td>
+                <td>Эмоциональный манифест в журнальном стиле. Тёплые оттенки, традиции итальянской кухни.</td>
+            </tr>
+            <tr>
+                <td>03</td>
+                <td><strong>Меню</strong></td>
+                <td>Интерактивные вкладки (Пицца · Паста · Закуски · Напитки). Сочные карточки в 2 колонки с фото и ценами.</td>
+            </tr>
+            <tr>
+                <td>04</td>
+                <td><strong>Хиты сезона</strong></td>
+                <td>Карусель шеф-повара: сезонные новинки, комбо-наборы, special offers.</td>
+            </tr>
+            <tr>
+                <td>05</td>
+                <td><strong>Интерьер & Гости</strong></td>
+                <td>Галерея атмосферы в стиле Editorial — модный журнал о еде и жизни.</td>
+            </tr>
+            <tr>
+                <td>06</td>
+                <td><strong>Бронирование</strong></td>
+                <td>Форма брони столика, карта проезда, часы работы, ссылки на соцсети.</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<!-- ============ СТРАНИЦА 4: ПРИМЕРЫ МЕНЮ ============ -->
+<div class="section">
+    <h2>Примеры карточек меню</h2>
+    <p class="subtitle">Визуальный принцип: фото 50% + текст 50%</p>
+
+    <h3>Pasta</h3>
+    <div class="menu-grid">
+        <div class="dish-card">
+            <div class="dish-img">Pasta Carbonara</div>
+            <div class="dish-info">
+                <h4>Carbonara Classica</h4>
+                <div class="dish-desc">Спагетти, гуанчиале, пекорино романо, яичный желток, чёрный перец</div>
+                <div class="dish-weight">320 г</div>
+                <div class="dish-price">4 200 ֏</div>
+            </div>
+        </div>
+        <div class="dish-card">
+            <div class="dish-img">Pasta alla Norma</div>
+            <div class="dish-info">
+                <h4>Norma Siciliana</h4>
+                <div class="dish-desc">Ригатони, баклажаны, томатный соус, рикотта салата, базилик</div>
+                <div class="dish-weight">350 г</div>
+                <div class="dish-price">3 900 ֏</div>
+            </div>
+        </div>
+    </div>
+
+    <h3>Pizza</h3>
+    <div class="menu-grid">
+        <div class="dish-card">
+            <div class="dish-img">Pizza Margherita</div>
+            <div class="dish-info">
+                <h4>Margherita DOP</h4>
+                <div class="dish-desc">Тесто на закваске, томаты San Marzano, моцарелла фиор ди латте, базилик</div>
+                <div class="dish-weight">480 г</div>
+                <div class="dish-price">4 500 ֏</div>
+            </div>
+        </div>
+        <div class="dish-card">
+            <div class="dish-img">Pizza Diavola</div>
+            <div class="dish-info">
+                <h4>Diavola Piccante</h4>
+                <div class="dish-desc">Острая салями, моцарелла, томатный соус, чили, орегано</div>
+                <div class="dish-weight">510 г</div>
+                <div class="dish-price">4 900 ֏</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top: 25px;">
+        <h3>Принципы визуализации меню</h3>
+        <ul>
+            <li><span class="tag">50/50</span> Фотографии блюд занимают не менее половины карточки — вызывают мгновенный аппетит.</li>
+            <li><span class="tag">Интерактив</span> По клику открывается модалка: увеличенное фото, граммовка, КБЖУ, состав.</li>
+            <li><span class="tag">Адаптив</span> На смартфонах карточки — на всю ширину с крупными ценами и кнопками.</li>
+            <li><span class="tag">Типографика</span> Курсивные описания + жирные цены для моментального сканирования.</li>
+        </ul>
+    </div>
+</div>
+
+<!-- ============ ФИНАЛЬНАЯ СТРАНИЦА ============ -->
+<div class="section">
+    <div class="final-page">
+        <div class="cover-ornament" style="color: #D9C3A9;">✦ ✦ ✦</div>
+        <h2 style="margin-top: 20px;">InTempo</h2>
+        <div class="cover-divider" style="width: 60px; height: 2px; background: #D33F2E; margin: 20px auto;"></div>
+        <p class="italic" style="font-size: 14pt; color: #7A7267; margin-top: 15px;">Time to enjoy</p>
+
+        <div class="final-contacts">
+            <strong>Контакты</strong>
+            Ереван, Северный проспект 10/3<br>
+            Ежедневно · 09:00 – 24:00<br>
+            +374 77 966 933<br>
+            <br>
+            <em style="color: #D33F2E; letter-spacing: 2px;">Instagram · @intempo_italian_restaurant</em>
+        </div>
+    </div>
 </div>
 
 </body>
@@ -209,4 +621,4 @@ html_content = """
 
 output_path = "InTempo_Brandbook_and_Landing_Structure.pdf"
 HTML(string=html_content).write_pdf(output_path)
-print("PDF generated successfully.")
+print("✅ PDF generated: " + output_path)
