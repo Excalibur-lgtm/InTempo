@@ -8,7 +8,9 @@
 <link rel="preload" href="images/logoIntempo.png" as="image" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
+<!-- ШРИФТЫ НЕ БЛОКИРУЮТ ЗАГРУЗКУ СТРАНИЦЫ -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet"></noscript>
 <script>
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
   document.addEventListener('DOMContentLoaded', function(){
@@ -308,7 +310,7 @@
 
 <header class="hero" id="top">
   <div class="hero-media">
-    <video id="heroVideo" autoplay muted loop playsinline preload="auto" poster="images/page-01.jpg">
+    <video id="heroVideo" autoplay muted loop playsinline preload="metadata" poster="images/page-01.jpg">
       <source src="images/HeroVideo.mp4" type="video/mp4">
     </video>
   </div>
@@ -370,15 +372,14 @@
 
 <script>
 /* ============================================================================
-   ФОТО ИЗ ПАПКИ Images-final/ ПО СХЕМЕ pageNN_imgM.jpg
-   Всё до page22_img1.jpg — БЕЗ ИЗМЕНЕНИЙ (тексты и фото).
-   С page23 по page52 — названия/ингредиенты/цены СОЗДАНЫ КАК ЗАГОТОВКА,
-   пользователь их позже поправит.
+   ФОТО ИЗ Images-final/ ПО СХЕМЕ pageNN_imgM.jpg
+   Всё до page22_img1.jpg — БЕЗ ИЗМЕНЕНИЙ.
+   page23–page52 — заготовки (названия/цены пользователь поправит).
    ============================================================================ */
 const IMG_DIR = 'Images-final/';
 
 const MENU = [
-  /* ================= ЗАКУСКИ (без изменений) ================= */
+  /* ================= ЗАКУСКИ ================= */
   { id:'starters', t:{hy:'Նախուտեստներ',en:'Starters',ru:'Закуски'}, scenes:[
     { dishes:[
       { img:IMG_DIR+'page03_img1.jpg', price:2700,
@@ -443,7 +444,7 @@ const MENU = [
         d:{hy:'Կարտոֆիլ, հեղինակային բոլոնեզ, սերուցքային պանիր',en:'Potatoes, Signature Bolognese, Cream cheese',ru:'Картофель, фирменный болоньезе, сливочный сыр'} },
     ]},
   ]},
-  /* ================= САЛАТЫ (без изменений) ================= */
+  /* ================= САЛАТЫ ================= */
   { id:'salads', t:{hy:'Աղցաններ',en:'Salads',ru:'Салаты'}, scenes:[
     { dishes:[
       { img:IMG_DIR+'page14_img1.jpg', price:3900,
@@ -480,7 +481,7 @@ const MENU = [
         d:{hy:'Ավոկադո, քինոա, դդմիկ, դդում, ռուկոլա',en:'Avocado, quinoa, squash, pumpkin, arugula',ru:'Авокадо, киноа, кабачок, тыква, руккола'} },
     ]},
   ]},
-  /* ================= СУПЫ (без изменений) ================= */
+  /* ================= СУПЫ ================= */
   { id:'soups', t:{hy:'Ապուրներ',en:'Soups',ru:'Супы'}, scenes:[
     { dishes:[
       { img:IMG_DIR+'page19_img2.jpg', price:1900,
@@ -491,7 +492,7 @@ const MENU = [
         d:{hy:'San Marzano լոլիկ, պարմեզան, բազիլիկ',en:'San Marzano tomatoes, parmesan, basil',ru:'Помидоры Сан-Марцано, пармезан, базилик'} },
     ]},
   ]},
-  /* ================= ПАСТА (до page22 без изменений) ================= */
+  /* ================= ПАСТА ================= */
   { id:'pasta', t:{hy:'Պաստա',en:'Pasta',ru:'Паста'}, scenes:[
     { dishes:[
       { img:IMG_DIR+'page20_img1.jpg', price:2900,
@@ -511,7 +512,6 @@ const MENU = [
         n:{hy:'Ֆետուչինի մարինարա',en:'Fettuccine Marinara',ru:'Феттучини маринара'},
         d:{hy:'Ֆետուչինի պաստա, լոլիկի սոուս, սերուցքային պանիր, պարմեզան',en:'Fettuccine pasta, tomato sauce, cream cheese, parmesan',ru:'Паста феттучини, томатный соус, сливочный сыр, пармезан'} },
     ]},
-    /* ----- НОВЫЕ ЗАГОТОВКИ (page23–page25) ----- */
     { dishes:[
       { img:IMG_DIR+'page23_img1.jpg', price:2700,
         n:{hy:'Պեննե արաբիատա',en:'Penne all\u2019Arrabbiata',ru:'Пенне арраббиата'},
@@ -531,7 +531,7 @@ const MENU = [
         d:{hy:'Կարտոֆիլի նյոկի, գորգոնզոլա, սերուցք, ընկույզ',en:'Potato gnocchi, gorgonzola, cream, walnuts',ru:'Ньокки из картофеля, горгонзола, сливки, грецкий орех'} },
     ]},
   ]},
-  /* ================= БУРГЕРЫ И СЭНДВИЧИ (заготовки) ================= */
+  /* ================= БУРГЕРЫ И СЭНДВИЧИ ================= */
   { id:'burgers', t:{hy:'Բուրգերներ և սենդվիչներ',en:'Burgers & Sandwiches',ru:'Бургеры и сэндвичи'}, scenes:[
     { dishes:[
       { img:IMG_DIR+'page26_img1.jpg', price:4200,
@@ -573,7 +573,7 @@ const MENU = [
         d:{hy:'Քաշված հավ, կոլսլո, BBQ սոուս, բրիոշ',en:'Pulled chicken, coleslaw, BBQ sauce, brioche',ru:'Рваная курица, коулслоу, соус BBQ, бриошь'} },
     ]},
   ]},
-  /* ================= ПЬЯДИНА (заготовки) ================= */
+  /* ================= ПЬЯДИНА ================= */
   { id:'piadina', t:{hy:'Պիադինա',en:'Piadina',ru:'Пьядина'}, scenes:[
     { dishes:[
       { img:IMG_DIR+'page32_img1.jpg', price:3500,
@@ -595,7 +595,7 @@ const MENU = [
         d:{hy:'Թխած բանջարեղեն, մոցարելլա, բազիլիկ',en:'Grilled vegetables, mozzarella, basil',ru:'Запечённые овощи, моцарелла, базилик'} },
     ]},
   ]},
-  /* ================= ОСНОВНЫЕ БЛЮДА (заготовки) ================= */
+  /* ================= ОСНОВНЫЕ БЛЮДА ================= */
   { id:'mains', t:{hy:'Հիմնական ուտեստներ',en:'Main Courses',ru:'Основные блюда'}, scenes:[
     { dishes:[
       { img:IMG_DIR+'page34_img1.jpg', price:5600,
@@ -636,7 +636,7 @@ const MENU = [
         d:{hy:'Սմբուկ, դդմիկ, պղպեղ, ձիթապտղի ձեթ',en:'Eggplant, zucchini, pepper, olive oil',ru:'Баклажан, цукини, перец, оливковое масло'} },
     ]},
   ]},
-  /* ================= ДЕСЕРТЫ (заготовки, page41–page52) ================= */
+  /* ================= ДЕСЕРТЫ ================= */
   { id:'desserts', t:{hy:'Աղանդեր',en:'Desserts',ru:'Десерты'}, scenes:[
     { dishes:[
       { img:IMG_DIR+'page41_img1.jpg', price:2800,
@@ -756,6 +756,26 @@ let currentLang = 'hy';
 const fmtPrice = n => (n == null ? '—' : String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' ') + ' ֏');
 const canHover = window.matchMedia('(hover:hover)').matches;
 
+/* ---------- НАДЕЖНОЕ ОТКРЫТИЕ: loader скроется ВСЕГДА ---------- */
+let revealed = false;
+function revealOnce(){
+  if (revealed) return;
+  revealed = true;
+  const l = document.getElementById('loader');
+  if (l) l.classList.add('done');
+  const n = document.getElementById('nav');
+  if (n) n.classList.add('ready');
+  const h = document.querySelector('.hero');
+  if (h) h.classList.add('ready');
+  checkImages();
+}
+window.addEventListener('load', () => {
+  window.scrollTo(0, 0);
+  setTimeout(revealOnce, 1200);
+});
+/* FAILSAFE: даже если любой ресурс зависнет — страница откроется через 4 сек */
+setTimeout(revealOnce, 4000);
+
 function closeAllPops(){
   document.querySelectorAll('.hotspot.open').forEach(h => h.classList.remove('open'));
 }
@@ -816,12 +836,114 @@ function renderMenu(lang){
       const scene = document.createElement('div');
       scene.className = 'scene';
 
+      /* ВСЕ фото ленивые — не блокируют открытие страницы */
       const imgs = sc.dishes.map((d, i) => {
         const im = document.createElement('img');
         im.className = 'scene-img' + (i === 0 ? ' active' : '');
         im.src = d.img;
         im.alt = d.n[lang];
-        im.loading = i === 0 ? 'eager' : 'lazy';
+        im.loading = 'lazy';
+        im.decoding = 'async';
         attachImgFallback(im);
         scene.appendChild(im);
-        return im
+        return im;
+      });
+
+      const hs = document.createElement('button');
+      hs.className = 'hotspot';
+      hs.innerHTML =
+        '<span class="hs-dot"></span>' +
+        '<div class="hs-pop"><div class="hs-pop-in">' +
+          '<div class="hs-name"></div>' +
+          '<div class="hs-desc"></div>' +
+          '<div class="hs-meta"><span class="hs-price"></span><span class="hs-kicker">In Tempo</span></div>' +
+        '</div></div>';
+      scene.appendChild(hs);
+      const hsName = hs.querySelector('.hs-name');
+      const hsDesc = hs.querySelector('.hs-desc');
+      const hsPrice = hs.querySelector('.hs-price');
+
+      function fillPopup(i){
+        const d = sc.dishes[i];
+        hsName.textContent = d.n[lang];
+        if (d.d[lang]) { hsDesc.textContent = d.d[lang]; hsDesc.style.display = ''; }
+        else hsDesc.style.display = 'none';
+        hsPrice.textContent = fmtPrice(d.price);
+        hs.setAttribute('aria-label', d.n[lang]);
+      }
+      fillPopup(0);
+
+      hs.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const was = hs.classList.contains('open');
+        closeAllPops();
+        if (!was) hs.classList.add('open');
+      });
+      if (canHover){
+        hs.addEventListener('mouseenter', () => { closeAllPops(); hs.classList.add('open'); });
+        hs.addEventListener('mouseleave', () => hs.classList.remove('open'));
+      }
+
+      let dots = [];
+      if (sc.dishes.length > 1){
+        const wrap = document.createElement('div');
+        wrap.className = 'sw-dots';
+        sc.dishes.forEach((d, i) => {
+          const dt = document.createElement('button');
+          dt.className = 'sw-dot' + (i === 0 ? ' active' : '');
+          dt.setAttribute('aria-label', d.n[lang]);
+          dt.addEventListener('click', (e) => {
+            e.stopPropagation();
+            imgs.forEach((im, k) => im.classList.toggle('active', k === i));
+            dots.forEach((dd, k) => dd.classList.toggle('active', k === i));
+            fillPopup(i);
+          });
+          wrap.appendChild(dt);
+          dots.push(dt);
+        });
+        scene.appendChild(wrap);
+      }
+
+      const tag = document.createElement('div');
+      tag.className = 'scene-tag';
+      tag.innerHTML = '<i></i><span>' + DICT[lang].tap + '</span>';
+      scene.appendChild(tag);
+
+      card.appendChild(scene);
+      grid.appendChild(card);
+      io.observe(card);
+    });
+
+    io.observe(sec.querySelector('.category-header'));
+    root.appendChild(sec);
+  });
+}
+
+function applyLang(lang){
+  currentLang = lang;
+  const d = DICT[lang] || DICT.hy;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k = el.getAttribute('data-i18n'); if (d[k] !== undefined) el.textContent = d[k];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el=>{
+    const k = el.getAttribute('data-i18n-html'); if (d[k] !== undefined) el.innerHTML = d[k];
+  });
+  document.documentElement.lang = lang;
+  document.title = d.title;
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active', b.dataset.lang===lang));
+  try{ localStorage.setItem('intempo_lang', lang); }catch(e){}
+  renderMenu(lang);
+}
+document.querySelectorAll('.lang-btn').forEach(b=>b.addEventListener('click', ()=>applyLang(b.dataset.lang)));
+let savedLang = 'hy';
+try{ savedLang = localStorage.getItem('intempo_lang') || 'hy'; }catch(e){}
+/* ошибка в меню больше не может убить страницу */
+try { applyLang(savedLang); } catch(e){ console.error('❌ Menu init error:', e); }
+
+const navEl = document.getElementById('nav');
+addEventListener('scroll', () => navEl.classList.toggle('scrolled', scrollY > 40), {passive:true});
+
+document.querySelectorAll('.rv').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
