@@ -8,7 +8,6 @@
 <link rel="preload" href="images/logoIntempo.png" as="image" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- ШРИФТЫ НЕ БЛОКИРУЮТ ЗАГРУЗКУ СТРАНИЦЫ -->
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet"></noscript>
 <script>
@@ -161,16 +160,9 @@
   .scene-tag i{width:5px;height:5px;border-radius:50%;background:var(--red);animation:pulse 2s ease-in-out infinite;}
   @keyframes pulse{0%,100%{opacity:.5;}50%{opacity:1;}}
 
-  .sw-dots{position:absolute;right:12px;bottom:12px;z-index:6;display:flex;gap:8px;}
-  .sw-dot{
-    width:12px;height:12px;border-radius:50%;padding:0;cursor:pointer;
-    border:1.5px solid rgba(241,239,233,.95);background:rgba(43,38,34,.4);
-    transition:.25s;
-  }
-  .sw-dot.active{background:var(--red);border-color:var(--red);transform:scale(1.25);}
-
+  /* ---- ТОЧКИ-ПОИНТЫ НА БЛЮДАХ (без лишних кнопок) ---- */
   .hotspot{
-    position:absolute;left:50%;top:55%;transform:translate(-50%,-50%);
+    position:absolute;transform:translate(-50%,-50%);
     width:44px;height:44px;border:0;background:none;cursor:pointer;z-index:4;
     -webkit-tap-highlight-color:transparent;
   }
@@ -210,6 +202,19 @@
   }
   .hotspot.open .hs-pop{opacity:1;visibility:visible;pointer-events:auto;}
   .hotspot.open .hs-pop-in{transform:translateY(0) scale(1);}
+  /* позиция всплывашки относительно точки */
+  .hotspot.pop-below .hs-pop{bottom:auto;top:calc(100% + 12px);}
+  .hotspot.pop-below .hs-pop-in{transform-origin:top center;transform:translateY(-8px) scale(.94);}
+  .hotspot.pop-below.open .hs-pop-in{transform:translateY(0) scale(1);}
+  .hotspot.pop-below .hs-pop::after{top:auto;bottom:100%;border-top-color:transparent;border-bottom-color:var(--paper);}
+  .hotspot.pop-left .hs-pop{left:-17px;margin-left:0;}
+  .hotspot.pop-left .hs-pop-in{transform-origin:bottom left;}
+  .hotspot.pop-left .hs-pop::after{left:24px;margin-left:0;}
+  .hotspot.pop-right .hs-pop{left:auto;right:-17px;margin-left:0;}
+  .hotspot.pop-right .hs-pop-in{transform-origin:bottom right;}
+  .hotspot.pop-right .hs-pop::after{left:auto;right:24px;margin-left:0;}
+  .hotspot.pop-below.pop-left .hs-pop-in{transform-origin:top left;}
+  .hotspot.pop-below.pop-right .hs-pop-in{transform-origin:top right;}
 
   .hs-name{font-family:var(--serif);font-weight:600;font-size:15px;line-height:1.3;color:var(--ink);margin-bottom:6px;}
   .hs-desc{font-size:12px;line-height:1.55;color:var(--muted);margin-bottom:9px;}
@@ -263,6 +268,8 @@
     .mq-track span{font-size:14px;padding:0 16px;}
     .menu-grid{grid-template-columns:1fr;}
     .hs-pop{width:210px;margin-left:-105px;}
+    .hotspot.pop-left .hs-pop{left:-10px;}
+    .hotspot.pop-right .hs-pop{right:-10px;}
     .contact-sec{padding:64px 0;}
     .contact-sub{font-size:14px;padding:0 6vw;}
     .phone{font-size:clamp(26px,8vw,40px);}
@@ -372,9 +379,10 @@
 
 <script>
 /* ============================================================================
-   ФОТО ИЗ Images-final/ ПО СХЕМЕ pageNN_imgM.jpg
-   Всё до page22_img1.jpg — БЕЗ ИЗМЕНЕНИЙ.
-   page23–page52 — заготовки (названия/цены пользователь поправит).
+   ТОЧКИ-ПОИНТЫ: x,y = позиция точки на фото (в %).
+   Кол-во точек = кол-во блюд = ваш список.
+   Десерты 1: точка1 слева-внизу, точка2 справа-вверху.
+   Десерты 9: 3 точки — слева-сверху, середина-слева, справа-внизу.
    ============================================================================ */
 const IMG_DIR = 'Images-final/';
 
@@ -382,64 +390,64 @@ const MENU = [
   /* ================= ЗАКУСКИ ================= */
   { id:'starters', t:{hy:'Նախուտեստներ',en:'Starters',ru:'Закуски'}, scenes:[
     { dishes:[
-      { img:IMG_DIR+'page03_img1.jpg', price:2700,
+      { img:IMG_DIR+'page03_img1.jpg', x:50, y:55, price:2700,
         n:{hy:'Բրուսկետտա պրոշուտտոյով և տապենադով',en:'Bruschetta Crudo with Tapenade',ru:'Брускетта с прошутто и тапенадом'},
         d:{hy:'Պրոշուտո, կալամատա, սերուցքային պանիր, բազիլիկ',en:'Crudo, kalamata olives, cream cheese, basil',ru:'Прошутто, каламата, сливочный сыр, базилик'} },
     ]},
     { dishes:[
-      { img:IMG_DIR+'page04_img1.jpg', price:2100,
+      { img:IMG_DIR+'page04_img1.jpg', x:35, y:35, price:2100,
         n:{hy:'Բրուսկետտա լոլիկով ոչ ավանդական',en:'Bruschetta with Tomatoes Non-Traditional',ru:'Брускетта с помидорами нетрадиционная'},
         d:{hy:'Լոլիկ, սերուցքային պանիր, բազիլիկ',en:'Tomatoes, cream cheese, basil',ru:'Помидор, сливочный сыр, базилик'} },
-      { img:IMG_DIR+'page04_img1.jpg', price:2300,
+      { img:IMG_DIR+'page04_img2.jpg', x:65, y:68, price:2300,
         n:{hy:'Բրուսկետտա մորտադելլայով և պիստակի կրեմով',en:'Bruschetta Mortadella with Pistachio Cream',ru:'Брускетта с мортаделлой и фисташковым кремом'},
         d:{hy:'Մորտադելլա, պիստակի կրեմ, բազիլիկ',en:'Mortadella, pistachio cream, basil',ru:'Мортаделла, фисташковый крем, базилик'} },
     ]},
     { dishes:[
-      { img:IMG_DIR+'page05_img1.jpg', price:2400,
+      { img:IMG_DIR+'page05_img1.jpg', x:50, y:55, price:2400,
         n:{hy:'Գրիլ վրայի բանջարեղեն',en:'Grilled Vegetables',ru:'Овощи на гриле'},
         d:{hy:'Պղպեղ, դդմիկ, սունկ, չերի լոլիկ, ֆարմեր սոուս',en:'Pepper, zucchini, mushroom, cherry tomatoes, Farmer sauce',ru:'Перец, кабачки, грибы, черри, фермерский соус'} },
     ]},
     { dishes:[
-      { img:IMG_DIR+'page06_img1.jpg', price:2100,
+      { img:IMG_DIR+'page06_img1.jpg', x:50, y:55, price:2100,
         n:{hy:'Խրթափավ հավի կրծքամիս կարտոֆիլ ֆրիով և չեդեր պանրով',en:'Crispy Chicken Breast with French Fries and Cheddar',ru:'Салат с хрустящей курицей, картофелем фри и чеддером'},
         d:{hy:'Հավի կրծքամիս, կարտոֆիլ ֆրի, ֆիրմային սոուս, չեդեր պանիր, բեկոն',en:'Chicken breast, French fries, signature sauce, cheddar, bacon',ru:'Куриная грудка, картофель фри, фирменный соус, чеддер, бекон'} },
     ]},
     { dishes:[
-      { img:IMG_DIR+'page07_img1.jpg', price:1900,
+      { img:IMG_DIR+'page07_img1.jpg', x:50, y:55, price:1900,
         n:{hy:'Մոցարելլայի ձողիկներ ԻնՏեմպո ոճով',en:'Mozzarella Sticks InTempo Style',ru:'Палочки из моцареллы в стиле InTempo'},
         d:{hy:'Մոցարելլայի ձողիկներ, ֆիրմային մայոնեզ, չեդեր, բեկոն, պարմեզան, կանաչ սոխ',en:'Mozzarella sticks, signature mayonnaise, cheddar, bacon, parmesan, green onion',ru:'Палочки из моцареллы, фирменный майонез, чеддер, бекон, пармезан, зелёный лук'} },
     ]},
     { dishes:[
-      { img:IMG_DIR+'page08_img1.jpg', price:2100,
+      { img:IMG_DIR+'page08_img1.jpg', x:50, y:55, price:2100,
         n:{hy:'Հավի տեմպուրա ԻնՏեմպոյում',en:'Chicken Tempura at InTempo',ru:'Куриная темпура в InTempo'},
         d:{hy:'Հավի կրծքամիս, չեդեր',en:'Chicken breast, cheddar',ru:'Куриная грудка, чеддер'} },
     ]},
     { dishes:[
-      { img:IMG_DIR+'page09_img1.jpg', price:3600,
+      { img:IMG_DIR+'page09_img1.jpg', x:50, y:55, price:3600,
         n:{hy:'Ծովախեցգետնի տեմպուրա',en:'Shrimp Tempura',ru:'Креветки темпура'},
         d:{hy:'Ծովախեցգետին, քաղցր չիլի սոուս',en:'Shrimps, sweet chili sauce',ru:'Креветки, сладкий соус чили'} },
     ]},
     { dishes:[
-      { img:IMG_DIR+'page10_img1.jpg', price:2500,
+      { img:IMG_DIR+'page10_img1.jpg', x:50, y:55, price:2500,
         n:{hy:'Հավի թևիկներ ԻնՏեմպոյում',en:'Chicken Wings at InTempo',ru:'Куриные крылышки в InTempo'},
         d:{hy:'Հավի թևիկներ, BBQ սոուս, պարմեզան, կանաչ սոխ',en:'Chicken wings, BBQ sauce, parmesan, green onions',ru:'Куриные крылышки, соус BBQ, пармезан, зелёный лук'} },
     ]},
     { dishes:[
-      { img:IMG_DIR+'page11_img1.jpg', price:3900,
+      { img:IMG_DIR+'page11_img1.jpg', x:35, y:35, price:3900,
         n:{hy:'Մսի ափսե',en:'Meat Platter',ru:'Мясная тарелка'},
         d:{hy:'Չորիզո, մորտադելլա, պրոշուտտո, միլանո սալյամի, ֆիրմային հաց, մանանեխ',en:'Chorizo, Mortadella, Prosciutto, Milano salami, signature bread, yellow mustard',ru:'Чоризо, мортаделла, прошутто, миланская салями, фирменный хлеб, горчица'} },
-      { img:IMG_DIR+'page11_img1.jpg', price:3300,
+      { img:IMG_DIR+'page11_img2.jpg', x:65, y:68, price:3300,
         n:{hy:'Պանրի ափսե',en:'Cheese Platter',ru:'Сырная тарелка'},
         d:{hy:'Պարմեզան, բրի, ռոքոր, թարմ մոցարելլա, ֆիրմային հաց, կարագ, մեղր',en:'Parmesan, Brie, Roquefort, fresh Mozzarella, signature bread, butter, honey',ru:'Пармезан, бри, рокфор, моцарелла свежая, фирменный хлеб, сливочное масло, мёд'} },
     ]},
     { dishes:[
-      { img:IMG_DIR+'page13_img1.jpg', price:1600,
+      { img:IMG_DIR+'page13_img1.jpg', x:30, y:25, price:1600,
         n:{hy:'Էքսկլյուզիվ կարտոֆիլ ֆրի ֆարմեր սոուսով',en:'Exclusive French Fries with Farmer\u2019s Sauce',ru:'Эксклюзивный картофель фри с фермерским соусом'},
         d:{hy:'Կարտոֆիլ, մատուցվում է չեդերով և ֆարմեր սոուսով',en:'Potatoes, served with cheddar, Farmer sauce',ru:'Картофель, подается с чеддером и фермерским соусом'} },
-      { img:IMG_DIR+'page13_img1.jpg', price:1100,
+      { img:IMG_DIR+'page13_img2.jpg', x:50, y:52, price:1100,
         n:{hy:'Կարտոֆիլ ֆրի',en:'French Fries',ru:'Картофель фри'},
         d:{hy:'',en:'',ru:''} },
-      { img:IMG_DIR+'page13_img1.jpg', price:1900,
+      { img:IMG_DIR+'page13_img3.jpg', x:70, y:78, price:1900,
         n:{hy:'Կարտոֆիլ ֆրի ալլա Բոլոնեզ',en:'French Fries Alla Bolognese',ru:'Картофель фри алла Болоньезе'},
         d:{hy:'Կարտոֆիլ, հեղինակային բոլոնեզ, սերուցքային պանիր',en:'Potatoes, Signature Bolognese, Cream cheese',ru:'Картофель, фирменный болоньезе, сливочный сыр'} },
     ]},
@@ -447,36 +455,36 @@ const MENU = [
   /* ================= САЛАТЫ ================= */
   { id:'salads', t:{hy:'Աղցաններ',en:'Salads',ru:'Салаты'}, scenes:[
     { dishes:[
-      { img:IMG_DIR+'page14_img1.jpg', price:3900,
+      { img:IMG_DIR+'page14_img1.jpg', x:50, y:55, price:3900,
         n:{hy:'Ստեյկ աղցան',en:'Steak Salad',ru:'Стейк-салат'},
         d:{hy:'Հորթի փափկամիս, խորոված պղպեղի կոնֆի, միքս աղցան, պարմեզան',en:'Veal tenderloin, grilled pepper confit, mixed salad, parmesan',ru:'Телячья вырезка, жареный перец конфи, микс салат, пармезан'} },
     ]},
     { dishes:[
-      { img:IMG_DIR+'page15_img1.jpg', price:2900,
+      { img:IMG_DIR+'page15_img1.jpg', x:35, y:35, price:2900,
         n:{hy:'Կապրեզե աղցան ԻնՏեմպոյում',en:'Caprese Salad at InTempo',ru:'Салат Капрезе в InTempo'},
         d:{hy:'Լոլիկ, թարմ մոցարելլա, բազիլիկ, պեստո սոուս',en:'Tomato, fresh mozzarella, basil, pesto sauce',ru:'Помидоры, свежая моцарелла, базилик, соус песто'} },
-      { img:IMG_DIR+'page15_img1.jpg', price:3300,
+      { img:IMG_DIR+'page15_img2.jpg', x:65, y:68, price:3300,
         n:{hy:'Հավով Կեսար աղցան ԻնՏեմպոյում',en:'Chicken Caesar Salad at InTempo',ru:'Салат «Цезарь» с курицей в InTempo'},
         d:{hy:'Հավի կրծքամիս, պեկինյան կաղամբ, հեղինակային կեսար սոուս, ֆիրմային գրիսինի, պարմեզան',en:'Chicken breast, Peking cabbage, signature Caesar dressing, signature grissini, parmesan',ru:'Куриная грудка, пекинская капуста, фирменный соус «Цезарь», фирменные гриссини, пармезан'} },
     ]},
     { dishes:[
-      { img:IMG_DIR+'page16_img1.jpg', price:3900,
+      { img:IMG_DIR+'page16_img1.jpg', x:50, y:55, price:3900,
         n:{hy:'Ավոկադոյով և քաղցրահամ լոլիկով աղցան',en:'Avocado & Sweet Tomato Salad',ru:'Салат с авокадо и сладкими томатами'},
         d:{hy:'Լոլիկ, ավոկադո, սերուցքային պանիր, extra virgin ձիթապտղի յուղ, բազիլիկ, չորս պղպեղ, կիտրոն',en:'Tomatoes, avocado, cream cheese, extra virgin olive oil, basil, four-pepper blend, lemon',ru:'Томаты, авокадо, сливочный сыр, оливковое масло extra virgin, базилик, смесь четырёх перцев, лимон'} },
     ]},
     { dishes:[
-      { img:IMG_DIR+'page17_img1.jpg', price:2800,
+      { img:IMG_DIR+'page17_img1.jpg', x:35, y:35, price:2800,
         n:{hy:'Հեղինակային ֆարմեր աղցան',en:'Signature Farmer\u2019s Salad',ru:'Фирменный Фермер салат'},
         d:{hy:'Հավի կրծքամիս, վարունգ, միքս աղցան, չերի լոլիկ, հեղինակային ֆարմեր սոուս',en:'Chicken breast, cucumber, mixed salad, cherry tomatoes, signature farmer\u2019s sauce',ru:'Куриная грудка, огурец, микс-салат, помидоры черри, фирменный фермерский соус'} },
-      { img:IMG_DIR+'page17_img1.jpg', price:3100,
+      { img:IMG_DIR+'page17_img2.jpg', x:65, y:68, price:3100,
         n:{hy:'Հունական աղցան ԻնՏեմպոյում',en:'Greek Salad at InTempo',ru:'Греческий салат в InTempo'},
         d:{hy:'Վարունգ, կալամատա ձիթապտուղ, կանաչ ձիթապտուղ, ֆետա էսպումա, գունավոր պղպեղ, մարինացված սոխ, բազիլիկ',en:'Cucumbers, Kalamata olives, green olives, feta espuma, colored peppers, marinated onions, basil',ru:'Огурец, оливки каламата, зеленые оливки, сыр фета эспума, разноцветный перец, маринованный лук, базилик'} },
     ]},
     { dishes:[
-      { img:IMG_DIR+'page18_img1.jpg', price:3400,
+      { img:IMG_DIR+'page18_img1.jpg', x:35, y:35, price:3400,
         n:{hy:'Հավով և ավոկադոյով աղցան ԻնՏեմպոյում',en:'Chicken and Avocado Salad at InTempo',ru:'Салат из курицы и авокадо в InTempo'},
         d:{hy:'Հավի կրծքամիս, ավոկադո, կարմիր կաղամբ, միքս աղցան, պարմեզան',en:'Chicken breast, avocado, red cabbage, mixed salad, parmesan',ru:'Куриная грудка, авокадо, красная капуста, микс салат, пармезан'} },
-      { img:IMG_DIR+'page18_img1.jpg', price:2900,
+      { img:IMG_DIR+'page18_img2.jpg', x:65, y:68, price:2900,
         n:{hy:'Քինոայով և ավոկադոյով աղցան',en:'Quinoa & Avocado Salad',ru:'Салат из киноа и авокадо'},
         d:{hy:'Ավոկադո, քինոա, դդմիկ, դդում, ռուկոլա',en:'Avocado, quinoa, squash, pumpkin, arugula',ru:'Авокадо, киноа, кабачок, тыква, руккола'} },
     ]},
@@ -484,10 +492,10 @@ const MENU = [
   /* ================= СУПЫ ================= */
   { id:'soups', t:{hy:'Ապուրներ',en:'Soups',ru:'Супы'}, scenes:[
     { dishes:[
-      { img:IMG_DIR+'page19_img2.jpg', price:1900,
+      { img:IMG_DIR+'page19_img1.jpg', x:35, y:35, price:1900,
         n:{hy:'Սնկով կրեմ-ապուր',en:'Mushroom Cream Soup',ru:'Грибной крем-суп'},
         d:{hy:'Սունկ, սերուցք, պարմեզան',en:'Mushroom, cream, parmesan',ru:'Грибы, сливки, пармезан'} },
-      { img:IMG_DIR+'page19_img2.jpg', price:1900,
+      { img:IMG_DIR+'page19_img2.jpg', x:65, y:68, price:1900,
         n:{hy:'Պապպա ալ Պոմոդորո լոլիկի ապուր',en:'Pappa al Pomodoro Tomato Soup',ru:'Томатный суп Pappa al Pomodoro'},
         d:{hy:'San Marzano լոլիկ, պարմեզան, բազիլիկ',en:'San Marzano tomatoes, parmesan, basil',ru:'Помидоры Сан-Марцано, пармезан, базилик'} },
     ]},
@@ -495,38 +503,38 @@ const MENU = [
   /* ================= ПАСТА ================= */
   { id:'pasta', t:{hy:'Պաստա',en:'Pasta',ru:'Паста'}, scenes:[
     { dishes:[
-      { img:IMG_DIR+'page20_img1.jpg', price:2900,
+      { img:IMG_DIR+'page20_img1.jpg', x:50, y:55, price:2900,
         n:{hy:'Սպագետտի ամատրիչանա շեֆից',en:'Spaghetti Amatriciana Chef\u2019s Style',ru:'Спагетти аматричана от шефа'},
         d:{hy:'Սպագետի ֆրեսկա, բեկոն, սերուցքային պանիր, լոլիկի սոուս, պարմեզան',en:'Spaghetti fresca, bacon, cream cheese, tomato sauce, parmesan',ru:'Спагетти фреска, бекон, сливочный сыр, томатный соус, пармезан'} },
     ]},
     { dishes:[
-      { img:IMG_DIR+'page21_img1.jpg', price:2900,
+      { img:IMG_DIR+'page21_img1.jpg', x:35, y:35, price:2900,
         n:{hy:'Սպագետտի կարբոնարա',en:'Spaghetti Carbonara',ru:'Спагетти карбонара'},
         d:{hy:'Սպագետի կարբոնարա, ձու, սերուցք, պարմեզան',en:'Spaghetti Carbonara, egg, cream, parmesan',ru:'Спагетти карбонара, яйцо, сливки, пармезан'} },
-      { img:IMG_DIR+'page21_img1.jpg', price:2800,
+      { img:IMG_DIR+'page21_img2.jpg', x:65, y:68, price:2800,
         n:{hy:'Սպագետտի կաչո է պեպե',en:'Spaghetti Cacio e Pepe',ru:'Спагетти качо э пепе'},
         d:{hy:'Սպագետի, սերուցք, պարմեզան, չորս պղպեղ, սերուցքային պանիր, բազիլիկ, կոնյակ',en:'Spaghetti cream, parmesan, four-pepper blend, cream cheese, basil, cognac',ru:'Спагетти, сливки, пармезан, смесь четырёх перцев, сливочный сыр, базилик, коньяк'} },
     ]},
     { dishes:[
-      { img:IMG_DIR+'page22_img1.jpg', price:2900,
+      { img:IMG_DIR+'page22_img1.jpg', x:50, y:55, price:2900,
         n:{hy:'Ֆետուչինի մարինարա',en:'Fettuccine Marinara',ru:'Феттучини маринара'},
         d:{hy:'Ֆետուչինի պաստա, լոլիկի սոուս, սերուցքային պանիր, պարմեզան',en:'Fettuccine pasta, tomato sauce, cream cheese, parmesan',ru:'Паста феттучини, томатный соус, сливочный сыр, пармезан'} },
     ]},
     { dishes:[
-      { img:IMG_DIR+'page23_img1.jpg', price:2700,
+      { img:IMG_DIR+'page23_img1.jpg', x:50, y:55, price:2700,
         n:{hy:'Պեննե արաբիատա',en:'Penne all\u2019Arrabbiata',ru:'Пенне арраббиата'},
         d:{hy:'Պեննե, լոլիկի սոուս, սխտոր, չիլի, բազիլիկ',en:'Penne, tomato sauce, garlic, chili, basil',ru:'Пенне, томатный соус, чеснок, чили, базилик'} },
     ]},
     { dishes:[
-      { img:IMG_DIR+'page24_img1.jpg', price:3400,
+      { img:IMG_DIR+'page24_img1.jpg', x:35, y:35, price:3400,
         n:{hy:'Ռավիոլի ռիկոտտայով և սպանախով',en:'Ravioli Ricotta e Spinaci',ru:'Равиоли с рикоттой и шпинатом'},
         d:{hy:'Ռիկոտտա, սպանախ, պարմեզան, կարագ',en:'Ricotta, spinach, parmesan, butter',ru:'Рикотта, шпинат, пармезан, сливочное масло'} },
-      { img:IMG_DIR+'page24_img1.jpg', price:3800,
+      { img:IMG_DIR+'page24_img2.jpg', x:65, y:68, price:3800,
         n:{hy:'Լինգվինե վոնգոլե',en:'Linguine alle Vongole',ru:'Лингвини с вонголе'},
         d:{hy:'Լինգվինե, վոնգոլե, սպիտակ գինի, սխտոր, մաղադանոս',en:'Linguine, clams, white wine, garlic, parsley',ru:'Лингвини, вонголе, белое вино, чеснок, петрушка'} },
     ]},
     { dishes:[
-      { img:IMG_DIR+'page25_img1.jpg', price:3200,
+      { img:IMG_DIR+'page25_img1.jpg', x:50, y:55, price:3200,
         n:{hy:'Նյոկի գորգոնզոլայով',en:'Gnocchi al Gorgonzola',ru:'Ньокки с горгонзолой'},
         d:{hy:'Կարտոֆիլի նյոկի, գորգոնզոլա, սերուցք, ընկույզ',en:'Potato gnocchi, gorgonzola, cream, walnuts',ru:'Ньокки из картофеля, горгонзола, сливки, грецкий орех'} },
     ]},
@@ -534,41 +542,41 @@ const MENU = [
   /* ================= БУРГЕРЫ И СЭНДВИЧИ ================= */
   { id:'burgers', t:{hy:'Բուրգերներ և սենդվիչներ',en:'Burgers & Sandwiches',ru:'Бургеры и сэндвичи'}, scenes:[
     { dishes:[
-      { img:IMG_DIR+'page26_img1.jpg', price:4200,
+      { img:IMG_DIR+'page26_img1.jpg', x:50, y:55, price:4200,
         n:{hy:'Դասական բուրգեր տավարի մսով',en:'Classic Beef Burger',ru:'Классический бургер с говядиной'},
         d:{hy:'Տավարի միս, չեդեր, սալատ, լոլիկ, ֆիրմային սոուս',en:'Beef, cheddar, lettuce, tomato, signature sauce',ru:'Говядина, чеддер, салат, томат, фирменный соус'} },
     ]},
     { dishes:[
-      { img:IMG_DIR+'page27_img1.jpg', price:3900,
+      { img:IMG_DIR+'page27_img1.jpg', x:50, y:55, price:3900,
         n:{hy:'Հավի բուրգեր',en:'Chicken Burger',ru:'Куриный бургер'},
         d:{hy:'Հավի ֆիլե, կոլսլո, չեդեր, մեղրով մանանեխ',en:'Chicken fillet, coleslaw, cheddar, honey mustard',ru:'Куриное филе, коулслоу, чеддер, медовая горчица'} },
     ]},
     { dishes:[
-      { img:IMG_DIR+'page28_img2.jpg', price:3700,
+      { img:IMG_DIR+'page28_img1.jpg', x:50, y:55, price:3700,
         n:{hy:'Բանջարեղենային բուրգեր',en:'Veggie Burger',ru:'Овощной бургер'},
         d:{hy:'Բանջարեղենային կոտլետ, ավոկադո, սալատ, լոլիկ, վեգան մայոնեզ',en:'Vegetable patty, avocado, lettuce, tomato, vegan mayo',ru:'Овощная котлета, авокадо, салат, томат, веганский майонез'} },
     ]},
     { dishes:[
-      { img:IMG_DIR+'page29_img1.jpg', price:4500,
+      { img:IMG_DIR+'page29_img1.jpg', x:35, y:35, price:4500,
         n:{hy:'BBQ բուրգեր բեկոնով',en:'BBQ Bacon Burger',ru:'BBQ бургер с беконом'},
         d:{hy:'Տավարի միս, բեկոն, չեդեր, BBQ սոուս, սոխ',en:'Beef, bacon, cheddar, BBQ sauce, onion',ru:'Говядина, бекон, чеддер, соус BBQ, лук'} },
-      { img:IMG_DIR+'page29_img1.jpg', price:4700,
+      { img:IMG_DIR+'page29_img2.jpg', x:65, y:68, price:4700,
         n:{hy:'Կրկնակի չիզբուրգեր',en:'Double Cheese Burger',ru:'Двойной чизбургер'},
         d:{hy:'Կրկնակի տավարի, կրկնակի չեդեր, թթու վարունգ, ֆիրմային սոուս',en:'Double beef, double cheddar, pickles, signature sauce',ru:'Двойная говядина, двойной чеддер, огурцы, фирменный соус'} },
     ]},
     { dishes:[
-      { img:IMG_DIR+'page30_img1.jpg', price:3800,
+      { img:IMG_DIR+'page30_img1.jpg', x:35, y:35, price:3800,
         n:{hy:'Կլաբ սենդվիչ',en:'Club Sandwich',ru:'Клаб сэндвич'},
         d:{hy:'Հավ, բեկոն, ձու, սալատ, տոստ',en:'Chicken, bacon, egg, lettuce, toast',ru:'Курица, бекон, яйцо, салат, тосты'} },
-      { img:IMG_DIR+'page30_img1.jpg', price:4100,
+      { img:IMG_DIR+'page30_img2.jpg', x:65, y:68, price:4100,
         n:{hy:'Պաստրամի սենդվիչ',en:'Pastrami Sandwich',ru:'Сэндвич с пастромой'},
         d:{hy:'Պաստրամի, մանանեխ, թթու վարունգ, տարեկանի հաց',en:'Pastrami, mustard, pickles, rye bread',ru:'Пастрома, горчица, огурцы, ржаной хлеб'} },
     ]},
     { dishes:[
-      { img:IMG_DIR+'page31_img1.jpg', price:4000,
+      { img:IMG_DIR+'page31_img1.jpg', x:35, y:35, price:4000,
         n:{hy:'Ձկնային սենդվիչ',en:'Fish Sandwich',ru:'Рыбный сэндвич'},
         d:{hy:'Սպիտակ ձուկ, տարտար սոուս, սալատ, լիմոն',en:'White fish, tartar sauce, lettuce, lemon',ru:'Белая рыба, соус тартар, салат, лимон'} },
-      { img:IMG_DIR+'page31_img1.jpg', price:3900,
+      { img:IMG_DIR+'page31_img2.jpg', x:65, y:68, price:3900,
         n:{hy:'Քաշված հավի սենդվիչ',en:'Pulled Chicken Sandwich',ru:'Сэндвич с рваной курицей'},
         d:{hy:'Քաշված հավ, կոլսլո, BBQ սոուս, բրիոշ',en:'Pulled chicken, coleslaw, BBQ sauce, brioche',ru:'Рваная курица, коулслоу, соус BBQ, бриошь'} },
     ]},
@@ -576,21 +584,21 @@ const MENU = [
   /* ================= ПЬЯДИНА ================= */
   { id:'piadina', t:{hy:'Պիադինա',en:'Piadina',ru:'Пьядина'}, scenes:[
     { dishes:[
-      { img:IMG_DIR+'page32_img1.jpg', price:3500,
+      { img:IMG_DIR+'page32_img1.jpg', x:35, y:35, price:3500,
         n:{hy:'Պիադինա մոցարելլայով և լոլիկով',en:'Piadina with Mozzarella and Tomato',ru:'Пьядина с моцареллой и томатом'},
         d:{hy:'Մոցարելլա, լոլիկ, բազիլիկ, ձիթապտղի ձեթ',en:'Mozzarella, tomato, basil, olive oil',ru:'Моцарелла, томат, базилик, оливковое масло'} },
-      { img:IMG_DIR+'page32_img1.jpg', price:3800,
+      { img:IMG_DIR+'page32_img2.jpg', x:65, y:68, price:3800,
         n:{hy:'Պիադինա պրոշուտտոյով',en:'Piadina with Prosciutto',ru:'Пьядина с прошутто'},
         d:{hy:'Պրոշուտտո, սկվակերոնե, ռուկոլա',en:'Prosciutto, squacquerone, arugula',ru:'Прошутто, скваккероне, рукола'} },
     ]},
     { dishes:[
-      { img:IMG_DIR+'page33_img1.jpg', price:3700,
+      { img:IMG_DIR+'page33_img1.jpg', x:30, y:25, price:3700,
         n:{hy:'Պիադինա հավով',en:'Piadina with Chicken',ru:'Пьядина с курицей'},
         d:{hy:'Հավ, թխած բանջարեղեն, պեստո',en:'Chicken, roasted vegetables, pesto',ru:'Курица, запечённые овощи, песто'} },
-      { img:IMG_DIR+'page33_img1.jpg', price:3900,
+      { img:IMG_DIR+'page33_img2.jpg', x:50, y:52, price:3900,
         n:{hy:'Պիադինա մորտադելլայով և պիստակով',en:'Piadina with Mortadella and Pistachio',ru:'Пьядина с мортаделлой и фисташкой'},
         d:{hy:'Մորտադելլա, պիստակի կրեմ, մոցարելլա',en:'Mortadella, pistachio cream, mozzarella',ru:'Мортаделла, фисташковый крем, моцарелла'} },
-      { img:IMG_DIR+'page33_img1.jpg', price:3400,
+      { img:IMG_DIR+'page33_img3.jpg', x:70, y:78, price:3400,
         n:{hy:'Պիադինա բանջարեղենով',en:'Piadina with Vegetables',ru:'Пьядина с овощами'},
         d:{hy:'Թխած բանջարեղեն, մոցարելլա, բազիլիկ',en:'Grilled vegetables, mozzarella, basil',ru:'Запечённые овощи, моцарелла, базилик'} },
     ]},
@@ -598,40 +606,40 @@ const MENU = [
   /* ================= ОСНОВНЫЕ БЛЮДА ================= */
   { id:'mains', t:{hy:'Հիմնական ուտեստներ',en:'Main Courses',ru:'Основные блюда'}, scenes:[
     { dishes:[
-      { img:IMG_DIR+'page34_img1.jpg', price:5600,
+      { img:IMG_DIR+'page34_img1.jpg', x:50, y:55, price:5600,
         n:{hy:'Ծովային բաս խորոված',en:'Grilled Sea Bass',ru:'Сибас на гриле'},
         d:{hy:'Սիբաս, լիմոն, ձիթապտղի ձեթ, բանջարեղեն',en:'Sea bass, lemon, olive oil, vegetables',ru:'Сибас, лимон, оливковое масло, овощи'} },
     ]},
     { dishes:[
-      { img:IMG_DIR+'page35_img1.jpg', price:5800,
+      { img:IMG_DIR+'page35_img1.jpg', x:35, y:35, price:5800,
         n:{hy:'Տոսկանայի տավարի ստեյկ',en:'Tuscan Beef Steak',ru:'Стейк по-тоскански'},
         d:{hy:'Տավարի միս, ռոզմարին, սխտոր, ձիթապտղի ձեթ',en:'Beef, rosemary, garlic, olive oil',ru:'Говядина, розмарин, чеснок, оливковое масло'} },
-      { img:IMG_DIR+'page35_img1.jpg', price:6200,
+      { img:IMG_DIR+'page35_img2.jpg', x:65, y:68, price:6200,
         n:{hy:'Օսո բուկո',en:'Osso Buco',ru:'Оссо буко'},
         d:{hy:'Հորթի սրունք, սպիտակ գինի, գրեմոլատա',en:'Veal shank, white wine, gremolata',ru:'Телячья голяшка, белое вино, гремолата'} },
     ]},
     { dishes:[
-      { img:IMG_DIR+'page36_img1.jpg', price:4800,
+      { img:IMG_DIR+'page36_img1.jpg', x:50, y:55, price:4800,
         n:{hy:'Հավ պարմիջիանա',en:'Chicken Parmigiana',ru:'Курица пармиджана'},
         d:{hy:'Հավի կուրծք, տոմատ, մոցարելլա, բազիլիկ',en:'Chicken breast, tomato, mozzarella, basil',ru:'Куриная грудка, томат, моцарелла, базилик'} },
     ]},
     { dishes:[
-      { img:IMG_DIR+'page37_img1.jpg', price:6400,
+      { img:IMG_DIR+'page37_img1.jpg', x:50, y:55, price:6400,
         n:{hy:'Գառան կոտլետներ',en:'Lamb Chops',ru:'Каре ягнёнка'},
         d:{hy:'Գառան միս, ռոզմարին, սխտոր, մանանեխ',en:'Lamb, rosemary, garlic, mustard',ru:'Ягнёнок, розмарин, чеснок, горчица'} },
     ]},
     { dishes:[
-      { img:IMG_DIR+'page38_img1.jpg', price:5200,
+      { img:IMG_DIR+'page38_img1.jpg', x:50, y:55, price:5200,
         n:{hy:'Խոզի ֆիլե',en:'Pork Tenderloin',ru:'Свиная вырезка'},
         d:{hy:'Խոզի ֆիլե, սալորի սոուս, թխած բանջարեղեն',en:'Pork tenderloin, plum sauce, roasted vegetables',ru:'Свиная вырезка, сливовый соус, запечённые овощи'} },
     ]},
     { dishes:[
-      { img:IMG_DIR+'page39_img1.jpg', price:6100,
+      { img:IMG_DIR+'page39_img1.jpg', x:50, y:55, price:6100,
         n:{hy:'Սաղմոն խորոված',en:'Grilled Salmon',ru:'Лосось на гриле'},
         d:{hy:'Սաղմոն, լիմոն, ծնեփակ, հոլանդեզ սոուս',en:'Salmon, lemon, asparagus, hollandaise',ru:'Лосось, лимон, спаржа, соус голландез'} },
     ]},
     { dishes:[
-      { img:IMG_DIR+'page40_img2.jpg', price:3800,
+      { img:IMG_DIR+'page40_img1.jpg', x:50, y:55, price:3800,
         n:{hy:'Թխած բանջարեղեն',en:'Roasted Vegetables',ru:'Запечённые овощи'},
         d:{hy:'Սմբուկ, դդմիկ, պղպեղ, ձիթապտղի ձեթ',en:'Eggplant, zucchini, pepper, olive oil',ru:'Баклажан, цукини, перец, оливковое масло'} },
     ]},
@@ -639,80 +647,86 @@ const MENU = [
   /* ================= ДЕСЕРТЫ ================= */
   { id:'desserts', t:{hy:'Աղանդեր',en:'Desserts',ru:'Десерты'}, scenes:[
     { dishes:[
-      { img:IMG_DIR+'page41_img2.jpg', price:2800,
+      /* точка 1 — слева внизу */
+      { img:IMG_DIR+'page41_img1.jpg', x:30, y:70, price:2800,
         n:{hy:'Տիրամիսու',en:'Tiramisù',ru:'Тирамису'},
         d:{hy:'Մասկարպոնե, էսպրեսո, կակաո, սավոյարդի',en:'Mascarpone, espresso, cocoa, savoiardi',ru:'Маскарпоне, эспрессо, какао, савоярди'} },
-      { img:IMG_DIR+'page41_img2.jpg', price:2500,
+      /* точка 2 — справа вверху */
+      { img:IMG_DIR+'page41_img2.jpg', x:70, y:30, price:2500,
         n:{hy:'Պաննա կոտտա',en:'Panna Cotta',ru:'Панна котта'},
         d:{hy:'Սերուցք, վանիլ, հատապտղային սոուս',en:'Cream, vanilla, berry sauce',ru:'Сливки, ваниль, ягодный соус'} },
     ]},
     { dishes:[
-      { img:IMG_DIR+'page42_img1.jpg', price:2700,
+      { img:IMG_DIR+'page42_img1.jpg', x:50, y:55, price:2700,
         n:{hy:'Կաննոլի սիցիլիանի',en:'Cannoli Siciliani',ru:'Канноли сицилийские'},
         d:{hy:'Ռիկոտտա, շաքարավազ, պիստակ, շոկոլադ',en:'Ricotta, sugar, pistachio, chocolate',ru:'Рикотта, сахар, фисташка, шоколад'} },
     ]},
     { dishes:[
-      { img:IMG_DIR+'page43_img1.jpg', price:2200,
+      { img:IMG_DIR+'page43_img1.jpg', x:50, y:55, price:2200,
         n:{hy:'Աֆոգատո',en:'Affogato',ru:'Аффогато'},
         d:{hy:'Վանիլի պաղպաղակ, էսպրեսո, կակաո',en:'Vanilla gelato, espresso, cocoa',ru:'Ванильное мороженое, эспрессо, какао'} },
     ]},
     { dishes:[
-      { img:IMG_DIR+'page44_img1.jpg', price:2400,
+      { img:IMG_DIR+'page44_img1.jpg', x:50, y:55, price:2400,
         n:{hy:'Խնձորի տարտ',en:'Apple Tart',ru:'Яблочный тарт'},
         d:{hy:'Խնձոր, շաքար, կարագ, վանիլ',en:'Apple, sugar, butter, vanilla',ru:'Яблоко, сахар, сливочное масло, ваниль'} },
     ]},
     { dishes:[
-      { img:IMG_DIR+'page45_img1.jpg', price:2900,
+      { img:IMG_DIR+'page45_img1.jpg', x:35, y:35, price:2900,
         n:{hy:'Շոկոլադե ֆոնդան',en:'Chocolate Fondant',ru:'Шоколадный фондан'},
         d:{hy:'Շոկոլադ, կարագ, ձու, վանիլի պաղպաղակ',en:'Chocolate, butter, egg, vanilla gelato',ru:'Шоколад, сливочное масло, яйцо, ванильное мороженое'} },
-      { img:IMG_DIR+'page45_img1.jpg', price:2800,
+      { img:IMG_DIR+'page45_img2.jpg', x:65, y:68, price:2800,
         n:{hy:'Պիստակե սեմիֆրեդո',en:'Pistachio Semifreddo',ru:'Семифреддо с фисташкой'},
         d:{hy:'Պիստակ, սերուցք, մեղր, նուշ',en:'Pistachio, cream, honey, almond',ru:'Фисташка, сливки, мёд, миндаль'} },
     ]},
     { dishes:[
-      { img:IMG_DIR+'page46_img1.jpg', price:2600,
+      { img:IMG_DIR+'page46_img1.jpg', x:50, y:55, price:2600,
         n:{hy:'Զաբայոնե',en:'Zabaione',ru:'Сабайон'},
         d:{hy:'Ձվի դեղնուց, մարսալա, շաքար, թխվածքաբլիթ',en:'Egg yolk, marsala, sugar, biscuit',ru:'Желток, марсала, сахар, печенье'} },
     ]},
     { dishes:[
-      { img:IMG_DIR+'page47_img1.jpg', price:2100,
+      { img:IMG_DIR+'page47_img1.jpg', x:35, y:35, price:2100,
         n:{hy:'Ջելատո արտիջիանալե',en:'Gelato Artigianale',ru:'Джелато артиджанале'},
         d:{hy:'Պաղպաղակ, պիստակ, շոկոլադ, մրգեր',en:'Gelato, pistachio, chocolate, fruits',ru:'Мороженое, фисташка, шоколад, фрукты'} },
-      { img:IMG_DIR+'page47_img1.jpg', price:2700,
+      { img:IMG_DIR+'page47_img2.jpg', x:65, y:68, price:2700,
         n:{hy:'Լիմոնչելլո տարտ',en:'Limoncello Tart',ru:'Тарт лимончелло'},
         d:{hy:'Լիմոն, լիմոնչելլո, սերուցք, թխվածք',en:'Lemon, limoncello, cream, pastry',ru:'Лимон, лимончелло, сливки, тесто'} },
     ]},
     { dishes:[
-      { img:IMG_DIR+'page48_img1.jpg', price:2600,
+      { img:IMG_DIR+'page48_img1.jpg', x:35, y:35, price:2600,
         n:{hy:'Հատապտղային միլֆոյ',en:'Berry Millefeuille',ru:'Мильфой с ягодами'},
         d:{hy:'Շերտավոր խմոր, սերուցք, հատապտուղներ',en:'Puff pastry, cream, berries',ru:'Слоёное тесто, крем, ягоды'} },
-      { img:IMG_DIR+'page48_img1.jpg', price:2900,
+      { img:IMG_DIR+'page48_img2.jpg', x:65, y:68, price:2900,
         n:{hy:'Շոկոլադե տրյուֆել տորթ',en:'Chocolate Truffle Cake',ru:'Шоколадный трюфельный торт'},
         d:{hy:'Շոկոլադ, սերուցք, կակաո, հատապտուղներ',en:'Chocolate, cream, cocoa, berries',ru:'Шоколад, сливки, какао, ягоды'} },
     ]},
     { dishes:[
-      { img:IMG_DIR+'page49_img2.jpg', price:2500,
+      /* 9 карточка: 1 слева сверху, 2 середина слева, 3 справа внизу */
+      { img:IMG_DIR+'page49_img1.jpg', x:30, y:25, price:2500,
         n:{hy:'Նուշե տորտա',en:'Almond Torta',ru:'Миндальный торт'},
         d:{hy:'Նուշ, սերուցք, վանիլ, հատապտուղներ',en:'Almond, cream, vanilla, berries',ru:'Миндаль, сливки, ваниль, ягоды'} },
-      { img:IMG_DIR+'page49_img2.jpg', price:2600,
+      { img:IMG_DIR+'page49_img2.jpg', x:30, y:52, price:2600,
         n:{hy:'Չիզքեյք',en:'Cheesecake',ru:'Чизкейк'},
         d:{hy:'Սերուցքային պանիր, թխվածք, հատապտղային սոուս',en:'Cream cheese, biscuit, berry sauce',ru:'Сливочный сыр, печенье, ягодный соус'} },
+      { img:IMG_DIR+'page49_img3.jpg', x:70, y:75, price:2400,
+        n:{hy:'Մեղրային տորթ',en:'Honey Cake',ru:'Медовик'},
+        d:{hy:'Մեղր, սերուցք, ընկույզ',en:'Honey, cream, walnuts',ru:'Мёд, сливки, грецкий орех'} },
     ]},
     { dishes:[
-      { img:IMG_DIR+'page50_img1.jpg', price:2700,
+      { img:IMG_DIR+'page50_img1.jpg', x:35, y:35, price:2700,
         n:{hy:'Պրոֆիտրոլներ',en:'Profiteroles',ru:'Профитроли'},
         d:{hy:'Շու խմոր, սերուցք, շոկոլադ',en:'Choux pastry, cream, chocolate',ru:'Заварное тесто, крем, шоколад'} },
-      { img:IMG_DIR+'page50_img1.jpg', price:2300,
+      { img:IMG_DIR+'page50_img2.jpg', x:65, y:68, price:2300,
         n:{hy:'Մրգային աղցան պաղպաղակով',en:'Fruit Salad with Gelato',ru:'Фруктовый салат с мороженым'},
         d:{hy:'Սեզոնային մրգեր, պաղպաղակ, մենթա',en:'Seasonal fruits, gelato, mint',ru:'Сезонные фрукты, мороженое, мята'} },
     ]},
     { dishes:[
-      { img:IMG_DIR+'page51_img1.jpg', price:1800,
+      { img:IMG_DIR+'page51_img1.jpg', x:50, y:55, price:1800,
         n:{hy:'Նուշե բիսկոտտի',en:'Almond Biscotti',ru:'Миндальные бискотти'},
         d:{hy:'Նուշ, ալյուր, շաքար, էսպրեսո',en:'Almond, flour, sugar, espresso',ru:'Миндаль, мука, сахар, эспрессо'} },
     ]},
     { dishes:[
-      { img:IMG_DIR+'page52_img1.jpg', price:2800,
+      { img:IMG_DIR+'page52_img1.jpg', x:50, y:55, price:2800,
         n:{hy:'Տորտա կապրեզե',en:'Torta Caprese',ru:'Торт Капрезе'},
         d:{hy:'Շոկոլադ, նուշ, կարագ, կակաո',en:'Chocolate, almond, butter, cocoa',ru:'Шоколад, миндаль, сливочное масло, какао'} },
     ]},
@@ -756,7 +770,6 @@ let currentLang = 'hy';
 const fmtPrice = n => (n == null ? '—' : String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' ') + ' ֏');
 const canHover = window.matchMedia('(hover:hover)').matches;
 
-/* ---------- НАДЕЖНОЕ ОТКРЫТИЕ: loader скроется ВСЕГДА ---------- */
 let revealed = false;
 function revealOnce(){
   if (revealed) return;
@@ -773,7 +786,6 @@ window.addEventListener('load', () => {
   window.scrollTo(0, 0);
   setTimeout(revealOnce, 1200);
 });
-/* FAILSAFE: даже если любой ресурс зависнет — страница откроется через 4 сек */
 setTimeout(revealOnce, 4000);
 
 function closeAllPops(){
@@ -836,7 +848,6 @@ function renderMenu(lang){
       const scene = document.createElement('div');
       scene.className = 'scene';
 
-      /* ВСЕ фото ленивые — не блокируют открытие страницы */
       const imgs = sc.dishes.map((d, i) => {
         const im = document.createElement('img');
         im.className = 'scene-img' + (i === 0 ? ' active' : '');
@@ -849,60 +860,36 @@ function renderMenu(lang){
         return im;
       });
 
-      const hs = document.createElement('button');
-      hs.className = 'hotspot';
-      hs.innerHTML =
-        '<span class="hs-dot"></span>' +
-        '<div class="hs-pop"><div class="hs-pop-in">' +
-          '<div class="hs-name"></div>' +
-          '<div class="hs-desc"></div>' +
-          '<div class="hs-meta"><span class="hs-price"></span><span class="hs-kicker">In Tempo</span></div>' +
-        '</div></div>';
-      scene.appendChild(hs);
-      const hsName = hs.querySelector('.hs-name');
-      const hsDesc = hs.querySelector('.hs-desc');
-      const hsPrice = hs.querySelector('.hs-price');
-
-      function fillPopup(i){
-        const d = sc.dishes[i];
-        hsName.textContent = d.n[lang];
-        if (d.d[lang]) { hsDesc.textContent = d.d[lang]; hsDesc.style.display = ''; }
-        else hsDesc.style.display = 'none';
-        hsPrice.textContent = fmtPrice(d.price);
+      /* по одной точке-поинту на каждое блюдо, в заданных координатах */
+      sc.dishes.forEach((d, i) => {
+        const hs = document.createElement('button');
+        hs.className = 'hotspot';
+        hs.style.left = d.x + '%';
+        hs.style.top = d.y + '%';
+        if (d.y < 40) hs.classList.add('pop-below');
+        if (d.x < 30) hs.classList.add('pop-left');
+        else if (d.x > 70) hs.classList.add('pop-right');
         hs.setAttribute('aria-label', d.n[lang]);
-      }
-      fillPopup(0);
-
-      hs.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const was = hs.classList.contains('open');
-        closeAllPops();
-        if (!was) hs.classList.add('open');
-      });
-      if (canHover){
-        hs.addEventListener('mouseenter', () => { closeAllPops(); hs.classList.add('open'); });
-        hs.addEventListener('mouseleave', () => hs.classList.remove('open'));
-      }
-
-      let dots = [];
-      if (sc.dishes.length > 1){
-        const wrap = document.createElement('div');
-        wrap.className = 'sw-dots';
-        sc.dishes.forEach((d, i) => {
-          const dt = document.createElement('button');
-          dt.className = 'sw-dot' + (i === 0 ? ' active' : '');
-          dt.setAttribute('aria-label', d.n[lang]);
-          dt.addEventListener('click', (e) => {
-            e.stopPropagation();
-            imgs.forEach((im, k) => im.classList.toggle('active', k === i));
-            dots.forEach((dd, k) => dd.classList.toggle('active', k === i));
-            fillPopup(i);
-          });
-          wrap.appendChild(dt);
-          dots.push(dt);
+        hs.innerHTML =
+          '<span class="hs-dot"></span>' +
+          '<div class="hs-pop"><div class="hs-pop-in">' +
+            '<div class="hs-name">' + d.n[lang] + '</div>' +
+            (d.d[lang] ? '<div class="hs-desc">' + d.d[lang] + '</div>' : '') +
+            '<div class="hs-meta"><span class="hs-price">' + fmtPrice(d.price) + '</span><span class="hs-kicker">In Tempo</span></div>' +
+          '</div></div>';
+        const setActive = () => imgs.forEach((im, k) => im.classList.toggle('active', k === i));
+        hs.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const was = hs.classList.contains('open');
+          closeAllPops();
+          if (!was){ setActive(); hs.classList.add('open'); }
         });
-        scene.appendChild(wrap);
-      }
+        if (canHover){
+          hs.addEventListener('mouseenter', () => { closeAllPops(); setActive(); hs.classList.add('open'); });
+          hs.addEventListener('mouseleave', () => hs.classList.remove('open'));
+        }
+        scene.appendChild(hs);
+      });
 
       const tag = document.createElement('div');
       tag.className = 'scene-tag';
@@ -937,7 +924,6 @@ function applyLang(lang){
 document.querySelectorAll('.lang-btn').forEach(b=>b.addEventListener('click', ()=>applyLang(b.dataset.lang)));
 let savedLang = 'hy';
 try{ savedLang = localStorage.getItem('intempo_lang') || 'hy'; }catch(e){}
-/* ошибка в меню больше не может убить страницу */
 try { applyLang(savedLang); } catch(e){ console.error('❌ Menu init error:', e); }
 
 const navEl = document.getElementById('nav');
