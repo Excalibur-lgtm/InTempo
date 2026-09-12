@@ -8,8 +8,6 @@
 <link rel="preload" href="images/logoIntempo.png" as="image" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-<noscript><link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet"></noscript>
 <script>
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
   document.addEventListener('DOMContentLoaded', function(){
@@ -85,7 +83,8 @@
   .nav.scrolled .nav-tel{border-color:var(--ink);color:var(--ink);text-shadow:none;}
   .nav.scrolled .nav-tel:hover{background:var(--ink);color:var(--menupage);}
 
-  .hero{position:relative;min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;background-color:var(--bg);background-image:url('Images-final/page01_img1.jpg');background-size:cover;background-position:center;}
+  /* HERO: фон = page03 (существует), видео = Herovideo.mp4 (точное имя) */
+  .hero{position:relative;min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;background-color:var(--bg);background-image:url('Images-final/page03_img1.jpg');background-size:cover;background-position:center;}
   .hero-media{position:absolute;inset:0;}
   .hero-media video{width:100%;height:100%;object-fit:cover;animation:kb 26s ease-in-out infinite alternate;}
   @keyframes kb{from{transform:scale(1);}to{transform:scale(1.09);}}
@@ -293,6 +292,14 @@
   <span class="slogan">Time to enjoy</span>
 </div>
 
+<!-- АВАРИЙНЫЙ ТАЙМЕР: спрячет загрузчик даже если любой скрипт упадёт -->
+<script>
+  setTimeout(function(){
+    var l = document.getElementById('loader');
+    if (l && !l.classList.contains('done')) l.classList.add('done');
+  }, 4000);
+</script>
+
 <nav class="nav" id="nav">
   <a class="logo-card" href="#top" aria-label="In Tempo — Time to enjoy">
     <img class="logo-img" src="images/logoIntempo.png" alt="In Tempo">
@@ -315,8 +322,10 @@
 
 <header class="hero" id="top">
   <div class="hero-media">
-    <!-- src подставит скрипт после проверки путей (см. initHeroVideo) -->
-    <video id="heroVideo" autoplay muted loop playsinline preload="auto" poster="Images-final/page01_img1.jpg"></video>
+    <!-- ТОЧНОЕ ИМЯ ФАЙЛА из папки Images-final (без перебора → без 404) -->
+    <video id="heroVideo" autoplay muted loop playsinline preload="auto" poster="Images-final/page03_img1.jpg">
+      <source src="Images-final/Herovideo.mp4" type="video/mp4">
+    </video>
   </div>
   <div class="hero-in">
     <h1>
@@ -377,9 +386,7 @@
 <script>
 /* ============================================================================
    ТОЧКИ-ПОИНТЫ: x,y = позиция точки на фото (в %).
-   Кол-во точек = кол-во блюд = ваш список.
-   Десерты 1: точка1 слева-внизу, точка2 справа-вверху.
-   Десерты 9: 3 точки — слева-сверху, середина-слева, справа-внизу.
+   Все фото — только СУЩЕСТВУЮЩИЕ файлы (pageNN_img1.jpg / page28_img1.2pg).
    ============================================================================ */
 const IMG_DIR = 'Images-final/';
 
@@ -489,10 +496,10 @@ const MENU = [
   /* ================= СУПЫ ================= */
   { id:'soups', t:{hy:'Ապուրներ',en:'Soups',ru:'Супы'}, scenes:[
     { dishes:[
-      { img:IMG_DIR+'page19_img2.jpg', x:35, y:35, price:1900,
+      { img:IMG_DIR+'page19_img1.jpg', x:35, y:35, price:1900,
         n:{hy:'Սնկով կրեմ-ապուր',en:'Mushroom Cream Soup',ru:'Грибной крем-суп'},
         d:{hy:'Սունկ, սերուցք, պարմեզան',en:'Mushroom, cream, parmesan',ru:'Грибы, сливки, пармезан'} },
-      { img:IMG_DIR+'page19_img2.jpg', x:65, y:68, price:1900,
+      { img:IMG_DIR+'page19_img1.jpg', x:65, y:68, price:1900,
         n:{hy:'Պապպա ալ Պոմոդորո լոլիկի ապուր',en:'Pappa al Pomodoro Tomato Soup',ru:'Томатный суп Pappa al Pomodoro'},
         d:{hy:'San Marzano լոլիկ, պարմեզան, բազիլիկ',en:'San Marzano tomatoes, parmesan, basil',ru:'Помидоры Сан-Марцано, пармезан, базилик'} },
     ]},
@@ -636,7 +643,7 @@ const MENU = [
         d:{hy:'Սաղմոն, լիմոն, ծնեփակ, հոլանդեզ սոուս',en:'Salmon, lemon, asparagus, hollandaise',ru:'Лосось, лимон, спаржа, соус голландез'} },
     ]},
     { dishes:[
-      { img:IMG_DIR+'page40_img2.jpg', x:50, y:55, price:3800,
+      { img:IMG_DIR+'page40_img1.jpg', x:50, y:55, price:3800,
         n:{hy:'Թխած բանջարեղեն',en:'Roasted Vegetables',ru:'Запечённые овощи'},
         d:{hy:'Սմբուկ, դդմիկ, պղպեղ, ձիթապտղի ձեթ',en:'Eggplant, zucchini, pepper, olive oil',ru:'Баклажан, цукини, перец, оливковое масло'} },
     ]},
@@ -645,11 +652,11 @@ const MENU = [
   { id:'desserts', t:{hy:'Աղանդեր',en:'Desserts',ru:'Десерты'}, scenes:[
     { dishes:[
       /* точка 1 — слева внизу */
-      { img:IMG_DIR+'page41_img2.jpg', x:30, y:70, price:2800,
+      { img:IMG_DIR+'page41_img1.jpg', x:30, y:70, price:2800,
         n:{hy:'Տիրամիսու',en:'Tiramisù',ru:'Тирамису'},
         d:{hy:'Մասկարպոնե, էսպրեսո, կակաո, սավոյարդի',en:'Mascarpone, espresso, cocoa, savoiardi',ru:'Маскарпоне, эспрессо, какао, савоярди'} },
       /* точка 2 — справа вверху */
-      { img:IMG_DIR+'page41_img2.jpg', x:70, y:30, price:2500,
+      { img:IMG_DIR+'page41_img1.jpg', x:70, y:30, price:2500,
         n:{hy:'Պաննա կոտտա',en:'Panna Cotta',ru:'Панна котта'},
         d:{hy:'Սերուցք, վանիլ, հատապտղային սոուս',en:'Cream, vanilla, berry sauce',ru:'Сливки, ваниль, ягодный соус'} },
     ]},
@@ -699,13 +706,13 @@ const MENU = [
     ]},
     { dishes:[
       /* 9 карточка: 1 слева сверху, 2 середина слева, 3 справа внизу */
-      { img:IMG_DIR+'page49_img2.jpg', x:30, y:25, price:2500,
+      { img:IMG_DIR+'page49_img1.jpg', x:30, y:25, price:2500,
         n:{hy:'Նուշե տորտա',en:'Almond Torta',ru:'Миндальный торт'},
         d:{hy:'Նուշ, սերուցք, վանիլ, հատապտուղներ',en:'Almond, cream, vanilla, berries',ru:'Миндаль, сливки, ваниль, ягоды'} },
-      { img:IMG_DIR+'page49_img2.jpg', x:30, y:52, price:2600,
+      { img:IMG_DIR+'page49_img1.jpg', x:30, y:52, price:2600,
         n:{hy:'Չիզքեյք',en:'Cheesecake',ru:'Чизкейк'},
         d:{hy:'Սերուցքային պանիր, թխվածք, հատապտղային սոուս',en:'Cream cheese, biscuit, berry sauce',ru:'Сливочный сыр, печенье, ягодный соус'} },
-      { img:IMG_DIR+'page49_img2.jpg', x:70, y:75, price:2400,
+      { img:IMG_DIR+'page49_img1.jpg', x:70, y:75, price:2400,
         n:{hy:'Մեղրային տորթ',en:'Honey Cake',ru:'Медовик'},
         d:{hy:'Մեղր, սերուցք, ընկույզ',en:'Honey, cream, walnuts',ru:'Мёд, сливки, грецкий орех'} },
     ]},
@@ -777,7 +784,6 @@ function revealOnce(){
   if (n) n.classList.add('ready');
   const h = document.querySelector('.hero');
   if (h) h.classList.add('ready');
-  checkImages();
 }
 window.addEventListener('load', () => {
   window.scrollTo(0, 0);
@@ -785,37 +791,12 @@ window.addEventListener('load', () => {
 });
 setTimeout(revealOnce, 4000);
 
-/* ---------- ПОИСК ВИДЕО: проверяем каждый путь и ставим существующий ---------- */
-(function initHeroVideo(){
-  const v = document.getElementById('heroVideo');
-  const CANDIDATES = [
-    'Images-final/Herovideo.mp4',
-    'Images-final/HeroVideo.mp4',
-    'Images-final/herovideo.mp4',
-    'Images-final/HEROVIDEO.MP4',
-    'images/Herovideo.mp4',
-    'images/HeroVideo.mp4',
-    'Herovideo.mp4',
-    'HeroVideo.mp4'
-  ];
-  let i = 0;
-  function tryNext(){
-    if (i >= CANDIDATES.length){
-      console.warn('❌ Видео НЕ найдено ни по одному из путей:', CANDIDATES.join(', '));
-      return;
-    }
-    const src = CANDIDATES[i++];
-    fetch(src, {method:'HEAD'}).then(r => {
-      if (r.ok){
-        console.log('✅ Видео найдено:', src);
-        v.src = src;
-        v.play().catch(()=>{});
-      } else {
-        tryNext();
-      }
-    }).catch(tryNext);
-  }
-  tryNext();
+/* ---------- ШРИФТЫ: подключаются НЕБЛОКИРУЮЩЕ (через JS) ---------- */
+(function(){
+  var l = document.createElement('link');
+  l.rel = 'stylesheet';
+  l.href = 'https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap';
+  document.head.appendChild(l);
 })();
 
 function closeAllPops(){
@@ -827,17 +808,7 @@ function attachImgFallback(imgEl){
   imgEl.addEventListener('error', () => {
     const wrap = imgEl.closest('.scene');
     if (wrap) wrap.classList.add('no-img');
-    console.warn('❌ Фото не найдено:', imgEl.getAttribute('src'));
   }, {once:true});
-}
-function checkImages(){
-  const seen = new Set();
-  MENU.forEach(cat => cat.scenes.forEach(sc => sc.dishes.forEach(d => {
-    if (seen.has(d.img)) return; seen.add(d.img);
-    fetch(d.img, {method:'HEAD'}).then(r => {
-      if (!r.ok) console.warn('❌ НЕТ ФАЙЛА:', d.img, '(код ' + r.status + ')');
-    }).catch(() => console.warn('❌ НЕТ ФАЙЛА:', d.img));
-  })));
 }
 
 const io = new IntersectionObserver(es => es.forEach(en => {
@@ -954,7 +925,7 @@ function applyLang(lang){
 document.querySelectorAll('.lang-btn').forEach(b=>b.addEventListener('click', ()=>applyLang(b.dataset.lang)));
 let savedLang = 'hy';
 try{ savedLang = localStorage.getItem('intempo_lang') || 'hy'; }catch(e){}
-try { applyLang(savedLang); } catch(e){ console.error('❌ Menu init error:', e); }
+try { applyLang(savedLang); } catch(e){ console.error('Menu init error:', e); }
 
 const navEl = document.getElementById('nav');
 addEventListener('scroll', () => navEl.classList.toggle('scrolled', scrollY > 40), {passive:true});
