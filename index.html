@@ -48,12 +48,10 @@
   h1,h2{font-family:var(--serif);font-weight:600;line-height:1.12;letter-spacing:-.01em;color:var(--ink);}
   em{font-style:italic;color:var(--red);}
 
-  /* ЛОГОТИП В ШАПКЕ +30% */
   .logo-img{height:90px;width:auto;display:block;}
   .logo-card{display:inline-flex;flex-direction:column;align-items:center;gap:2px;background:transparent;padding:4px 10px;border-radius:12px;}
   .slogan{font-family:var(--serif);font-style:italic;font-size:11px;letter-spacing:.14em;color:var(--muted);}
 
-  /* ЛОГОТИП В ЗАГРУЗЧИКЕ +50% */
   #loader{position:fixed;inset:0;z-index:100;background:var(--logo-bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;transition:transform .9s cubic-bezier(.76,0,.24,1),opacity .9s ease,visibility .9s;}
   #loader.done{transform:translateY(-100%);opacity:0;visibility:hidden;}
   #loader .logo-img{height:270px;opacity:0;transform:scale(.9) translateY(14px);animation:logoIn 1s cubic-bezier(.22,1,.36,1) .15s forwards;}
@@ -368,14 +366,17 @@
 
 <script>
 /* ============================================================================
-   ЗАКУСКИ: фото 1-й и 2-й карточек ПОМЕНЯНЫ МЕСТАМИ (исправлено).
-   Карточка 1 = page-03 + блюдо Крудо (HY дано вами, EN/RU — перевод).
+   ПОИНТЫ ПО НОМЕРАМ КАРТОЧЕК (правка пользователя):
+   Закуски: 8→1, 9→2 · Салаты: 3→1, 4→2 · Паста: 5→2 ·
+   Бургеры: 4,5,6→2 · Пьядина: 1→2, 2→3 · Основные: 2→2 ·
+   Десерты: 1,5,7,8,10→2 (9 уже 2)
    ============================================================================ */
 const TBA = {hy:'Անունը ճշտվում է', en:'Name to be confirmed', ru:'Название уточняется'};
+const POS = {1:[48], 2:[28,72], 3:[20,50,80]};
 const ph = (img, count) => ({
   img: img,
   dishes: Array.from({length: count || 1}, (_, i) => ({
-    x: 50, y: (count > 1 ? 28 + i * 44 : 48),
+    x: 50, y: (POS[count] || POS[1])[i],
     price: null,
     n: TBA,
     d: {hy:'', en:'', ru:''}
@@ -400,7 +401,7 @@ const MENU = [
     ]},
     { img:'images/page-05.jpg', dishes:[
       { x:50, y:52, price:2400,
-        n:{hy:'Գրիլ բանջարեղեն',en:'Grilled Vegetables',ru:'Овощи на гриле'},
+        n:{hy:'Գրիլ վրայի բանջարեղեն',en:'Grilled Vegetables',ru:'Овощи на гриле'},
         d:{hy:'Պղպեղ, դդմիկ, սունկ, չերի լոլիկ, ֆարմեր սոուս',en:'Pepper, zucchini, mushroom, cherry tomatoes, Farmer sauce',ru:'Перец, кабачки, грибы, черри, фермерский соус'} },
     ]},
     { img:'images/page-06.jpg', dishes:[
@@ -423,18 +424,20 @@ const MENU = [
         n:{hy:'Ծովախեցգետնի տեմպուրա',en:'Shrimp Tempura',ru:'Креветки темпура'},
         d:{hy:'Ծովախեցգետին, քաղցր չիլի սոուս',en:'Shrimps, sweet chili sauce',ru:'Креветки, сладкий соус чили'} },
     ]},
+    /* карточка 8 → 1 поинт (крылышки) */
     { img:'images/page-10.jpg', dishes:[
+      { x:50, y:48, price:2500,
+        n:{hy:'Հավի թևիկներ ԻնՏեմպոյում',en:'Chicken Wings at InTempo',ru:'Куриные крылышки в InTempo'},
+        d:{hy:'Հավի թևիկներ, BBQ սոուս, պարմեզան, կանաչ սոխ',en:'Chicken wings, BBQ sauce, parmesan, green onions',ru:'Куриные крылышки, соус BBQ, пармезан, зелёный лук'} },
+    ]},
+    /* карточка 9 → 2 поинта (мясная + сырная тарелки) */
+    { img:'images/page-11.jpg', dishes:[
       { x:50, y:26, price:3900,
         n:{hy:'Մսի ափսե',en:'Meat Platter',ru:'Мясная тарелка'},
         d:{hy:'Չորիզո, մորտադելլա, պրոշուտտո, միլանո սալյամի, ֆիրմային հաց, մանանեխ',en:'Chorizo, Mortadella, Prosciutto, Milano salami, signature bread, yellow mustard',ru:'Чоризо, мортаделла, прошутто, миланская салями, фирменный хлеб, горчица'} },
       { x:50, y:72, price:3300,
         n:{hy:'Պանրի ափսե',en:'Cheese Platter',ru:'Сырная тарелка'},
         d:{hy:'Պարմեզան, բրի, ռոքոր, թարմ մոցարելլա, ֆիրմային հաց, կարագ, մեղր',en:'Parmesan, Brie, Roquefort, fresh Mozzarella, signature bread, butter, honey',ru:'Пармезан, бри, рокфор, моцарелла свежая, фирменный хлеб, сливочное масло, мёд'} },
-    ]},
-    { img:'images/page-11.jpg', dishes:[
-      { x:50, y:48, price:2500,
-        n:{hy:'Հավի թևիկներ ԻնՏեմպոյում',en:'Chicken Wings at InTempo',ru:'Куриные крылышки в InTempo'},
-        d:{hy:'Հավի թևիկներ, BBQ սոուս, պարմեզան, կանաչ սոխ',en:'Chicken wings, BBQ sauce, parmesan, green onions',ru:'Куриные крылышки, соус BBQ, пармезан, зелёный лук'} },
     ]},
     { img:'images/page-13.jpg', dishes:[
       { x:55, y:20, price:1600,
@@ -463,18 +466,20 @@ const MENU = [
         n:{hy:'Հավով Կեսար աղցան ԻնՏեմպոյում',en:'Chicken Caesar Salad at InTempo',ru:'Салат «Цезарь» с курицей в InTempo'},
         d:{hy:'Հավի կրծքամիս, պեկինյան կաղամբ, հեղինակային կեսար սոուս, ֆիրմային գրիսինի, պարմեզան',en:'Chicken breast, Peking cabbage, signature Caesar dressing, signature grissini, parmesan',ru:'Куриная грудка, пекинская капуста, фирменный соус «Цезарь», фирменные гриссини, пармезан'} },
     ]},
+    /* карточка 3 → 1 поинт (авокадо и томаты) */
     { img:'images/page-16.jpg', dishes:[
+      { x:50, y:48, price:3900,
+        n:{hy:'Ավոկադոյով և քաղցրահամ լոլիկով աղցան',en:'Avocado & Sweet Tomato Salad',ru:'Салат с авокадо и сладкими томатами'},
+        d:{hy:'Լոլիկ, ավոկադո, սերուցքային պանիր, extra virgin ձիթապտղի յուղ, բազիլիկ, չորս պղպեղ, կիտրոն',en:'Tomatoes, avocado, cream cheese, extra virgin olive oil, basil, four-pepper blend, lemon',ru:'Томаты, авокадо, сливочный сыр, оливковое масло extra virgin, базилик, смесь четырёх перцев, лимон'} },
+    ]},
+    /* карточка 4 → 2 поинта (фермер + греческий) */
+    { img:'images/page-17.jpg', dishes:[
       { x:50, y:26, price:2800,
         n:{hy:'Հեղինակային ֆարմեր աղցան',en:'Signature Farmer\u2019s Salad',ru:'Фирменный Фермер салат'},
         d:{hy:'Հավի կրծքամիս, վարունգ, միքս աղցան, չերի լոլիկ, հեղինակային ֆարմեր սոուս',en:'Chicken breast, cucumber, mixed salad, cherry tomatoes, signature farmer\u2019s sauce',ru:'Куриная грудка, огурец, микс-салат, помидоры черри, фирменный фермерский соус'} },
       { x:50, y:72, price:3100,
         n:{hy:'Հունական աղցան ԻնՏեմպոյում',en:'Greek Salad at InTempo',ru:'Греческий салат в InTempo'},
         d:{hy:'Վարունգ, կալամատա ձիթապտուղ, կանաչ ձիթապտուղ, ֆետա էսպումա, գունավոր պղպեղ, մարինացված սոխ, բազիլիկ',en:'Cucumbers, Kalamata olives, green olives, feta espuma, colored peppers, marinated onions, basil',ru:'Огурец, оливки каламата, зеленые оливки, сыр фета эспума, разноцветный перец, маринованный лук, базилик'} },
-    ]},
-    { img:'images/page-17.jpg', dishes:[
-      { x:50, y:48, price:3900,
-        n:{hy:'Ավոկադոյով և քաղցրահամ լոլիկով աղցան',en:'Avocado & Sweet Tomato Salad',ru:'Салат с авокадо и сладкими томатами'},
-        d:{hy:'Լոլիկ, ավոկադո, սերուցքային պանիր, extra virgin ձիթապտղի յուղ, բազիլիկ, չորս պղպեղ, կիտրոն',en:'Tomatoes, avocado, cream cheese, extra virgin olive oil, basil, four-pepper blend, lemon',ru:'Томаты, авокадо, сливочный сыр, оливковое масло extra virgin, базилик, смесь четырёх перцев, лимон'} },
     ]},
     { img:'images/page-18.jpg', dishes:[
       { x:50, y:26, price:3400,
@@ -516,29 +521,46 @@ const MENU = [
         n:{hy:'Ֆետուչինի մարինարա',en:'Fettuccine Marinara',ru:'Феттучини маринара'},
         d:{hy:'Ֆետուչինի պաստա, լոլիկի սոուս, սերուցքային պանիր, պարմեզան',en:'Fettuccine pasta, tomato sauce, cream cheese, parmesan',ru:'Паста феттучини, томатный соус, сливочный сыр, пармезан'} },
     ]},
-    ph('images/page-23.jpg'), ph('images/page-24.jpg'), ph('images/page-25.jpg'),
+    ph('images/page-23.jpg', 1),
+    ph('images/page-24.jpg', 2),   /* карточка 5 → 2 поинта */
+    ph('images/page-25.jpg', 1),
   ]},
   /* ================= БУРГЕРЫ И СЭНДВИЧИ ================= */
   { id:'burgers', t:{hy:'Բուրգերներ և սենդվիչներ',en:'Burgers & Sandwiches',ru:'Бургеры и сэндвичи'}, scenes:[
-    ph('images/page-26.jpg'), ph('images/page-27.jpg'), ph('images/page-28.jpg'),
-    ph('images/page-29.jpg'), ph('images/page-30.jpg'), ph('images/page-31.jpg'),
+    ph('images/page-26.jpg', 1),
+    ph('images/page-27.jpg', 1),
+    ph('images/page-28.jpg', 1),
+    ph('images/page-29.jpg', 2),   /* карточка 4 → 2 поинта */
+    ph('images/page-30.jpg', 2),   /* карточка 5 → 2 поинта */
+    ph('images/page-31.jpg', 2),   /* карточка 6 → 2 поинта */
   ]},
   /* ================= ПЬЯДИНА ================= */
   { id:'piadina', t:{hy:'Պիադինա',en:'Piadina',ru:'Пьядина'}, scenes:[
-    ph('images/page-32.jpg'), ph('images/page-33.jpg'),
+    ph('images/page-32.jpg', 2),   /* карточка 1 → 2 поинта */
+    ph('images/page-33.jpg', 3),   /* карточка 2 → 3 поинта */
   ]},
   /* ================= ОСНОВНЫЕ БЛЮДА ================= */
   { id:'mains', t:{hy:'Հիմնական ուտեստներ',en:'Main Courses',ru:'Основные блюда'}, scenes:[
-    ph('images/page-34.jpg'), ph('images/page-35.jpg'), ph('images/page-36.jpg'),
-    ph('images/page-37.jpg'), ph('images/page-38.jpg'), ph('images/page-39.jpg'),
-    ph('images/page-40.jpg'),
+    ph('images/page-34.jpg', 1),
+    ph('images/page-35.jpg', 2),   /* карточка 2 → 2 поинта */
+    ph('images/page-36.jpg', 1),
+    ph('images/page-37.jpg', 1),
+    ph('images/page-38.jpg', 1),
+    ph('images/page-39.jpg', 1),
+    ph('images/page-40.jpg', 1),
   ]},
   /* ================= ДЕСЕРТЫ ================= */
   { id:'desserts', t:{hy:'Աղանդեր',en:'Desserts',ru:'Десерты'}, scenes:[
-    ph('images/page-41.jpg'), ph('images/page-42.jpg'), ph('images/page-43.jpg'),
-    ph('images/page-44.jpg'), ph('images/page-45.jpg'), ph('images/page-46.jpg'),
-    ph('images/page-47.jpg'), ph('images/page-48.jpg'), ph('images/page-49.jpg', 2),
-    ph('images/page-50.jpg'),
+    ph('images/page-41.jpg', 2),   /* карта 1 → 2 поинта */
+    ph('images/page-42.jpg', 1),
+    ph('images/page-43.jpg', 1),
+    ph('images/page-44.jpg', 1),
+    ph('images/page-45.jpg', 2),   /* карточка 5 → 2 поинта */
+    ph('images/page-46.jpg', 1),
+    ph('images/page-47.jpg', 2),   /* карта 7 → 2 поинта */
+    ph('images/page-48.jpg', 2),   /* карта 8 → 2 поинта */
+    ph('images/page-49.jpg', 2),   /* карта 9 → 2 поинта */
+    ph('images/page-50.jpg', 2),   /* карта 10 → 2 поинта */
   ]},
 ];
 
