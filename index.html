@@ -28,7 +28,7 @@
     --logo-bg:#b8a17e;
     --gold:#e8b04b;
     --accent-grad:linear-gradient(135deg,#e8b04b 0%,#d8432a 100%);
-    --nav-h:126px;   /* высота шапки */
+    --nav-h:126px;   /* реальная высота шапки */
     --cat-h:64px;    /* высота полки категорий */
     --serif:'Noto Serif',Georgia,serif;
     --sans:'Noto Sans',-apple-system,sans-serif;
@@ -56,13 +56,12 @@
   .logo-card .slogan{margin-top:-2px;}
   .slogan{font-family:var(--serif);font-style:italic;font-size:11px;letter-spacing:.14em;color:var(--muted);}
 
-  /* ========== ЗАГРУЗЧИК: размытое hero-видео + дорисовка логотипа + пар ========== */
+  /* ========== ЗАГРУЗЧИК: размытое фото page20 + дорисовка логотипа + пар ========== */
   #loader{position:fixed;inset:0;z-index:100;background:var(--logo-bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;transition:transform .9s cubic-bezier(.76,0,.24,1),opacity .9s ease,visibility .9s;overflow:hidden;}
   #loader.done{transform:translateY(-100%);opacity:0;visibility:hidden;}
   .loader-bg{position:absolute;inset:0;z-index:0;}
-  .loader-bg video{width:100%;height:100%;object-fit:cover;filter:blur(26px) brightness(.5) saturate(1.15);transform:scale(1.18);}
+  .loader-bg img{width:100%;height:100%;object-fit:cover;filter:blur(26px) brightness(.5) saturate(1.15);transform:scale(1.18);}
   .loader-bg::after{content:"";position:absolute;inset:0;background:rgba(43,38,34,.42);}
-  /* пар: полупрозрачные точки снизу вверх */
   .loader-steam{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden;}
   .loader-steam i{position:absolute;bottom:-30px;border-radius:50%;background:rgba(241,239,233,.4);filter:blur(3px);opacity:0;animation:steam 7s linear infinite;}
   .loader-steam i:nth-child(1){left:10%;width:10px;height:10px;animation-delay:0s;}
@@ -79,7 +78,6 @@
     60%{opacity:.35;}
     100%{transform:translateY(-105vh) translateX(36px) scale(1.7);opacity:0;}
   }
-  /* логотип "дорисовывается" + бегущая линия-перо */
   .logo-wrap{position:relative;z-index:2;}
   #loader .logo-img{
     height:459px;max-width:86vw;object-fit:contain;
@@ -166,11 +164,11 @@
   @keyframes mq{to{transform:translateX(-50%);}}
 
   /* ========== МЕНЮ ========== */
-  /* контент сдвинут вниз на шапку + полку категорий */
-  .menu-sec{padding:calc(var(--nav-h) + var(--cat-h) + 28px) 0 clamp(70px,9vw,120px);}
-  /* ПОЛКА КАТЕГОРИЙ: fixed под шапкой, светлая подложка */
+  .menu-sec{padding:clamp(60px,8vw,100px) 0 clamp(70px,9vw,120px);}
+  /* ПОЛКА КАТЕГОРИЙ: STICKY — появляется в потоке после hero+marquee,
+     прилипает под шапку только когда долистали до меню */
   .menu-nav{
-    position:fixed;top:var(--nav-h);left:0;right:0;z-index:55;
+    position:sticky;top:var(--nav-h);z-index:55;
     background:rgba(241,239,233,.6);
     backdrop-filter:blur(12px);
     padding:12px 4vw;
@@ -324,7 +322,6 @@
   .rv{opacity:0;transform:translateY(30px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);}
   .rv.in{opacity:1;transform:none;}
 
-  /* НИЖНЯЯ ПАНЕЛЬ: автоскрытие при скролле вниз */
   .mobile-bar{display:none;}
 
   @media (max-width:900px){.nav{padding:8px 4vw;}.nav-right{gap:10px;}}
@@ -361,7 +358,6 @@
     .lang-btn.active{background:var(--ink);color:var(--menupage);}
     .nav-soc{align-self:center;color:var(--ink);border-color:var(--line);}
     .nav-tel{justify-content:center;color:var(--ink);text-shadow:none;border-color:var(--ink);}
-    /* нижняя панель + автоскрытие */
     .mobile-bar{
       position:fixed;left:0;right:0;bottom:0;z-index:70;
       display:flex;gap:10px;
@@ -422,9 +418,7 @@
 
 <div id="loader">
   <div class="loader-bg">
-    <video autoplay muted loop playsinline preload="auto" poster="Images-final/page03_img1.jpg">
-      <source src="Images-final/Herovideo.mp4" type="video/mp4">
-    </video>
+    <img src="Images-final/page20_img1.jpg" alt="">
   </div>
   <div class="loader-steam" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
   <div class="logo-wrap">
@@ -969,7 +963,6 @@ document.getElementById('navRight').addEventListener('click', e => {
   if (e.target.closest('a') || e.target.closest('.lang-btn')) navEl.classList.remove('open');
 });
 
-/* АВТОСКРЫТИЕ нижней панели: вниз — прячется, вверх — выезжает */
 const mobileBar = document.getElementById('mobileBar');
 let lastY = window.scrollY;
 addEventListener('scroll', () => {
