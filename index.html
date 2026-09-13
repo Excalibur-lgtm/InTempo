@@ -28,8 +28,8 @@
     --logo-bg:#b8a17e;
     --gold:#e8b04b;
     --accent-grad:linear-gradient(135deg,#e8b04b 0%,#d8432a 100%);
-    --nav-h:126px;   /* реальная высота шапки */
-    --cat-h:64px;    /* высота полки категорий */
+    --nav-h:88px;   /* ФИКСИРОВАННАЯ высота шапки */
+    --cat-h:64px;
     --serif:'Noto Serif',Georgia,serif;
     --sans:'Noto Sans',-apple-system,sans-serif;
   }
@@ -56,28 +56,39 @@
   .logo-card .slogan{margin-top:-2px;}
   .slogan{font-family:var(--serif);font-style:italic;font-size:11px;letter-spacing:.14em;color:var(--muted);}
 
-  /* ========== ЗАГРУЗЧИК: размытое фото page20 + дорисовка логотипа + пар ========== */
+  /* ========== ЗАГРУЗЧИК ========== */
   #loader{position:fixed;inset:0;z-index:100;background:var(--logo-bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;transition:transform .9s cubic-bezier(.76,0,.24,1),opacity .9s ease,visibility .9s;overflow:hidden;}
   #loader.done{transform:translateY(-100%);opacity:0;visibility:hidden;}
   .loader-bg{position:absolute;inset:0;z-index:0;}
   .loader-bg img{width:100%;height:100%;object-fit:cover;filter:blur(26px) brightness(.5) saturate(1.15);transform:scale(1.18);}
   .loader-bg::after{content:"";position:absolute;inset:0;background:rgba(43,38,34,.42);}
+
+  /* РЕАЛИСТИЧНЫЙ ПАР: размытые "облака" через radial-gradient + blur */
   .loader-steam{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden;}
-  .loader-steam i{position:absolute;bottom:-30px;border-radius:50%;background:rgba(241,239,233,.4);filter:blur(3px);opacity:0;animation:steam 7s linear infinite;}
-  .loader-steam i:nth-child(1){left:10%;width:10px;height:10px;animation-delay:0s;}
-  .loader-steam i:nth-child(2){left:24%;width:7px;height:7px;animation-delay:1.2s;animation-duration:8s;}
-  .loader-steam i:nth-child(3){left:38%;width:12px;height:12px;animation-delay:2.4s;animation-duration:6.5s;}
-  .loader-steam i:nth-child(4){left:52%;width:8px;height:8px;animation-delay:.8s;animation-duration:7.5s;}
-  .loader-steam i:nth-child(5){left:66%;width:11px;height:11px;animation-delay:3.1s;animation-duration:6.8s;}
-  .loader-steam i:nth-child(6){left:80%;width:7px;height:7px;animation-delay:1.8s;animation-duration:8.2s;}
-  .loader-steam i:nth-child(7){left:90%;width:9px;height:9px;animation-delay:2.9s;animation-duration:7.2s;}
-  .loader-steam i:nth-child(8){left:45%;width:6px;height:6px;animation-delay:4s;animation-duration:6.2s;}
-  @keyframes steam{
-    0%{transform:translateY(0) translateX(0) scale(.6);opacity:0;}
-    12%{opacity:.55;}
-    60%{opacity:.35;}
-    100%{transform:translateY(-105vh) translateX(36px) scale(1.7);opacity:0;}
+  .loader-steam i{
+    position:absolute;bottom:-30%;
+    width:240px;height:240px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(241,239,233,.55) 0%, rgba(241,239,233,.25) 35%, rgba(241,239,233,0) 65%);
+    filter:blur(45px);
+    opacity:0;
+    animation:steam 14s linear infinite;
+    will-change:transform,opacity;
   }
+  .loader-steam i:nth-child(1){left:12%;width:300px;height:300px;animation-duration:16s;animation-delay:0s;}
+  .loader-steam i:nth-child(2){left:30%;width:220px;height:220px;animation-duration:14s;animation-delay:2.5s;}
+  .loader-steam i:nth-child(3){left:48%;width:280px;height:280px;animation-duration:18s;animation-delay:1.2s;}
+  .loader-steam i:nth-child(4){left:65%;width:260px;height:260px;animation-duration:15s;animation-delay:3.8s;}
+  .loader-steam i:nth-child(5){left:82%;width:200px;height:200px;animation-duration:13s;animation-delay:4.7s;}
+  .loader-steam i:nth-child(6){left:22%;width:180px;height:180px;animation-duration:17s;animation-delay:5.5s;}
+  @keyframes steam{
+    0%{transform:translateY(0) translateX(0) scale(.8);opacity:0;}
+    15%{opacity:.5;}
+    50%{transform:translateY(-55vh) translateX(40px) scale(1.3);opacity:.4;}
+    85%{opacity:.2;}
+    100%{transform:translateY(-115vh) translateX(-30px) scale(1.6);opacity:0;}
+  }
+
   .logo-wrap{position:relative;z-index:2;}
   #loader .logo-img{
     height:459px;max-width:86vw;object-fit:contain;
@@ -98,8 +109,13 @@
   @keyframes loadbar{0%{transform:translateX(-110%);}100%{transform:translateX(360%);}}
   @keyframes logoIn{to{opacity:1;transform:none;}}
 
-  /* ========== ШАПКА ========== */
-  .nav{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:8px 6vw;transition:.4s;}
+  /* ========== ШАПКА: ФИКСИРОВАННАЯ ВЫСОТА ========== */
+  .nav{
+    position:fixed;top:0;left:0;right:0;z-index:60;
+    height:var(--nav-h);  /* <-- ЖЁСТКО заданная высота */
+    display:flex;align-items:center;justify-content:space-between;padding:0 6vw;
+    transition:.4s;
+  }
   .nav.scrolled{background:rgba(184,161,126,.96);backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--line);}
   .nav .logo-card{opacity:0;transform:translateY(-16px) scale(.94);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1);}
   .nav.ready .logo-card{opacity:1;transform:none;}
@@ -165,10 +181,8 @@
 
   /* ========== МЕНЮ ========== */
   .menu-sec{padding:clamp(60px,8vw,100px) 0 clamp(70px,9vw,120px);}
-  /* ПОЛКА КАТЕГОРИЙ: STICKY — появляется в потоке после hero+marquee,
-     прилипает под шапку только когда долистали до меню */
   .menu-nav{
-    position:sticky;top:var(--nav-h);z-index:55;
+    position:sticky;top:var(--nav-h);z-index:55;  /* <-- ТОЧНО равен высоте шапки */
     background:rgba(241,239,233,.6);
     backdrop-filter:blur(12px);
     padding:12px 4vw;
@@ -324,18 +338,18 @@
 
   .mobile-bar{display:none;}
 
-  @media (max-width:900px){.nav{padding:8px 4vw;}.nav-right{gap:10px;}}
+  @media (max-width:900px){.nav{padding:0 4vw;}.nav-right{gap:10px;}}
   @media (max-width:768px){
-    :root{--nav-h:112px;}
+    :root{--nav-h:80px;}   /* планшет */
     .nav-link{display:none;}
     .logo-img{height:96px;}
     #loader .logo-img{height:383px;}
     .menu-nav-btn{font-size:11px;padding:8px 14px;}
   }
   @media (max-width:640px){
-    :root{--nav-h:100px;--cat-h:58px;}
+    :root{--nav-h:72px;--cat-h:58px;}   /* телефон */
     html{scroll-padding-top:calc(var(--nav-h) + var(--cat-h) + 16px);}
-    .nav{padding:8px 4vw;}
+    .nav{padding:0 4vw;}
     .nav .slogan{display:none;}
     .burger{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:42px;height:42px;background:none;border:0;cursor:pointer;z-index:5;}
     .burger span{display:block;width:22px;height:2px;background:var(--paper);transition:.3s;}
@@ -404,7 +418,7 @@
     footer .logo-img{height:92px;}
   }
   @media (max-width:380px){
-    :root{--nav-h:92px;}
+    :root{--nav-h:64px;}   /* очень маленький */
     .lang-btn{padding:6px 10px;font-size:10px;}
     .logo-img{height:76px;}
     #loader .logo-img{height:300px;}
@@ -418,9 +432,9 @@
 
 <div id="loader">
   <div class="loader-bg">
-    <img src="Images-final/page20_img1.jpg" alt="">
+    <img src="Images-final/page4_img1.jpg" alt="">
   </div>
-  <div class="loader-steam" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="loader-steam" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
   <div class="logo-wrap">
     <img class="logo-img" src="images/logoIntempo.png" alt="In Tempo">
   </div>
