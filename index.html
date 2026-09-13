@@ -545,8 +545,6 @@
 <script>
 const IMG_DIR = 'Images-final/';
 
-/* ЗАКУСКИ: карточки 4↔5 и 7↔8 обменяны описаниями+ценами (фото и точки НЕ тронуты)
-   САЛАТЫ: карточки 2↔4 обменяны описаниями+ценами (фото и точки НЕ тронуты) */
 const MENU = [
   { id:'starters', t:{hy:'Նախուտեստներ',en:'Starters',ru:'Закуски'}, scenes:[
     { dishes:[
@@ -567,13 +565,11 @@ const MENU = [
         n:{hy:'Գրիլ վրայի բանջարեղեն',en:'Grilled Vegetables',ru:'Овощи на гриле'},
         d:{hy:'Պղպեղ, դդմիկ, սունկ, չերի լոլիկ, ֆարմեր սոուս',en:'Pepper, zucchini, mushroom, cherry tomatoes, Farmer sauce',ru:'Перец, кабачки, грибы, черри, фермерский соус'} },
     ]},
-    /* карточка 4: теперь описание+цена от бывшей карточки 5 */
     { dishes:[
       { img:IMG_DIR+'page06_img1.jpg', x:50, y:55, price:1900,
         n:{hy:'Մոցարելլայի ձողիկներ ԻնՏեմպո ոճով',en:'Mozzarella Sticks InTempo Style',ru:'Палочки из моцареллы в стиле InTempo'},
         d:{hy:'Մոցարելլայի ձողիկներ, ֆիրմային մայոնեզ, չեդեր, բեկոն, պարմեզան, կանաչ սոխ',en:'Mozzarella sticks, signature mayonnaise, cheddar, bacon, parmesan, green onion',ru:'Палочки из моцареллы, фирменный майонез, чеддер, бекон, пармезан, зелёный лук'} },
     ]},
-    /* карточка 5: теперь описание+цена от бывшей карточки 4 */
     { dishes:[
       { img:IMG_DIR+'page07_img1.jpg', x:50, y:55, price:2100,
         n:{hy:'Խրթափավ հավի կրծքամիս կարտոֆիլ ֆրիով և չեդեր պանրով',en:'Crispy Chicken Breast with French Fries and Cheddar',ru:'Салат с хрустящей курицей, картофелем фри и чеддером'},
@@ -584,17 +580,15 @@ const MENU = [
         n:{hy:'Հավի տեմպուրա ԻնՏեմպոյում',en:'Chicken Tempura at InTempo',ru:'Куриная темпура в InTempo'},
         d:{hy:'Հավի կրծքամիս, չեդեր',en:'Chicken breast, cheddar',ru:'Куриная грудка, чеддер'} },
     ]},
-    /* карточка 7: теперь описание+цена от бывшей карточки 8 */
     { dishes:[
-      { img:IMG_DIR+'page09_img1.jpg', x:50, y:55, price:2500,
-        n:{hy:'Հավի թևիկներ ԻնՏեմպոյում',en:'Chicken Wings at InTempo',ru:'Куриные крылышки в InTempo'},
-        d:{hy:'Հավի թևիկներ, BBQ սոուս, պարմեզան, կանաչ սոխ',en:'Chicken wings, BBQ sauce, parmesan, green onions',ru:'Куриные крылышки, соус BBQ, пармезан, зелёный лук'} },
-    ]},
-    /* карточка 8: теперь описание+цена от бывшей карточки 7 */
-    { dishes:[
-      { img:IMG_DIR+'page10_img1.jpg', x:50, y:55, price:3600,
+      { img:IMG_DIR+'page09_img1.jpg', x:50, y:55, price:3600,
         n:{hy:'Ծովախեցգետնի տեմպուրա',en:'Shrimp Tempura',ru:'Креветки темпура'},
         d:{hy:'Ծովախեցգետին, քաղցր չիլի սոուս',en:'Shrimps, sweet chili sauce',ru:'Креветки, сладкий соус чили'} },
+    ]},
+    { dishes:[
+      { img:IMG_DIR+'page10_img1.jpg', x:50, y:55, price:2500,
+        n:{hy:'Հավի թևիկներ ԻնՏեմպոյում',en:'Chicken Wings at InTempo',ru:'Куриные крылышки в InTempo'},
+        d:{hy:'Հավի թևիկներ, BBQ սոուս, պարմեզան, կանաչ սոխ',en:'Chicken wings, BBQ sauce, parmesan, green onions',ru:'Куриные крылышки, соус BBQ, пармезан, зелёный лук'} },
     ]},
     { dishes:[
       { img:IMG_DIR+'page11_img1.jpg', x:35, y:35, price:3900,
@@ -622,7 +616,6 @@ const MENU = [
         n:{hy:'Ստեյկ աղցան',en:'Steak Salad',ru:'Стейк-салат'},
         d:{hy:'Հորթի փափկամիս, խորոված պղպեղի կոնֆի, միքս աղցան, պարմեզան',en:'Veal tenderloin, grilled pepper confit, mixed salad, parmesan',ru:'Телячья вырезка, жареный перец конфи, микс салат, пармезан'} },
     ]},
-    /* карточка 2: теперь описания+цены от бывшей карточки 4 */
     { dishes:[
       { img:IMG_DIR+'page15_img1.jpg', x:35, y:35, price:2800,
         n:{hy:'Հեղինակային ֆարմեր աղցան',en:'Signature Farmer\u2019s Salad',ru:'Фирменный Фермер салат'},
@@ -636,7 +629,6 @@ const MENU = [
         n:{hy:'Ավոկադոյով և քաղցրահամ լոլիկով աղցան',en:'Avocado & Sweet Tomato Salad',ru:'Салат с авокадо и сладкими томатами'},
         d:{hy:'Լոլիկ, ավոկադո, սերուցքային պանիր, extra virgin ձիթապտղի յուղ, բազիլիկ, չորս պղպեղ, կիտրոն',en:'Tomatoes, avocado, cream cheese, extra virgin olive oil, basil, four-pepper blend, lemon',ru:'Томаты, авокадо, сливочный сыр, оливковое масло extra virgin, базилик, смесь четырёх перцев, лимон'} },
     ]},
-    /* карточка 4: теперь описания+цены от бывшей карточки 2 */
     { dishes:[
       { img:IMG_DIR+'page17_img1.jpg', x:35, y:35, price:2900,
         n:{hy:'Կապրեզե աղցան ԻնՏեմպոյում',en:'Caprese Salad at InTempo',ru:'Салат Капрезе в InTempo'},
@@ -876,7 +868,8 @@ const MENU = [
         n:{hy:'շոկոլադե հրաբուխ',en:'chocolate volcano',ru:'шоколадный вулкан'},
         d:{hy:'',en:'',ru:''} },
     ]},
-  ]}
+  ]},
+];
 
 const DICT = {
   hy:{title:'In Tempo — Իտալական խոհանոց · Երևան',nav_menu:'Մենյու',nav_contact:'Կապ',
@@ -915,7 +908,7 @@ const DICT = {
 };
 
 let currentLang = 'hy';
-const fmtPrice = n => (n == null ? '—' : String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' ') + ' ֏');
+const fmtPrice = n => (n == null ? '—' : (typeof n === 'number' ? String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' ') : String(n))) + ' ֏';
 const canHover = window.matchMedia('(hover:hover)').matches;
 const isMobile = () => window.matchMedia('(max-width:640px)').matches;
 
@@ -1139,6 +1132,16 @@ try{ savedLang = localStorage.getItem('intempo_lang') || 'hy'; }catch(e){}
 try { applyLang(savedLang); } catch(e){ console.error('Menu init error:', e); }
 
 document.querySelectorAll('.rv').forEach(el => io.observe(el));
+</script>
+
+<!-- СТРАХОВКА: даже если основной скрипт упадёт, тексты шапки/hero появятся -->
+<script>
+  setTimeout(function(){
+    var n = document.getElementById('nav');
+    var h = document.querySelector('.hero');
+    if (n && !n.classList.contains('ready')) n.classList.add('ready');
+    if (h && !h.classList.contains('ready')) h.classList.add('ready');
+  }, 4200);
 </script>
 </body>
 </html>
