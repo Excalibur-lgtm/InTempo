@@ -73,14 +73,17 @@
   #loader.done{transform:translateY(-100%);opacity:0;visibility:hidden;}
   .loader-bg{position:absolute;inset:0;z-index:0;}
   .loader-bg img{width:100%;height:100%;object-fit:cover;filter:blur(26px) brightness(.5) saturate(1.15);transform:scale(1.18);}
-  /* ВИНЬЕТКА: полностью прозрачна в центре (0%), плавно затемняется к краям (100%) */
+  
+  /* БЕЛО-МАТОВАЯ ВИНЬЕТКА С РАЗМЫТИЕМ */
   .loader-bg::after{
     content:"";position:absolute;inset:0;
-    background: radial-gradient(circle at center, rgba(43,38,34,0) 15%, rgba(43,38,34,0.5) 60%, rgba(43,38,34,0.85) 100%);
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.15) 35%, transparent 75%);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     pointer-events:none;
   }
+
   .loader-steam{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden;}
-  /* ПАР: большие, сильно размытые облачка, имитирующие настоящий пар */
   .loader-steam i{
     position:absolute; bottom:-150px;
     width:140px; height:350px;
@@ -105,12 +108,12 @@
   }
 
   .logo-wrap{position:relative;z-index:2;}
-  /* НОВАЯ АНИМАЦИЯ ЛОГОТИПА: плавное появление из размытия и увеличение */
+  /* Анимация логотипа: плавное появление из размытия и увеличение */
   #loader .logo-img{
     height:459px;max-width:86vw;object-fit:contain;
     opacity: 0;
-    transform: scale(0.8) translateY(30px);
-    filter: blur(10px);
+    transform: scale(0.85) translateY(20px);
+    filter: blur(8px);
     animation: logoReveal 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
   }
   @keyframes logoReveal {
@@ -199,7 +202,6 @@
   .mq-track b{color:var(--red);font-weight:500;}
   @keyframes mq{to{transform:translateX(-50%);}}
 
-  /* Анимация появления меню */
   .menu-sec{
     position:relative;z-index:1;background:rgba(183,157,116,.85);
     padding:clamp(60px,8vw,100px) 0 clamp(70px,9vw,120px);
@@ -337,7 +339,6 @@
 
   .mobile-bar{display:none;}
 
-  /* ========== СТАРТОВЫЙ ЭКРАН ВЫБОРА ФИЛИАЛА ========== */
   .branch-modal{
     position:fixed;inset:0;z-index:350;
     background:rgba(43,38,34,.96);backdrop-filter:blur(16px);
@@ -360,13 +361,12 @@
     transform:translateY(-6px);box-shadow:0 20px 40px rgba(0,0,0,.3);
   }
   .branch-choice:active{
-    transform: scale(0.96); /* Эффект нажатия */
+    transform: scale(0.96);
   }
   .branch-choice .icon{font-size:56px;margin-bottom:16px;}
   .branch-choice .name{font-family:var(--serif);font-size:26px;color:var(--paper);margin-bottom:8px;font-weight:600;}
   .branch-choice .desc{font-size:14px;color:rgba(241,239,233,.65);}
 
-  /* ========== КОМПАКТНЫЙ РЕЖИМ МЕНЮ ========== */
   .compact-mode .menu-grid {
     display: flex !important; flex-direction: column !important; gap: 12px !important; max-width: 800px !important; margin: 0 auto !important;
   }
@@ -473,7 +473,6 @@
   <img src="Images-final/page13_img1.jpg" alt="" onerror="this.onerror=null;this.src='Images-final/page03_img1.jpg';">
 </div>
 
-<!-- Модальное окно выбора филиала (открыто по умолчанию) -->
 <div class="branch-modal open" id="branchModal">
   <div class="branch-modal-inner">
     <h2 data-i18n="branch_title">Выберите филиал</h2>
@@ -545,7 +544,6 @@
       <span class="line"><span class="line-in" data-i18n-html="hero_l2">Երևանի <em>Կենտրոնում</em></span></span>
     </h1>
     <p class="hero-sub" data-i18n="hero_sub">Բաց է 09:00–24:00</p>
-    <!-- Кнопки появляются только после выбора филиала -->
     <div class="hero-actions" id="heroActions" style="display:none;">
       <button class="btn btn-primary" id="showMenuBtn">📋 <span data-i18n="tab_main">Основное меню</span></button>
       <button class="btn btn-ghost" onclick="showComingSoon()">🍹 <span data-i18n="tab_bar">Бар</span></button>
@@ -564,7 +562,6 @@
   <span>Time To Enjoy. <b>·</b> Pizza And More. <b>·</b></span>
 </div></div>
 
-<!-- Меню скрыто по умолчанию -->
 <section class="menu-sec" id="menu">
   <div id="menuRoot"></div>
 </section>
@@ -753,9 +750,9 @@ window.addEventListener('load', () => {
     currentBranch = savedBranch;
     document.getElementById('branchToggle').textContent = currentBranch === 'hyusisayin' ? '🏛️ Հյուսիսային' : '🛍️ Mega Mall';
     document.getElementById('heroActions').style.display = 'flex';
-    branchModal.classList.remove('open'); // Скрываем, если уже выбран
+    branchModal.classList.remove('open');
   } else {
-    branchModal.classList.add('open'); // Показываем обязательно при первом входе
+    branchModal.classList.add('open');
   }
 });
 setTimeout(revealOnce, 4000);
@@ -902,24 +899,29 @@ function renderMenu(lang){
   });
 }
 
-// Исправленная логика открытия меню
+// ИСПРАВЛЕННАЯ ЛОГИКА ОТКРЫТИЯ МЕНЮ
 document.getElementById('showMenuBtn').addEventListener('click', () => {
   const menuSec = document.getElementById('menu');
   const menuRoot = document.getElementById('menuRoot');
   
+  // 1. Делаем блок видимым для DOM
   menuSec.style.display = 'block';
   menuRoot.classList.add('compact-mode');
   
+  // 2. Рендерим, если еще не рендерили
   if (!menuRendered) {
     renderMenu(currentLang);
     menuRendered = true;
   }
 
-  // Небольшая задержка, чтобы браузер успел отрисовать display: block перед анимацией
-  setTimeout(() => {
+  // 3. Принудительный reflow и запуск анимации
+  void menuSec.offsetWidth; 
+  requestAnimationFrame(() => {
     menuSec.classList.add('visible');
-    menuSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, 50);
+    setTimeout(() => {
+      menuSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  });
 });
 
 function showComingSoon(){
