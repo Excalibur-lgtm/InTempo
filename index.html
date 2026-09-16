@@ -897,6 +897,22 @@ function renderMenu(lang){
       scene.appendChild(hotspot);
       
       card.appendChild(scene);
+      const info = document.createElement('div');
+      info.className = 'menu-item-info';
+      const title = document.createElement('div');
+      title.className = 'hs-name';
+      title.textContent = nameText;
+      const description = document.createElement('div');
+      description.className = 'hs-desc';
+      description.textContent = descText;
+      const meta = document.createElement('div');
+      meta.className = 'hs-meta';
+      const price = document.createElement('span');
+      price.className = 'hs-price';
+      price.textContent = fmtPrice(branchData.price);
+      meta.appendChild(price);
+      info.append(title, description, meta);
+      card.appendChild(info);
       card.addEventListener('click', () => { if (isMobile()) openSceneModal(card); });
       grid.appendChild(card);
       io.observe(card);
@@ -960,6 +976,7 @@ function selectBranch(branch){
   closeBranchModal();
   branchToggle.textContent = currentBranch === 'hyusisayin' ? '🏛️ Հյուսիսային' : '🛍️ Mega Mall';
   document.getElementById('heroActions').style.display = 'flex';
+  if (menuRendered) renderMenu(currentLang);
   openMenu();
 }
 
