@@ -614,7 +614,7 @@
 </div>
 
 <script>
-const IMG_DIR = 'Images-final/';
+const IMG_DIR = 'https://raw.githubusercontent.com/Excalibur-lgtm/InTempo/main/Images-final/';
 let currentBranch = 'hyusisayin';
 let currentLang = 'hy';
 let menuRendered = false;
@@ -1095,20 +1095,7 @@ function renderMenu(lang){
   const root = document.getElementById('menuRoot');
   root.innerHTML = '';
 
-  const filteredMenu = MENU.map(cat => ({
-    ...cat,
-    dishes: cat.scenes.flatMap(scene => scene.dishes.map(d => ({
-      ...d,
-      name: d.n,
-      desc: d.d,
-      branches: {
-        hyusisayin: { price: d.price, available: true },
-        mega: { price: d.price, available: true }
-      }
-    }))).filter(d => getBranchData(d).available)
-  })).filter(cat => cat.dishes.length > 0);
-
-  filteredMenu.forEach((cat) => {
+  MENU.forEach(cat => {
     const sec = document.createElement('div');
     sec.className = 'menu-category';
     sec.id = 'cat-' + cat.id;
@@ -1118,76 +1105,60 @@ function renderMenu(lang){
         '<span class="cat-kicker">In Tempo · ' + cat.t.en + '</span>' +
         '<h2>' + cat.t[lang] + '</h2>' +
         '<div class="cat-line">' + others + '</div>' +
-      '</div>' +
-      '<div class="menu-grid"></div>';
+      '</div><div class="menu-grid"></div>';
     const grid = sec.querySelector('.menu-grid');
 
-    cat.dishes.forEach((d) => {
-      const branchData = getBranchData(d);
+    cat.scenes.forEach((sceneData, index) => {
       const card = document.createElement('div');
       card.className = 'menu-item';
-      
+      card.style.transitionDelay = (index % 4) * 80 + 'ms';
+
       const scene = document.createElement('div');
       scene.className = 'scene';
-      const img = document.createElement('img');
-      img.className = 'scene-img active';
-      img.src = IMG_DIR + d.img;
-      // ЗАЩИТА ОТ ОШИБКИ: Если name нет, используем пустую строку
-      img.alt = (d.name && d.name[lang]) ? d.name[lang] : '';
-      img.loading = 'lazy';
-      attachImgFallback(img);
-      scene.appendChild(img);
-      
-      const hotspot = document.createElement('button');
-      hotspot.className = 'hotspot';
-      hotspot.style.left = d.x + '%';
-      hotspot.style.top = d.y + '%';
-      if (d.y < 40) hotspot.classList.add('pop-below');
-      if (d.x < 30) hotspot.classList.add('pop-left');
-      else if (d.x > 70) hotspot.classList.add('pop-right');
-      // ЗАЩИТА ОТ ОШИБКИ: Если name нет, используем пустую строку
-      hotspot.setAttribute('aria-label', (d.name && d.name[lang]) ? d.name[lang] : '');
-      
-      // ЗАЩИТА ОТ ОШИБКИ: Исправлено d.d на d.desc для соответствия данным
-      const descText = (d.desc && d.desc[lang]) ? d.desc[lang] : '';
-      const nameText = (d.name && d.name[lang]) ? d.name[lang] : '';
-
-      hotspot.innerHTML =
-        '<span class="hs-dot"></span>' +
-        '<div class="hs-pop"><div class="hs-pop-in">' +
-          '<div class="hs-name">' + nameText + '</div>' +
-          (descText ? '<div class="hs-desc">' + descText + '</div>' : '') +
-          '<div class="hs-meta"><span class="hs-price">' + fmtPrice(branchData.price) + '</span><span class="hs-kicker">In Tempo</span></div>' +
-        '</div></div>';
-      hotspot.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const was = hotspot.classList.contains('open');
-        closeAllPops();
-        if (!was) hotspot.classList.add('open');
+      const images = sceneData.dishes.map((dish, imageIndex) => {
+        const image = document.createElement('img');
+        image.className = 'scene-img' + (imageIndex === 0 ? ' active' : '');
+        image.src = dish.img;
+        image.alt = dish.n[lang] || '';
+        image.loading = 'lazy';
+        image.decoding = 'async';
+        attachImgFallback(image);
+        scene.appendChild(image);
+        return image;
       });
-      if (canHover){
-        hotspot.addEventListener('mouseenter', () => { closeAllPops(); hotspot.classList.add('open'); });
-        hotspot.addEventListener('mouseleave', () => hotspot.classList.remove('open'));
-      }
-      scene.appendChild(hotspot);
-      
+
+      sceneData.dishes.forEach((dish, dishIndex) => {
+        const hotspot = document.createElement('button');
+        hotspot.className = 'hotspot';
+        hotspot.style.left = dish.x + '%';
+        hotspot.style.top = dish.y + '%';
+        if (dish.y < 40) hotspot.classList.add('pop-below');
+        if (dish.x < 30) hotspot.classList.add('pop-left');
+        else if (dish.x > 70) hotspot.classList.add('pop-right');
+        hotspot.setAttribute('aria-label', dish.n[lang] || '');
+        hotspot.innerHTML =
+          '<span class="hs-dot"></span>' +
+          '<div class="hs-pop"><div class="hs-pop-in">' +
+            '<div class="hs-name">' + (dish.n[lang] || '') + '</div>' +
+            (dish.d[lang] ? '<div class="hs-desc">' + dish.d[lang] + '</div>' : '') +
+            '<div class="hs-meta"><span class="hs-price">' + fmtPrice(dish.price) + '</span><span class="hs-kicker">In Tempo</span></div>' +
+          '</div></div>';
+
+        const showDish = () => images.forEach((image, imageIndex) => image.classList.toggle('active', imageIndex === dishIndex));
+        hotspot.addEventListener('click', event => {
+          event.stopPropagation();
+          const wasOpen = hotspot.classList.contains('open');
+          closeAllPops();
+          if (!wasOpen) { showDish(); hotspot.classList.add('open'); }
+        });
+        if (canHover) {
+          hotspot.addEventListener('mouseenter', () => { closeAllPops(); showDish(); hotspot.classList.add('open'); });
+          hotspot.addEventListener('mouseleave', () => hotspot.classList.remove('open'));
+        }
+        scene.appendChild(hotspot);
+      });
+
       card.appendChild(scene);
-      const info = document.createElement('div');
-      info.className = 'menu-item-info';
-      const title = document.createElement('div');
-      title.className = 'hs-name';
-      title.textContent = nameText;
-      const description = document.createElement('div');
-      description.className = 'hs-desc';
-      description.textContent = descText;
-      const meta = document.createElement('div');
-      meta.className = 'hs-meta';
-      const price = document.createElement('span');
-      price.className = 'hs-price';
-      price.textContent = fmtPrice(branchData.price);
-      meta.appendChild(price);
-      info.append(title, description, meta);
-      card.appendChild(info);
       card.addEventListener('click', () => { if (isMobile()) openSceneModal(card); });
       grid.appendChild(card);
       io.observe(card);
@@ -1203,7 +1174,6 @@ function openMenu() {
   const menuRoot = document.getElementById('menuRoot');
 
   menuSec.style.display = 'block';
-  menuRoot.classList.add('compact-mode');
 
   if (!menuRendered) {
     renderMenu(currentLang);
@@ -1273,4 +1243,3 @@ document.querySelectorAll('.rv').forEach(el => io.observe(el));
 </script>
 </body>
 </html>
-
