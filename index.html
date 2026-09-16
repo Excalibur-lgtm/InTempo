@@ -50,7 +50,7 @@
   h1,h2{font-family:var(--serif);font-weight:600;line-height:1.12;letter-spacing:-.01em;color:var(--ink);}
   em{font-style:italic;color:var(--red);}
 
-  /* ========== ПАРАЛЛАКС-ФОН: ЛЁГКИЙ blur (6px), фото читается ========== */
+  /* ========== ПАРАЛЛАКС-ФОН: ЛЁГКИЙ blur (6px) ========== */
   .site-bg{
     position:fixed;left:0;right:0;top:-20vh;height:140vh;
     z-index:0;pointer-events:none;overflow:hidden;
@@ -61,7 +61,6 @@
     filter:blur(6px) brightness(.72) saturate(1.1);
     transform:scale(1.06);
   }
-  /* полупрозрачная бежевая вуаль поверх фото (осветлена) */
   .site-bg::after{
     content:"";position:absolute;inset:0;
     background:
@@ -214,7 +213,6 @@
 
   .menu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:clamp(20px,2.6vw,36px);}
 
-  /* карточки-«стекло» с ЛЁГКИМ blur */
   .menu-item{
     position:relative;
     background:rgba(241,239,233,.5);
@@ -241,14 +239,6 @@
     font-family:var(--serif);font-style:italic;font-size:15px;letter-spacing:.12em;color:var(--muted);
     background:repeating-linear-gradient(45deg, rgba(43,38,34,.05) 0 14px, transparent 14px 28px), var(--menupage);
   }
-  .scene-tag{
-    position:absolute;bottom:12px;left:12px;z-index:5;
-    background:rgba(26,22,19,.55);backdrop-filter:blur(6px);
-    color:rgba(241,239,233,.9);font-size:9px;letter-spacing:.24em;text-transform:uppercase;
-    padding:6px 10px;border-radius:999px;display:flex;align-items:center;gap:6px;pointer-events:none;
-  }
-  .scene-tag i{width:5px;height:5px;border-radius:50%;background:var(--red);animation:pulse 2s ease-in-out infinite;}
-  @keyframes pulse{0%,100%{opacity:.5;}50%{opacity:1;}}
 
   .card-cap{display:none;}
   .cc-name{font-family:var(--serif);font-size:12px;font-weight:600;color:var(--ink);line-height:1.25;flex:1;}
@@ -1127,11 +1117,7 @@ function renderMenu(lang){
         scene.appendChild(hs);
       });
 
-      const tag = document.createElement('div');
-      tag.className = 'scene-tag';
-      tag.innerHTML = '<i></i><span>' + DICT[lang].tap + '</span>';
-      scene.appendChild(tag);
-
+      /* БЕЗ надписи «Սեղմեք կետերին» — только фото и точки */
       const cap = document.createElement('div');
       cap.className = 'card-cap';
       cap.innerHTML = '<span class="cc-name">' + sc.dishes[0].n[lang] + '</span><span class="cc-price">' + fmtPrice(sc.dishes[0].price) + '</span>';
