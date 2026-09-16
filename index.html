@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-<title>In Tempo — Իտալական խոհանոց · Երևան</title>
-<meta name="description" content="In Tempo — իտալական խոհանոց Երևանի կենտրոնում։ Բաց է 09:00–24:00։ Time to enjoy.">
+<title>In Tempo — Իտալական խոհանոց · րևան</title>
+<meta name="description" content="In Tempo — իտալական խոհանոց Երևանի կենտրոնում։ աց է 09:00–24:00։ Time to enjoy.">
 <link rel="preload" href="images/logoIntempo.png" as="image" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -240,7 +240,7 @@
   .scene-img.active{opacity:1;}
   .menu-item:hover .scene-img{transform:scale(1.06);}
   .scene.no-img::after{
-    content:'In Tempo · լուսանկարը շուտով';position:absolute;inset:0;z-index:1;
+    content:'In Tempo · ուսանկարը շուտով';position:absolute;inset:0;z-index:1;
     display:flex;align-items:center;justify-content:center;
     font-family:var(--serif);font-style:italic;font-size:15px;letter-spacing:.12em;color:var(--muted);
     background:repeating-linear-gradient(45deg, rgba(43,38,34,.05) 0 14px, transparent 14px 28px), var(--menupage);
@@ -479,7 +479,7 @@
     <p data-i18n="branch_subtitle">Меню отличается в зависимости от филиала</p>
     <div class="branch-choices">
       <div class="branch-choice" data-branch="hyusisayin">
-        <div class="icon">🏛️</div>
+        <div class="icon">️</div>
         <div class="name">Հյուսիսային</div>
         <div class="desc" data-i18n="branch_big">Большой филиал</div>
       </div>
@@ -517,7 +517,7 @@
     <span class="slogan">Time to enjoy</span>
   </a>
   <div class="nav-right" id="navRight">
-    <a class="nav-link" href="#menu" data-i18n="nav_menu">Մենյու</a>
+    <a class="nav-link" href="#menu" data-i18n="nav_menu">ենյու</a>
     <a class="nav-link" href="#contact" data-i18n="nav_contact">Կապ</a>
     <button class="branch-toggle" id="branchToggle" title="Сменить филиал">🏛️ Հյուսիսային</button>
     <div class="langs">
@@ -585,7 +585,7 @@
   <p class="addr rv"><span data-i18n="c_addr1">Երևան, Հյուսիսային 10/3</span><br><span data-i18n="c_addr2">Ամեն օր 09:00 – 24:00</span></p>
   <div class="delivery-note rv">
     <span class="delivery-title" data-i18n="c_delivery_title">Առաքում</span>
-    <span data-i18n-html="c_delivery">Առաքում պատվիրելու համար կարող եք օգտվել <b>Glovo</b>, <b>Yandex</b>, <b>Buy.am</b> հավելվածներից կամ զանգահարել <b>8811</b> Buy.am</span>
+    <span data-i18n-html="c_delivery">Առաքում պատվիրելու համար կարող եք գտվել <b>Glovo</b>, <b>Yandex</b>, <b>Buy.am</b> հավելվածներից կամ զանգահարել <b>8811</b> Buy.am</span>
   </div>
   <div class="soc-row rv">
     <a class="soc" href="https://www.instagram.com/intempo_italian_restaurant?stkn=dmNidWlnbmxpbm12" target="_blank" rel="noopener" aria-label="Instagram">
@@ -622,7 +622,7 @@ const MENU = [
   { id:'starters', t:{hy:'Նախուտեստներ',en:'Starters',ru:'Закуски'}, dishes:[
     { id:'bruschetta-crudo', category:'starters', img:'page04_img1.jpg', x:35, y:35,
       name:{hy:'Բրուսկետտա պրոշուտտոյով և տապենադով',en:'Bruschetta Crudo with Tapenade',ru:'Брускетта с прошутто и тапенадом'},
-      desc:{hy:'Պրոշուտտո, կալամատա, սերուցքային պանիր, բազիլիկ',en:'Crudo, kalamata olives, cream cheese, basil',ru:'Прошутто, каламата, сливочный сыр, базилик'},
+      desc:{hy:'րոշուտտո, կալամատա, սերուցքային պանիր, բազիլիկ',en:'Crudo, kalamata olives, cream cheese, basil',ru:'Прошутто, каламата, сливочный сыр, базилик'},
       branches:{hyusisayin:{price:2700,available:true},mega:{price:2700,available:true}} },
     { id:'bruschetta-mortadella', category:'starters', img:'page04_img1.jpg', x:65, y:68,
       name:{hy:'Բրուսկետտա մորտադելլայով և պիստակի կրեմով',en:'Bruschetta Mortadella with Pistachio Cream',ru:'Брускетта с мортаделлой и фисташковым кремом'},
@@ -633,10 +633,10 @@ const MENU = [
       desc:{hy:'Պղպեղ, դդմիկ, սունկ, չերի լոլիկ, ֆարմեր սոուս',en:'Pepper, zucchini, mushroom, cherry tomatoes, Farmer sauce',ru:'Перец, кабачки, грибы, черри, фермерский соус'},
       branches:{hyusisayin:{price:2400,available:true},mega:{price:2400,available:true}} },
   ]},
-  { id:'salads', t:{hy:'Սալատներ',en:'Salads',ru:'Салаты'}, dishes:[
+  { id:'salads', t:{hy:'ալատներ',en:'Salads',ru:'Салаты'}, dishes:[
     { id:'steak-salad', category:'salads', img:'page14_img1.jpg', x:50, y:55,
       name:{hy:'Ստեյկ աղցան',en:'Steak Salad',ru:'Стейк-салат'},
-      desc:{hy:'Հորթի փափկամիս, խորոված պղպեղի կոնֆի, միքս աղցան, պարմեզան',en:'Veal tenderloin, grilled pepper confit, mixed salad, parmesan',ru:'Телячья вырезка, жареный перец конфи, микс салат, пармезан'},
+      desc:{hy:'Հորթի փափկամիս, որոված պղպեղի կոնֆի, միքս աղցան, պարմեզան',en:'Veal tenderloin, grilled pepper confit, mixed salad, parmesan',ru:'Телячья вырезка, жареный перец конфи, микс салат, пармезан'},
       branches:{hyusisayin:{price:3900,available:true},mega:{price:3900,available:true}} },
   ]},
   { id:'soups', t:{hy:'Ապուրներ',en:'Soups',ru:'Супы'}, dishes:[
@@ -660,7 +660,7 @@ const MENU = [
   { id:'piadina', t:{hy:'Պիադինա',en:'Piadina',ru:'Пьядина'}, dishes:[
     { id:'piadina-chicken', category:'piadina', img:'page32_img1.jpg', x:35, y:35,
       name:{hy:'Պիադինելլա հավով և ավոկադոյով',en:'Piadinella with chicken & avocado',ru:'Пьядинелла с курицей и авокадо'},
-      desc:{hy:'Տորտիլիա, հավի կրծքամիս, ավոկադո, ֆարմեր սոուս, միքս աղցան, կարտոֆիլ ֆրի, մայոնեզ',en:'Tortilla, chicken breast, avocado, farmer sauce, mixed salad, french fries, mayonnaise',ru:'Тортилья, куриная грудка, авокадо, фермерский соус, микс-салат, картофель фри, майонез'},
+      desc:{hy:'Տորտիլիա, հավի կրծքամիս, ավոկադո, արմեր սոուս, միքս աղցան, կարտոֆիլ ֆրի, մայոնեզ',en:'Tortilla, chicken breast, avocado, farmer sauce, mixed salad, french fries, mayonnaise',ru:'Тортилья, куриная грудка, авокадо, фермерский соус, микс-салат, картофель фри, майонез'},
       branches:{hyusisayin:{price:2500,available:true},mega:{price:2500,available:true}} },
   ]},
   { id:'mains', t:{hy:'Հիմնական ուտեստներ',en:'Main Courses',ru:'Основные блюда'}, dishes:[
@@ -679,18 +679,18 @@ const MENU = [
 
 const DICT = {
   hy:{title:'In Tempo — Իտալական խոհանոց · Երևան',nav_menu:'Մենյու',nav_contact:'Կապ',
-    hero_l1:'Իտալական խոհանոց',hero_l2:'Երևանի <em>Կենտրոնում</em>',hero_sub:'Բաց է 09:00–24:00',
+    hero_l1:'Իտալական խոհանոց',hero_l2:'Երևանի <em>Կենտրոնում</em>',hero_sub:'աց է 09:00–24:00',
     cue:'թերթեք', tap:'Սեղմեք կետերին',
     mb_call:'Զանգել',mb_book:'Ամրագրել',
     c_h2:'Զանգեք — և սեղանը <em>սպասում է</em>',
     c_sub:'Մեկ հպում — և մնացածը մենք կհոգանք։',
     c_addr1:'Երևան, Հյուսիսային 10/3',c_addr2:'Ամեն օր 09:00 – 24:00',
     c_delivery_title:'Առաքում',
-    c_delivery:'Առաքում պատվիրելու համար կարող եք օգտվել <b>Glovo</b>, <b>Yandex</b>, <b>Buy.am</b> հավելվածներից կամ զանգահարել <b>8811</b> Buy.am',
+    c_delivery:'Առաքում պատվիրելու համար կարող եք օգտվել <b>Glovo</b>, <b>Yandex</b>, <b>Buy.am</b> հավելվածներից կամ անգահարել <b>8811</b> Buy.am',
     f_line:'© 2026 In Tempo · Իտալական խոհանոց',
-    branch_title:'Ընտրեք մասնաճյուղ',branch_subtitle:'Մենյուն տարբերվում է ըստ մասնաճյուղի',
-    branch_big:'Մեծ մասնաճյուղ',branch_small:'Փոքր մասնաճյուղ',
-    tab_main:'Հիմնական մենյու',tab_bar:'Բար',tab_pizza:'Պիցցա',
+    branch_title:'Ընտրեք մասնաճյուղ',branch_subtitle:'Մենյուն տարբերվում է ըստ մասնայուղի',
+    branch_big:'եծ մասնաճյուղ',branch_small:'Փոքր մասնաճյուղ',
+    tab_main:'Հիմնական մենյու',tab_bar:'Բար',tab_pizza:'իցցա',
     coming_soon:'Բաժինը շուտով կլինի'},
   en:{title:'In Tempo — Italian Kitchen · Yerevan',nav_menu:'Menu',nav_contact:'Contact',
     hero_l1:'Italian kitchen',hero_l2:'in the heart of <em>Yerevan</em>',hero_sub:'Open 09:00 – 24:00',
@@ -823,6 +823,7 @@ function getBranchData(dish){
   return {price: branch.price, available: branch.available !== false};
 }
 
+// ИСПРАВЛЕННАЯ ФУНКЦИЯ РЕНДЕРА МЕНЮ
 function renderMenu(lang){
   const root = document.getElementById('menuRoot');
   root.innerHTML = '';
@@ -847,6 +848,9 @@ function renderMenu(lang){
     const grid = sec.querySelector('.menu-grid');
 
     cat.dishes.forEach((d) => {
+      // ЗАЩИТА ОТ ОШИБОК: проверяем наличие name и desc
+      if (!d.name || !d.name[lang]) return; 
+      
       const branchData = getBranchData(d);
       const card = document.createElement('div');
       card.className = 'menu-item';
@@ -856,7 +860,7 @@ function renderMenu(lang){
       const img = document.createElement('img');
       img.className = 'scene-img active';
       img.src = IMG_DIR + d.img;
-      img.alt = d.n[lang];
+      img.alt = d.name[lang]; // ИСПРАВЛЕНО: было d.n[lang]
       img.loading = 'lazy';
       attachImgFallback(img);
       scene.appendChild(img);
@@ -868,12 +872,12 @@ function renderMenu(lang){
       if (d.y < 40) hotspot.classList.add('pop-below');
       if (d.x < 30) hotspot.classList.add('pop-left');
       else if (d.x > 70) hotspot.classList.add('pop-right');
-      hotspot.setAttribute('aria-label', d.n[lang]);
+      hotspot.setAttribute('aria-label', d.name[lang]); // ИСПРАВЛЕНО: было d.n[lang]
       hotspot.innerHTML =
         '<span class="hs-dot"></span>' +
         '<div class="hs-pop"><div class="hs-pop-in">' +
-          '<div class="hs-name">' + d.n[lang] + '</div>' +
-          (d.d[lang] ? '<div class="hs-desc">' + d.d[lang] + '</div>' : '') +
+          '<div class="hs-name">' + d.name[lang] + '</div>' + // ИСПРАВЛЕНО: было d.n[lang]
+          (d.desc && d.desc[lang] ? '<div class="hs-desc">' + d.desc[lang] + '</div>' : '') + // ИСПРАВЛЕНО: было d.d[lang]
           '<div class="hs-meta"><span class="hs-price">' + fmtPrice(branchData.price) + '</span><span class="hs-kicker">In Tempo</span></div>' +
         '</div></div>';
       hotspot.addEventListener('click', (e) => {
@@ -903,78 +907,3 @@ function renderMenu(lang){
 document.getElementById('showMenuBtn').addEventListener('click', () => {
   const menuSec = document.getElementById('menu');
   const menuRoot = document.getElementById('menuRoot');
-  
-  // 1. Делаем блок видимым для DOM
-  menuSec.style.display = 'block';
-  menuRoot.classList.add('compact-mode');
-  
-  // 2. Рендерим, если еще не рендерили
-  if (!menuRendered) {
-    renderMenu(currentLang);
-    menuRendered = true;
-  }
-
-  // 3. Принудительный reflow и запуск анимации
-  void menuSec.offsetWidth; 
-  requestAnimationFrame(() => {
-    menuSec.classList.add('visible');
-    setTimeout(() => {
-      menuSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 100);
-  });
-});
-
-function showComingSoon(){
-  alert(DICT[currentLang].coming_soon);
-}
-
-function applyLang(lang){
-  currentLang = lang;
-  const d = DICT[lang] || DICT.hy;
-  document.querySelectorAll('[data-i18n]').forEach(el=>{
-    const k = el.getAttribute('data-i18n'); if (d[k] !== undefined) el.textContent = d[k];
-  });
-  document.documentElement.lang = lang;
-  document.title = d.title;
-  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active', b.dataset.lang===lang));
-  try{ localStorage.setItem('intempo_lang', lang); }catch(e){}
-  if (menuRendered) renderMenu(lang);
-}
-document.querySelectorAll('.lang-btn').forEach(b=>b.addEventListener('click', ()=>applyLang(b.dataset.lang)));
-let savedLang = 'hy';
-try{ savedLang = localStorage.getItem('intempo_lang') || 'hy'; }catch(e){}
-applyLang(savedLang);
-
-const branchModal = document.getElementById('branchModal');
-const branchToggle = document.getElementById('branchToggle');
-
-function closeBranchModal(){
-  branchModal.classList.remove('open');
-}
-function selectBranch(branch){
-  currentBranch = branch;
-  try{ localStorage.setItem('intempo_branch', branch); }catch(e){}
-  closeBranchModal();
-  branchToggle.textContent = currentBranch === 'hyusisayin' ? '🏛️ Հյուսիսային' : '🛍️ Mega Mall';
-  document.getElementById('heroActions').style.display = 'flex';
-}
-
-document.querySelectorAll('.branch-choice').forEach(choice => {
-  choice.addEventListener('click', () => selectBranch(choice.dataset.branch));
-});
-branchToggle.addEventListener('click', () => branchModal.classList.add('open'));
-branchModal.addEventListener('click', e => { if (e.target === branchModal) closeBranchModal(); });
-
-document.querySelectorAll('.rv').forEach(el => io.observe(el));
-</script>
-
-<script>
-  setTimeout(function(){
-    var n = document.getElementById('nav');
-    var h = document.querySelector('.hero');
-    if (n && !n.classList.contains('ready')) n.classList.add('ready');
-    if (h && !h.classList.contains('ready')) h.classList.add('ready');
-  }, 4200);
-</script>
-</body>
-</html>
