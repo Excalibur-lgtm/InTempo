@@ -74,7 +74,6 @@
   .loader-bg{position:absolute;inset:0;z-index:0;}
   .loader-bg img{width:100%;height:100%;object-fit:cover;filter:blur(26px) brightness(.5) saturate(1.15);transform:scale(1.18);}
   
-  /* БЕЛО-МАТОВАЯ ВИНЬЕТКА С РАЗМЫТИЕМ */
   .loader-bg::after{
     content:"";position:absolute;inset:0;
     background: radial-gradient(circle at center, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.15) 35%, transparent 75%);
@@ -108,7 +107,6 @@
   }
 
   .logo-wrap{position:relative;z-index:2;}
-  /* Анимация логотипа: плавное появление из размытия и увеличение */
   #loader .logo-img{
     height:459px;max-width:86vw;object-fit:contain;
     opacity: 0;
@@ -207,7 +205,7 @@
     padding:clamp(60px,8vw,100px) 0 clamp(70px,9vw,120px);
     opacity:0; transform:translateY(30px);
     transition: opacity 0.6s ease, transform 0.6s ease;
-    display: none; /* Скрыто по умолчанию */
+    display: none; 
   }
   .menu-sec.visible {
     opacity:1; transform:translateY(0);
@@ -235,6 +233,7 @@
   .menu-item.in{opacity:1;transform:translateY(0);}
   .menu-item:hover{box-shadow:0 22px 50px rgba(43,38,34,.22),0 0 32px rgba(232,176,75,.28);border-color:rgba(216,67,42,.35);background:rgba(241,239,233,.68);}
 
+  /* Standard Scene Styles */
   .scene{position:relative;aspect-ratio:3/4;overflow:hidden;background:var(--menupage);}
   .scene-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .6s ease, transform .9s cubic-bezier(.22,1,.36,1);}
   .scene-img.active{opacity:1;}
@@ -245,6 +244,95 @@
     font-family:var(--serif);font-style:italic;font-size:15px;letter-spacing:.12em;color:var(--muted);
     background:repeating-linear-gradient(45deg, rgba(43,38,34,.05) 0 14px, transparent 14px 28px), var(--menupage);
   }
+
+  /* =========================================
+     PIZZA CARD STYLES (Special for Half-Photos)
+     ========================================= */
+  .pizza-scene {
+    position: relative;
+    aspect-ratio: 4/3; /* Более квадратный формат для пиццы */
+    overflow: hidden;
+    background: var(--menupage);
+    border-radius: 12px;
+  }
+
+  .pizza-img-layer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.8s ease, transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* Второе фото скрыто по умолчанию */
+  .pizza-img-layer.secondary {
+    opacity: 0;
+    transform: scale(1.15);
+  }
+
+  /* Эффект при наведении: показываем второе фото */
+  .menu-item:hover .pizza-img-layer.secondary,
+  .menu-item.active .pizza-img-layer.secondary {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* Эффект при наведении: первое фото немного уходит */
+  .menu-item:hover .pizza-img-layer.primary,
+  .menu-item.active .pizza-img-layer.primary {
+    transform: scale(1.05);
+    filter: brightness(0.9);
+  }
+
+  /* Оверлей с информацией для пиццы */
+  .pizza-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 24px 20px;
+    background: linear-gradient(to top, rgba(43,38,34,0.95) 0%, rgba(43,38,34,0.6) 60%, rgba(43,38,34,0) 100%);
+    color: var(--paper);
+    transform: translateY(100%);
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    z-index: 2;
+    text-align: left;
+  }
+
+  .menu-item:hover .pizza-overlay,
+  .menu-item.active .pizza-overlay {
+    transform: translateY(0);
+  }
+
+  .pizza-name {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: #fff;
+    line-height: 1.2;
+  }
+
+  .pizza-desc {
+    font-size: 14px;
+    line-height: 1.5;
+    color: rgba(241,239,233,0.9);
+    margin-bottom: 12px;
+    font-weight: 400;
+  }
+
+  .pizza-price-tag {
+    display: inline-block;
+    background: var(--red);
+    color: #fff;
+    padding: 6px 14px;
+    border-radius: 99px;
+    font-weight: 700;
+    font-size: 15px;
+    box-shadow: 0 4px 12px rgba(216, 67, 42, 0.4);
+  }
+
 
   .hotspot{
     position:absolute;transform:translate(-50%,-50%);
@@ -547,7 +635,7 @@
     <div class="hero-actions" id="heroActions" style="display:none;">
       <button class="btn btn-primary" id="showMenuBtn">📋 <span data-i18n="tab_main">Основное меню</span></button>
       <button class="btn btn-ghost" onclick="showComingSoon()"> <span data-i18n="tab_bar">Бар</span></button>
-      <button class="btn btn-ghost" onclick="showComingSoon()"> <span data-i18n="tab_pizza">Пицца</span></button>
+      <button class="btn btn-ghost" id="showPizzaBtn"> <span data-i18n="tab_pizza">Пицца</span></button>
     </div>
   </div>
   <div class="scroll-cue"><i></i><span data-i18n="cue">թերթեք</span></div>
@@ -942,6 +1030,46 @@ const MENU = [
         d:{hy:'',en:'',ru:''} },
     ]},
   ]},
+  // =========================================
+  // PIZZA SECTION (NEW)
+  // =========================================
+  { 
+    id:'pizza', 
+    t:{hy:'Պիցցա',en:'Pizza',ru:'Пицца'}, 
+    scenes:[
+      { 
+        dishes:[
+          { 
+            img1: IMG_DIR+'page02_img1.jpg', // Первое фото
+            img2: IMG_DIR+'page03_img1.jpg', // Второе фото
+            price: 2900,
+            n:{hy:'Մարգարիտա',en:'Margherita',ru:'Маргарита'},
+            d:{hy:'Մոցարելլա, բազիլիկ, տոմատային սոուս և օրեգանո',en:'Mozzarella, basil, tomato sauce and oregano',ru:'Моцарелла, базилик, томатный соус и орегано'} 
+          },
+        ]
+      },
+      // Шаблоны для остальных 20 пицц (заполните их данными позже)
+      { dishes:[ { img1:IMG_DIR+'page02_img1.jpg', img2:IMG_DIR+'page03_img1.jpg', price:3500, n:{hy:'Պեպերոնի',en:'Pepperoni',ru:'Пепперони'}, d:{hy:'...',en:'...',ru:'...'} } ] },
+      { dishes:[ { img1:IMG_DIR+'page02_img1.jpg', img2:IMG_DIR+'page03_img1.jpg', price:3500, n:{hy:'...',en:'...',ru:'...'}, d:{hy:'...',en:'...',ru:'...'} } ] },
+      { dishes:[ { img1:IMG_DIR+'page02_img1.jpg', img2:IMG_DIR+'page03_img1.jpg', price:3500, n:{hy:'...',en:'...',ru:'...'}, d:{hy:'...',en:'...',ru:'...'} } ] },
+      { dishes:[ { img1:IMG_DIR+'page02_img1.jpg', img2:IMG_DIR+'page03_img1.jpg', price:3500, n:{hy:'...',en:'...',ru:'...'}, d:{hy:'...',en:'...',ru:'...'} } ] },
+      { dishes:[ { img1:IMG_DIR+'page02_img1.jpg', img2:IMG_DIR+'page03_img1.jpg', price:3500, n:{hy:'...',en:'...',ru:'...'}, d:{hy:'...',en:'...',ru:'...'} } ] },
+      { dishes:[ { img1:IMG_DIR+'page02_img1.jpg', img2:IMG_DIR+'page03_img1.jpg', price:3500, n:{hy:'...',en:'...',ru:'...'}, d:{hy:'...',en:'...',ru:'...'} } ] },
+      { dishes:[ { img1:IMG_DIR+'page02_img1.jpg', img2:IMG_DIR+'page03_img1.jpg', price:3500, n:{hy:'...',en:'...',ru:'...'}, d:{hy:'...',en:'...',ru:'...'} } ] },
+      { dishes:[ { img1:IMG_DIR+'page02_img1.jpg', img2:IMG_DIR+'page03_img1.jpg', price:3500, n:{hy:'...',en:'...',ru:'...'}, d:{hy:'...',en:'...',ru:'...'} } ] },
+      { dishes:[ { img1:IMG_DIR+'page02_img1.jpg', img2:IMG_DIR+'page03_img1.jpg', price:3500, n:{hy:'...',en:'...',ru:'...'}, d:{hy:'...',......} } ] },
+      { dishes:[ { img1:IMG_DIR+'page02_img1.jpg', img2:IMG_DIR+'page03_img1.jpg', price:3500, n:{hy:'...',en:'...',ru:'...'}, d:{hy:'...',......} } ] },
+      { dishes:[ { img1:IMG_DIR+'page02_img1.jpg', img2:IMG_DIR+'page03_img1.jpg', price:3500, n:{hy:'...',en:'...',ru:'...'}, d:{hy:'...',......} } ] },
+      { dishes:[ { img1:IMG_DIR+'page02_img1.jpg', img2:IMG_DIR+'page03_img1.jpg', price:3500, n:{hy:'...',en:'...',ru:'...'}, d:{hy:'...',......} } ] },
+      { dishes:[ { img1:IMG_DIR+'page02_img1.jpg', img2:IMG_DIR+'page03_img1.jpg', price:3500, n:{hy:'...',en:'...',ru:'...'}, d:{hy:'...',......} } ] },
+      { dishes:[ { img1:IMG_DIR+'page02_img1.jpg', img2:IMG_DIR+'page03_img1.jpg', price:3500, n:{hy:'...',en:'...',ru:'...'}, d:{hy:'...',......} } ] },
+      { dishes:[ { img1:IMG_DIR+'page02_img1.jpg', img2:IMG_DIR+'page03_img1.jpg', price:3500, n:{hy:'...',en:'...',ru:'...'}, d:{hy:'...',......} } ] },
+      { dishes:[ { img1:IMG_DIR+'page02_img1.jpg', img2:IMG_DIR+'page03_img1.jpg', price:3500, n:{hy:'...',en:'...',ru:'...'}, d:{hy:'...',......} } ] },
+      { dishes:[ { img1:IMG_DIR+'page02_img1.jpg', img2:IMG_DIR+'page03_img1.jpg', price:3500, n:{hy:'...',en:'...',ru:'...'}, d:{hy:'...',......} } ] },
+      { dishes:[ { img1:IMG_DIR+'page02_img1.jpg', img2:IMG_DIR+'page03_img1.jpg', price......} } ] },
+      { dishes:[ { img1:IMG_DIR+'page02_img1.jpg', img2:IMG_DIR+'page03_img1.jpg', price......} } ] },
+    ]
+  },
 ];
 
 const DICT = {
@@ -1108,59 +1236,115 @@ function renderMenu(lang){
     const grid = sec.querySelector('.menu-grid');
 
     cat.scenes.forEach((sceneData, index) => {
-      const card = document.createElement('div');
-      card.className = 'menu-item';
-      card.style.transitionDelay = (index % 4) * 80 + 'ms';
+      // Для пиццы одна карточка = одно блюдо, для остальных - сцена может иметь несколько блюд
+      const itemsToRender = (cat.id === 'pizza') ? sceneData.dishes : [{}]; 
+      
+      // Если это не пицца, используем старую логику (одна карточка на сцену)
+      if (cat.id !== 'pizza') {
+         const card = document.createElement('div');
+         card.className = 'menu-item';
+         card.style.transitionDelay = (index % 4) * 80 + 'ms';
 
-      const scene = document.createElement('div');
-      scene.className = 'scene';
-      const images = sceneData.dishes.map((dish, imageIndex) => {
-        const image = document.createElement('img');
-        image.className = 'scene-img' + (imageIndex === 0 ? ' active' : '');
-        image.src = dish.img;
-        image.alt = dish.n[lang] || '';
-        image.loading = 'lazy';
-        image.decoding = 'async';
-        attachImgFallback(image);
-        scene.appendChild(image);
-        return image;
-      });
+         const scene = document.createElement('div');
+         scene.className = 'scene';
+         const images = sceneData.dishes.map((dish, imageIndex) => {
+           const image = document.createElement('img');
+           image.className = 'scene-img' + (imageIndex === 0 ? ' active' : '');
+           image.src = dish.img;
+           image.alt = dish.n[lang] || '';
+           image.loading = 'lazy';
+           image.decoding = 'async';
+           attachImgFallback(image);
+           scene.appendChild(image);
+           return image;
+         });
 
-      sceneData.dishes.forEach((dish, dishIndex) => {
-        const hotspot = document.createElement('button');
-        hotspot.className = 'hotspot';
-        hotspot.style.left = dish.x + '%';
-        hotspot.style.top = dish.y + '%';
-        if (dish.y < 40) hotspot.classList.add('pop-below');
-        if (dish.x < 30) hotspot.classList.add('pop-left');
-        else if (dish.x > 70) hotspot.classList.add('pop-right');
-        hotspot.setAttribute('aria-label', dish.n[lang] || '');
-        hotspot.innerHTML =
-          '<span class="hs-dot"></span>' +
-          '<div class="hs-pop"><div class="hs-pop-in">' +
-            '<div class="hs-name">' + (dish.n[lang] || '') + '</div>' +
-            (dish.d[lang] ? '<div class="hs-desc">' + dish.d[lang] + '</div>' : '') +
-            '<div class="hs-meta"><span class="hs-price">' + fmtPrice(dish.price) + '</span><span class="hs-kicker">In Tempo</span></div>' +
-          '</div></div>';
+         sceneData.dishes.forEach((dish, dishIndex) => {
+           const hotspot = document.createElement('button');
+           hotspot.className = 'hotspot';
+           hotspot.style.left = dish.x + '%';
+           hotspot.style.top = dish.y + '%';
+           if (dish.y < 40) hotspot.classList.add('pop-below');
+           if (dish.x < 30) hotspot.classList.add('pop-left');
+           else if (dish.x > 70) hotspot.classList.add('pop-right');
+           hotspot.setAttribute('aria-label', dish.n[lang] || '');
+           hotspot.innerHTML =
+             '<span class="hs-dot"></span>' +
+             '<div class="hs-pop"><div class="hs-pop-in">' +
+               '<div class="hs-name">' + (dish.n[lang] || '') + '</div>' +
+               (dish.d[lang] ? '<div class="hs-desc">' + dish.d[lang] + '</div>' : '') +
+               '<div class="hs-meta"><span class="hs-price">' + fmtPrice(dish.price) + '</span><span class="hs-kicker">In Tempo</span></div>' +
+             '</div></div>';
 
-        const showDish = () => images.forEach((image, imageIndex) => image.classList.toggle('active', imageIndex === dishIndex));
-        hotspot.addEventListener('click', event => {
-          event.stopPropagation();
-          const wasOpen = hotspot.classList.contains('open');
-          closeAllPops();
-          if (!wasOpen) { showDish(); hotspot.classList.add('open'); }
+           const showDish = () => images.forEach((image, imageIndex) => image.classList.toggle('active', imageIndex === dishIndex));
+           hotspot.addEventListener('click', event => {
+             event.stopPropagation();
+             const wasOpen = hotspot.classList.contains('open');
+             closeAllPops();
+             if (!wasOpen) { showDish(); hotspot.classList.add('open'); }
+           });
+           if (canHover) {
+             hotspot.addEventListener('mouseenter', () => { closeAllPops(); showDish(); hotspot.classList.add('open'); });
+             hotspot.addEventListener('mouseleave', () => hotspot.classList.remove('open'));
+           }
+           scene.appendChild(hotspot);
+         });
+
+         card.appendChild(scene);
+         card.addEventListener('click', () => { if (isMobile()) openSceneModal(card); });
+         grid.appendChild(card);
+         io.observe(card);
+      } 
+      // Логика для ПИЦЦЫ
+      else {
+        sceneData.dishes.forEach((dish, dishIndex) => {
+          const card = document.createElement('div');
+          card.className = 'menu-item pizza-card';
+          card.style.transitionDelay = (dishIndex % 4) * 80 + 'ms';
+
+          const scene = document.createElement('div');
+          scene.className = 'pizza-scene';
+          
+          const img1 = document.createElement('img');
+          img1.className = 'pizza-img-layer primary';
+          img1.src = dish.img1;
+          img1.alt = dish.n[lang];
+          img1.loading = 'lazy';
+          
+          const img2 = document.createElement('img');
+          img2.className = 'pizza-img-layer secondary';
+          img2.src = dish.img2;
+          img2.alt = dish.n[lang] + ' detail';
+          img2.loading = 'lazy';
+          
+          scene.appendChild(img1);
+          scene.appendChild(img2);
+
+          const overlay = document.createElement('div');
+          overlay.className = 'pizza-overlay';
+          overlay.innerHTML = `
+            <div class="pizza-name">${dish.n[lang]}</div>
+            <div class="pizza-desc">${dish.d[lang]}</div>
+            <div class="pizza-price-tag">${fmtPrice(dish.price)}</div>
+          `;
+          scene.appendChild(overlay);
+
+          card.appendChild(scene);
+          
+          // Для мобильных: клик открывает "активное" состояние (как hover)
+          if (isMobile()) {
+            card.addEventListener('click', (e) => {
+              e.stopPropagation();
+              const isActive = card.classList.contains('active');
+              document.querySelectorAll('.menu-item.active').forEach(i => i.classList.remove('active'));
+              if (!isActive) card.classList.add('active');
+            });
+          }
+
+          grid.appendChild(card);
+          io.observe(card);
         });
-        if (canHover) {
-          hotspot.addEventListener('mouseenter', () => { closeAllPops(); showDish(); hotspot.classList.add('open'); });
-          hotspot.addEventListener('mouseleave', () => hotspot.classList.remove('open'));
-        }
-        scene.appendChild(hotspot);
-      });
-
-      card.appendChild(scene);
-      card.addEventListener('click', () => { if (isMobile()) openSceneModal(card); });
-      grid.appendChild(card);
-      io.observe(card);
+      }
     });
 
     io.observe(sec.querySelector('.category-header'));
@@ -1186,6 +1370,14 @@ function openMenu() {
 }
 
 document.getElementById('showMenuBtn').addEventListener('click', openMenu);
+document.getElementById('showPizzaBtn').addEventListener('click', function() {
+  openMenu();
+  // Прокрутка к пицце после открытия меню
+  setTimeout(() => {
+    const pizzaCat = document.getElementById('cat-pizza');
+    if(pizzaCat) pizzaCat.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 300);
+});
 
 function showComingSoon(){
   alert(DICT[currentLang].coming_soon);
