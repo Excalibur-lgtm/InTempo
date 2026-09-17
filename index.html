@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-<title>In Tempo — Իտալական ոհանոց · րևան</title>
-<meta name="description" content="In Tempo — իտալական խոհանոց Երևանի կենտրոնում։ աց է 09:00–24:00։ Time to enjoy.">
+<title>In Tempo — Իտալական խոհանոց · Երևան</title>
+<meta name="description" content="In Tempo — իտալական խոհանոց Երևանի կենտրոնում։ Բաց է 09:00–24:00։ Time to enjoy.">
 <link rel="preload" href="images/logoIntempo.png" as="image" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,11 +29,12 @@
     --gold:#e8b04b;
     --accent-grad:linear-gradient(135deg,#e8b04b 0%,#d8432a 100%);
     --nav-h:96px;
+    --cat-h:64px;
     --serif:'Noto Serif',Georgia,serif;
     --sans:'Noto Sans',-apple-system,sans-serif;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
-  html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 80px);}
+  html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + var(--cat-h) + 20px);}
   body{
     background:var(--bg);
     color:var(--ink);
@@ -49,18 +50,22 @@
   h1,h2{font-family:var(--serif);font-weight:600;line-height:1.12;letter-spacing:-.01em;color:var(--ink);}
   em{font-style:italic;color:var(--red);}
 
+  /* ========== ПАРАЛЛАКС-ФОН: ЛЁГКИЙ blur (6px) ========== */
   .site-bg{
     position:fixed;left:0;right:0;top:-20vh;height:140vh;
-    z-index:0;pointer-events:none;overflow:hidden;will-change:transform;
+    z-index:0;pointer-events:none;overflow:hidden;
+    will-change:transform;
   }
   .site-bg img{
     width:100%;height:100%;object-fit:cover;
-    filter:blur(6px) brightness(.72) saturate(1.1);transform:scale(1.06);
+    filter:blur(6px) brightness(.72) saturate(1.1);
+    transform:scale(1.06);
   }
   .site-bg::after{
     content:"";position:absolute;inset:0;
-    background:linear-gradient(rgba(183,157,116,.52),rgba(183,157,116,.52)),
-    radial-gradient(ellipse 900px 500px at 15% -10%,rgba(255,255,255,.14),transparent 60%);
+    background:
+      linear-gradient(rgba(183,157,116,.52),rgba(183,157,116,.52)),
+      radial-gradient(ellipse 900px 500px at 15% -10%,rgba(255,255,255,.14),transparent 60%);
   }
 
   .logo-img{height:110px;width:auto;max-width:38vw;object-fit:contain;display:block;}
@@ -69,59 +74,48 @@
   .logo-card .slogan{margin-top:-2px;}
   .slogan{font-family:var(--serif);font-style:italic;font-size:11px;letter-spacing:.14em;color:var(--muted);}
 
-  #loader{position:fixed;inset:0;z-index:300;background:var(--logo-bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;transition:transform .9s cubic-bezier(.76,0,.24,1),opacity .9s ease,visibility .9s;overflow:hidden;}
+  #loader{position:fixed;inset:0;z-index:100;background:var(--logo-bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;transition:transform .9s cubic-bezier(.76,0,.24,1),opacity .9s ease,visibility .9s;overflow:hidden;}
   #loader.done{transform:translateY(-100%);opacity:0;visibility:hidden;}
   .loader-bg{position:absolute;inset:0;z-index:0;}
   .loader-bg img{width:100%;height:100%;object-fit:cover;filter:blur(26px) brightness(.5) saturate(1.15);transform:scale(1.18);}
-  
-  .loader-bg::after{
-    content:"";position:absolute;inset:0;
-    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.15) 35%, transparent 75%);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    pointer-events:none;
-  }
-
+  .loader-bg::after{content:"";position:absolute;inset:0;background:rgba(43,38,34,.42);}
   .loader-steam{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden;}
   .loader-steam i{
-    position:absolute; bottom:-150px;
-    width:140px; height:350px;
-    background: linear-gradient(to top, rgba(241,239,233,0.5) 0%, rgba(241,239,233,0) 100%);
-    filter: blur(30px);
-    border-radius: 50% 50% 45% 45%;
+    position:absolute;bottom:-160px;
+    width:90px;height:200px;
+    background:radial-gradient(ellipse at center, rgba(241,239,233,.6) 0%, rgba(241,239,233,.28) 45%, transparent 72%);
+    filter:blur(14px);
     opacity:0;
-    transform:translateY(0) translateX(0) scale(0.8);
-    animation: steamRise 7s ease-out infinite;
+    transform:translateY(0) translateX(0) scale(.7);
+    animation:steam 6.5s ease-in infinite;
   }
-  .loader-steam i:nth-child(1){left:10%; animation-delay:0s; animation-duration:7s;}
-  .loader-steam i:nth-child(2){left:30%; animation-delay:1.5s; animation-duration:8s;}
-  .loader-steam i:nth-child(3){left:50%; animation-delay:3s; animation-duration:6.5s;}
-  .loader-steam i:nth-child(4){left:70%; animation-delay:0.8s; animation-duration:7.5s;}
-  .loader-steam i:nth-child(5){left:85%; animation-delay:2.2s; animation-duration:8.5s;}
-  
-  @keyframes steamRise{
-    0% { transform: translateY(0) translateX(0) scale(0.8); opacity: 0; }
-    10% { opacity: 0.5; }
-    50% { transform: translateY(-40vh) translateX(15px) scale(1.2); opacity: 0.3; }
-    100% { transform: translateY(-90vh) translateX(-10px) scale(1.5); opacity: 0; }
+  .loader-steam i:nth-child(1){left:6%;width:95px;height:210px;animation-delay:0s;animation-duration:6.5s;}
+  .loader-steam i:nth-child(2){left:24%;width:70px;height:170px;animation-delay:1.4s;animation-duration:7.6s;}
+  .loader-steam i:nth-child(3){left:42%;width:115px;height:235px;animation-delay:2.6s;animation-duration:6s;}
+  .loader-steam i:nth-child(4){left:60%;width:82px;height:190px;animation-delay:.9s;animation-duration:7.1s;}
+  .loader-steam i:nth-child(5){left:76%;width:105px;height:215px;animation-delay:3.4s;animation-duration:6.8s;}
+  .loader-steam i:nth-child(6){left:52%;width:62px;height:150px;animation-delay:4.6s;animation-duration:6.2s;}
+  @keyframes steam{
+    0%{transform:translateY(0) translateX(0) scale(.7);opacity:0;}
+    15%{opacity:.6;}
+    50%{transform:translateY(-48vh) translateX(26px) scale(1.08);opacity:.42;}
+    85%{opacity:.16;}
+    100%{transform:translateY(-98vh) translateX(-20px) scale(1.55);opacity:0;}
   }
-
   .logo-wrap{position:relative;z-index:2;}
   #loader .logo-img{
     height:459px;max-width:86vw;object-fit:contain;
-    opacity: 0;
-    transform: scale(0.85) translateY(20px);
-    filter: blur(8px);
-    animation: logoReveal 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+    clip-path:inset(0 100% 0 0);
+    animation:drawLogo 1.6s cubic-bezier(.65,0,.35,1) .35s forwards;
   }
-  @keyframes logoReveal {
-    to {
-      opacity: 1;
-      transform: scale(1) translateY(0);
-      filter: blur(0);
-    }
+  @keyframes drawLogo{0%{clip-path:inset(0 100% 0 0);}100%{clip-path:inset(0 0 0 0);}}
+  .logo-wrap::after{
+    content:"";position:absolute;top:-4%;bottom:-4%;width:3px;left:0;
+    background:linear-gradient(to bottom,transparent,var(--gold),transparent);
+    box-shadow:0 0 14px rgba(232,176,75,.8);
+    opacity:0;animation:pen 1.6s cubic-bezier(.65,0,.35,1) .35s forwards;
   }
-  
+  @keyframes pen{0%{left:0;opacity:1;}92%{opacity:1;}100%{left:100%;opacity:0;}}
   #loader .slogan{font-size:16.5px;margin-top:0;opacity:0;transform:translateY(10px);animation:logoIn .8s ease 1.7s forwards;}
   .loader-progress{width:180px;height:3px;background:rgba(241,239,233,.25);border-radius:99px;overflow:hidden;margin-top:18px;opacity:0;animation:logoIn .6s ease 1.9s forwards;position:relative;z-index:2;}
   .loader-progress i{display:block;height:100%;width:40%;background:var(--accent-grad);border-radius:99px;animation:loadbar 1.5s ease-in-out infinite;}
@@ -135,7 +129,7 @@
   .nav.ready .logo-card{opacity:1;transform:none;}
   .nav .nav-right{opacity:0;transform:translateY(-10px);transition:opacity .8s ease .2s,transform .8s cubic-bezier(.22,1,.36,1) .2s;}
   .nav.ready .nav-right{opacity:1;transform:none;}
-  .nav-right{display:flex;align-items:center;gap:10px;}
+  .nav-right{display:flex;align-items:center;gap:14px;}
   .nav-link{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:rgba(241,239,233,.92);text-shadow:0 1px 6px rgba(43,38,34,.55);transition:.3s;}
   .nav-link:hover{color:#fff;}
   .nav.scrolled .nav-link{color:var(--muted);text-shadow:none;}
@@ -150,22 +144,12 @@
   .nav.scrolled .nav-soc{border-color:var(--line);color:var(--ink);}
   .nav.scrolled .nav-soc:hover{background:var(--ink);color:var(--menupage);}
   .nav-soc svg{width:17px;height:17px;}
-  .nav-tel{font-size:13px;font-weight:600;letter-spacing:.06em;padding:10px 20px;border:1.5px solid rgba(241,239,233,.85);border-radius:999px;color:var(--paper);text-shadow:0 1px 6px rgba(43,38,34,.55);transition:.3s;white-space:nowrap;flex-shrink:0;box-shadow:0 2px 8px rgba(43,38,34,.15);}
+  .nav-tel{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;letter-spacing:.06em;padding:10px 20px;border:1.5px solid rgba(241,239,233,.85);border-radius:999px;color:var(--paper);text-shadow:0 1px 6px rgba(43,38,34,.55);transition:.3s;white-space:nowrap;flex-shrink:0;box-shadow:0 2px 8px rgba(43,38,34,.15);}
+  .nav-tel svg{width:15px;height:15px;flex-shrink:0;}
   .nav-tel:hover{background:var(--menupage);color:var(--ink);text-shadow:none;}
   .nav.scrolled .nav-tel{border-color:var(--ink);color:var(--ink);text-shadow:none;}
   .nav.scrolled .nav-tel:hover{background:var(--ink);color:var(--menupage);}
   .burger{display:none;}
-
-  .branch-toggle{
-    font:inherit;font-size:12px;font-weight:600;letter-spacing:.05em;
-    padding:8px 14px;border:1.5px solid rgba(241,239,233,.75);border-radius:999px;
-    background:none;color:var(--paper);cursor:pointer;
-    transition:.25s;text-shadow:0 1px 6px rgba(43,38,34,.55);
-    box-shadow:0 2px 6px rgba(43,38,34,.12);
-    white-space:nowrap; display:flex; align-items:center; gap:6px;
-  }
-  .nav.scrolled .branch-toggle{border-color:var(--line);color:var(--muted);text-shadow:none;}
-  .branch-toggle:hover{background:var(--menupage);color:var(--ink);text-shadow:none;}
 
   .hero{position:relative;z-index:1;min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;background-color:var(--bg);background-image:url('Images-final/page03_img1.jpg');background-size:cover;background-position:center;}
   .hero-media{position:absolute;inset:0;}
@@ -190,6 +174,8 @@
   .btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(43,38,34,.35);}
   .btn-ghost{border:1.5px solid rgba(241,239,233,.7);background:none;color:var(--paper);box-shadow:0 2px 8px rgba(43,38,34,.18);}
   .btn-ghost:hover{background:rgba(241,239,233,.14);}
+  .btn-accent{background:var(--accent-grad);color:#fff;box-shadow:0 4px 14px rgba(216,67,42,.4);}
+  .btn-accent:hover{transform:translateY(-2px);box-shadow:0 12px 34px rgba(216,67,42,.5),0 0 26px rgba(232,176,75,.4);}
   .scroll-cue{position:absolute;z-index:2;bottom:26px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;color:rgba(241,239,233,.8);font-size:11px;letter-spacing:.3em;text-transform:uppercase;}
   .scroll-cue i{width:1px;height:40px;background:var(--paper);animation:cue 2s ease-in-out infinite;}
   @keyframes cue{0%,100%{transform:scaleY(.35);opacity:.5;}50%{transform:scaleY(1);opacity:1;}}
@@ -200,18 +186,24 @@
   .mq-track b{color:var(--red);font-weight:500;}
   @keyframes mq{to{transform:translateX(-50%);}}
 
-  .menu-sec{
-    position:relative;z-index:1;background:rgba(183,157,116,.85);
-    padding:clamp(60px,8vw,100px) 0 clamp(70px,9vw,120px);
-    opacity:0; transform:translateY(30px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-    display: none; 
+  .menu-sec{position:relative;z-index:1;background:rgba(183,157,116,.66);padding:clamp(60px,8vw,100px) 0 clamp(70px,9vw,120px);}
+  .menu-nav{
+    position:sticky;top:var(--nav-h);z-index:55;
+    background:rgba(241,239,233,.6);
+    backdrop-filter:blur(12px);
+    padding:12px 4vw;
+    border-block:1px solid rgba(255,255,255,.55),1px solid var(--line);
+    box-shadow:0 6px 18px rgba(43,38,34,.14);
+    transition:top .45s cubic-bezier(.22,1,.36,1);
   }
-  .menu-sec.visible {
-    opacity:1; transform:translateY(0);
-  }
-  
-  .menu-category{max-width:1400px;margin:0 auto;padding:clamp(50px,7vw,90px) 4vw 0;scroll-margin-top:calc(var(--nav-h) + 80px);}
+  body.in-menu .menu-nav{top:0;}
+  .menu-nav-inner{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:10px;max-width:1400px;margin:0 auto;scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch;}
+  .menu-nav-inner::-webkit-scrollbar{display:none;}
+  .menu-nav-btn{font:inherit;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);background:none;border:1.5px solid rgba(43,38,34,.28);border-radius:999px;padding:9px 18px;cursor:pointer;transition:.3s;flex:0 0 auto;box-shadow:0 2px 6px rgba(43,38,34,.1);}
+  .menu-nav-btn:hover{color:var(--red);border-color:var(--red);}
+  .menu-nav-btn.active{color:var(--menupage);background:var(--ink);border-color:var(--ink);}
+
+  .menu-category{max-width:1400px;margin:0 auto;padding:clamp(50px,7vw,90px) 4vw 0;scroll-margin-top:calc(var(--cat-h) + 16px);}
   .category-header{text-align:center;margin-bottom:clamp(32px,4vw,56px);opacity:0;transform:translateY(40px);transition:opacity 1s ease,transform 1s cubic-bezier(.22,1,.36,1);}
   .category-header.in{opacity:1;transform:none;}
   .cat-kicker{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--red);letter-spacing:.14em;display:block;margin-bottom:10px;}
@@ -233,9 +225,12 @@
   .menu-item.in{opacity:1;transform:translateY(0);}
   .menu-item:hover{box-shadow:0 22px 50px rgba(43,38,34,.22),0 0 32px rgba(232,176,75,.28);border-color:rgba(216,67,42,.35);background:rgba(241,239,233,.68);}
 
-  /* Standard Scene Styles */
   .scene{position:relative;aspect-ratio:3/4;overflow:hidden;background:var(--menupage);}
-  .scene-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .6s ease, transform .9s cubic-bezier(.22,1,.36,1);}
+  .scene-img{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+    opacity:0;
+    transition:opacity .6s ease, transform .9s cubic-bezier(.22,1,.36,1);
+  }
   .scene-img.active{opacity:1;}
   .menu-item:hover .scene-img{transform:scale(1.06);}
   .scene.no-img::after{
@@ -245,90 +240,9 @@
     background:repeating-linear-gradient(45deg, rgba(43,38,34,.05) 0 14px, transparent 14px 28px), var(--menupage);
   }
 
-  /* =========================================
-     PIZZA CARD STYLES (Special for Half-Photos)
-     ========================================= */
-  .pizza-scene {
-    position: relative;
-    aspect-ratio: 4/3;
-    overflow: hidden;
-    background: var(--menupage);
-    border-radius: 12px;
-  }
-
-  .pizza-img-layer {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: opacity 0.8s ease, transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  .pizza-img-layer.secondary {
-    opacity: 0;
-    transform: scale(1.15);
-  }
-
-  .menu-item:hover .pizza-img-layer.secondary,
-  .menu-item.active .pizza-img-layer.secondary {
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  .menu-item:hover .pizza-img-layer.primary,
-  .menu-item.active .pizza-img-layer.primary {
-    transform: scale(1.05);
-    filter: brightness(0.9);
-  }
-
-  .pizza-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 24px 20px;
-    background: linear-gradient(to top, rgba(43,38,34,0.95) 0%, rgba(43,38,34,0.6) 60%, rgba(43,38,34,0) 100%);
-    color: var(--paper);
-    transform: translateY(100%);
-    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-    z-index: 2;
-    text-align: left;
-  }
-
-  .menu-item:hover .pizza-overlay,
-  .menu-item.active .pizza-overlay {
-    transform: translateY(0);
-  }
-
-  .pizza-name {
-    font-family: var(--serif);
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 6px;
-    color: #fff;
-    line-height: 1.2;
-  }
-
-  .pizza-desc {
-    font-size: 14px;
-    line-height: 1.5;
-    color: rgba(241,239,233,0.9);
-    margin-bottom: 12px;
-    font-weight: 400;
-  }
-
-  .pizza-price-tag {
-    display: inline-block;
-    background: var(--red);
-    color: #fff;
-    padding: 6px 14px;
-    border-radius: 99px;
-    font-weight: 700;
-    font-size: 15px;
-    box-shadow: 0 4px 12px rgba(216, 67, 42, 0.4);
-  }
-
+  .card-cap{display:none;}
+  .cc-name{font-family:var(--serif);font-size:12px;font-weight:600;color:var(--ink);line-height:1.25;flex:1;}
+  .cc-price{font-family:var(--serif);font-style:italic;font-weight:700;font-size:13px;color:var(--red);white-space:nowrap;}
 
   .hotspot{
     position:absolute;transform:translate(-50%,-50%);
@@ -356,14 +270,18 @@
   .hotspot:hover .hs-dot,.hotspot.open .hs-dot{transform:scale(1.3);}
 
   .hs-pop{
-    position:absolute;width:236px;bottom:calc(100% + 12px);left:50%;margin-left:-118px;
-    opacity:0;visibility:hidden;transition:opacity .25s ease,visibility .25s;pointer-events:none;z-index:6;
+    position:absolute;width:236px;
+    bottom:calc(100% + 12px);left:50%;margin-left:-118px;
+    opacity:0;visibility:hidden;
+    transition:opacity .25s ease,visibility .25s;
+    pointer-events:none;z-index:6;
   }
   .hs-pop-in{
     background:var(--paper);border:1px solid var(--line);border-radius:8px;
     padding:13px 15px 11px;box-shadow:0 18px 44px rgba(43,38,34,.4);
     transform:translateY(8px) scale(.94);transform-origin:bottom center;
-    transition:transform .3s cubic-bezier(.22,1,.36,1);text-align:left;
+    transition:transform .3s cubic-bezier(.22,1,.36,1);
+    text-align:left;
   }
   .hs-pop::after{
     content:"";position:absolute;top:100%;left:50%;margin-left:-7px;
@@ -423,67 +341,16 @@
 
   .mobile-bar{display:none;}
 
-  .branch-modal{
-    position:fixed;inset:0;z-index:350;
-    background:rgba(43,38,34,.96);backdrop-filter:blur(16px);
-    display:none;align-items:center;justify-content:center;
-    padding:24px;
-  }
-  .branch-modal.open{display:flex;}
-  .branch-modal-inner{max-width:720px;width:100%;text-align:center;}
-  .branch-modal-inner h2{font-family:var(--serif);font-size:clamp(28px,5vw,44px);color:var(--paper);margin-bottom:12px;}
-  .branch-modal-inner p{color:rgba(241,239,233,.75);font-size:16px;margin-bottom:40px;}
-  .branch-choices{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
-  .branch-choice{
-    background:rgba(241,239,233,.08);border:2px solid rgba(241,239,233,.2);
-    border-radius:20px;padding:40px 24px;cursor:pointer;
-    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s, background 0.3s;
-    text-align:center;
-  }
-  .branch-choice:hover{
-    background:rgba(241,239,233,.15);border-color:var(--red);
-    transform:translateY(-6px);box-shadow:0 20px 40px rgba(0,0,0,.3);
-  }
-  .branch-choice:active{
-    transform: scale(0.96);
-  }
-  .branch-choice .icon{font-size:56px;margin-bottom:16px;}
-  .branch-choice .name{font-family:var(--serif);font-size:26px;color:var(--paper);margin-bottom:8px;font-weight:600;}
-  .branch-choice .desc{font-size:14px;color:rgba(241,239,233,.65);}
-
-  .compact-mode .menu-grid {
-    display: flex !important; flex-direction: column !important; gap: 12px !important; max-width: 800px !important; margin: 0 auto !important;
-  }
-  .compact-mode .menu-item {
-    display: flex !important; align-items: center !important; gap: 16px !important; padding: 12px !important; flex-direction: row !important;
-    opacity: 1 !important; transform: none !important; transition: background .2s !important;
-  }
-  .compact-mode .menu-item:hover {
-    background: rgba(241,239,233,.8); box-shadow: 0 4px 12px rgba(43,38,34,.1);
-  }
-  .compact-mode .scene {
-    width: 80px; height: 80px; aspect-ratio: 1; flex-shrink: 0; border-radius: 8px; overflow: hidden;
-  }
-  .compact-mode .scene-img {
-    position: relative; opacity: 1 !important; transform: none !important; width: 100%; height: 100%;
-  }
-  .compact-mode .hotspot { display: none !important; }
-  .compact-mode .menu-item-info { flex: 1; display: flex; flex-direction: column; }
-  .compact-mode .hs-name { font-size: 16px; margin-bottom: 4px; }
-  .compact-mode .hs-desc { font-size: 13px; margin-bottom: 0; color: var(--muted); }
-  .compact-mode .hs-meta { margin-top: 8px; border-top: none; padding-top: 0; }
-  .compact-mode .hs-price { font-size: 16px; }
-
   @media (max-width:900px){.nav{padding:0 4vw;}.nav-right{gap:10px;}}
   @media (max-width:768px){
     :root{--nav-h:84px;}
     .nav-link{display:none;}
     #loader .logo-img{height:383px;}
-    .branch-choices{grid-template-columns:1fr;}
+    .menu-nav-btn{font-size:11px;padding:8px 14px;}
   }
   @media (max-width:640px){
-    :root{--nav-h:72px;}
-    html{scroll-padding-top:calc(var(--nav-h) + 80px);}
+    :root{--nav-h:72px;--cat-h:58px;}
+    html{scroll-padding-top:calc(var(--cat-h) + 16px);}
     .nav .slogan{display:none;}
     .burger{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:42px;height:42px;background:none;border:0;cursor:pointer;z-index:5;}
     .burger span{display:block;width:22px;height:2px;background:var(--paper);transition:.3s;}
@@ -529,9 +396,17 @@
     .hero-actions{flex-direction:column;width:100%;max-width:340px;margin:32px auto 0;}
     .btn{width:100%;justify-content:center;padding:15px 24px;}
     .mq-track span{font-size:14px;padding:0 16px;}
-    .menu-grid{grid-template-columns:1fr;}
+    .menu-grid{grid-template-columns:repeat(2,1fr);gap:12px;}
     .menu-item{cursor:pointer;}
     .menu-item .hotspot{pointer-events:none;}
+    .card-cap{
+      position:absolute;left:0;right:0;bottom:0;z-index:6;
+      display:flex;justify-content:space-between;align-items:baseline;gap:8px;
+      padding:30px 12px 10px;
+      background:linear-gradient(to top, rgba(43,38,34,.82), rgba(43,38,34,0));
+    }
+    .cc-name{color:var(--paper);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .cc-price{color:#e9d7b4;}
     .hs-pop{width:min(236px, 78vw);}
     .contact-sec{padding:64px 0 90px;}
     .contact-sub{font-size:14px;padding:0 6vw;}
@@ -543,9 +418,10 @@
     footer .logo-img{height:92px;}
   }
   @media (max-width:380px){
-    .nav-tel{display:none;}
-    .lang-btn{padding:5px 8px;font-size:9px;}
+    :root{--nav-h:64px;}
+    .lang-btn{padding:6px 10px;font-size:10px;}
     #loader .logo-img{height:300px;}
+    .menu-grid{gap:8px;}
     .hs-pop{width:min(236px, 82vw);}
   }
   @media (prefers-reduced-motion:reduce){*{transition-duration:.01ms !important;animation-duration:.01ms !important;}}
@@ -553,34 +429,16 @@
 </head>
 <body>
 
+<!-- ПАРАЛЛАКС-ФОН: размытое фото на весь экран (лёгкий blur) -->
 <div class="site-bg" id="siteBg" aria-hidden="true">
   <img src="Images-final/page13_img1.jpg" alt="" onerror="this.onerror=null;this.src='Images-final/page03_img1.jpg';">
-</div>
-
-<div class="branch-modal open" id="branchModal">
-  <div class="branch-modal-inner">
-    <h2 data-i18n="branch_title">Выберите филиал</h2>
-    <p data-i18n="branch_subtitle">Меню отличается в зависимости от филиала</p>
-    <div class="branch-choices">
-      <div class="branch-choice" data-branch="hyusisayin">
-        <div class="icon">🏛️</div>
-        <div class="name">Հյուսիսային</div>
-        <div class="desc" data-i18n="branch_big">Большой филиал</div>
-      </div>
-      <div class="branch-choice" data-branch="mega">
-        <div class="icon">🛍️</div>
-        <div class="name">Mega Mall</div>
-        <div class="desc" data-i18n="branch_small">Маленький филиал</div>
-      </div>
-    </div>
-  </div>
 </div>
 
 <div id="loader">
   <div class="loader-bg">
     <img src="Images-final/page04_img1.jpg" alt="" onerror="this.onerror=null;this.src='Images-final/page4_img1.jpg';">
   </div>
-  <div class="loader-steam" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="loader-steam" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
   <div class="logo-wrap">
     <img class="logo-img" src="images/logoIntempo.png" alt="In Tempo">
   </div>
@@ -600,20 +458,25 @@
     <img class="logo-img" src="images/logoIntempo.png" alt="In Tempo">
     <span class="slogan">Time to enjoy</span>
   </a>
+  <button class="burger" id="burgerBtn" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
   <div class="nav-right" id="navRight">
     <a class="nav-link" href="#menu" data-i18n="nav_menu">Մենյու</a>
     <a class="nav-link" href="#contact" data-i18n="nav_contact">Կապ</a>
-    <button class="branch-toggle" id="branchToggle" title="Сменить филиал">🏛️ Հյուսիսային</button>
     <div class="langs">
       <button class="lang-btn active" data-lang="hy">HY</button>
       <button class="lang-btn" data-lang="en">EN</button>
       <button class="lang-btn" data-lang="ru">RU</button>
     </div>
-    <a class="nav-tel" href="tel:+37477966933">+374 77 966 933</a>
+    <a class="nav-soc" href="https://www.instagram.com/intempo_italian_restaurant?stkn=dmNidWlnbmxpbm12" target="_blank" rel="noopener" aria-label="Instagram">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"></circle></svg>
+    </a>
+    <a class="nav-tel" href="tel:+37477966933" aria-label="+374 77 966 933">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+      <span class="tel-num">+374 77 966 933</span>
+    </a>
   </div>
-  <button class="burger" id="burgerBtn" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
 </nav>
 
 <header class="hero" id="top">
@@ -624,14 +487,13 @@
   </div>
   <div class="hero-in">
     <h1>
-      <span class="line"><span class="line-in" data-i18n-html="hero_l1">Իտալական ոհանոց</span></span>
+      <span class="line"><span class="line-in" data-i18n-html="hero_l1">Իտալական խոհանոց</span></span>
       <span class="line"><span class="line-in" data-i18n-html="hero_l2">Երևանի <em>Կենտրոնում</em></span></span>
     </h1>
     <p class="hero-sub" data-i18n="hero_sub">Բաց է 09:00–24:00</p>
-    <div class="hero-actions" id="heroActions" style="display:none;">
-      <button class="btn btn-primary" id="showMenuBtn">📋 <span data-i18n="tab_main">Основное меню</span></button>
-      <button class="btn btn-ghost" onclick="showComingSoon()"> <span data-i18n="tab_bar">Бар</span></button>
-      <button class="btn btn-ghost" id="showPizzaBtn"> <span data-i18n="tab_pizza">Пицца</span></button>
+    <div class="hero-actions">
+      <a class="btn btn-ghost" href="#menu" data-i18n="hero_b1">Բացել մենյուն →</a>
+      <a class="btn btn-accent" href="#contact" data-i18n="hero_b2">Ամրագրել սեղան</a>
     </div>
   </div>
   <div class="scroll-cue"><i></i><span data-i18n="cue">թերթեք</span></div>
@@ -647,6 +509,7 @@
 </div></div>
 
 <section class="menu-sec" id="menu">
+  <nav class="menu-nav"><div class="menu-nav-inner" id="menuNav"></div></nav>
   <div id="menuRoot"></div>
 </section>
 
@@ -666,7 +529,7 @@
   <div class="phones rv">
     <a class="phone" href="tel:+37477966933">+374 77 966 933</a>
   </div>
-  <p class="addr rv"><span data-i18n="c_addr1">Երևան, Հյուսիսային 10/3</span><br><span data-i18n="c_addr2">Ամեն ր 09:00 – 24:00</span></p>
+  <p class="addr rv"><span data-i18n="c_addr1">Երևան, Հյուսիսային 10/3</span><br><span data-i18n="c_addr2">Ամեն օր 09:00 – 24:00</span></p>
   <div class="delivery-note rv">
     <span class="delivery-title" data-i18n="c_delivery_title">Առաքում</span>
     <span data-i18n-html="c_delivery">Առաքում պատվիրելու համար կարող եք օգտվել <b>Glovo</b>, <b>Yandex</b>, <b>Buy.am</b> հավելվածներից կամ զանգահարել <b>8811</b> Buy.am</span>
@@ -697,26 +560,10 @@
 </div>
 
 <script>
-const IMG_DIR = 'https://raw.githubusercontent.com/Excalibur-lgtm/InTempo/main/Images-final/';
-let currentBranch = 'hyusisayin';
-let currentLang = 'hy';
-let menuRendered = false;
-
-// Helper function to create pizza template
-function createPizzaTemplate(img1, img2, price, nameHy, nameEn, nameRu, descHy, descEn, descRu) {
-  return {
-    dishes: [{
-      img1: img1 || IMG_DIR + 'page02_img1.jpg',
-      img2: img2 || IMG_DIR + 'page03_img1.jpg',
-      price: price || 3500,
-      n: { hy: nameHy || '...', en: nameEn || '...', ru: nameRu || '...' },
-      d: { hy: descHy || '...', en: descEn || '...', ru: descRu || '...' }
-    }]
-  };
-}
+const IMG_DIR = 'Images-final/';
 
 const MENU = [
-  { id:'starters', t:{hy:'ախուտեստներ',en:'Starters',ru:'Закуски'}, scenes:[
+  { id:'starters', t:{hy:'Նախուտեստներ',en:'Starters',ru:'Закуски'}, scenes:[
     { dishes:[
       { img:IMG_DIR+'page03_img1.jpg', x:50, y:55, price:2700,
         n:{hy:'Բրուսկետտա պրոշուտտոյով և տապենադով',en:'Bruschetta Crudo with Tapenade',ru:'Брускетта с прошутто и тапенадом'},
@@ -738,7 +585,7 @@ const MENU = [
     { dishes:[
       { img:IMG_DIR+'page06_img1.jpg', x:50, y:55, price:1900,
         n:{hy:'Մոցարելլայի ձողիկներ ԻնՏեմպո ոճով',en:'Mozzarella Sticks InTempo Style',ru:'Палочки из моцареллы в стиле InTempo'},
-        d:{hy:'Մոցարելլայի ողիկներ, ֆիրմային մայոնեզ, չեդեր, բեկոն, պարմեզան, կանաչ սոխ',en:'Mozzarella sticks, signature mayonnaise, cheddar, bacon, parmesan, green onion',ru:'Палочки из моцареллы, фирменный майонез, чеддер, бекон, пармезан, зелёный лук'} },
+        d:{hy:'Մոցարելլայի ձողիկներ, ֆիրմային մայոնեզ, չեդեր, բեկոն, պարմեզան, կանաչ սոխ',en:'Mozzarella sticks, signature mayonnaise, cheddar, bacon, parmesan, green onion',ru:'Палочки из моцареллы, фирменный майонез, чеддер, бекон, пармезан, зелёный лук'} },
     ]},
     { dishes:[
       { img:IMG_DIR+'page07_img1.jpg', x:50, y:55, price:2100,
@@ -753,7 +600,7 @@ const MENU = [
     { dishes:[
       { img:IMG_DIR+'page09_img1.jpg', x:50, y:55, price:3600,
         n:{hy:'Ծովախեցգետնի տեմպուրա',en:'Shrimp Tempura',ru:'Креветки темпура'},
-        d:{hy:'ովախեցգետին, քաղցր չիլի սոուս',en:'Shrimps, sweet chili sauce',ru:'Креветки, сладкий соус чили'} },
+        d:{hy:'Ծովախեցգետին, քաղցր չիլի սոուս',en:'Shrimps, sweet chili sauce',ru:'Креветки, сладкий соус чили'} },
     ]},
     { dishes:[
       { img:IMG_DIR+'page10_img1.jpg', x:50, y:55, price:2500,
@@ -762,7 +609,7 @@ const MENU = [
     ]},
     { dishes:[
       { img:IMG_DIR+'page11_img1.jpg', x:35, y:35, price:3900,
-        n:{hy:'սի ափսե',en:'Meat Platter',ru:'Мясная тарелка'},
+        n:{hy:'Մսի ափսե',en:'Meat Platter',ru:'Мясная тарелка'},
         d:{hy:'Չորիզո, մորտադելլա, պրոշուտտո, միլանո սալյամի, ֆիրմային հաց, մանանեխ',en:'Chorizo, Mortadella, Prosciutto, Milano salami, signature bread, yellow mustard',ru:'Чоризо, мортаделла, прошутто, миланская салями, фирменный хлеб, горчица'} },
       { img:IMG_DIR+'page11_img1.jpg', x:65, y:68, price:3300,
         n:{hy:'Պանրի ափսե',en:'Cheese Platter',ru:'Сырная тарелка'},
@@ -771,12 +618,12 @@ const MENU = [
     { dishes:[
       { img:IMG_DIR+'page13_img1.jpg', x:30, y:25, price:1600,
         n:{hy:'Էքսկլյուզիվ կարտոֆիլ ֆրի ֆարմեր սոուսով',en:'Exclusive French Fries with Farmer\u2019s Sauce',ru:'Эксклюзивный картофель фри с фермерским соусом'},
-        d:{hy:'արտոֆիլ, մատուցվում է չեդերով և ֆարմեր սոուսով',en:'Potatoes, served with cheddar, Farmer sauce',ru:'Картофель, подается с чеддером и фермерским соусом'} },
+        d:{hy:'Կարտոֆիլ, մատուցվում է չեդերով և ֆարմեր սոուսով',en:'Potatoes, served with cheddar, Farmer sauce',ru:'Картофель, подается с чеддером и фермерским соусом'} },
       { img:IMG_DIR+'page13_img1.jpg', x:50, y:52, price:1100,
         n:{hy:'Կարտոֆիլ ֆրի',en:'French Fries',ru:'Картофель фри'},
         d:{hy:'',en:'',ru:''} },
       { img:IMG_DIR+'page13_img1.jpg', x:70, y:78, price:1900,
-        n:{hy:'արտոֆիլ րի ալլա Բոլոնեզ',en:'French Fries Alla Bolognese',ru:'Картофель фри алла Болоньезе'},
+        n:{hy:'Կարտոֆիլ ֆրի ալլա Բոլոնեզ',en:'French Fries Alla Bolognese',ru:'Картофель фри алла Болоньезе'},
         d:{hy:'Կարտոֆիլ, հեղինակային բոլոնեզ, սերուցքային պանիր',en:'Potatoes, Signature Bolognese, Cream cheese',ru:'Картофель, фирменный болоньезе, сливочный сыр'} },
     ]},
   ]},
@@ -784,7 +631,7 @@ const MENU = [
     { dishes:[
       { img:IMG_DIR+'page14_img1.jpg', x:50, y:55, price:3900,
         n:{hy:'Ստեյկ աղցան',en:'Steak Salad',ru:'Стейк-салат'},
-        d:{hy:'Հորթի ափկամիս, խորոված պղպեղի կոնի, միքս աղցան, պարմեզան',en:'Veal tenderloin, grilled pepper confit, mixed salad, parmesan',ru:'Телячья вырезка, жареный перец конфи, микс салат, пармезан'} },
+        d:{hy:'Հորթի փափկամիս, խորոված պղպեղի կոնֆի, միքս աղցան, պարմեզան',en:'Veal tenderloin, grilled pepper confit, mixed salad, parmesan',ru:'Телячья вырезка, жареный перец конфи, микс салат, пармезан'} },
     ]},
     { dishes:[
       { img:IMG_DIR+'page15_img1.jpg', x:35, y:35, price:2800,
@@ -797,19 +644,19 @@ const MENU = [
     { dishes:[
       { img:IMG_DIR+'page16_img1.jpg', x:50, y:55, price:3900,
         n:{hy:'Ավոկադոյով և քաղցրահամ լոլիկով աղցան',en:'Avocado & Sweet Tomato Salad',ru:'Салат с авокадо и сладкими томатами'},
-        d:{hy:'Լոլիկ, ավոկադո, սերուցքային պանիր, extra virgin ձիթապտղի ուղ, բազիլիկ, չորս պղպեղ, կիտրոն',en:'Tomatoes, avocado, cream cheese, extra virgin olive oil, basil, four-pepper blend, lemon',ru:'Томаты, авокадо, сливочный сыр, оливковое масло extra virgin, базилик, смесь четырёх перцев, лимон'} },
+        d:{hy:'Լոլիկ, ավոկադո, սերուցքային պանիր, extra virgin ձիթապտղի յուղ, բազիլիկ, չորս պղպեղ, կիտրոն',en:'Tomatoes, avocado, cream cheese, extra virgin olive oil, basil, four-pepper blend, lemon',ru:'Томаты, авокадо, сливочный сыр, оливковое масло extra virgin, базилик, смесь четырёх перцев, лимон'} },
     ]},
     { dishes:[
       { img:IMG_DIR+'page17_img1.jpg', x:35, y:35, price:2900,
         n:{hy:'Կապրեզե աղցան ԻնՏեմպոյում',en:'Caprese Salad at InTempo',ru:'Салат Капрезе в InTempo'},
         d:{hy:'Լոլիկ, թարմ մոցարելլա, բազիլիկ, պեստո սոուս',en:'Tomato, fresh mozzarella, basil, pesto sauce',ru:'Помидоры, свежая моцарелла, базилик, соус песто'} },
       { img:IMG_DIR+'page17_img1.jpg', x:65, y:68, price:3300,
-        n:{hy:'Հավով եսար աղցան Ինեմպոյում',en:'Chicken Caesar Salad at InTempo',ru:'Салат «Цезарь» с курицей в InTempo'},
+        n:{hy:'Հավով Կեսար աղցան ԻնՏեմպոյում',en:'Chicken Caesar Salad at InTempo',ru:'Салат «Цезарь» с курицей в InTempo'},
         d:{hy:'Հավի կրծքամիս, պեկինյան կաղամբ, հեղինակային կեսար սոուս, ֆիրմային գրիսինի, պարմեզան',en:'Chicken breast, Peking cabbage, signature Caesar dressing, signature grissini, parmesan',ru:'Куриная грудка, пекинская капуста, фирменный соус «Цезарь», фирменные гриссини, пармезан'} },
     ]},
     { dishes:[
       { img:IMG_DIR+'page18_img1.jpg', x:35, y:35, price:3400,
-        n:{hy:'Հավով և ավոկադոյով աղցան նՏեմպոյում',en:'Chicken and Avocado Salad at InTempo',ru:'Салат из курицы и авокадо в InTempo'},
+        n:{hy:'Հավով և ավոկադոյով աղցան ԻնՏեմպոյում',en:'Chicken and Avocado Salad at InTempo',ru:'Салат из курицы и авокадо в InTempo'},
         d:{hy:'Հավի կրծքամիս, ավոկադո, կարմիր կաղամբ, միքս աղցան, պարմեզան',en:'Chicken breast, avocado, red cabbage, mixed salad, parmesan',ru:'Куриная грудка, авокадо, красная капуста, микс салат, пармезан'} },
       { img:IMG_DIR+'page18_img1.jpg', x:65, y:68, price:2900,
         n:{hy:'Քինոայով և ավոկադոյով աղցան',en:'Quinoa & Avocado Salad',ru:'Салат из киноа и авокадо'},
@@ -819,10 +666,10 @@ const MENU = [
   { id:'soups', t:{hy:'Ապուրներ',en:'Soups',ru:'Супы'}, scenes:[
     { dishes:[
       { img:IMG_DIR+'page19_img2.jpg', x:35, y:35, price:1900,
-        n:{hy:'նկով կրեմ-ապուր',en:'Mushroom Cream Soup',ru:'Грибной крем-суп'},
+        n:{hy:'Սնկով կրեմ-ապուր',en:'Mushroom Cream Soup',ru:'Грибной крем-суп'},
         d:{hy:'Սունկ, սերուցք, պարմեզան',en:'Mushroom, cream, parmesan',ru:'Грибы, сливки, пармезан'} },
       { img:IMG_DIR+'page19_img2.jpg', x:65, y:68, price:1900,
-        n:{hy:'Պապպա ալ ոմոդորո լոլիկի ապուր',en:'Pappa al Pomodoro Tomato Soup',ru:'Томатный суп Pappa al Pomodoro'},
+        n:{hy:'Պապպա ալ Պոմոդորո լոլիկի ապուր',en:'Pappa al Pomodoro Tomato Soup',ru:'Томатный суп Pappa al Pomodoro'},
         d:{hy:'Լոլիկ, պարմեզան, բազիլիկ',en:'San Marzano tomatoes, parmesan, basil',ru:'Помидоры Сан-Марцано, пармезан, базилик'} },
     ]},
   ]},
@@ -830,7 +677,7 @@ const MENU = [
     { dishes:[
       { img:IMG_DIR+'page20_img1.jpg', x:50, y:55, price:2900,
         n:{hy:'Սպագետտի ամատրիչանա շեֆից',en:'Spaghetti Amatriciana Chef\u2019s Style',ru:'Спагетти аматричана от шефа'},
-        d:{hy:'պագետի ֆրեսկա, բեկոն, սերուցքային պանիր, լոլիկի սոուս, պարմեզան',en:'Spaghetti fresca, bacon, cream cheese, tomato sauce, parmesan',ru:'Спагетти фреска, бекон, сливочный сыр, томатный соус, пармезан'} },
+        d:{hy:'Սպագետի ֆրեսկա, բեկոն, սերուցքային պանիր, լոլիկի սոուս, պարմեզան',en:'Spaghetti fresca, bacon, cream cheese, tomato sauce, parmesan',ru:'Спагетти фреска, бекон, сливочный сыр, томатный соус, пармезан'} },
     ]},
     { dishes:[
       { img:IMG_DIR+'page21_img1.jpg', x:35, y:35, price:2900,
@@ -847,7 +694,7 @@ const MENU = [
     ]},
     { dishes:[
       { img:IMG_DIR+'page23_img1.jpg', x:50, y:55, price:2700,
-        n:{hy:'ինգուինի ալֆրեդո',en:'Linguine alfredo',ru:'Лингвини альфредо'},
+        n:{hy:'Լինգուինի ալֆրեդո',en:'Linguine alfredo',ru:'Лингвини альфредо'},
         d:{hy:'Լինգուինի պաստա, հավի կրծքամիս, սունկ, սերուցքային պանիր, սերուցք',en:'Linguine pasta, chicken breast, mushroom, cream cheese, cream',ru:'Паста Лингвини, куриная грудка, грибы, сливочный сыр, сливки'} },
     ]},
     { dishes:[
@@ -855,13 +702,13 @@ const MENU = [
         n:{hy:'Ֆետուչինի բոլոնեզ',en:'Fettuccine bolognese',ru:'Феттучини болоньезе'},
         d:{hy:'Ֆետուչինի բոլոնեզ, տավարի միս, սերուցքային պանիր, չերի լոլիկ, պարմեզան',en:'Fettuccine pasta, Beef, cream cheese, cherry tomatoes, parmesan',ru:'Феттучини болоньезе, говядина, сливочный сыр, помидоры черри, пармезан'} },
       { img:IMG_DIR+'page24_img1.jpg', x:65, y:68, price:3200,
-        n:{hy:'ետուչինի ֆորմաջի',en:'Fettuccine formaggi',ru:'Фетучини формаджи'},
+        n:{hy:'Ֆետուչինի ֆորմաջի',en:'Fettuccine formaggi',ru:'Фетучини формаджи'},
         d:{hy:'Ֆետուչինի պաստա, պարմեզան, ռոքֆոր, սերուցքային պանիր',en:'Fettuccine pasta, parmesan, Roquefort, cream cheese',ru:'Паста Фетучини, пармезан, рокфор, сливочный сыр'} },
     ]},
     { dishes:[
       { img:IMG_DIR+'page25_img1.jpg', x:50, y:55, price:4900,
         n:{hy:'Լինգուինի սաղմոնով',en:'Linguine with salmon',ru:'Лингвини с лососем'},
-        d:{hy:'ինգուինի պաստա, սաղմոն, սերուցքային պանիր, պարմեզան, սերուցք',en:'Linguine pasta, salmon, cream cheese, parmesan, cream',ru:'Паста Лингвини, лосось, сливочный сыр, пармезан, сливки'} },
+        d:{hy:'Լինգուինի պաստա, սաղմոն, սերուցքային պանիր, պարմեզան, սերուցք',en:'Linguine pasta, salmon, cream cheese, parmesan, cream',ru:'Паста Лингвини, лосось, сливочный сыр, пармезан, сливки'} },
     ]},
   ]},
   { id:'burgers', t:{hy:'Բուրգերներ և սենդվիչներ',en:'Burgers & Sandwiches',ru:'Бургеры и сэндвичи'}, scenes:[
@@ -873,7 +720,7 @@ const MENU = [
     { dishes:[
       { img:IMG_DIR+'page27_img1.jpg', x:50, y:55, price:3900,
         n:{hy:'Յուրօրինակ բուրգեր շեֆից',en:'Unique burger by the chef',ru:'Уникальный бургер от шеф-повара'},
-        d:{hy:'Տավարի միս, թարթար սոուս, մարինացված վարունգ, լոլիկ, եդեր, բեկոն, ևավոր հազար, հալապենյո, սպիտակ մարինացված սոխ, մատուցվում է էքսկլյուզիվ կարտոֆիլ րիով',en:'Beef, tartar sauce, marinated cucumber, tomato, cheddar, bacon, lettuce, jalapeno, white marinated onion, served with exclusive french fries',ru:'Говядина, соус тартар, маринованный огурец, помидор, чеддер, бекон, салат, халапеньо, белый маринованный лук, подается с эксклюзивным картофелем фри'} },
+        d:{hy:'Տավարի միս, թարթար սոուս, մարինացված վարունգ, լոլիկ, չեդեր, բեկոն, ձևավոր հազար, հալապենյո, սպիտակ մարինացված սոխ, մատուցվում է էքսկլյուզիվ կարտոֆիլ ֆրիով',en:'Beef, tartar sauce, marinated cucumber, tomato, cheddar, bacon, lettuce, jalapeno, white marinated onion, served with exclusive french fries',ru:'Говядина, соус тартар, маринованный огурец, помидор, чеддер, бекон, салат, халапеньо, белый маринованный лук, подается с эксклюзивным картофелем фри'} },
     ]},
     { dishes:[
       { img:IMG_DIR+'page28_img2.jpg', x:50, y:55, price:3900,
@@ -882,33 +729,33 @@ const MENU = [
     ]},
     { dishes:[
       { img:IMG_DIR+'page29_img1.jpg', x:35, y:35, price:3500,
-        n:{hy:'լաբ սենդվիչ',en:'Club sandwich',ru:'Клаб-сэндвич'},
-        d:{hy:'Տոստի հաց, հավի կրծքամիս, բեկոն, եդեր, լոլիկ, մարինացված վարունգ, այսբերգ կաղամբ, մատուցվում է կարտոֆիլ ֆրիով',en:'Toast bread, chicken breast, bacon, cheddar, tomato, pickled cucumber, iceberg lettuce, served with French fries',ru:'Тостовый хлеб, куриная грудка, бекон, чеддер, помидор, маринованный огурец, айсберг салат, подается с картофелем фри'} },
+        n:{hy:'Քլաբ սենդվիչ',en:'Club sandwich',ru:'Клаб-сэндвич'},
+        d:{hy:'Տոստի հաց, հավի կրծքամիս, բեկոն, չեդեր, լոլիկ, մարինացված վարունգ, այսբերգ կաղամբ, մատուցվում է կարտոֆիլ ֆրիով',en:'Toast bread, chicken breast, bacon, cheddar, tomato, pickled cucumber, iceberg lettuce, served with French fries',ru:'Тостовый хлеб, куриная грудка, бекон, чеддер, помидор, маринованный огурец, айсберг салат, подается с картофелем фри'} },
       { img:IMG_DIR+'page29_img1.jpg', x:65, y:68, price:3100,
         n:{hy:'Ֆիրմային խրթխրթան քլաբ սենդվիչ',en:'Signature crispy club sandwich',ru:'Фирменный хрустящий клаб-сэндвич'},
-        d:{hy:'Խրթխրթան հավի կրծքամիս, թարմ վարունգ, ոլիկ, բեկոն, չեդեր, Ֆարմեր սոուս, էքսկլյուզիվ կարտոֆիլ ֆրիով',en:'Crispy chicken breast, fresh cucumber, tomato, bacon, cheddar, farmer\'s sauce, exclusive french fries',ru:'Хрустящая куриная грудка, свежий огурец, помидор, бекон, чеддер, фермерский соус, эксклюзивный картофель фри'} },
+        d:{hy:'Խրթխրթան հավի կրծքամիս, թարմ վարունգ, լոլիկ, բեկոն, չեդեր, Ֆարմեր սոուս, էքսկլյուզիվ կարտոֆիլ ֆրիով',en:'Crispy chicken breast, fresh cucumber, tomato, bacon, cheddar, farmer\'s sauce, exclusive french fries',ru:'Хрустящая куриная грудка, свежий огурец, помидор, бекон, чеддер, фермерский соус, эксклюзивный картофель фри'} },
     ]},
     { dishes:[
       { img:IMG_DIR+'page30_img1.jpg', x:35, y:35, price:2700,
         n:{hy:'Նեապոլիտանական սենդվիչ մորտադելլայով',en:'Neapolitan sandwich with mortadella',ru:'Неаполитанский сэндвич с мортаделлой'},
         d:{hy:'Մորտադելլա, պիստակի կրեմ սոուս, բազիլիկ',en:'Mortadella, pistachio cream, basil',ru:'Мортаделла, фисташковый крем, базилик'} },
       { img:IMG_DIR+'page30_img1.jpg', x:65, y:68, price:2800,
-        n:{hy:'եապոլիտանական սենդվիչ պրոշուտոյով և պարմեզանով',en:'Neapolitan sandwich with prosciutto & parmesan',ru:'Неаполитанский сэндвич с прошутто и пармезаном'},
+        n:{hy:'Նեապոլիտանական սենդվիչ պրոշուտոյով և պարմեզանով',en:'Neapolitan sandwich with prosciutto & parmesan',ru:'Неаполитанский сэндвич с прошутто и пармезаном'},
         d:{hy:'Պրոշուտո, սերուցքային պանիր, չերի լոլիկ, ռուկոլա, ֆիրմային կեսար սոուս, պարմեզան',en:'Prosciutto, cream cheese, cherry tomatoes, arugula, signature caesar sauce, parmesan',ru:'Прошутто, сливочный сыр, помидоры черри, руккола, фирменный соус «Цезарь», пармезан'} },
     ]},
     { dishes:[
       { img:IMG_DIR+'page31_img1.jpg', x:35, y:35, price:1800,
         n:{hy:'Կրուասան մորտադելլայով',en:'Croissant with mortadella',ru:'Круассан с мортаделлой'},
-        d:{hy:'Կրուասան, սերուցքային պանիր, ուկոլա, մորտադելլա, պարմեզան, էքստրա վիրջին ձիթայուղ, բազիլիկ, պիստակ',en:'Croissant, cream cheese, arugula, mortadella, parmesan, extra virgin olive oil, basil, pistachios',ru:'Круассан, сливочный сыр, руккола, мортаделла, пармезан, оливковое масло extra virgin, базилик, фисташки'} },
+        d:{hy:'Կրուասան, սերուցքային պանիր, ռուկոլա, մորտադելլա, պարմեզան, էքստրա վիրջին ձիթայուղ, բազիլիկ, պիստակ',en:'Croissant, cream cheese, arugula, mortadella, parmesan, extra virgin olive oil, basil, pistachios',ru:'Круассан, сливочный сыр, руккола, мортаделла, пармезан, оливковое масло extra virgin, базилик, фисташки'} },
       { img:IMG_DIR+'page31_img1.jpg', x:65, y:68, price:1900,
-        n:{hy:'րուասան պրոշուտոյով',en:'Croissant with prosciutto',ru:'Круассан с прошутто'},
+        n:{hy:'Կրուասան պրոշուտոյով',en:'Croissant with prosciutto',ru:'Круассан с прошутто'},
         d:{hy:'Կրուասան, ֆիրմային սոուս, ռուկոլա, պրոշուտո, պարմեզան, էքստրա վիրջին ձիթայուղ, բազիլիկ',en:'Croissant, signature sauce, arugula, prosciutto, parmesan, extra virgin olive oil, basil',ru:'Круассан, фирменный соус, руккола, прошутто, пармезан, оливковое масло extra virgin, базилик'} },
     ]},
   ]},
   { id:'piadina', t:{hy:'Պիադինա',en:'Piadina',ru:'Пьядина'}, scenes:[
     { dishes:[
       { img:IMG_DIR+'page32_img1.jpg', x:35, y:35, price:2500,
-        n:{hy:'իադինելլա հավով և ավոկադոյով',en:'Piadinella with chicken & avocado',ru:'Пьядинелла с курицей и авокадо'},
+        n:{hy:'Պիադինելլա հավով և ավոկադոյով',en:'Piadinella with chicken & avocado',ru:'Пьядинелла с курицей и авокадо'},
         d:{hy:'Տորտիլիա, հավի կրծքամիս, ավոկադո, ֆարմեր սոուս, միքս աղցան, կարտոֆիլ ֆրի, մայոնեզ',en:'Tortilla, chicken breast, avocado, farmer sauce, mixed salad, french fries, mayonnaise',ru:'Тортилья, куриная грудка, авокадо, фермерский соус, микс-салат, картофель фри, майонез'} },
       { img:IMG_DIR+'page32_img1.jpg', x:65, y:68, price:2300,
         n:{hy:'Պիադինելլա խրթխրթան հավով',en:'Crispy chicken piadinella',ru:'Пьядинелла с хрустящей курицей'},
@@ -916,11 +763,11 @@ const MENU = [
     ]},
     { dishes:[
       { img:IMG_DIR+'page33_img1.jpg', x:30, y:25, price:2500,
-        n:{hy:'Պիադինա էքսկԼյուզվ',en:'Piadina exclusive',ru:'Пьядина эксклюзив'},
+        n:{hy:'Պիադինա էքսկԼյուզԻվ',en:'Piadina exclusive',ru:'Пьядина эксклюзив'},
         d:{hy:'Հավի կրծքամիս, պեկինյան կաղամբ, սունկ, սերուցքային պանիր',en:'Chicken breast, Peking cabbage, mushrooms, cheese',ru:'Куриная грудка, пекинская капуста, грибы, сливочный сыр'} },
       { img:IMG_DIR+'page33_img1.jpg', x:50, y:52, price:3100,
         n:{hy:'Պիադինա պրոշուտոյով',en:'Piadina with prosciutto',ru:'Пьядина с прошутто'},
-        d:{hy:'Պրոշուտո, ուկոլա, չերի ոլիկ, սերուցքային պանիր, պարմեզան',en:'Prosciutto, arugula, cherry tomatoes, cream cheese, parmesan',ru:'Прошутто, руккола, помидоры черри, сливочный сыр, пармезан'} },
+        d:{hy:'Պրոշուտո, ռուկոլա, չերի լոլիկ, սերուցքային պանիր, պարմեզան',en:'Prosciutto, arugula, cherry tomatoes, cream cheese, parmesan',ru:'Прошутто, руккола, помидоры черри, сливочный сыр, пармезан'} },
       { img:IMG_DIR+'page33_img1.jpg', x:70, y:78, price:2500,
         n:{hy:'Պիադինա մորտադելլայով',en:'Piadina with mortadella',ru:'Пьядина с мортаделлой'},
         d:{hy:'Մորտադելլա, սերուցքային պանիր, պիստակ, բազիլիկ',en:'Mortadella, cream cheese, pistachios, basil',ru:'Мортаделла, сливочный сыр, фисташки, базилик'} },
@@ -943,7 +790,7 @@ const MENU = [
     { dishes:[
       { img:IMG_DIR+'page36_img1.jpg', x:50, y:55, price:5900,
         n:{hy:'հեղինակային սթեյք մինիոն թարմ նոտաներով',en:'signature steak mignon with fresh notes',ru:'фирменный стейк-миньон со свежими нотками'},
-        d:{hy:'Հորթի փափկամիս, նեխուր, պղպեղի սոուս, իրմային կարտոֆիլի խյուս',en:'Veal fillet, celery, pepper sauce, special mashed potatoes',ru:'Телячья вырезка, сельдерей, перечный соус, фирменное картофельное пюре'} },
+        d:{hy:'Հորթի փափկամիս, նեխուր, պղպեղի սոուս, ֆիրմային կարտոֆիլի խյուս',en:'Veal fillet, celery, pepper sauce, special mashed potatoes',ru:'Телячья вырезка, сельдерей, перечный соус, фирменное картофельное пюре'} },
     ]},
     { dishes:[
       { img:IMG_DIR+'page37_img1.jpg', x:50, y:55, price:3800,
@@ -970,7 +817,7 @@ const MENU = [
     { dishes:[
       { img:IMG_DIR+'page41_img2.jpg', x:30, y:70, price:2400,
         n:{hy:'վաֆլի բանան նուտելլա ինտեմպոյում',en:'waffle banana nutella intempo',ru:'вафли банан нутелла интемпо'},
-        d:{hy:'Վաֆլի, բանան, ելակ, նուտելլա, օլիմպիա, ոկոլադ, պաղպաղակ',en:'Waffle, banana, strawberry, nutella, olympia, chocolate, ice cream',ru:'Вафли, банан, клубника, нутелла, олимпия, шоколад, мороженое'} },
+        d:{hy:'Վաֆլի, բանան, ելակ, նուտելլա, օլիմպիա, շոկոլադ, պաղպաղակ',en:'Waffle, banana, strawberry, nutella, olympia, chocolate, ice cream',ru:'Вафли, банан, клубника, нутелла, олимпия, шоколад, мороженое'} },
       { img:IMG_DIR+'page41_img2.jpg', x:70, y:30, price:2500,
         n:{hy:'վաֆլի օլիմպիա ինտեմպոյում',en:'waffle olympia intempo',ru:'вафли olympia intempo'},
         d:{hy:'Վաֆլի, նուտելլա, օլիմպիա կրեմ, պիստակ, նուշի կրեմ, պաղպաղակ',en:'Waffle, Nutella, Olympia cream, pistachio, almond cream, ice cream',ru:'Вафли, нутелла, крем Olympia, фисташки, миндальный крем, мороженое'} },
@@ -978,7 +825,7 @@ const MENU = [
     { dishes:[
       { img:IMG_DIR+'page42_img1.jpg', x:50, y:55, price:'800/3900',
         n:{hy:'Քաղցր ֆոկաչա ամարենա',en:'sweet focaccia amarena',ru:'сладкая фокачча амарена'},
-        d:{hy:'ոկաչա, ֆիրմային կրեմ, բալի եմ, Օլիմպիա կրեմ',en:'Focaccia, signature cream, cherry jam, Olympia cream',ru:'Фокачча, фирменный крем, вишнёвый джем, крем Олимпия'} },
+        d:{hy:'Ֆոկաչա, ֆիրմային կրեմ, բալի ջեմ, Օլիմպիա կրեմ',en:'Focaccia, signature cream, cherry jam, Olympia cream',ru:'Фокачча, фирменный крем, вишнёвый джем, крем Олимпия'} },
     ]},
     { dishes:[
       { img:IMG_DIR+'page43_img1.jpg', x:50, y:55, price:'800/3900',
@@ -1039,90 +886,45 @@ const MENU = [
         d:{hy:'',en:'',ru:''} },
     ]},
   ]},
-  // =========================================
-  // PIZZA SECTION (FIXED - NO SYNTAX ERRORS)
-  // =========================================
-  { 
-    id:'pizza', 
-    t:{hy:'Պիցցա',en:'Pizza',ru:'Пицца'}, 
-    scenes:[
-      // Карточка 1: Маргарита (с эффектом двух фото)
-      { 
-        dishes:[
-          { 
-            img1: IMG_DIR+'page02_img1.jpg',
-            img2: IMG_DIR+'page03_img1.jpg',
-            price: 2900,
-            n:{hy:'Մարգարիտա',en:'Margherita',ru:'Маргарита'},
-            d:{hy:'Մոցարելլա, բազիլիկ, տոմատային սոուս և օրեգանո',en:'Mozzarella, basil, tomato sauce and oregano',ru:'Моцарелла, базилик, томатный соус и орегано'} 
-          },
-        ]
-      },
-      // Шаблоны для остальных 20 пицц (заполните их данными позже)
-      createPizzaTemplate(),
-      createPizzaTemplate(),
-      createPizzaTemplate(),
-      createPizzaTemplate(),
-      createPizzaTemplate(),
-      createPizzaTemplate(),
-      createPizzaTemplate(),
-      createPizzaTemplate(),
-      createPizzaTemplate(),
-      createPizzaTemplate(),
-      createPizzaTemplate(),
-      createPizzaTemplate(),
-      createPizzaTemplate(),
-      createPizzaTemplate(),
-      create......
-    ]
-  },
 ];
 
 const DICT = {
-  hy:{title:'In Tempo — Իտալական խոհանոց · րևան',nav_menu:'Մենյու',nav_contact:'Կապ',
+  hy:{title:'In Tempo — Իտալական խոհանոց · Երևան',nav_menu:'Մենյու',nav_contact:'Կապ',
     hero_l1:'Իտալական խոհանոց',hero_l2:'Երևանի <em>Կենտրոնում</em>',hero_sub:'Բաց է 09:00–24:00',
-    cue:'թերթեք', tap:'Սեղմեք կետերին',
+    hero_b1:'Բացել մենյուն →',hero_b2:'Ամրագրել սեղան',cue:'թերթեք',
+    tap:'Սեղմեք կետերին',
     mb_call:'Զանգել',mb_book:'Ամրագրել',
     c_h2:'Զանգեք — և սեղանը <em>սպասում է</em>',
-    c_sub:'եկ հպում — և մնացածը մենք кհոգанք։',
-    c_addr1:'Երևан, Հյուսисайин 10/3',c_addr2:'Амен ор 09:00 – 24:00',
-    c_delivery_title:'Аракум',
-    c_delivery:'Аракум патурелу hamar karoq eq ogtsvel <b>Glovo</b>, <b>Yandex</b>, <b>Buy.am</b> havelvacnerits kam zangaharel <b>8811</b> Buy.am',
-    f_line:'© 2026 In Tempo · Италиан хоханоц',
-    branch_title:'Ынтрэк масначюх',branch_subtitle:'Менюн тарбервум э зс масначюхи',
-    branch_big:'Мец маснаюх',branch_small:'Покр масначюх',
-    tab_main:'Химнакан меню',tab_bar:'Бар',tab_pizza:'Пицца',
-    coming_soon:'Бажинэ утов клини'},
+    c_sub:'Մեկ հպում — և մնացածը մենք կհոգանք։',
+    c_addr1:'Երևան, Հյուսիսային 10/3',c_addr2:'Ամեն օր 09:00 – 24:00',
+    c_delivery_title:'Առաքում',
+    c_delivery:'Առաքում պատվիրելու համար կարող եք օգտվել <b>Glovo</b>, <b>Yandex</b>, <b>Buy.am</b> հավելվածներից կամ զանգահարել <b>8811</b> Buy.am',
+    f_line:'© 2026 In Tempo · Իտալական խոհանոց'},
   en:{title:'In Tempo — Italian Kitchen · Yerevan',nav_menu:'Menu',nav_contact:'Contact',
     hero_l1:'Italian kitchen',hero_l2:'in the heart of <em>Yerevan</em>',hero_sub:'Open 09:00 – 24:00',
-    cue:'scroll', tap:'Tap the points',
+    hero_b1:'Open the menu →',hero_b2:'Book a table',cue:'scroll',
+    tap:'Tap the points',
     mb_call:'Call',mb_book:'Book a table',
     c_h2:'Call us — and the table <em>is waiting</em>',
     c_sub:'One tap — and we will take care of the rest.',
     c_addr1:'Yerevan, 10/3 Northern Avenue',c_addr2:'Daily 09:00 – 24:00',
     c_delivery_title:'Delivery',
     c_delivery:'To order delivery, you can use the <b>Glovo</b>, <b>Yandex</b> or <b>Buy.am</b> apps, or call <b>8811</b> Buy.am',
-    f_line:'© 2026 In Tempo · Italian kitchen',
-    branch_title:'Choose branch',branch_subtitle:'Menu differs by branch',
-    branch_big:'Big branch',branch_small:'Small branch',
-    tab_main:'Main Menu',tab_bar:'Bar',tab_pizza:'Pizza',
-    coming_soon:'Section coming soon'},
+    f_line:'© 2026 In Tempo · Italian kitchen'},
   ru:{title:'In Tempo — Итальянская кухня · Ереван',nav_menu:'Меню',nav_contact:'Контакты',
     hero_l1:'Итальянская кухня',hero_l2:'в центре <em>Еревана</em>',hero_sub:'Открыта с 09:00 до 24:00',
-    cue:'листайте', tap:'Нажимайте на точки',
+    hero_b1:'Открыть меню →',hero_b2:'Забронировать стол',cue:'листайте',
+    tap:'Нажимайте на точки',
     mb_call:'Позвонить',mb_book:'Забронировать',
     c_h2:'Позвоните — и столик <em>ждёт</em>',
     c_sub:'Одно касание — и мы позаботимся обо всём остальном.',
     c_addr1:'Ереван, Северный проспект 10/3',c_addr2:'Ежедневно 09:00 – 24:00',
     c_delivery_title:'Доставка',
     c_delivery:'Заказать доставку можно через приложения <b>Glovo</b>, <b>Yandex</b>, <b>Buy.am</b> или позвонить <b>8811</b> Buy.am',
-    f_line:'© 2026 In Tempo · Итальянская кухня',
-    branch_title:'Выберите филиал',branch_subtitle:'Меню отличается в зависимости от филиала',
-    branch_big:'Большой филиал',branch_small:'Маленький филиал',
-    tab_main:'Основное меню',tab_bar:'Бар',tab_pizza:'Пицца',
-    coming_soon:'Раздел скоро будет доступен'}
+    f_line:'© 2026 In Tempo · Итальянская кухня'}
 };
 
+let currentLang = 'hy';
 const fmtPrice = n => (n == null ? '—' : (typeof n === 'number' ? String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' ') : String(n))) + ' ֏';
 const canHover = window.matchMedia('(hover:hover)').matches;
 const isMobile = () => window.matchMedia('(max-width:640px)').matches;
@@ -1139,22 +941,10 @@ function revealOnce(){
   const h = document.querySelector('.hero');
   if (h) h.classList.add('ready');
 }
-
 window.addEventListener('load', () => {
   window.scrollTo(0, 0);
   setTimeout(revealOnce, 1200);
-  
-  const savedBranch = localStorage.getItem('intempo_branch');
-  const branchModal = document.getElementById('branchModal');
-  
-  if (savedBranch) {
-    currentBranch = savedBranch;
-    document.getElementById('branchToggle').textContent = currentBranch === 'hyusisayin' ? '🏛️ Հյուսիսային' : '️ Mega Mall';
-    document.getElementById('heroActions').style.display = 'flex';
-    branchModal.classList.remove('open');
-  } else {
-    branchModal.classList.add('open');
-  }
+  measureStick();
 });
 setTimeout(revealOnce, 4000);
 
@@ -1180,8 +970,37 @@ document.addEventListener('click', e => {
   if (navEl.classList.contains('open') && !navEl.contains(e.target)) navEl.classList.remove('open');
 });
 document.getElementById('navRight').addEventListener('click', e => {
-  if (e.target.closest('a') || e.target.closest('.lang-btn') || e.target.closest('.branch-toggle')) navEl.classList.remove('open');
+  if (e.target.closest('a') || e.target.closest('.lang-btn')) navEl.classList.remove('open');
 });
+
+const menuNavEl = document.querySelector('.menu-nav');
+let stickPoint = 0;
+function measureStick(){
+  stickPoint = menuNavEl.getBoundingClientRect().top + window.scrollY;
+}
+window.addEventListener('resize', measureStick);
+
+/* ПАРАЛЛАКС: фон движется медленнее контента */
+const siteBg = document.getElementById('siteBg');
+const mobileBar = document.getElementById('mobileBar');
+let lastY = window.scrollY;
+let ticking = false;
+addEventListener('scroll', () => {
+  const y = window.scrollY;
+  document.body.classList.toggle('in-menu', y >= stickPoint - 2);
+  if (y > lastY + 6 && y > 140) mobileBar.classList.add('hidden');
+  else if (y < lastY - 6) mobileBar.classList.remove('hidden');
+  lastY = y;
+  navEl.classList.toggle('scrolled', y > 40);
+  if (!reduceMotion && !ticking){
+    ticking = true;
+    requestAnimationFrame(() => {
+      const py = Math.min(y * 0.07, window.innerHeight * 0.35);
+      siteBg.style.transform = 'translate3d(0,' + py + 'px,0)';
+      ticking = false;
+    });
+  }
+}, {passive:true});
 
 const sceneModal = document.getElementById('sceneModal');
 const sceneModalBody = document.getElementById('sceneModalBody');
@@ -1219,16 +1038,22 @@ const io = new IntersectionObserver(es => es.forEach(en => {
   if (en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
 }), {threshold:.1, rootMargin:'0px 0px -40px 0px'});
 
-function getBranchData(dish){
-  const branch = dish.branches[currentBranch] || dish.branches.hyusisayin;
-  return {price: branch.price, available: branch.available !== false};
-}
-
 function renderMenu(lang){
+  const nav = document.getElementById('menuNav');
   const root = document.getElementById('menuRoot');
+  nav.innerHTML = '';
   root.innerHTML = '';
 
-  MENU.forEach(cat => {
+  MENU.forEach((cat) => {
+    const b = document.createElement('button');
+    b.className = 'menu-nav-btn';
+    b.textContent = cat.t[lang];
+    b.addEventListener('click', () => {
+      document.getElementById('cat-'+cat.id).scrollIntoView({behavior:'smooth',block:'start'});
+      b.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+    });
+    nav.appendChild(b);
+
     const sec = document.createElement('div');
     sec.className = 'menu-category';
     sec.id = 'cat-' + cat.id;
@@ -1238,152 +1063,77 @@ function renderMenu(lang){
         '<span class="cat-kicker">In Tempo · ' + cat.t.en + '</span>' +
         '<h2>' + cat.t[lang] + '</h2>' +
         '<div class="cat-line">' + others + '</div>' +
-      '</div><div class="menu-grid"></div>';
+      '</div>' +
+      '<div class="menu-grid"></div>';
     const grid = sec.querySelector('.menu-grid');
 
-    cat.scenes.forEach((sceneData, index) => {
-      // Для пиццы одна карточка = одно блюдо, для остальных - сцена может иметь несколько блюд
-      if (cat.id !== 'pizza') {
-         const card = document.createElement('div');
-         card.className = 'menu-item';
-         card.style.transitionDelay = (index % 4) * 80 + 'ms';
+    cat.scenes.forEach((sc, si) => {
+      const card = document.createElement('div');
+      card.className = 'menu-item';
+      card.style.transitionDelay = (si % 4) * 80 + 'ms';
 
-         const scene = document.createElement('div');
-         scene.className = 'scene';
-         const images = sceneData.dishes.map((dish, imageIndex) => {
-           const image = document.createElement('img');
-           image.className = 'scene-img' + (imageIndex === 0 ? ' active' : '');
-           image.src = dish.img;
-           image.alt = dish.n[lang] || '';
-           image.loading = 'lazy';
-           image.decoding = 'async';
-           attachImgFallback(image);
-           scene.appendChild(image);
-           return image;
-         });
+      const scene = document.createElement('div');
+      scene.className = 'scene';
 
-         sceneData.dishes.forEach((dish, dishIndex) => {
-           const hotspot = document.createElement('button');
-           hotspot.className = 'hotspot';
-           hotspot.style.left = dish.x + '%';
-           hotspot.style.top = dish.y + '%';
-           if (dish.y < 40) hotspot.classList.add('pop-below');
-           if (dish.x < 30) hotspot.classList.add('pop-left');
-           else if (dish.x > 70) hotspot.classList.add('pop-right');
-           hotspot.setAttribute('aria-label', dish.n[lang] || '');
-           hotspot.innerHTML =
-             '<span class="hs-dot"></span>' +
-             '<div class="hs-pop"><div class="hs-pop-in">' +
-               '<div class="hs-name">' + (dish.n[lang] || '') + '</div>' +
-               (dish.d[lang] ? '<div class="hs-desc">' + dish.d[lang] + '</div>' : '') +
-               '<div class="hs-meta"><span class="hs-price">' + fmtPrice(dish.price) + '</span><span class="hs-kicker">In Tempo</span></div>' +
-             '</div></div>';
+      const imgs = sc.dishes.map((d, i) => {
+        const im = document.createElement('img');
+        im.className = 'scene-img' + (i === 0 ? ' active' : '');
+        im.src = d.img;
+        im.alt = d.n[lang];
+        im.loading = 'lazy';
+        im.decoding = 'async';
+        attachImgFallback(im);
+        scene.appendChild(im);
+        return im;
+      });
 
-           const showDish = () => images.forEach((image, imageIndex) => image.classList.toggle('active', imageIndex === dishIndex));
-           hotspot.addEventListener('click', event => {
-             event.stopPropagation();
-             const wasOpen = hotspot.classList.contains('open');
-             closeAllPops();
-             if (!wasOpen) { showDish(); hotspot.classList.add('open'); }
-           });
-           if (canHover) {
-             hotspot.addEventListener('mouseenter', () => { closeAllPops(); showDish(); hotspot.classList.add('open'); });
-             hotspot.addEventListener('mouseleave', () => hotspot.classList.remove('open'));
-           }
-           scene.appendChild(hotspot);
-         });
-
-         card.appendChild(scene);
-         card.addEventListener('click', () => { if (isMobile()) openSceneModal(card); });
-         grid.appendChild(card);
-         io.observe(card);
-      } 
-      // Логика для ПИЦЦЫ
-      else {
-        sceneData.dishes.forEach((dish, dishIndex) => {
-          const card = document.createElement('div');
-          card.className = 'menu-item pizza-card';
-          card.style.transitionDelay = (dishIndex % 4) * 80 + 'ms';
-
-          const scene = document.createElement('div');
-          scene.className = 'pizza-scene';
-          
-          const img1 = document.createElement('img');
-          img1.className = 'pizza-img-layer primary';
-          img1.src = dish.img1;
-          img1.alt = dish.n[lang];
-          img1.loading = 'lazy';
-          
-          const img2 = document.createElement('img');
-          img2.className = 'pizza-img-layer secondary';
-          img2.src = dish.img2;
-          img2.alt = dish.n[lang] + ' detail';
-          img2.loading = 'lazy';
-          
-          scene.appendChild(img1);
-          scene.appendChild(img2);
-
-          const overlay = document.createElement('div');
-          overlay.className = 'pizza-overlay';
-          overlay.innerHTML = `
-            <div class="pizza-name">${dish.n[lang]}</div>
-            <div class="pizza-desc">${dish.d[lang]}</div>
-            <div class="pizza-price-tag">${fmtPrice(dish.price)}</div>
-          `;
-          scene.appendChild(overlay);
-
-          card.appendChild(scene);
-          
-          // Для мобильных: клик открывает "активное" состояние (как hover)
-          if (isMobile()) {
-            card.addEventListener('click', (e) => {
-              e.stopPropagation();
-              const isActive = card.classList.contains('active');
-              document.querySelectorAll('.menu-item.active').forEach(i => i.classList.remove('active'));
-              if (!isActive) card.classList.add('active');
-            });
-          }
-
-          grid.appendChild(card);
-          io.observe(card);
+      sc.dishes.forEach((d, i) => {
+        const hs = document.createElement('button');
+        hs.className = 'hotspot';
+        hs.style.left = d.x + '%';
+        hs.style.top = d.y + '%';
+        if (d.y < 40) hs.classList.add('pop-below');
+        if (d.x < 30) hs.classList.add('pop-left');
+        else if (d.x > 70) hs.classList.add('pop-right');
+        hs.setAttribute('aria-label', d.n[lang]);
+        hs.innerHTML =
+          '<span class="hs-dot"></span>' +
+          '<div class="hs-pop"><div class="hs-pop-in">' +
+            '<div class="hs-name">' + d.n[lang] + '</div>' +
+            (d.d[lang] ? '<div class="hs-desc">' + d.d[lang] + '</div>' : '') +
+            '<div class="hs-meta"><span class="hs-price">' + fmtPrice(d.price) + '</span><span class="hs-kicker">In Tempo</span></div>' +
+          '</div></div>';
+        const setActive = () => imgs.forEach((im, k) => im.classList.toggle('active', k === i));
+        hs.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const was = hs.classList.contains('open');
+          closeAllPops();
+          if (!was){ setActive(); hs.classList.add('open'); }
         });
-      }
+        if (canHover){
+          hs.addEventListener('mouseenter', () => { closeAllPops(); setActive(); hs.classList.add('open'); });
+          hs.addEventListener('mouseleave', () => hs.classList.remove('open'));
+        }
+        scene.appendChild(hs);
+      });
+
+      /* БЕЗ надписи «Սեղմեք կետերին» — только фото и точки */
+      const cap = document.createElement('div');
+      cap.className = 'card-cap';
+      cap.innerHTML = '<span class="cc-name">' + sc.dishes[0].n[lang] + '</span><span class="cc-price">' + fmtPrice(sc.dishes[0].price) + '</span>';
+
+      card.appendChild(scene);
+      card.appendChild(cap);
+      card.addEventListener('click', () => { if (isMobile()) openSceneModal(card); });
+
+      grid.appendChild(card);
+      io.observe(card);
     });
 
     io.observe(sec.querySelector('.category-header'));
     root.appendChild(sec);
   });
-}
-
-function openMenu() {
-  const menuSec = document.getElementById('menu');
-  const menuRoot = document.getElementById('menuRoot');
-
-  menuSec.style.display = 'block';
-
-  if (!menuRendered) {
-    renderMenu(currentLang);
-    menuRendered = true;
-  }
-
-  requestAnimationFrame(() => {
-    menuSec.classList.add('visible');
-    menuSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
-}
-
-document.getElementById('showMenuBtn').addEventListener('click', openMenu);
-document.getElementById('showPizzaBtn').addEventListener('click', function() {
-  openMenu();
-  // Прокрутка к пицце после открытия меню
-  setTimeout(() => {
-    const pizzaCat = document.getElementById('cat-pizza');
-    if(pizzaCat) pizzaCat.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, 300);
-});
-
-function showComingSoon(){
-  alert(DICT[currentLang].coming_soon);
+  requestAnimationFrame(measureStick);
 }
 
 function applyLang(lang){
@@ -1392,41 +1142,24 @@ function applyLang(lang){
   document.querySelectorAll('[data-i18n]').forEach(el=>{
     const k = el.getAttribute('data-i18n'); if (d[k] !== undefined) el.textContent = d[k];
   });
+  document.querySelectorAll('[data-i18n-html]').forEach(el=>{
+    const k = el.getAttribute('data-i18n-html'); if (d[k] !== undefined) el.innerHTML = d[k];
+  });
   document.documentElement.lang = lang;
   document.title = d.title;
   document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active', b.dataset.lang===lang));
   try{ localStorage.setItem('intempo_lang', lang); }catch(e){}
-  if (menuRendered) renderMenu(lang);
+  renderMenu(lang);
 }
 document.querySelectorAll('.lang-btn').forEach(b=>b.addEventListener('click', ()=>applyLang(b.dataset.lang)));
 let savedLang = 'hy';
 try{ savedLang = localStorage.getItem('intempo_lang') || 'hy'; }catch(e){}
-applyLang(savedLang);
-
-const branchModal = document.getElementById('branchModal');
-const branchToggle = document.getElementById('branchToggle');
-
-function closeBranchModal(){
-  branchModal.classList.remove('open');
-}
-function selectBranch(branch){
-  currentBranch = branch;
-  try{ localStorage.setItem('intempo_branch', branch); }catch(e){}
-  closeBranchModal();
-  branchToggle.textContent = currentBranch === 'hyusisayin' ? '🏛️ Հյուսիսային' : '🛍️ Mega Mall';
-  document.getElementById('heroActions').style.display = 'flex';
-  if (menuRendered) renderMenu(currentLang);
-}
-
-document.querySelectorAll('.branch-choice').forEach(choice => {
-  choice.addEventListener('click', () => selectBranch(choice.dataset.branch));
-});
-branchToggle.addEventListener('click', () => branchModal.classList.add('open'));
-branchModal.addEventListener('click', e => { if (e.target === branchModal) closeBranchModal(); });
+try { applyLang(savedLang); } catch(e){ console.error('Menu init error:', e); }
 
 document.querySelectorAll('.rv').forEach(el => io.observe(el));
 </script>
 
+<!-- СТРАХОВКА: даже если основной скрипт упадёт, тексты шапки/hero появятся -->
 <script>
   setTimeout(function(){
     var n = document.getElementById('nav');
