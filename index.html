@@ -666,12 +666,11 @@
 </div>
 
 <script>
-// Обновлён путь на Images-final
 const IMG_DIR = 'https://raw.githubusercontent.com/Excalibur-lgtm/InTempo/main/Images-final/';
 let currentBranch = 'hyusisayin';
 let currentLang = 'hy';
 let menuRendered = false;
-let currentView = 'all'; // 'all' или 'pizza'
+let currentView = 'all'; 
 
 const MENU = [
   { id:'starters', t:{hy:'Նախուտեստներ',en:'Starters',ru:'Закуски'}, scenes:[
@@ -1001,18 +1000,27 @@ const MENU = [
     id:'pizza', 
     t:{hy:'Պիցցա',en:'Pizza',ru:'Пицца'}, 
     scenes:[
-      { 
-        dishes:[
-          { 
-            // Обновлены имена файлов на page02_img12.jpg и page03_img12.jpg
-            img1: IMG_DIR+'page02_img12.jpg',
-            img2: IMG_DIR+'page03_img12.jpg',
-            price: 2900,
-            n:{hy:'Մարգարիտա',en:'Margherita',ru:'Маргарита'},
-            d:{hy:'Մոցարելլա, բազիլիկ, տոմատային սոուս և օրեգանո',en:'Mozzarella, basil, tomato sauce and oregano',ru:'Моцарелла, базилик, томатный соус и орегано'}
-          }
-        ]
-      }
+      { dishes:[ { img1: IMG_DIR+'page02_img12.jpg', img2: IMG_DIR+'page03_img12.jpg', price: 2900, n:{hy:'Մարգարիտա',en:'Margherita',ru:'Маргарита'}, d:{hy:'Մոցարելլա, բազիլիկ, տոմատային սոուս և օրեգանո',en:'Mozzarella, basil, tomato sauce and oregano',ru:'Моцарелла, базилик, томатный соус и орегано'} } ] },
+      { dishes:[ { img1: IMG_DIR+'page04_img12.jpg', img2: IMG_DIR+'page04_img12.jpg', price: 3300, n:{hy:'Վեգետարիանական',en:'Vegetariana',ru:'Вегетарианская'}, d:{hy:'Մոցարելլա, սնկեր, բուլղարական պղպեղ, դդմիկ, տոմատային սոուս, միկրոկանաչի և օրեգանո',en:'Mozzarella, mushrooms, bell pepper, zucchini, tomato sauce, microgreens and oregano',ru:'Моцарелла, грибы, болгарский перец, кабачок, томатный соус, микрозелень и орегано'} } ] },
+      { dishes:[ { img1: IMG_DIR+'page05_img12.jpg', img2: IMG_DIR+'page05_img12.jpg', price: 3600, n:{hy:'Դիավոլա',en:'Diavola',ru:'Диавола'}, d:{hy:'Մոցարելլա, սալյամի, կարմիր տաք պղպեղ, տոմատային սոուս, օրեգանո և բազիլիկ',en:'Mozzarella, salami, red hot pepper, tomato sauce, oregano and basil',ru:'Моцарелла, салями, красный острый перец, томатный соус, орегано и базилик'} } ] },
+      { dishes:[ { img1: IMG_DIR+'page06_img12.jpg', img2: IMG_DIR+'page06_img12.jpg', price: 3700, n:{hy:'Պիցցա Ալլա Նորմա',en:'Pizza Alla Norma',ru:'Пицца Алла Норма'}, d:{hy:'Բակլաջան, տոմատային սոուս, պիստակ, բազիլիկ',en:'Eggplant, tomato sauce, pistachios, basil',ru:'Баклажаны, томатный соус, фисташки, базилик'} } ] },
+      { dishes:[ { img1: IMG_DIR+'page07_img12.jpg', img2: IMG_DIR+'page07_img12.jpg', price: 3600, n:{hy:'Պեպպերոնի',en:'Pepperoni',ru:'Пепперони'}, d:{hy:'Մոցարելլա, պեպպերոնի, տոմատային սոուս և օրեգանո',en:'Mozzarella, pepperoni, tomato sauce and oregano',ru:'Моцарелла, пепперони, томатный соус и орегано'} } ] },
+      { dishes:[ { img1: IMG_DIR+'page08_img12.jpg', img2: IMG_DIR+'page08_img12.jpg', price: 3900, n:{hy:'Պեպպերոնի և Մասկարպոնե',en:'Pepperoni and Mascarpone',ru:'Пепперони и Маскарпоне'}, d:{hy:'Մոցարելլա, մասկարպոնե, պեպպերոնի, տոմատային սոուս, բազիլիկ և օրեգանո',en:'Mozzarella, mascarpone, pepperoni, tomato sauce, basil and oregano',ru:'Моцарелла, маскарпоне, пепперони, томатный соус, базилик и орегано'} } ] },
+      { dishes:[ { img1: IMG_DIR+'page09_img12.jpg', img2: IMG_DIR+'page09_img12.jpg', price: 3800, n:{hy:'Ալ Պոլո',en:'Al Polo',ru:'Ал Поло'}, d:{hy:'Մոցարելլա, տապակած հավի կրծքամիս, չորացրած տոմատներ չերրի, սպիտակ սերուցքային սոուս',en:'Mozzarella, fried chicken breast, dried cherry tomatoes, white cream sauce',ru:'Моцарелла, жареная куриная грудка, вяленые томаты черри, белый сливочный соус'} } ] },
+      { dishes:[ { img1: IMG_DIR+'page10_img12.jpg', img2: IMG_DIR+'page10_img12.jpg', price: 3800, n:{hy:'Լացիո',en:'Lazio',ru:'Лацио'}, d:{hy:'Մոցարելլա, բեկոն, սերուցքային պանիր, պարմեզան, բազիլիկ',en:'Mozzarella, bacon, cream cheese, parmesan, basil',ru:'Моцарелла, бекон, сливочный сыр, пармезан, базилик'} } ] },
+      { dishes:[ { img1: IMG_DIR+'page11_img12.jpg', img2: IMG_DIR+'page11_img12.jpg', price: 3700, n:{hy:'Մորտադելլայով և Ֆիստակներով',en:'With Mortadella and Pistachios',ru:'С Мортаделлой и Фисташками'}, d:{hy:'Սերուցքային սոուս, մորտադելլա, ֆիստակ և բազիլիկ',en:'Cream sauce, mortadella, pistachios and basil',ru:'Сливочный соус, мортаделла, фисташки и базилик'} } ] },
+      { dishes:[ { img1: IMG_DIR+'page12_img12.jpg', img2: IMG_DIR+'page12_img12.jpg', price: 3900, n:{hy:'Չորս Պանիր',en:'Quattro Formaggi',ru:'Четыре Сыра'}, d:{hy:'Մոցարելլա, պարմեզան, բլու չիզ և ռոքֆոր, օրեգանո և բազիլիկ',en:'Mozzarella, parmesan, blue cheese and roquefort, oregano and basil',ru:'Моцарелла, пармезан, блю чиз и рокфор, орегано и базилик'} } ] },
+      { dishes:[ { img1: IMG_DIR+'page13_img12.jpg', img2: IMG_DIR+'page13_img12.jpg', price: 3900, n:{hy:'Տրյուֆելով',en:'With Truffle',ru:'С трюфелем'}, d:{hy:'Մոցարելլա, սնկեր, սպիտակ և սև տրյուֆել, սերուցքային սոուս և բազիլիկ',en:'Mozzarella, mushrooms, white and black truffle, cream sauce and basil',ru:'Моцарелла, грибы, белый и чёрный трюфель, сливочный соус и базилик'} } ] },
+      { dishes:[ { img1: IMG_DIR+'page14_img12.jpg', img2: IMG_DIR+'page14_img12.jpg', price: 3900, n:{hy:'Տոսկանա',en:'Toscana',ru:'Тоскана'}, d:{hy:'Մոցարելլա, մասկարպոնե, բեկոն, տոմատային սոուս, օրեգանո և բազիլիկ',en:'Mozzarella, mascarpone, bacon, tomato sauce, oregano and basil',ru:'Моцарелла, маскарпоне, бекон, томатный соус, орегано и базилик'} } ] },
+      { dishes:[ { img1: IMG_DIR+'page15_img12.jpg', img2: IMG_DIR+'page15_img12.jpg', price: 6800, n:{hy:'ԻնՏեմպո',en:'InTempo',ru:'InTempo'}, d:{hy:'Պրոշուտտո, բուրատա, մոցարելլա, բազիլիկ',en:'Prosciutto, burrata, mozzarella, basil',ru:'Прошутто, буррата, моцарелла, базилик'} } ] },
+      { dishes:[ { img1: IMG_DIR+'page16_img12.jpg', img2: IMG_DIR+'page16_img12.jpg', price: 4600, n:{hy:'Պրոշուտտո Ռուկոլայով',en:'Prosciutto & Arugula',ru:'Прошутто с Руколой'}, d:{hy:'Մոցարելլա, պրոշուտտո, տոմատներ չերրի, ռուկոլա, տոմատային սոուս և օրեգանո',en:'Mozzarella, prosciutto, cherry tomatoes, arugula, tomato sauce and oregano',ru:'Моцарелла, прошутто, томаты черри, руккола, томатный соус и орегано'} } ] },
+      { dishes:[ { img1: IMG_DIR+'page17_img12.jpg', img2: IMG_DIR+'page17_img12.jpg', price: 5400, n:{hy:'Սաղմոնով',en:'With Salmon',ru:'С Лососем'}, d:{hy:'Սաղմոն, ավոկադո, մոցարելլա, սպիտակ սերուցքային սոուս, կապերս, օրեգանո և բազիլիկ',en:'Salmon, avocado, mozzarella, white cream sauce, capers, oregano and basil',ru:'Лосось, авокадо, моцарелла, белый сливочный соус, каперсы, орегано и базилик'} } ] },
+      { dishes:[ { img1: IMG_DIR+'page18_img12.jpg', img2: IMG_DIR+'page18_img12.jpg', price: 2900, n:{hy:'Դոլչե Պիցցա',en:'Dolce Pizza',ru:'Долче Пицца'}, d:{hy:'Բանան, ելակ, Nutella, կրեմ և մասկարպոնե',en:'Banana, strawberry, Nutella, cream and mascarpone',ru:'Банан, клубника, Nutella, крем и маскарпоне'} } ] },
+      { dishes:[ { img1: IMG_DIR+'page19_img12.jpg', img2: IMG_DIR+'page19_img12.jpg', price: 1600, n:{hy:'Պինսերե Մարգարիտա',en:'Pinsere Margherita',ru:'Пинсере Маргарита'}, d:{hy:'Մոցարելլա, պոմիդորներ չերրի, տոմատային սոուս',en:'Mozzarella, cherry tomatoes, tomato sauce',ru:'Моцарелла, помидоры черри, Томатный соус'} } ] },
+      { dishes:[ { img1: IMG_DIR+'page20_img12.jpg', img2: IMG_DIR+'page20_img12.jpg', price: 1700, n:{hy:'Պինսերե Պեպերոնի',en:'Pinsere Pepperoni',ru:'Пинсере Пеперони'}, d:{hy:'Մոցարելլա, պեպերոնի, տոմատային սոուս',en:'Mozzarella, pepperoni, tomato sauce',ru:'Моцарелла, Пеперони, Томатный соус'} } ] },
+      { dishes:[ { img1: IMG_DIR+'page21_img12.jpg', img2: IMG_DIR+'page21_img12.jpg', price: 1900, n:{hy:'Պինսերե Սպեչիատա',en:'Pinsere Special',ru:'Пинсере Специата'}, d:{hy:'Մոցարելլա, չորիզո, սոուս չորս պանիր, սերուցքային պանիր, կանաչ ձիթապտուղ',en:'Mozzarella, chorizo, four cheese sauce, cream cheese, green olives',ru:'Моцарелла, чоризо, соус четыре сыра, сливочный сыр, зелёные оливки'} } ] },
+      { dishes:[ { img1: IMG_DIR+'page22_img12.jpg', img2: IMG_DIR+'page22_img12.jpg', price: 1900, n:{hy:'Պինսերե Կրուդո Ձիթապտուղներ',en:'Pinsere Crudo Olives Mix',ru:'Пинсере Крудо Оливки Смесь'}, d:{hy:'Մոցարելլա, ձիթապտուղ կալամատա, կանաչ ձիթապտուղ, պրոշուտտո, սերուցքային պանիր',en:'Mozzarella, kalamata olives, green olives, prosciutto, cream cheese',ru:'Моцарелла, оливки каламата, зелёные оливки, прошутто, сливочный сыр'} } ] },
+      { dishes:[ { img1: IMG_DIR+'page23_img12.jpg', img2: IMG_DIR+'page23_img12.jpg', price: 1900, n:{hy:'Պինսերե Ձիթապտուղ և Պանչետտա',en:'Pinsere Olives and Pancetta Mix',ru:'Пинсере Смесь оливок и Панчетты'}, d:{hy:'Մոցարելլա, տոմատային սոուս, բեկոն, ձիթապտուղ կալամատա, կանաչ ձիթապտուղ, սերուցքային պանիր',en:'Mozzarella, tomato sauce, bacon, kalamata olives, green olives, cream cheese',ru:'Моцарелла, томатный соус, бекон, оливки каламата, зелёные оливки, сливочный сыр'} } ] }
     ]
   }
 ];
@@ -1167,7 +1175,6 @@ function renderMenu(lang, view = 'all'){
   const root = document.getElementById('menuRoot');
   root.innerHTML = '';
 
-  // Фильтруем категории: если view === 'pizza', показываем ТОЛЬКО пиццу. Иначе показываем ВСЁ, КРОМЕ пиццы.
   const categoriesToShow = view === 'pizza' 
     ? MENU.filter(cat => cat.id === 'pizza')
     : MENU.filter(cat => cat.id !== 'pizza');
@@ -1192,7 +1199,6 @@ function renderMenu(lang, view = 'all'){
 
       const scene = document.createElement('div');
       
-      // Pizza special rendering
       if (cat.id === 'pizza') {
         scene.className = 'pizza-split';
         sceneData.dishes.forEach((dish, dishIndex) => {
@@ -1215,7 +1221,6 @@ function renderMenu(lang, view = 'all'){
           scene.appendChild(leftHalf);
           scene.appendChild(rightHalf);
           
-          // Add info overlay
           const infoOverlay = document.createElement('div');
           infoOverlay.style.cssText = 'position:absolute;bottom:0;left:0;right:0;padding:20px;background:linear-gradient(to top, rgba(43,38,34,0.9), transparent);color:var(--paper);';
           infoOverlay.innerHTML = `
@@ -1226,7 +1231,6 @@ function renderMenu(lang, view = 'all'){
           scene.appendChild(infoOverlay);
         });
       } else {
-        // Regular menu rendering
         scene.className = 'scene';
         const images = sceneData.dishes.map((dish, imageIndex) => {
           const image = document.createElement('img');
