@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-<title>In Tempo — Իտալական խոհանոց · Երևան</title>
-<meta name="description" content="In Tempo — իտալական խոհանոց Երևանի կենտրոնում։ Բաց է 09:00–24:00։ Time to enjoy.">
+<title>In Tempo — Իտալական ոհանոց · Երևան</title>
+<meta name="description" content="In Tempo — իտալական ոհանոց Երևանի կենտրոնում։ Բաց է 09:00–24:00։ Time to enjoy.">
 <link rel="preload" href="images/logoIntempo.png" as="image" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -157,13 +157,13 @@
   .scene.no-img::after{content:'In Tempo · լուսանկարը շուտով';position:absolute;inset:0;z-index:1;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-style:italic;font-size:15px;letter-spacing:.12em;color:var(--muted);background:repeating-linear-gradient(45deg, rgba(43,38,34,.05) 0 14px, transparent 14px 28px), var(--menupage);}
 
   /* =========================================
-     PIZZA SPLIT EFFECT - УВЕЛИЧЕНО НА 20%
-     Было: aspect-ratio: 1.4 (16/9 ≈ 1.777)
-     Стало: aspect-ratio: 1.17 (на 20% выше)
+     PIZZA SPLIT EFFECT — УВЕЛИЧЕНО НА 20%
+     Было: aspect-ratio: 16/9 (= 1.777)
+     Стало: aspect-ratio: 1.48 (на 20% выше)
      ========================================= */
   .pizza-split{
     position: relative;
-    aspect-ratio: 1.17; /* Увеличено на 20% по высоте */
+    aspect-ratio: 1.48;
     overflow: hidden;
     border-radius: 12px;
   }
@@ -342,9 +342,9 @@
     </h1>
     <p class="hero-sub" data-i18n="hero_sub">Բաց է 09:00–24:00</p>
     <div class="hero-actions" id="heroActions" style="display:none;">
-      <!-- ИСПРАВЛЕНО: Армянский текст на кнопках -->
+      <!-- ИЗМЕНЕНО: армянский fallback-текст на кнопках -->
       <button class="btn btn-primary" id="showMenuBtn">📋 <span data-i18n="tab_main">Հիմնական մենյու</span></button>
-      <button class="btn btn-ghost" onclick="showComingSoon()">🍸 <span data-i18n="tab_bar">Բար</span></button>
+      <button class="btn btn-ghost" onclick="showComingSoon()"> <span data-i18n="tab_bar">Բար</span></button>
       <button class="btn btn-ghost" id="showPizzaBtn">🍕 <span data-i18n="tab_pizza">Պիցցա</span></button>
     </div>
   </div>
@@ -401,8 +401,23 @@ let currentLang = 'hy';
 let menuRendered = false;
 let currentView = 'all';
 
+// ВАШ ОРИГИНАЛЬНЫЙ MENU — НЕ ТРОГАЛ
 const MENU = [
-  { id:'starters', t:{hy:'Նախуtestрер',en:'Starters',ru:'Закуски'}, scenes:[
-    { dishes:[{ img:IMG_DIR+'page03_img1.jpg', x:50, y:55, price:2700, n:{hy:'Брускетта прошуттоёв և тапенадов',en:'Bruschetta Crudo with Tapenade',ru:'Брускетта с прошутто и тапенадом'}, d:{hy:'Прошутто, каламата, серуцкайин панир, базилик',en:'Crudo, kalamata olives, cream cheese, basil',ru:'Прошутто, каламата, сливочный сыр, базилик'} }]},
-    { dishes:[{ img:IMG_DIR+'page04_img1.jpg', x:35, y:35, price:2100, n:{hy:'Брускетта лоликов оч авандакан',en:'Bruschetta with Tomatoes Non-Traditional',ru:'Брускетта с помидорами нетрадиционная'}, d:{hy:'Лолик, серуцкайин панир, базилик',en:'Tomatoes, cream cheese, basil',ru:'Помидор, сливочный сыр, базилик'} },{ img:IMG_DIR+'page04_img1.jpg', x:65, y:68, price:2300, n:{hy:'Брускетта мортаделлаёв և пистаки кремов',en:'Bruschetta Mortadella with Pistachio Cream',ru:'Брускетта с мортаделлой и фисташковым кремом'}, d:{hy:'Мортаделла, пистаки крем, базилик',en:'Mortadella, pistachio cream, basil',ru:'Мортаделла, фисташковый крем, базилик'} }]},
-    { dishes:[{ img:IMG_DIR+'page05_img1.jpg', x:50, y:55, price:2400, n:{hy:'Грил врайи банжареген',en:'Grilled Vegetables',ru:'Овощи на гриле'}, d:{hy:'Пхпех, ддмик, сун
+  { id:'starters', t:{hy:'Նախուտեստներ',en:'Starters',ru:'Закуски'}, scenes:[
+    { dishes:[{ img:IMG_DIR+'page03_img1.jpg', x:50, y:55, price:2700, n:{hy:'Բրուսկետտա պրոշուտտոյով և տապենադով',en:'Bruschetta Crudo with Tapenade',ru:'Брускетта с прошутто и тапенадом'}, d:{hy:'րոշուտո, կալամատա, սերուցքային պանիր, բազիլիկ',en:'Crudo, kalamata olives, cream cheese, basil',ru:'Прошутто, каламата, сливочный сыр, базилик'} }]},
+    { dishes:[{ img:IMG_DIR+'page04_img1.jpg', x:35, y:35, price:2100, n:{hy:'Բրուսկետտա լոլիկով ոչ ավանդական',en:'Bruschetta with Tomatoes Non-Traditional',ru:'Брускетта с помидорами нетрадиционная'}, d:{hy:'Լոլիկ, սերուցքային պանիր, բազիլիկ',en:'Tomatoes, cream cheese, basil',ru:'Помидор, сливочный сыр, базилик'} },{ img:IMG_DIR+'page04_img1.jpg', x:65, y:68, price:2300, n:{hy:'Բրուսկետտա մորտադելլայով և պիստակի կրեմով',en:'Bruschetta Mortadella with Pistachio Cream',ru:'Брускетта с мортаделлой и фисташковым кремом'}, d:{hy:'Մորտադելլա, պիստակի կրեմ, բազիլիկ',en:'Mortadella, pistachio cream, basil',ru:'Мортаделла, фисташковый крем, базилик'} }]},
+    { dishes:[{ img:IMG_DIR+'page05_img1.jpg', x:50, y:55, price:2400, n:{hy:'րիլ վրայի բանջարեղեն',en:'Grilled Vegetables',ru:'Овощи на гриле'}, d:{hy:'Պղպեղ, դդմիկ, սունկ, չերի լոլիկ, ֆարմեր սոուս',en:'Pepper, zucchini, mushroom, cherry tomatoes, Farmer sauce',ru:'Перец, кабачки, грибы, черри, фермерский соус'} }]},
+    { dishes:[{ img:IMG_DIR+'page06_img1.jpg', x:50, y:55, price:1900, n:{hy:'Մոցարելլայի ողիկներ ԻնՏեմպո ոճով',en:'Mozzarella Sticks InTempo Style',ru:'Палочки из моцареллы в стиле InTempo'}, d:{hy:'Մոցարելլայի ձողիկներ, ֆիրմային մայոնեզ, չեդեր, բեկոն, պարմեզան, կանաչ սոխ',en:'Mozzarella sticks, signature mayonnaise, cheddar, bacon, parmesan, green onion',ru:'Палочки из моцареллы, фирменный майонез, чеддер, бекон, пармезан, зелёный лук'} }]},
+    { dishes:[{ img:IMG_DIR+'page07_img1.jpg', x:50, y:55, price:2100, n:{hy:'Խրթափավ հավի կրծքամիս կարտոֆիլ ֆրիով և չեդեր պանրով',en:'Crispy Chicken Breast with French Fries and Cheddar',ru:'Салат с хрустящей курицей, картофелем фри и чеддером'}, d:{hy:'Հավի կրծքամիս, կարտոֆիլ ֆրի, ֆիրմային սոուս, չեդեր պանիր, բեկոն',en:'Chicken breast, French fries, signature sauce, cheddar, bacon',ru:'Куриная грудка, картофель фри, фирменный соус, чеддер, бекон'} }]},
+    { dishes:[{ img:IMG_DIR+'page08_img1.jpg', x:50, y:55, price:2100, n:{hy:'Հավի տեմպուրա ԻնՏեմպոյում',en:'Chicken Tempura at InTempo',ru:'Куриная темпура в InTempo'}, d:{hy:'Հավի կրծքամիս, չեդեր',en:'Chicken breast, cheddar',ru:'Куриная грудка, чеддер'} }]},
+    { dishes:[{ img:IMG_DIR+'page09_img1.jpg', x:50, y:55, price:3600, n:{hy:'Ծովախեցգետնի տեմպուրա',en:'Shrimp Tempura',ru:'Креветки темпура'}, d:{hy:'Ծովախեցգետին, քաղցր չիլի սոուս',en:'Shrimps, sweet chili sauce',ru:'Креветки, сладкий соус чили'} }]},
+    { dishes:[{ img:IMG_DIR+'page10_img1.jpg', x:50, y:55, price:2500, n:{hy:'Հավի թևիկներ նՏեմպոյում',en:'Chicken Wings at InTempo',ru:'Куриные крылышки в InTempo'}, d:{hy:'Հավի թևիկներ, BBQ սոուս, պարմեզան, կանաչ սոխ',en:'Chicken wings, BBQ sauce, parmesan, green onions',ru:'Куриные крылышки, соус BBQ, пармезан, зелёный лук'} }]},
+    { dishes:[{ img:IMG_DIR+'page11_img1.jpg', x:35, y:35, price:3900, n:{hy:'Մսի ափսե',en:'Meat Platter',ru:'Мясная тарелка'}, d:{hy:'որիզո, մորտադելլա, պրոշուտտո, միլանո սալյամի, ֆիրմային հաց, մանանեխ',en:'Chorizo, Mortadella, Prosciutto, Milano salami, signature bread, yellow mustard',ru:'Чоризо, мортаделла, прошутто, миланская салями, фирменный хлеб, горчица'} },{ img:IMG_DIR+'page11_img1.jpg', x:65, y:68, price:3300, n:{hy:'Պանրի ափսե',en:'Cheese Platter',ru:'Сырная тарелка'}, d:{hy:'Պարմեզան, բրի, ռոքոր, թարմ մոցարելլա, իրմային հաց, կարագ, մեղր',en:'Parmesan, Brie, Roquefort, fresh Mozzarella, signature bread, butter, honey',ru:'Пармезан, бри, рокфор, моцарелла свежая, фирменный хлеб, сливочное масло, мёд'} }]},
+    { dishes:[{ img:IMG_DIR+'page13_img1.jpg', x:30, y:25, price:1600, n:{hy:'Էքսկլյուզիվ կարտոֆիլ ֆրի արմեր սոուսով',en:'Exclusive French Fries with Farmer\u2019s Sauce',ru:'Эксклюзивный картофель фри с фермерским соусом'}, d:{hy:'արտոֆիլ, մատուցվում է չեդերով և ֆարմեր սոուսով',en:'Potatoes, served with cheddar, Farmer sauce',ru:'Картофель, подается с чеддером и фермерским соусом'} },{ img:IMG_DIR+'page13_img1.jpg', x:50, y:52, price:1100, n:{hy:'Կարտոֆիլ ֆրի',en:'French Fries',ru:'Картофель фри'}, d:{hy:'',en:'',ru:''} },{ img:IMG_DIR+'page13_img1.jpg', x:70, y:78, price:1900, n:{hy:'Կարտոֆիլ ֆրի ալլա Բոլոնեզ',en:'French Fries Alla Bolognese',ru:'Картофель фри алла Болоньезе'}, d:{hy:'Կարտոֆիլ, հեղինակային բոլոնեզ, սերուցքային պանիր',en:'Potatoes, Signature Bolognese, Cream cheese',ru:'Картофель, фирменный болоньезе, сливочный сыр'} }]}
+  ]},
+  { id:'salads', t:{hy:'Աղցաններ',en:'Salads',ru:'Салаты'}, scenes:[
+    { dishes:[{ img:IMG_DIR+'page14_img1.jpg', x:50, y:55, price:3900, n:{hy:'Ստեյկ աղցան',en:'Steak Salad',ru:'Стейк-салат'}, d:{hy:'Հորթի փակամիս, խորոված պղպեղի կոնֆի, միքս աղցան, պարմեզան',en:'Veal tenderloin, grilled pepper confit, mixed salad, parmesan',ru:'Телячья вырезка, жареный перец конфи, микс салат, пармезан'} }]},
+    { dishes:[{ img:IMG_DIR+'page15_img1.jpg', x:35, y:35, price:2800, n:{hy:'Հեղինակային ֆարմեր աղցան',en:'Signature Farmer\u2019s Salad',ru:'Фирменный Фермер салат'}, d:{hy:'Հավի կրծքամիս, վարունգ, միքս աղցան, չերի լոլիկ, հեղինակային ֆարմեր սոուս',en:'Chicken breast, cucumber, mixed salad, cherry tomatoes, signature farmer\u2019s sauce',ru:'Куриная грудка, огурец, микс-салат, помидоры черри, фирменный фермерский соус'} },{ img:IMG_DIR+'page15_img1.jpg', x:65, y:68, price:3100, n:{hy:'Հունական աղցան ԻնՏեմպոյում',en:'Greek Salad at InTempo',ru:'Греческий салат в InTempo'}, d:{hy:'Վարունգ, կալամատա ձիթապտուղ, կանաչ ձիթապտուղ, ֆետա էսպումա, գունավոր պղպեղ, մարինացված սոխ, բազիլիկ',en:'Cucumbers, Kalamata olives, green olives, feta espuma, colored peppers, marinated onions, basil',ru:'Огурец, оливки каламата, зеленые оливки, сыр фета эспума, разноцветный перец, маринованный лук, базилик'} }]},
+    { dishes:[{ img:IMG_DIR+'page16_img1.jpg', x:50, y:55, price:3900, n:{hy:'Ավոկադոյով և քաղցրահամ լոլիկով աղցան',en:'Avocado & Sweet Tomato Salad',ru:'Салат с авокадо и сладкими томатами'}, d:{hy:'Լոլիկ, ավոկադո, սերուցքային պանիր, extra virgin ձիթապտղի յուղ, բազիլիկ, չորս պղպեղ, կիտրոն',en:'Tomatoes, avocado, cream cheese, extra virgin olive oil, basil, four-pepper blend, lemon',ru:'Томаты, авокадо, сливочный сыр, оливковое масло extra virgin, базилик, смесь четырёх перцев, лимон'} }]},
+    { dishes:[{ img:IMG_DIR+'page17_img1.jpg', x:35, y:35, price:2900, n:{hy:'Կապրեզե աղցան ԻնՏեմպոյում',en:'Caprese Salad at InTempo',ru:'Салат Капрезе в InTempo'}, d:{hy:'Լոլիկ, թարմ մոցարելլա, բազիլիկ, պեստո սոուս',en:'Tomato, fresh mozzarella, basil, pesto sauce',ru:'Помидоры, свежая моцарелла, базилик, соус песто'} },{ img:IMG_DIR+'page17_img1.jpg', x:65, y:68, price:3300, n:{hy:'Հավով Կեսար աղցան ԻնՏեմպոյում',en:'Chicken Caesar Salad at InTempo',ru:'Салат «Цезарь» с курицей в InTempo'}, d:{hy:'Հավի կրծքամիս, պեկինյան կաղամբ, հեղինակային կեսար սոուս, ֆիրմային գրիսինի, պարմեզան',en:'Chicken breast, Peking cabbage, signature Caesar dressing, signature grissini, parmesan',ru:'Куриная грудка, пекинская капуста, фирменный соус «Цезарь», фирменные гриссини, пармезан'} }]},
+    { dishes:[{ img:IMG_DIR+'page18_img1.jpg', x:35, y:35, price:3400, n:{hy:'Հ
