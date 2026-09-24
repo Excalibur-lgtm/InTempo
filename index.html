@@ -109,19 +109,19 @@
   @keyframes kb{from{transform:scale(1);}to{transform:scale(1.09);}}
   .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(to top, rgba(43,38,34,.78) 0%, rgba(43,38,34,.38) 38%, rgba(43,38,34,.18) 65%, rgba(43,38,34,.42) 100%),radial-gradient(90% 70% at 50% 45%, rgba(43,38,34,.16), rgba(43,38,34,.6) 100%);}
   .hero-in{position:relative;z-index:2;padding:0 6vw;max-width:980px;color:var(--paper);}
-  .hero h1{font-size:clamp(34px,6.4vw,80px);color:var(--paper);text-shadow:0 2px 24px rgba(43,38,34,.55);}
+  .hero h1{font-size:clamp(34px,6.4vw,80px);color:var(--paper);text-shadow:0 4px 12px rgba(0,0,0,.4);}
   .hero h1 em{color:#e9d7b4;}
   .line{display:block;overflow:hidden;}
   .line-in{display:block;transform:translateY(110%);transition:transform 1.1s cubic-bezier(.22,1,.36,1);}
   .hero.ready .line-in{transform:translateY(0);}
   .hero.ready .line:nth-child(2) .line-in{transition-delay:.18s;}
-  .hero-sub{margin:24px auto 0;max-width:560px;color:rgba(241,239,233,.95);font-size:17px;line-height:1.7;opacity:0;transition:opacity 1s ease .6s;text-shadow:0 1px 10px rgba(43,38,34,.5);}
+  .hero-sub{margin:24px auto 0;max-width:560px;color:rgba(241,239,233,.95);font-size:17px;line-height:1.7;opacity:0;transition:opacity 1s ease .6s;text-shadow:0 1px 10px rgba(43,38,34,.5);font-weight:300;letter-spacing:0.05em;}
   .hero.ready .hero-sub{opacity:1;}
   .hero-actions{margin-top:32px;display:flex;gap:14px;flex-wrap:wrap;justify-content:center;opacity:0;transition:opacity 1s ease .8s;}
   .hero.ready .hero-actions{opacity:1;}
   .btn{display:inline-flex;align-items:center;gap:10px;padding:16px 30px;border-radius:999px;font-weight:600;font-size:15px;border:0;cursor:pointer;transition:.25s;box-shadow:0 3px 10px rgba(43,38,34,.2);}
   .btn-primary{background:var(--menupage);color:var(--ink);}
-  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(43,38,34,.35);}
+  .btn-primary:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 10px 20px rgba(216,67,42,.3);}
   .btn-ghost{border:1.5px solid rgba(241,239,233,.7);background:none;color:var(--paper);box-shadow:0 2px 8px rgba(43,38,34,.18);}
   .btn-ghost:hover{background:rgba(241,239,233,.14);}
   .scroll-cue{position:absolute;z-index:2;bottom:26px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;color:rgba(241,239,233,.8);font-size:11px;letter-spacing:.3em;text-transform:uppercase;}
@@ -146,9 +146,25 @@
 
   .menu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:clamp(20px,2.6vw,36px);}
 
-  .menu-item{position:relative;background:rgba(241,239,233,.5);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.5);border-radius:6px;overflow:hidden;opacity:0;transform:translateY(50px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1),box-shadow .4s ease,border-color .4s ease,background .4s ease;}
+  /* IMPROVED CARD DESIGN */
+  .menu-item{
+    position:relative;
+    background:rgba(241,239,233,.6);
+    backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+    border:1px solid rgba(255,255,255,.6);
+    border-radius:12px;
+    overflow:hidden;
+    opacity:0;transform:translateY(50px);
+    transition:all .4s cubic-bezier(.25,.8,.25,1);
+    box-shadow: 0 4px 6px rgba(0,0,0,.05);
+  }
   .menu-item.in{opacity:1;transform:translateY(0);}
-  .menu-item:hover{box-shadow:0 22px 50px rgba(43,38,34,.22),0 0 32px rgba(232,176,75,.28);border-color:rgba(216,67,42,.35);background:rgba(241,239,233,.68);}
+  .menu-item:hover{
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(43,38,34,.15), 0 0 0 1px rgba(216,67,42,.1);
+    border-color: rgba(216,67,42,.3);
+    background:rgba(241,239,233,.85);
+  }
 
   .scene{position:relative;aspect-ratio:3/4;overflow:hidden;background:var(--menupage);}
   .scene-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .6s ease,transform .9s cubic-bezier(.22,1,.36,1);}
@@ -179,15 +195,28 @@
   .hotspot::after{content:"";position:absolute;inset:0;margin:auto;width:42px;height:42px;border-radius:50%;border:2px solid rgba(232,176,75,.65);animation:ping 1.8s ease-out .9s infinite;}
   @keyframes ping{0%{transform:scale(.5);opacity:1;}100%{transform:scale(1.6);opacity:0;}}
   .hotspot:hover .hs-dot,.hotspot.open .hs-dot{transform:scale(1.3);}
+  
+  /* IMPROVED TOOLTIP DESIGN */
   .hs-pop{position:absolute;width:236px;bottom:calc(100% + 12px);left:50%;margin-left:-118px;opacity:0;visibility:hidden;transition:opacity .25s ease,visibility .25s;pointer-events:none;z-index:6;}
-  .hs-pop-in{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:13px 15px 11px;box-shadow:0 18px 44px rgba(43,38,34,.4);transform:translateY(8px) scale(.94);transform-origin:bottom center;transition:transform .3s cubic-bezier(.22,1,.36,1);text-align:left;}
-  .hs-pop::after{content:"";position:absolute;top:100%;left:50%;margin-left:-7px;border:7px solid transparent;border-top-color:var(--paper);filter:drop-shadow(0 2px 2px rgba(43,38,34,.15));}
+  .hs-pop-in{
+    background:#fff;
+    border:none;
+    border-radius:10px;
+    padding:16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,.15);
+    font-family: var(--sans);
+    transform:translateY(8px) scale(.94);
+    transform-origin:bottom center;
+    transition:transform .3s cubic-bezier(.22,1,.36,1);
+    text-align:left;
+  }
+  .hs-pop::after{content:"";position:absolute;top:100%;left:50%;margin-left:-7px;border:7px solid transparent;border-top-color:#fff;filter:drop-shadow(0 2px 2px rgba(43,38,34,.15));}
   .hotspot.open .hs-pop{opacity:1;visibility:visible;pointer-events:auto;}
   .hotspot.open .hs-pop-in{transform:translateY(0) scale(1);}
   .hotspot.pop-below .hs-pop{bottom:auto;top:calc(100% + 12px);}
   .hotspot.pop-below .hs-pop-in{transform-origin:top center;transform:translateY(-8px) scale(.94);}
   .hotspot.pop-below.open .hs-pop-in{transform:translateY(0) scale(1);}
-  .hotspot.pop-below .hs-pop::after{top:auto;bottom:100%;border-top-color:transparent;border-bottom-color:var(--paper);}
+  .hotspot.pop-below .hs-pop::after{top:auto;bottom:100%;border-top-color:transparent;border-bottom-color:#fff;}
   .hotspot.pop-left .hs-pop{left:-17px;margin-left:0;}
   .hotspot.pop-left .hs-pop-in{transform-origin:bottom left;}
   .hotspot.pop-left .hs-pop::after{left:24px;margin-left:0;}
@@ -196,10 +225,10 @@
   .hotspot.pop-right .hs-pop::after{left:auto;right:24px;margin-left:0;}
   .hotspot.pop-below.pop-left .hs-pop-in{transform-origin:top left;}
   .hotspot.pop-below.pop-right .hs-pop-in{transform-origin:top right;}
-  .hs-name{font-family:var(--serif);font-weight:600;font-size:15px;line-height:1.3;color:var(--ink);margin-bottom:6px;}
-  .hs-desc{font-size:12px;line-height:1.55;color:var(--muted);margin-bottom:9px;}
+  .hs-name{font-family:var(--serif);font-weight:600;font-size:16px;line-height:1.3;color:#1a1a1a;margin-bottom:8px;}
+  .hs-desc{font-size:13px;line-height:1.5;color:#666;margin-bottom:12px;}
   .hs-meta{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--line);padding-top:8px;}
-  .hs-price{font-family:var(--serif);font-style:italic;font-weight:700;font-size:19px;color:var(--red);}
+  .hs-price{font-family:var(--serif);font-style:italic;font-weight:700;font-size:18px;color:var(--red);}
   .hs-kicker{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);}
 
   .scene-modal{position:fixed;inset:0;z-index:95;background:rgba(43,38,34,.93);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:18px;}
@@ -241,16 +270,15 @@
   .branch-modal-inner p{color:rgba(241,239,233,.75);font-size:16px;margin-bottom:40px;}
   .branch-choices{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
   
-  /* ИСПРАВЛЕННЫЙ СТИЛЬ КНОПОК ВЫБОРА ФИЛИАЛА */
   .branch-choice{
-    background: var(--menupage); /* Теплый фон для контраста */
+    background: var(--menupage);
     border: 2px solid rgba(43,38,34,0.2);
     border-radius: 20px;
     padding: 40px 24px;
     cursor: pointer;
     transition: all 0.3s ease;
     text-align: center;
-    color: var(--ink); /* Темный текст для идеальной читаемости */
+    color: var(--ink);
   }
   .branch-choice:hover{
     background: var(--bg);
@@ -263,13 +291,13 @@
   .branch-choice .name{
     font-family:var(--serif);
     font-size:26px;
-    color:var(--ink); /* Темный цвет названия */
+    color:var(--ink);
     margin-bottom:8px;
     font-weight:600;
   }
   .branch-choice .desc{
     font-size:14px;
-    color:var(--muted); /* Темный приглушенный цвет описания */
+    color:var(--muted);
   }
 
   .compact-mode .menu-grid{display:flex !important;flex-direction:column !important;gap:12px !important;max-width:800px !important;margin:0 auto !important;}
@@ -415,7 +443,7 @@ const MENU = [
   { id:'starters', t:{hy:'Նախուտեստներ',en:'Starters',ru:'Закуски'}, scenes:[
     { dishes:[{ img:IMG_DIR+'page03_img1.jpg', x:50, y:55, price:2700, n:{hy:'Բրուսկետտա պրոշուտտոյով և տապենադով',en:'Bruschetta Crudo with Tapenade',ru:'Брускетта с прошутто и тапенадом'}, d:{hy:'Պրոշուտո, կալամատա, սերուցքային պանիր, բազիլիկ',en:'Crudo, kalamata olives, cream cheese, basil',ru:'Прошутто, каламата, сливочный сыр, базилик'} }]},
     { dishes:[{ img:IMG_DIR+'page04_img1.jpg', x:35, y:35, price:2100, n:{hy:'Բրուսկետտա լոլիկով ոչ ավանդական',en:'Bruschetta with Tomatoes Non-Traditional',ru:'Брускетта с помидорами нетрадиционная'}, d:{hy:'Լոլիկ, սերուցքային պանիր, բազիլիկ',en:'Tomatoes, cream cheese, basil',ru:'Помидор, сливочный сыр, базилик'} },{ img:IMG_DIR+'page04_img1.jpg', x:65, y:68, price:2300, n:{hy:'Բրուսկետտա մորտադելլայով և պիստակի կրեմով',en:'Bruschetta Mortadella with Pistachio Cream',ru:'Брускетта с мортаделлой и фисташковым кремом'}, d:{hy:'Մորտադելլա, պիստակի կրեմ, բազիլիկ',en:'Mortadella, pistachio cream, basil',ru:'Мортаделла, фисташковый крем, базилик'} }]},
-    { dishes:[{ img:IMG_DIR+'page05_img1.jpg', x:50, y:55, price:2400, n:{hy:'Գրիլ վրայի բանջարեղեն',en:'Grilled Vegetables',ru:'Овощи на гриле'}, d:{hy:'Պղպեղ, դդմիկ, սունկ, չերի լոլիկ, ֆարմեր սոուս',en:'Pepper, zucchini, mushroom, cherry tomatoes, Farmer sauce',ru:'Перец, кабачки, грибы, черри, фермерский соус'} }]},
+    { dishes:[{ img:IMG_DIR+'page05_img1.jpg', x:50, y:55, price:2400, n:{hy:'Գրիլ վրայի բանջարեղեն',en:'Grilled Vegetables',ru:'Овощи на гриле'}, d:{hy:'Պղպեղ, դդմիկ, սունկ, չերի ոլիկ, արմեր սոուս',en:'Pepper, zucchini, mushroom, cherry tomatoes, Farmer sauce',ru:'Перец, кабачки, грибы, черри, фермерский соус'} }]},
     { dishes:[{ img:IMG_DIR+'page06_img1.jpg', x:50, y:55, price:1900, n:{hy:'Մոցարելլայի ձողիկներ ԻնՏեմպո ոճով',en:'Mozzarella Sticks InTempo Style',ru:'Палочки из моцареллы в стиле InTempo'}, d:{hy:'Մոցարելլայի ձողիկներ, ֆիրմային մայոնեզ, չեդեր, բեկոն, պարմեզան, կանաչ սոխ',en:'Mozzarella sticks, signature mayonnaise, cheddar, bacon, parmesan, green onion',ru:'Палочки из моцареллы, фирменный майонез, чеддер, бекон, пармезан, зелёный лук'} }]},
     { dishes:[{ img:IMG_DIR+'page07_img1.jpg', x:50, y:55, price:2100, n:{hy:'Խրթափավ հավի կրծքամիս կարտոֆիլ ֆրիով և չեդեր պանրով',en:'Crispy Chicken Breast with French Fries and Cheddar',ru:'Салат с хрустящей курицей, картофелем фри и чеддером'}, d:{hy:'Հավի կրծքամիս, կարտոֆիլ ֆրի, ֆիրմային սոուս, չեդեր պանիր, բեկոն',en:'Chicken breast, French fries, signature sauce, cheddar, bacon',ru:'Куриная грудка, картофель фри, фирменный соус, чеддер, бекон'} }]},
     { dishes:[{ img:IMG_DIR+'page08_img1.jpg', x:50, y:55, price:2100, n:{hy:'Հավի տեմպուրա ԻնՏեմպոյում',en:'Chicken Tempura at InTempo',ru:'Куриная темпура в InTempo'}, d:{hy:'Հավի կրծքամիս, չեդեր',en:'Chicken breast, cheddar',ru:'Куриная грудка, чеддер'} }]},
@@ -447,7 +475,7 @@ const MENU = [
     { dishes:[{ img:IMG_DIR+'page27_img1.jpg', x:50, y:55, price:3900, n:{hy:'Յուրօրինակ բուրգեր շեֆից',en:'Unique burger by the chef',ru:'Уникальный бургер от шеф-повара'}, d:{hy:'Տավարի միս, թարթար սոուս, մարինացված վարունգ, լոլիկ, չեդեր, բեկոն, ձևավոր հազար, հալապենյո, սպիտակ մարինացված սոխ, մատուցվում է էքսկլյուզիվ կարտոֆիլ ֆրիով',en:'Beef, tartar sauce, marinated cucumber, tomato, cheddar, bacon, lettuce, jalapeno, white marinated onion, served with exclusive french fries',ru:'Говядина, соус тартар, маринованный огурец, помидор, чеддер, бекон, салат, халапеньо, белый маринованный лук, подается с эксклюзивным картофелем фри'} }]},
     { dishes:[{ img:IMG_DIR+'page28_img2.jpg', x:50, y:55, price:3900, n:{hy:'Ինտեմպո բուրգեր',en:'Intempo burger',ru:'Интемпо бургер'}, d:{hy:'Տավարի միս, չեդեր, բեկոն, լոլիկ, մարինացված վարունգ, կոկտեյլ սոուս, մատուցվում է էքսկլյուզիվ կարտոֆիլ ֆրիով',en:'Beef, cheddar, bacon, tomato, pickled cucumber, cocktail sauce served with exclusive french fries',ru:'Говядина, чеддер, бекон, помидор, маринованный огурец, коктейльный соус, подается с эксклюзивным картофелем фри'} }]},
     { dishes:[{ img:IMG_DIR+'page29_img1.jpg', x:35, y:35, price:3500, n:{hy:'Քլաբ սենդվիչ',en:'Club sandwich',ru:'Клаб-сэндвич'}, d:{hy:'Տոստի հաց, հավի կրծքամիս, բեկոն, չեդեր, լոլիկ, մարինացված վարունգ, այսբերգ կաղամբ, մատուցվում է կարտոֆիլ ֆրիով',en:'Toast bread, chicken breast, bacon, cheddar, tomato, pickled cucumber, iceberg lettuce, served with French fries',ru:'Тостовый хлеб, куриная грудка, бекон, чеддер, помидор, маринованный огурец, айсберг салат, подается с картофелем фри'} },{ img:IMG_DIR+'page29_img1.jpg', x:65, y:68, price:3100, n:{hy:'Ֆիրմային խրթխրթան քլաբ սենդվիչ',en:'Signature crispy club sandwich',ru:'Фирменный хрустящий клаб-сэндвич'}, d:{hy:'Խրթխրթան հավի կրծքամիս, թարմ վարունգ, լոլիկ, բեկոն, չեդեր, Ֆարմեր սոուս, էքսկլյուզիվ կարտոֆիլ ֆրիով',en:'Crispy chicken breast, fresh cucumber, tomato, bacon, cheddar, farmer\'s sauce, exclusive french fries',ru:'Хрустящая куриная грудка, свежий огурец, помидор, бекон, чеддер, фермерский соус, эксклюзивный картофель фри'} }]},
-    { dishes:[{ img:IMG_DIR+'page30_img1.jpg', x:35, y:35, price:2700, n:{hy:'Նեապոլիտանական սենդվիչ մորտադելլայով',en:'Neapolitan sandwich with mortadella',ru:'Неаполитанский сэндвич с мортаделлой'}, d:{hy:'Մորտադելլա, պիստակի կրեմ սոուս, բազիլիկ',en:'Mortadella, pistachio cream, basil',ru:'Мортаделла, фисташковый крем, базилик'} },{ img:IMG_DIR+'page30_img1.jpg', x:65, y:68, price:2800, n:{hy:'Նեապոլիտանական սենդվիչ պրոշուտոյով և պարմեզանով',en:'Neapolitan sandwich with prosciutto & parmesan',ru:'Неаполитанский сэндвич с прошутто и пармезаном'}, d:{hy:'Պրոշուտո, սերուցքային պանիր, չերի լոլիկ, ռուկոլա, ֆիրմային կեսար սոուս, պարմեզան',en:'Prosciutto, cream cheese, cherry tomatoes, arugula, signature caesar sauce, parmesan',ru:'Прошутто, сливочный сыр, помидоры черри, руккола, фирменный соус «Цезарь», пармезан'} }]},
+    { dishes:[{ img:IMG_DIR+'page30_img1.jpg', x:35, y:35, price:2700, n:{hy:'Նեապոլիտանական սենդվիչ մորտադելլայով',en:'Neapolitan sandwich with mortadella',ru:'Неаполитанский сэндвич с мортаделлой'}, d:{hy:'Մորտադելլա, պիստակի կրեմ սոուս, բազիլիկ',en:'Mortadella, pistachio cream, basil',ru:'Мортаделла, фисташковый крем, базилик'} },{ img:IMG_DIR+'page30_img1.jpg', x:65, y:68, price:2800, n:{hy:'Նեապոլիտանական սենդվիչ պրոշուտոյով և պարմեզանով',en:'Neapolitan sandwich with prosciutto & parmesan',ru:'Неаполитанский сэндвич с прошутто и пармезаном'}, d:{hy:'Պրոշուտո, սերուցքային պանիր, չերի ոլիկ, ռուկոլա, ֆիրմային կեսար սոուս, պարմեզան',en:'Prosciutto, cream cheese, cherry tomatoes, arugula, signature caesar sauce, parmesan',ru:'Прошутто, сливочный сыр, помидоры черри, руккола, фирменный соус «Цезарь», пармезан'} }]},
     { dishes:[{ img:IMG_DIR+'page31_img1.jpg', x:35, y:35, price:1800, n:{hy:'Կրուասան մորտադելլայով',en:'Croissant with mortadella',ru:'Круассан с мортаделлой'}, d:{hy:'Կրուասան, սերուցքային պանիր, ռուկոլա, մորտադելլա, պարմեզան, էքստրա վիրջին ձիթայուղ, բազիլիկ, պիստակ',en:'Croissant, cream cheese, arugula, mortadella, parmesan, extra virgin olive oil, basil, pistachios',ru:'Круассан, сливочный сыр, руккола, мортаделла, пармезан, оливковое масло extra virgin, базилик, фисташки'} },{ img:IMG_DIR+'page31_img1.jpg', x:65, y:68, price:1900, n:{hy:'Կրուասան պրոշուտոյով',en:'Croissant with prosciutto',ru:'Круассан с прошутто'}, d:{hy:'Կրուասան, ֆիրմային սոուս, ռուկոլա, պրոշուտո, պարմեզան, էքստրա վիրջին ձիթայուղ, բազիլիկ',en:'Croissant, signature sauce, arugula, prosciutto, parmesan, extra virgin olive oil, basil',ru:'Круассан, фирменный соус, руккола, прошутто, пармезан, оливковое масло extra virgin, базилик'} }]}
   ]},
   { id:'piadina', t:{hy:'Պիադինա',en:'Piadina',ru:'Пьядина'}, scenes:[
@@ -488,7 +516,7 @@ const MENU = [
       { dishes:[ { img1: IMG_DIR+'page14_img12.jpg', img2: IMG_DIR+'page15_img12.jpg', price: 3800, n:{hy:'Ալ Պոլո',en:'Al Polo',ru:'Ал Поло'}, d:{hy:'Մոցարելլա, տապակած հավի կրծքամիս, չորացրած տոմատներ չերրի, սպիտակ սերուցքային սոուս',en:'Mozzarella, fried chicken breast, dried cherry tomatoes, white cream sauce',ru:'Моцарелла, жареная куриная грудка, вяленые томаты черри, белый сливочный соус'} } ] },
       { dishes:[ { img1: IMG_DIR+'page16_img12.jpg', img2: IMG_DIR+'page17_img12.jpg', price: 3800, n:{hy:'Լացիո',en:'Lazio',ru:'Лацио'}, d:{hy:'Մոցարելլա, բեկոն, սերուցքային պանիր, պարմեզան, բազիլիկ',en:'Mozzarella, bacon, cream cheese, parmesan, basil',ru:'Моцарелла, бекон, сливочный сыр, пармезан, базилик'} } ] },
       { dishes:[ { img1: IMG_DIR+'page18_img12.jpg', img2: IMG_DIR+'page19_img12.jpg', price: 3700, n:{hy:'Մորտադելլայով և Ֆիստակներով',en:'With Mortadella and Pistachios',ru:'С Мортаделлой и Фисташками'}, d:{hy:'Սերուցքային սոուս, մորտադելլա, ֆիստակ և բազիլիկ',en:'Cream sauce, mortadella, pistachios and basil',ru:'Сливочный соус, мортаделла, фисташки и базилик'} } ] },
-      { dishes:[ { img1: IMG_DIR+'page20_img12.jpg', img2: IMG_DIR+'page21_img12.jpg', price: 3900, n:{hy:'Չորս Պանիր',en:'Quattro Formaggi',ru:'Четыре Сыра'}, d:{hy:'Մոցարելլա, պարմեզան, բլու չիզ և ռոքոր, օրեգանո և բազիլիկ',en:'Mozzarella, parmesan, blue cheese and roquefort, oregano and basil',ru:'Моцарелла, пармезан, блю чиз и рокфор, орегано и базилик'} } ] },
+      { dishes:[ { img1: IMG_DIR+'page20_img12.jpg', img2: IMG_DIR+'page21_img12.jpg', price: 3900, n:{hy:'Չորս անիր',en:'Quattro Formaggi',ru:'Четыре Сыра'}, d:{hy:'Մոցարելլա, պարմեզան, բլու չիզ և ռոքոր, օրեգանո և բազիլիկ',en:'Mozzarella, parmesan, blue cheese and roquefort, oregano and basil',ru:'Моцарелла, пармезан, блю чиз и рокфор, орегано и базилик'} } ] },
       { dishes:[ { img1: IMG_DIR+'page22_img12.jpg', img2: IMG_DIR+'page23_img12.jpg', price: 3900, n:{hy:'Տրյուֆելով',en:'With Truffle',ru:'С трюфелем'}, d:{hy:'Մոցարելլա, սնկեր, սպիտակ և սև տրյուֆել, սերուցքային սոուս և բազիլիկ',en:'Mozzarella, mushrooms, white and black truffle, cream sauce and basil',ru:'Моцарелла, грибы, белый и чёрный трюфель, сливочный соус и базилик'} } ] },
       { dishes:[ { img1: IMG_DIR+'page24_img12.jpg', img2: IMG_DIR+'page25_img22.jpg', price: 3900, n:{hy:'Տոսկանա',en:'Toscana',ru:'Тоскана'}, d:{hy:'Մոցարելլա, մասկարպոնե, բեկոն, տոմատային սոուս, օրեգանո և բազիլիկ',en:'Mozzarella, mascarpone, bacon, tomato sauce, oregano and basil',ru:'Моцарелла, маскарпоне, бекон, томатный соус, орегано и базилик'} } ] },
       { dishes:[ { img1: IMG_DIR+'page26_img12.jpg', img2: IMG_DIR+'page27_img12.jpg', price: 6800, n:{hy:'ԻնՏեմպո',en:'InTempo',ru:'InTempo'}, d:{hy:'Պրոշուտտո, բուրատա, մոցարելլա, բազիլիկ',en:'Prosciutto, burrata, mozzarella, basil',ru:'Прошутто, буррата, моцарелла, базилик'} } ] },
@@ -667,7 +695,7 @@ const MENU = [
   {id:'bar_hot_coffee',t:{hy:'Տաք սուրճ',en:'Hot Coffee',ru:'Горячий кофе'},scenes:[
     {dishes:[
       {img:IMG_DIR+'page35_img123.jpg',x:35,y:35,price:1800,n:{hy:'Սուր ուտելլա',en:'Coffee Nutella',ru:'Кофе Нутелла'},d:{hy:'Էսպրեսո, նուտելլա, կաթ, հարած սերուցք',en:'Espresso, nutella, milk, whipped cream',ru:'Эспрессо, нутелла, молоко, взбитые сливки'}},
-      {img:IMG_DIR+'page35_img123.jpg',x:65,y:65,price:1800,n:{hy:'Սուր Վենա',en:'Coffee Vienna',ru:'Кофе Вена'},d:{hy:'Էսպրեսո, կաթ, հարած սերուցք',en:'Espresso, milk, whipped cream',ru:'Эспрессо, молоко, взбитые сливки'}}
+      {img:IMG_DIR+'page35_img123.jpg',x:65,y:65,price:1800,n:{hy:'Սուր ենա',en:'Coffee Vienna',ru:'Кофе Вена'},d:{hy:'Էսպրեսո, կաթ, հարած սերուցք',en:'Espresso, milk, whipped cream',ru:'Эспрессо, молоко, взбитые сливки'}}
     ]},
     {dishes:[
       {img:IMG_DIR+'page36_img123.jpg',x:35,y:35,price:2300,n:{hy:'Լատտե ընկույզով',en:'Latte with Hazelnut',ru:'Латте с фундуком'},d:{hy:'Էսպրեսո, կաթ, ընկույզի սիրոպ',en:'Espresso, milk, hazelnut syrup',ru:'Эспрессо, молоко, фундучный сироп'}},
@@ -701,7 +729,7 @@ const MENU = [
     ]},
     {dishes:[
       {img:IMG_DIR+'page42_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սուր րապպե',en:'Cafe Frappe',ru:'Кафе фраппе'},d:{hy:'Էսպրեսո, կաթ, շաքար, սերուցք, հարած սերուցք, սուրճի փոշի',en:'Espresso, milk, sugar, cream, whipped cream, coffee powder',ru:'Эспрессо, молоко, сахар, сливки, взбитые сливки, кофейный порошок'}},
-      {img:IMG_DIR+'page42_img123.jpg',x:65,y:65,price:1800,n:{hy:'Նուտելլա Ֆրապպե',en:'Nutella Frappe',ru:'Нутелла фраппе'},d:{hy:'Էսպրեսո, կաթ, Նուտելլա, սերուցք, հարած սերուցք, սուրճի փոշի',en:'Espresso, milk, Nutella, cream, whipped cream, coffee powder',ru:'Эспрессо, молоко, Нутелла, сливки, взбитые сливки, кофейный порошок'}}
+      {img:IMG_DIR+'page42_img123.jpg',x:65,y:65,price:1800,n:{hy:'Նուտելլա Ֆրապպե',en:'Nutella Frappe',ru:'Нутелла фраппе'},d:{hy:'Էսպրեսո, կաթ, Նուտելլա, սերուցք, հարած սերուցք, սուրճի ոշի',en:'Espresso, milk, Nutella, cream, whipped cream, coffee powder',ru:'Эспрессо, молоко, Нутелла, сливки, взбитые сливки, кофейный порошок'}}
     ]}
   ]},
   {id:'bar_shakes',t:{hy:'Էսպրեսո-շեյքեր',en:'Espresso Shakes',ru:'Эспрессо-шейки'},scenes:[
