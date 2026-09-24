@@ -530,42 +530,46 @@ const MENU = [
       { dishes:[ { img1: IMG_DIR+'page42_img12.jpg', img2: IMG_DIR+'page43_img12.jpg', price: 1900, n:{hy:'Պինսերե Ձիթապտուղ և Պանչետտա',en:'Pinsere Olives and Pancetta Mix',ru:'Пинсере Смесь оливок и Панчетты'}, d:{hy:'Մոցարելլա, տոմատային սոուս, բեկոն, ձիթապտուղ կալամատա, կանաչ ձիթապտուղ, սերուցքային պանիր',en:'Mozzarella, tomato sauce, bacon, kalamata olives, green olives, cream cheese',ru:'Моцарелла, томатный соус, бекон, оливки каламата, зелёные оливки, сливочный сыр'} } ] }
     ]
   },
-  // БАР МЕНЮ (ИСПРАВЛЕНО И ОБНОВЛЕНО ПОЗИЦИИ)
   {id:'bar_special',t:{hy:'Հատուկ կոկտեյլներ',en:'Special Cocktails',ru:'Специальные алкогольные коктейли'},scenes:[
     {dishes:[
-      // ИЗМЕНЕНО: Карточка 1, Позиция 1 и 2 поменяны местами
-      // Было: 1. Черная смородина, 2. Голубой кокос
+      // ИЗМЕНЕНО: Позиция 1 и 2 поменяны местами
+      // Было: 1. Черная смородина (x35), 2. Голубой кокос (x65)
       // Стало: 1. Голубой кокос, 2. Черная смородина
       
       {img:IMG_DIR+'page03_img123.jpg',x:65,y:65,price:3100,n:{hy:'Կապույտ կոկոսային կղզի',en:'Blue Coconut Island',ru:'Голубой кокосовый остров'},d:{hy:'Ջին, օղի, Blue Curacao, կոկոսի սիրոպ, լայմի հյութ, սերուցք',en:'Gin, vodka, Blue Curacao, coconut syrup, lime juice, cream',ru:'Джин, водка, ликер Блю Кюрасао, кокосовый сироп, сок лайма, сливки'}},
+      
       {img:IMG_DIR+'page03_img123.jpg',x:35,y:35,price:3100,n:{hy:'Սև հաղարջ ջին',en:'Black Currant Gin',ru:'Чёрная смородина джин'},d:{hy:'Ջին, օղի, Creme de Cacao, արոսենու սիրոպ, կիտրոնի հյութ, սև հաղարջ',en:'Gin, vodka, Creme de Cacao, elderberry syrup, lemon juice, black currant',ru:'Джин, водка, ликер Creme de Cacao, сироп бузины, лимонный сок, черная смородина'}}
     ]},
     {dishes:[
       {img:IMG_DIR+'page04_img123.jpg',x:25,y:25,price:2900,n:{hy:'Մարակույա կոկտեյլ',en:'Passion Fruit Cocktail',ru:'Коктейль Маракуйя'},d:{hy:'Ջին, Amaretto, մարակույայի պյուրե, մանգոյի սիրոպ, վի սպիտակուց, կիտրոնի հյութ, Maraschino կեռաս, Butterfly թեյ',en:'Gin, Amaretto, passion fruit puree, mango syrup, egg white, lemon juice, Maraschino cherry, Butterfly tea',ru:'Джин, ликёр Амаретто, пюре из маракуйи, манговый сироп, яичный белок, свежевыжатый лимонный сок, вишня Мараскино, чай Баттерфляй'}},
       {img:IMG_DIR+'page04_img123.jpg',x:50,y:50,price:2700,n:{hy:'Մասրենու միքս',en:'Sea Buckthorn Mix',ru:'Облепиховый микс'},d:{hy:'Մասրենու պյուրե, կիտրոնի հյութ, ջին, նարնջի հյութ, ձվի սպիտակուց',en:'Sea buckthorn puree, lemon juice, gin, orange juice, egg white',ru:'Пюре облепихи, лимонный сок, джин, апельсиновый сок, яичный белок'}},
-      {img:IMG_DIR+'page04_img123.jpg',x:75,y:75,price:2900,n:{hy:'Լավանդայի կոկտեյլ',en:'Lavender Cocktail',ru:'Лавандовый коктейль'},d:{hy:'Ջին, ավանդայի սիրոպ, կիտրոնի հյութ, կապույտ թեյ, parfait amour, ձվի սպիտակուց',en:'Gin, lavender syrup, lemon juice, blue tea, parfait amour, egg white',ru:'Джин, лавандовый сироп, лимонный сок, чай из синего анчана, ликёр parfait amour, яичный белок'}}
+      {img:IMG_DIR+'page04_img123.jpg',x:75,y:75,price:2900,n:{hy:'Լավանդայի կոկտեյլ',en:'Lavender Cocktail',ru:'Лавандовый коктейль'},d:{hy:'Ջին, լավանդայի սիրոպ, կիտրոնի հյութ, կապույտ թեյ, parfait amour, ձվի սպիտակուց',en:'Gin, lavender syrup, lemon juice, blue tea, parfait amour, egg white',ru:'Джин, лавандовый сироп, лимонный сок, чай из синего анчана, ликёр parfait amour, яичный белок'}}
     ]},
     {dishes:[
       {img:IMG_DIR+'page05_img123.jpg',x:35,y:35,price:3600,n:{hy:'Ուայթ Սանսեթ',en:'White Sunset',ru:'Уайт Сансет'},d:{hy:'Անանասի հյութ, սերուցք, սպիտակ ռոմ, նարինջ, ընկույզ',en:'Pineapple juice, cream, white rum, orange, walnut',ru:'Ананасовый сок, сливки, белый ром, апельсин, грецкий орех'}},
       {img:IMG_DIR+'page05_img123.jpg',x:65,y:65,price:2900,n:{hy:'Մանուշակագույն Մարգարիտա',en:'Purple Margarita',ru:'Фиолетовая Маргарита'},d:{hy:'Տեկիլա, Parfait Amour, լայմի հյութ, լավանդայի սիրոպ',en:'Tequila, Parfait Amour, lime juice, lavender syrup',ru:'Текила, ликер Парфе Амур, сок лайма, лавандовый сироп'}}
     ]}
   ]},
+
   {id:'bar_mojitos',t:{hy:'Անալկոհոլային մոխիտո',en:'Non-Alcoholic Mojitos',ru:'Безалкогольные мохито'},scenes:[
     {dishes:[
-      // ИЗМЕНЕНО: Карточка 1, Позиция 1 и 2 поменяны местами
-      // Было: 1. Черника/Лаванда, 2. Киви/Базилик
+      // ИЗМЕНЕНО: Позиция 1 и 2 поменяны местами
+      // Было: 1. Черника/Лаванда (x35), 2. Киви/Базилик (x65)
       // Стало: 1. Киви/Базилик, 2. Черника/Лаванда
       
       {img:IMG_DIR+'page06_img123.jpg',x:65,y:65,price:2700,n:{hy:'Կիվի-բազիլիկ Մոխիտո',en:'Kiwi Basil Mojito',ru:'Киви-базиликовый мохито'},d:{hy:'Կիվի պյուրե, լայմ, շագանակագույն շաքար, բազիլիկ, գազավորված ջուր',en:'Kiwi puree, lime, brown sugar, basil, sparkling water',ru:'Киви пюре, лайм, коричневый сахар, базилик, газированная вода'}},
+      
       {img:IMG_DIR+'page06_img123.jpg',x:35,y:35,price:2800,n:{hy:'Մոխիտո սև հաղարջով և լավանդայով',en:'Blueberry Lavender Mojito',ru:'Мохито с черникой, лавандой и базиликом'},d:{hy:'Սև հաղարջի պյուրե, լավանդայի սիրոպ, լայմ, շագանակագույն շաքար, բազիլիկ',en:'Blueberry puree, lavender syrup, lime, brown sugar, basil',ru:'Пюре из черники, лавандовый сироп, лайм, коричневый сахар, базилик'}}
     ]},
     {dishes:[
-      // ИЗМЕНЕНО: Карточка 2, Позиция 1 и 2 поменяны местами
-      // Было: 1. Ежевика/Базилик, 2. Ананас/Базилик, 3. Манго/Маракуйя
-      // Стало: 1. Ананас/Базилик, 2. Ежевика/Базилик, 3. Манго/Маракуйя
+      // ИЗМЕНЕНО: Позиция 1 и 2 поменяны местами
+      // Было: 1. Ежевика/Базилик (x25), 2. Ананас/Базилик (x50)...
+      // Стало: 1. Ананас/Базилик, 2. Ежевика/Базилик...
       
       {img:IMG_DIR+'page07_img123.jpg',x:50,y:50,price:2700,n:{hy:'Անանաս-բազիլիկ Մոխիտո',en:'Pineapple Basil Mojito',ru:'Ананасово-базиликовый мохито'},d:{hy:'Անանասի պյուրե, լայմ, շագանակագույն շաքար, բազիլիկ, գազավորված ջուր',en:'Pineapple puree, lime, brown sugar, basil, sparkling water',ru:'Ананасовое пюре, лайм, коричневый сахар, базилик, газированная вода'}},
+      
       {img:IMG_DIR+'page07_img123.jpg',x:25,y:25,price:2100,n:{hy:'Ելակ-բազիլիկ Մոխիտո',en:'Blackberry Basil Mojito',ru:'Ежевично-базиликовый мохито'},d:{hy:'Ելակ, լայմ, շագանակագույն շաքար, շաքարի սիրոպ, բազիլիկ',en:'Blackberry, lime, brown sugar, sugar syrup, basil',ru:'Ежевика, лайм, коричневый сахар, сахарный сироп, базилик'}},
+      
       {img:IMG_DIR+'page07_img123.jpg',x:75,y:75,price:2700,n:{hy:'Մոխիտո մանգոյով և մարակույայով',en:'Mango Passionfruit Mojito',ru:'Мохито с манго, маракуйей и базиликом'},d:{hy:'Մարակույայի պյուրե, մանգոյի սիրոպ, լայմ, շագանակագույն շաքար, բազիլիկ',en:'Passionfruit puree, mango syrup, lime, brown sugar, basil',ru:'Пюре маракуйи, сироп манго, лайм, коричневый сахар, базилик'}}
     ]},
     {dishes:[
@@ -574,37 +578,30 @@ const MENU = [
       {img:IMG_DIR+'page08_img123.jpg',x:75,y:75,price:2500,n:{hy:'Մոխիտո մորի և բազիլիկով',en:'Raspberry Basil Mojito',ru:'Мохито с малиной и базиликом'},d:{hy:'Մորի, լայմ, շագանակագույն շաքար, շաքարի սիրոպ, բազիլիկ',en:'Raspberry, lime, brown sugar, sugar syrup, basil',ru:'Малина, лайм, коричневый сахар, сахарный сироп, базилик'}}
     ]}
   ]},
-  {id:'bar_nonalc',t:{hy:'Անալկոհոլային կոկտեյլներ',en:'Non-Alcoholic Cocktails',ru:'Безалкогольные коктейли'},scenes:[
-    {dishes:[
-      {img:IMG_DIR+'page09_img123.jpg',x:35,y:35,price:2700,n:{hy:'Վարդի և բազիլիկի միքս',en:'Rose Basil Mix',ru:'Микс из розы и базилика'},d:{hy:'Վարդի սիրոպ, կիտրոնի հյութ, լիմոն, լայմ, տոնիկ, բազիլիկ, Butterfly թեյ',en:'Rose syrup, lemon juice, lemon, lime, tonic, basil, Butterfly tea',ru:'Сироп розы, лимонный сок, лимон, лайм, тоник, базилик, чай Баттерфляй'}},
-      {img:IMG_DIR+'page09_img123.jpg',x:65,y:65,price:2900,n:{hy:'Լավանդայի միքս',en:'Lavender Mix',ru:'Лавандовый микс'},d:{hy:'Լավանդայի սիրոպ, կիտրոնի հյութ, լիմոն, լայմ, տոնիկ, Butterfly թեյ',en:'Lavender syrup, lemon juice, lemon, lime, tonic, Butterfly tea',ru:'Сироп лаванды, лимонный сок, лимон, лайм, тоник, чай Баттерфляй'}}
-    ]},
-    {dishes:[
-      {img:IMG_DIR+'page10_img123.jpg',x:25,y:25,price:2200,n:{hy:'Թարմացնող Ալոե',en:'Refreshing Aloe',ru:'Освежающий алоэ'},d:{hy:'Ալոեի հյութ, լայմ, անանուխ, վարդի թերթիկներ',en:'Aloe juice, lime, mint, rose petals',ru:'Сок алоэ, лайм, мята, лепестки роз'}},
-      {img:IMG_DIR+'page10_img123.jpg',x:50,y:50,price:2100,n:{hy:'Բորա Բորա',en:'Bora Bora',ru:'Бора Бора'},d:{hy:'Անանասի հյութ, գրենադին սիրոպ, լայմի թարմ հյութ, սփրայթ',en:'Pineapple juice, grenadine syrup, fresh lime juice, sprite',ru:'Ананасовый сок, сироп гренадин, свежевыжатый сок лайма, спрайт'}},
-      {img:IMG_DIR+'page10_img123.jpg',x:75,y:75,price:2100,n:{hy:'Մանգո միքս',en:'Mango Mix',ru:'Манго микс'},d:{hy:'Մանգոյի սիրոպ, մանգոյի հյութ, անանուխ, տոնիկ',en:'Mango syrup, mango juice, mint, tonic',ru:'Сироп манго, сок манго, мята, тоник'}}
-    ]}
-  ]},
+
   {id:'bar_classic',t:{hy:'Դասական կոկտեյլներ',en:'Classic Cocktails',ru:'Классические коктейли'},scenes:[
     {dishes:[
       {img:IMG_DIR+'page11_img123.jpg',x:35,y:35,price:3300,n:{hy:'Aperol Spritz',en:'Aperol Spritz',ru:'Aperol Spritz'},d:{hy:'Ապերոլ, պրոսեկո, գազավորված ջուր',en:'Aperol, prosecco, sparkling water',ru:'Апероль, просекко, газированная вода'}},
       {img:IMG_DIR+'page11_img123.jpg',x:65,y:65,price:3300,n:{hy:'Negroni',en:'Negroni',ru:'Negroni'},d:{hy:'Ջին, Մարտինի Ռոսսո, Կամպարի',en:'Gin, Martini Rosso, Campari',ru:'Джин, Мартини Россо, Кампари'}}
     ]},
     {dishes:[
-      // ИЗМЕНЕНО: Карточка 2, Позиция 1 и 2 поменяны местами
-      // Было: 1. Cherry Spritz, 2. Gin Tonic
+      // ИЗМЕНЕНО: Позиция 1 и 2 поменяны местами
+      // Было: 1. Cherry Spritz (x35), 2. Gin Tonic (x65)
       // Стало: 1. Gin Tonic, 2. Cherry Spritz
       
       {img:IMG_DIR+'page12_img123.jpg',x:65,y:65,price:2900,n:{hy:'Gin Tonic',en:'Gin Tonic',ru:'Gin Tonic'},d:{hy:'Ջին Beefeater, տոնիկ, վարունգ, վարդի երթիկներ',en:'Beefeater gin, tonic, cucumber, rose petals',ru:'Джин Beefeater, тоник, огурец, лепестки розы'}},
+      
       {img:IMG_DIR+'page12_img123.jpg',x:35,y:35,price:3000,n:{hy:'Cherry Spritz',en:'Cherry Spritz',ru:'Cherry Spritz'},d:{hy:'Բալի սիրոպ, բալի բրենդի, Մարտինի Ռոսսո, տոնիկ, լայմ, նարինջ',en:'Cherry syrup, cherry brandy, Martini Rosso, tonic, lime, orange',ru:'Вишнёвый сироп, вишнёвый бренди, Мартини Россо, тоник, лайм, апельсин'}}
     ]},
     {dishes:[
-      // ИЗМЕНЕНО: Карточка 3, Позиция 2 и 3 поменяны местами
-      // Было: 1. Pina Colada, 2. Basil & Strawberry Margarita, 3. Moscow Mule
+      // ИЗМЕНЕНО: Позиция 2 и 3 поменяны местами
+      // Было: 1. Pina Colada, 2. Basil & Strawberry Margarita (x50), 3. Moscow Mule (x75)
       // Стало: 1. Pina Colada, 2. Moscow Mule, 3. Basil & Strawberry Margarita
       
       {img:IMG_DIR+'page13_img123.jpg',x:25,y:25,price:3300,n:{hy:'Pina Colada',en:'Pina Colada',ru:'Pina Colada'},d:{hy:'Անանասի հյութ, սպիտակ ռոմ, սերուցք, կոկոսի պյուրե',en:'Pineapple juice, white rum, cream, coconut puree',ru:'Сок ананаса, белый ром, сливки, кокосовое пюре'}},
+      
       {img:IMG_DIR+'page13_img123.jpg',x:75,y:75,price:3300,n:{hy:'Moscow Mule',en:'Moscow Mule',ru:'Moscow Mule'},d:{hy:'Օղի, կոճապղպեղի գարեջուր, լայմ',en:'Vodka, ginger beer, lime',ru:'Водка, имбирное пиво, лайм'}},
+      
       {img:IMG_DIR+'page13_img123.jpg',x:50,y:50,price:3500,n:{hy:'Basil & Strawberry Margarita',en:'Basil & Strawberry Margarita',ru:'Basil & Strawberry Margarita'},d:{hy:'Տեկիլա, ելակի պյուրե, լայմ, նարնջի լիկյոր, բազիլիկ',en:'Tequila, strawberry puree, lime, orange liqueur, basil',ru:'Текила, клубничное пюре, лайм, апельсиновый ликер, базилик'}}
     ]},
     {dishes:[
@@ -616,23 +613,28 @@ const MENU = [
       {img:IMG_DIR+'page15_img123.jpg',x:65,y:65,price:2800,n:{hy:'Espresso Martini',en:'Espresso Martini',ru:'Espresso Martini'},d:{hy:'Էսպրեսո, օղի, Kahlua լիկյոր, շոկոլադի սիրոպ',en:'Espresso, vodka, Kahlua liqueur, chocolate syrup',ru:'Эспрессо, водка, ликёр Kahlua, шоколадный сироп'}}
     ]}
   ]},
+
   {id:'bar_fruit_tea',t:{hy:'Մրգային թեյեր',en:'Fruit Teas',ru:'Фруктовые чаи'},scenes:[
     {dishes:[
-      // ИЗМЕНЕНО: Карточка 1, Позиция 1 и 2 поменяны местами
-      // Было: 1. Ягоды/Мед, 2. Облепиха, 3. Цитрус
-      // Стало: 1. Облепиха, 2. Ягоды/Мед, 3. Цитрус
+      // ИЗМЕНЕНО: Позиция 1 и 2 поменяны местами
+      // Было: 1. Ягоды/Мед (x25), 2. Облепиха (x50)...
+      // Стало: 1. Облепиха, 2. Ягоды/Мед...
       
       {img:IMG_DIR+'page19_img123.jpg',x:50,y:50,price:1400,n:{hy:'Մասրենու թեյ',en:'Sea Buckthorn Tea',ru:'Облепиховый чай'},d:{hy:'Մասրենու պյուրե, դարչինի փայտիկ, նարինջ',en:'Sea buckthorn puree, cinnamon stick, orange',ru:'Облепиховое пюре, палочка корицы, апельсин'}},
+      
       {img:IMG_DIR+'page19_img123.jpg',x:25,y:25,price:1600,n:{hy:'Հատապտուղներ և մեղր',en:'Berries & Honey',ru:'Ягоды и мёд'},d:{hy:'Մորի, ելակ, սև հաղարջ, ելակ',en:'Raspberry, blackberry, blackcurrant, strawberry',ru:'Малина, ежевика, черная смородина, клубника'}},
+      
       {img:IMG_DIR+'page19_img123.jpg',x:75,y:75,price:1400,n:{hy:'Ցիտրուսային թեյ',en:'Citrus Tea',ru:'Цитрусовый чай'},d:{hy:'Նարինջ, լիմոն, լայմ, գրեյպֆրուտ',en:'Orange, lemon, lime, grapefruit',ru:'Апельсин, лимон, лайм, грейпфрут'}}
     ]},
     {dishes:[
-      // ИЗМЕНЕНО: Карточка 2, Позиция 1 и 2 поменяны местами
-      // Было: 1. Малина/Мята, 2. Клубника/Манго, 3. Имбирь/Мед
-      // Стало: 1. Клубника/Манго, 2. Малина/Мята, 3. Имбирь/Мед
+      // ИЗМЕНЕНО: Позиция 1 и 2 поменяны местами
+      // Было: 1. Малина/Мята (x25), 2. Клубника/Манго (x50)...
+      // Стало: 1. Клубника/Манго, 2. Малина/Мята...
       
       {img:IMG_DIR+'page20_img123.jpg',x:50,y:50,price:1400,n:{hy:'Ելակ-մանգո թեյ',en:'Strawberry Mango Tea',ru:'Чай с клубникой и манго'},d:{hy:'Ելակի պյուրե, մանգոյի հյութ, կիտրոնի հյութ, ելակ',en:'Strawberry puree, mango juice, lemon juice, strawberry',ru:'Пюре из клубники, манговый сок, лимонный сок, клубника'}},
+      
       {img:IMG_DIR+'page20_img123.jpg',x:25,y:25,price:1600,n:{hy:'Մորի-անանուխ թեյ',en:'Raspberry Mint Tea',ru:'Чай с малиной и мятой'},d:{hy:'Մորի, անանուխ, մեղր, դարչինի փայտիկ',en:'Raspberries, mint, honey, cinnamon stick',ru:'Малина, мята, мёд, палочка корицы'}},
+      
       {img:IMG_DIR+'page20_img123.jpg',x:75,y:75,price:1400,n:{hy:'Կոճապղպեղ-մեղր թեյ',en:'Ginger Honey Tea',ru:'Чай с имбирём и мёдом'},d:{hy:'Կոճապղպեղ, մեղր, լայմ, լիմոն, թիմուսով թեյ',en:'Ginger, honey, lime, lemon, thyme tea',ru:'Имбирь, мёд, лайм, лимон, чай с тимьяном'}}
     ]},
     {dishes:[
