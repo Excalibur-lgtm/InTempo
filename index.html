@@ -188,6 +188,7 @@
 
   .pizza-info-overlay {position: absolute;bottom: 0;left: 0;right: 0;padding: 32px 20px 20px 20px;background: linear-gradient(to top, rgba(20, 15, 10, 0.98) 0%, rgba(43, 38, 34, 0.95) 50%, rgba(43, 38, 34, 0.7) 80%, transparent 100%);color: #fff;z-index: 2;}
 
+  /* --- СТАНДАРТНЫЕ ТОЧКИ (для еды) --- */
   .hotspot{position:absolute;transform:translate(-50%,-50%);width:44px;height:44px;border:0;background:none;cursor:pointer;z-index:4;-webkit-tap-highlight-color:transparent;}
   .hotspot:focus-visible{outline:2px solid var(--red);outline-offset:2px;border-radius:50%;}
   .hs-dot{position:absolute;inset:0;margin:auto;width:18px;height:18px;border-radius:50%;background:var(--accent-grad);box-shadow:0 0 0 5px rgba(241,239,233,.95),0 8px 22px rgba(216,67,42,.55);transition:transform .25s cubic-bezier(.34,1.56,.64,1);}
@@ -196,7 +197,7 @@
   @keyframes ping{0%{transform:scale(.5);opacity:1;}100%{transform:scale(1.6);opacity:0;}}
   .hotspot:hover .hs-dot,.hotspot.open .hs-dot{transform:scale(1.3);}
   
-  /* IMPROVED TOOLTIP DESIGN */
+  /* --- СТАНДАРТНЫЙ ТУЛТИП (для еды) --- */
   .hs-pop{position:absolute;width:236px;bottom:calc(100% + 12px);left:50%;margin-left:-118px;opacity:0;visibility:hidden;transition:opacity .25s ease,visibility .25s;pointer-events:none;z-index:6;}
   .hs-pop-in{
     background:#fff;
@@ -230,6 +231,127 @@
   .hs-meta{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--line);padding-top:8px;}
   .hs-price{font-family:var(--serif);font-style:italic;font-weight:700;font-size:18px;color:var(--red);}
   .hs-kicker{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);}
+
+  /* =========================================================
+     СПЕЦИФИКАЦИЯ ДЛЯ БАР-МЕНЮ (BAR MENU ONLY)
+     ========================================================= */
+  
+  /* 1. Стилизуем точки в баре как "Soft Minimal" */
+  [id^="cat-bar"] .hotspot {
+    width: 40px; 
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Убираем старую точку и заменяем на новую, более изящную */
+  [id^="cat-bar"] .hs-dot {
+    width: 10px; 
+    height: 10px;
+    background: rgba(255, 255, 255, 0.9); /* Почти белая */
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.6), inset 0 0 2px rgba(0,0,0,0.1);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    z-index: 2;
+  }
+
+  /* Отключаем пульсацию (кольца) только в баре */
+  [id^="cat-bar"] .hotspot::before, 
+  [id^="cat-bar"] .hotspot::after {
+    content: none !important;
+    animation: none !important;
+  }
+
+  /* Эффект при НАВЕДЕНИИ в баре */
+  [id^="cat-bar"] .hotspot:hover .hs-dot,
+  [id^="cat-bar"] .hotspot.open .hs-dot {
+    width: 14px; 
+    height: 14px;
+    background: var(--red); /* Цвет бренда */
+    box-shadow: 0 0 20px rgba(216, 67, 42, 0.8), 0 0 40px rgba(216, 67, 42, 0.4);
+    transform: scale(1.1);
+  }
+
+  /* Декоративное кольцо появляется только при ховере в баре */
+  [id^="cat-bar"] .hotspot::after {
+    content: "";
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid rgba(216, 67, 42, 0.3);
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.4s ease;
+    pointer-events: none;
+  }
+  [id^="cat-bar"] .hotspot:hover::after,
+  [id^="cat-bar"] .hotspot.open::after {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* 2. Стилизуем тултип в баре как Glassmorphism */
+  [id^="cat-bar"] .hs-pop-in {
+    background: rgba(255, 255, 255, 0.15); /* Полупрозрачный белый */
+    backdrop-filter: blur(12px);           /* Размытие фона за текстом */
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    padding: 14px 18px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+    color: #fff; /* Белый текст для контраста на темном фоне */
+    min-width: 200px;
+  }
+
+  [id^="cat-bar"] .hs-name {
+    color: #fff;
+    font-family: var(--serif);
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  }
+
+  [id^="cat-bar"] .hs-desc {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 13px;
+    line-height: 1.4;
+    margin-bottom: 10px;
+  }
+
+  [id^="cat-bar"] .hs-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 8px;
+  }
+
+  [id^="cat-bar"] .hs-price {
+    color: #ffd700; /* Золотой цвет цены */
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 700;
+    font-size: 18px;
+  }
+
+  [id^="cat-bar"] .hs-kicker {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* Меняем цвет стрелочки под стекло */
+  [id^="cat-bar"] .hs-pop::after {
+    border-top-color: rgba(255, 255, 255, 0.15);
+    filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+  }
+  [id^="cat-bar"].pop-below .hs-pop::after {
+    border-bottom-color: rgba(255, 255, 255, 0.15);
+  }
+
 
   .scene-modal{position:fixed;inset:0;z-index:95;background:rgba(43,38,34,.93);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:18px;}
   .scene-modal.open{display:flex;}
@@ -410,7 +532,7 @@
 
 <section class="contact-sec" id="contact">
   <h2 class="rv" data-i18n-html="c_h2">Զանգեք — և սեղանը <em>սպասում է</em></h2>
-  <p class="contact-sub rv" data-i18n="c_sub">Մեկ հպում — և մնացածը մենք кհогаем.</p>
+  <p class="contact-sub rv" data-i18n="c_sub">Մեկ հպում — և մնացածը մենք кхoгаем.</p>
   <div class="phones rv"><a class="phone" href="tel:+37477966933">+374 77 966 933</a></div>
   <p class="addr rv"><span data-i18n="c_addr1">Երևան, Հյուսիսային 10/3</span><br><span data-i18n="c_addr2">Ամեն օր 09:00 – 24:00</span></p>
   <div class="delivery-note rv">
@@ -686,7 +808,7 @@ const MENU = [
       {img:IMG_DIR+'page30_img123.jpg',x:50,y:50,price:'1800 / 4800',n:{hy:'Վարդագույն Լիչի Լիմոնադ',en:'Pink Lychee Lemonade',ru:'Розовый личи лимонад'},d:{hy:'Վարդագույն լիչիի սիրոպ, մորի, կիտրոնի հյութ, անանուխ, գազավորված ջուր',en:'Pink lychee syrup, raspberry, lemon juice, mint, sparkling water',ru:'Сироп розового личи, малина, лимонный сок, мята, газированная вода'}}
     ]},
     {dishes:[
-      {img:IMG_DIR+'page31_img123.jpg',x:35,y:35,price:'1800 / 4800',n:{hy:'Դեղձ-Խնձոր իմոնադ',en:'Peach Apple Lemonade',ru:'Персиково-яблочный лимонад'},d:{hy:'Պերսիկի պյուրե, խնձորի հյութ, խնձոր, անանուխ, գազավորված ջուր',en:'Peach puree, apple juice, apple, mint, sparkling water',ru:'Персиковое пюре, яблочный сок, яблоко, мята, газированная вода'}},
+      {img:IMG_DIR+'page31_img123.jpg',x:35,y:35,price:'1800 / 4800',n:{hy:'Դեղ-Խնձոր իմոնադ',en:'Peach Apple Lemonade',ru:'Персиково-яблочный лимонад'},d:{hy:'Պերսիկի պյուրե, խնձորի հյութ, խնձոր, անանուխ, գազավորված ջուր',en:'Peach puree, apple juice, apple, mint, sparkling water',ru:'Персиковое пюре, яблочный сок, яблоко, мята, газированная вода'}},
       {img:IMG_DIR+'page31_img123.jpg',x:65,y:65,price:'1800 / 4800',n:{hy:'Ելակի Լիմոնադ',en:'Strawberry Lemonade',ru:'Клубничный лимонад'},d:{hy:'Ելակի պյուրե, կիտրոնի հյութ, ելակ, անանուխ, գազավորված ջուր',en:'Strawberry puree, lemon juice, strawberry, mint, sparkling water',ru:'Пюре клубники, лимонный сок, клубника, мята, газированная вода'}}
     ]},
     {dishes:[
@@ -744,7 +866,7 @@ const MENU = [
       {img:IMG_DIR+'page44_img123.jpg',x:65,y:65,price:1900,n:{hy:'Կոկտեյլ աղի կարամելով և դարչինով',en:'Cocktail Salted Caramel Cinnamon',ru:'Коктейль с солёной карамелью и корицей'},d:{hy:'Աղի կարամելի սիրոպ, էսպրեսո, վանիլային պաղպաղակ, կաթ, դարչին',en:'Salted caramel syrup, espresso, vanilla ice cream, milk, cinnamon',ru:'Сироп солёной карамели, эспрессо, ванильное мороженое, молоко, корица'}}
     ]},
     {dishes:[
-      {img:IMG_DIR+'page45_img123.jpg',x:35,y:35,price:2300,n:{hy:'Կաթնային կոկտեյլ Սուր Մոկկա',en:'Milkshake Coffee Mocha',ru:'Молочный коктейль Кофе Мокка'},d:{hy:'Էսպրեսո, կաթ, մուգ շոկոլադե պաղպաղակ',en:'Espresso, milk, dark chocolate ice cream',ru:'Эспрессо, молоко, тёмное шоколадное мороженое'}},
+      {img:IMG_DIR+'page45_img123.jpg',x:35,y:35,price:2300,n:{hy:'Կաթնային կոկտեյլ Սուր ոկկա',en:'Milkshake Coffee Mocha',ru:'Молочный коктейль Кофе Мокка'},d:{hy:'Էսպրեսո, կաթ, մուգ շոկոլադե պաղպաղակ',en:'Espresso, milk, dark chocolate ice cream',ru:'Эспрессо, молоко, тёмное шоколадное мороженое'}},
       {img:IMG_DIR+'page45_img123.jpg',x:65,y:65,price:2300,n:{hy:'Կաթնային կոկտեյլ Մոկկա',en:'Milkshake Mocha',ru:'Молочный коктейль Мокка'},d:{hy:'Էսպրեսո, կաթ, վանիլային պաղպաղակ',en:'Espresso, milk, vanilla ice cream',ru:'Эспрессо, молоко, ванильное мороженое'}}
     ]}
   ]},
@@ -799,7 +921,7 @@ const MENU = [
 ];
 
 const DICT = {
-  hy:{title:'In Tempo — Իտալական խոհանոց · Երևան',nav_menu:'Մենյու',nav_contact:'Կապ',hero_l1:'Իտալական խոհանոց',hero_l2:'Երևանի <em>Կենտրոնում</em>',hero_sub:'Բաց է 09:00–24:00',cue:'թերթեք',tap:'Սեղմեք կետերին',mb_call:'Զանգել',mb_book:'Ամրագրել',c_h2:'Զանգեք — և սեղանը <em>սպասում է</em>',c_sub:'Մեկ հպում — և մնացածը մենք кհогаем.',c_addr1:'Երևան, Հյուսիսային 10/3',c_addr2:'Ամեն օր 09:00 – 24:00',c_delivery_title:'Առաքում',c_delivery:'Առաքում պատվիրելու համար կարող եք օգտվել <b>Glovo</b>, <b>Yandex</b>, <b>Buy.am</b> հավելվածներից կամ զանգահարել <b>8811</b> Buy.am',f_line:'© 2026 In Tempo · Իտալական խոհանոց',branch_title:'Ընտրեք մասնաճյուղ',branch_subtitle:'Մենյուն տարբերվում է ըստ մասնաճյուղի',branch_big:'Մեծ մասնաճյուղ',branch_small:'Փոքր մասնաճյուղ',tab_main:'Հիմնական մենյու',tab_bar:'Բար',tab_pizza:'Պիցցա',coming_soon:'Բաժինը շուտով կլինի'},
+  hy:{title:'In Tempo — Իտալական խոհանոց · Երևան',nav_menu:'Մենյու',nav_contact:'Կապ',hero_l1:'Իտալական խոհանոց',hero_l2:'Երևանի <em>Կենտրոնում</em>',hero_sub:'Բաց է 09:00–24:00',cue:'թերթեք',tap:'Սեղմեք կետերին',mb_call:'Զանգել',mb_book:'Ամրագրել',c_h2:'Զանգեք — և սեղանը <em>սպասում է</em>',c_sub:'Մեկ հպում — և մնացածը մենք кхoгаем.',c_addr1:'Երևան, Հյուսիսային 10/3',c_addr2:'Ամեն օր 09:00 – 24:00',c_delivery_title:'Առաքում',c_delivery:'Առաքում պատվիրելու համար կարող եք օգտվել <b>Glovo</b>, <b>Yandex</b>, <b>Buy.am</b> հավելվածներից կամ զանգահարել <b>8811</b> Buy.am',f_line:'© 2026 In Tempo · Իտալական խոհանոց',branch_title:'Ընտրեք մասնաճյուղ',branch_subtitle:'Մենյուն տարբերվում է ըստ մասնաճյուղի',branch_big:'Մեծ մասնաճյուղ',branch_small:'Փոքր մասնաճյուղ',tab_main:'Հիմնական մենյու',tab_bar:'Բար',tab_pizza:'Պիցցա',coming_soon:'Բաժինը շուտով կլինի'},
   en:{title:'In Tempo — Italian Kitchen · Yerevan',nav_menu:'Menu',nav_contact:'Contact',hero_l1:'Italian kitchen',hero_l2:'in the heart of <em>Yerevan</em>',hero_sub:'Open 09:00 – 24:00',cue:'scroll',tap:'Tap the points',mb_call:'Call',mb_book:'Book a table',c_h2:'Call us — and the table <em>is waiting</em>',c_sub:'One tap — and we will take care of the rest.',c_addr1:'Yerevan, 10/3 Northern Avenue',c_addr2:'Daily 09:00 – 24:00',c_delivery_title:'Delivery',c_delivery:'To order delivery, you can use the <b>Glovo</b>, <b>Yandex</b> or <b>Buy.am</b> apps, or call <b>8811</b> Buy.am',f_line:'© 2026 In Tempo · Italian kitchen',branch_title:'Choose branch',branch_subtitle:'Menu differs by branch',branch_big:'Big branch',branch_small:'Small branch',tab_main:'Main Menu',tab_bar:'Bar',tab_pizza:'Pizza',coming_soon:'Section coming soon'},
   ru:{title:'In Tempo — Итальянская кухня · Ереван',nav_menu:'Меню',nav_contact:'Контакты',hero_l1:'Итальянская кухня',hero_l2:'в центре <em>Еревана</em>',hero_sub:'Открыта с 09:00 до 24:00',cue:'листайте',tap:'Нажимайте на точки',mb_call:'Позвонить',mb_book:'Забронировать',c_h2:'Позвоните — и столик <em>ждёт</em>',c_sub:'Одно касание — и мы позаботимся обо всём остальном.',c_addr1:'Ереван, Северный проспект 10/3',c_addr2:'Ежедневно 09:00 – 24:00',c_delivery_title:'Доставка',c_delivery:'Заказать доставку можно через приложения <b>Glovo</b>, <b>Yandex</b>, <b>Buy.am</b> или позвонить <b>8811</b> Buy.am',f_line:'© 2026 In Tempo · Итальянская кухня',branch_title:'Выберите филиал',branch_subtitle:'Меню отличается в зависимости от филиала',branch_big:'Большой филиал',branch_small:'Маленький филиал',tab_main:'Основное меню',tab_bar:'Бар',tab_pizza:'Пицца',coming_soon:'Раздел скоро будет доступен'}
 };
