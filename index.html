@@ -233,95 +233,172 @@
   .hs-kicker{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);}
 
   /* =========================================================
-     СПЕЦИФИКАЦИЯ ДЛЯ БАР-МЕНЮ (BAR MENU ONLY)
+     НОВЫЙ ЭФФЕКТ ДЛЯ БАР-МЕНЮ: Interactive List Overlay
      ========================================================= */
   
-  /* 1. Скрываем стандартные точки и тултипы в баре */
-  [id^="cat-bar"] .hotspot {
-    width: 100%; 
-    height: 100%;
-    top: 0 !important;
-    left: 0 !important;
-    transform: none !important;
-    opacity: 0; /* Делаем невидимыми, но кликабельными */
-    z-index: 5;
-  }
-  [id^="cat-bar"] .hs-dot,
-  [id^="cat-bar"] .hs-pop,
-  [id^="cat-bar"] .hotspot::before,
-  [id^="cat-bar"] .hotspot::after {
-    display: none !important;
+  /* Скрываем стандартные точки для бара */
+  [id^="cat-bar"] .hotspot { display: none !important; }
+
+  /* Контейнер для списка и оверлея */
+  .bar-overlay-container {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    pointer-events: none; /* Чтобы клики проходили сквозь пустые места, если нужно, но элементы внутри будут активны */
   }
 
-  /* 2. Новая Нижняя Панель (Bottom Sheet) для бара */
-  .bar-footer-panel {
+  /* Список напитков внизу карточки */
+  .bar-drinks-list {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    background: rgba(20, 15, 10, 0.95); /* Темный фон */
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    color: #fff;
-    padding: 16px 20px;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-    transform: translateY(100%); /* Спрятана по умолчанию */
-    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.3s ease;
-    z-index: 10;
-    opacity: 0;
-    pointer-events: none;
-    box-shadow: 0 -10px 30px rgba(0,0,0,0.3);
+    background: linear-gradient(to top, rgba(20, 15, 10, 0.95) 0%, rgba(20, 15, 10, 0.8) 60%, transparent 100%);
+    padding: 20px 15px 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    pointer-events: auto; /* Делаем список кликабельным */
+    transition: opacity 0.3s ease;
   }
 
-  /* Активация панели */
-  .menu-item.is-active .bar-footer-panel {
-    transform: translateY(0);
+  .bar-drink-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    transition: all 0.3s ease;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .bar-drink-item:hover, .bar-drink-item.active {
+    background: rgba(255,255,255,0.15);
+    border-color: var(--gold);
+    color: #fff;
+    transform: translateX(5px);
+  }
+
+  .bar-drink-name {
+    font-family: var(--serif);
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 70%;
+  }
+
+  .bar-drink-price-mini {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--gold);
+  }
+
+  /* Детальный оверлей, который появляется НАД картинкой при выборе */
+  .bar-detail-popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    width: 85%;
+    background: rgba(20, 15, 10, 0.92);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 16px;
+    padding: 20px;
+    color: #fff;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    pointer-events: none;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    z-index: 20;
+    text-align: center;
+  }
+
+  .bar-detail-popup.show {
     opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
     pointer-events: auto;
   }
 
-  /* Стилизация контента внутри панели */
-  .bfp-name {
+  /* Маркер на картинке, указывающий на позицию напитка */
+  .bar-marker {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--gold);
+    border: 3px solid #fff;
+    box-shadow: 0 0 15px rgba(232, 176, 75, 0.8);
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 15;
+    pointer-events: none;
+  }
+  
+  .bar-marker::after {
+    content: '';
+    position: absolute;
+    inset: -10px;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+    animation: markerPulse 1.5s infinite;
+    opacity: 0;
+  }
+
+  @keyframes markerPulse {
+    0% { transform: scale(0.5); opacity: 0.8; }
+    100% { transform: scale(1.5); opacity: 0; }
+  }
+
+  .bar-marker.show {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  /* Контент попапа */
+  .bdp-title {
     font-family: var(--serif);
     font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 6px;
-    color: #e9d7b4; /* Золотистый акцент */
+    color: var(--gold);
+    margin-bottom: 8px;
     line-height: 1.2;
   }
-  .bfp-desc {
+  .bdp-desc {
     font-size: 13px;
-    line-height: 1.4;
-    color: rgba(255, 255, 255, 0.8);
-    margin-bottom: 10px;
-    max-height: 3.5em; /* Ограничение высоты описания */
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 15px;
   }
-  .bfp-price-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-top: 1px solid rgba(255,255,255,0.1);
-    padding-top: 8px;
-  }
-  .bfp-price {
+  .bdp-price {
     font-family: var(--serif);
-    font-style: italic;
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 700;
-    color: var(--red);
+    color: #fff;
   }
-  .bfp-brand {
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.4);
+  .bdp-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 24px;
+    height: 24px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #fff;
+    font-size: 14px;
+    transition: background 0.2s;
   }
+  .bdp-close:hover { background: rgba(255,255,255,0.3); }
 
 
   .scene-modal{position:fixed;inset:0;z-index:95;background:rgba(43,38,34,.93);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:18px;}
@@ -532,6 +609,7 @@ let currentLang = 'hy';
 let menuRendered = false;
 let currentView = 'all';
 
+// ... (Оставьте ваш массив MENU без изменений, он такой же как был выше) ...
 const MENU = [
   { id:'starters', t:{hy:'Նախուտեստներ',en:'Starters',ru:'Закуски'}, scenes:[
     { dishes:[{ img:IMG_DIR+'page03_img1.jpg', x:50, y:55, price:2700, n:{hy:'Բրուսկետտա պրոշուտտոյով և տապենադով',en:'Bruschetta Crudo with Tapenade',ru:'Брускетта с прошутто и тапенадом'}, d:{hy:'Պրոշուտո, կալամատա, սերուցքային պանիր, բազիլիկ',en:'Crudo, kalamata olives, cream cheese, basil',ru:'Прошутто, каламата, сливочный сыр, базилик'} }]},
@@ -587,22 +665,7 @@ const MENU = [
   { id:'desserts', t:{hy:'Աղանդեր',en:'Desserts',ru:'Десерты'}, scenes:[
     { dishes:[{ img:IMG_DIR+'page41_img2.jpg', x:30, y:70, price:2400, n:{hy:'վաֆլի բանան նուտելլա ինտեմպոյում',en:'waffle banana nutella intempo',ru:'вафли банан нутелла интемпо'}, d:{hy:'Վաֆլի, բանան, ելակ, նուտելլա, օլիմպիա, շոկոլադ, պաղպաղակ',en:'Waffle, banana, strawberry, nutella, olympia, chocolate, ice cream',ru:'Вафли, банан, клубника, нутелла, олимпия, шоколад, мороженое'} },{ img:IMG_DIR+'page41_img2.jpg', x:70, y:30, price:2500, n:{hy:'վաֆլի օլիմպիա ինտեմպոյում',en:'waffle olympia intempo',ru:'вафли olympia intempo'}, d:{hy:'Վաֆլի, նուտելլա, օլիմպիա կրեմ, պիստակ, նուշի կրեմ, պաղպաղակ',en:'Waffle, Nutella, Olympia cream, pistachio, almond cream, ice cream',ru:'Вафли, нутелла, крем Olympia, фисташки, миндальный крем, мороженое'} }]},
     { dishes:[{ img:IMG_DIR+'page42_img1.jpg', x:50, y:55, price:'800/3900', n:{hy:'Քաղցր ֆոկաչա ամարենա',en:'sweet focaccia amarena',ru:'сладкая фокачча амарена'}, d:{hy:'Ֆոկաչա, ֆիրմային կրեմ, բալի ջեմ, Օլիմպիա կրեմ',en:'Focaccia, signature cream, cherry jam, Olympia cream',ru:'Фокачча, фирменный крем, вишнёвый джем, крем Олимпия'} }]},
-    { dishes:[{ img:IMG_DIR+'page43_img1.jpg', x:50, y:55, price:'800/3900', n:{hy:'Քաղցր ֆոկաչա բանան նուտելլա',en:'sweet focaccia banana nutella',ru:'сладкая фокачча банан нутелла'}, d:{hy:'Ֆոկաչա, բանան, նուտելլա, ֆիրմային կրեմ, նուշի թերթիկ, ելակ',en:'Focaccia, banana, Nutella, signature cream, almond flakes, strawberry',ru:'Фокачча, банан, нутелла, фирменный крем, миндальные хлопья, клубника'} }]},
-    { dishes:[{ img:IMG_DIR+'page44_img1.jpg', x:50, y:55, price:2300, n:{hy:'Դասական տիրամիսու',en:'classic tiramisu',ru:'классический тирамису'}, d:{hy:'',en:'',ru:''} }]},
-    { dishes:[{ img:IMG_DIR+'page45_img1.jpg', x:35, y:35, price:2900, n:{hy:'բիսկոֆ տիրամիսու',en:'biscoff tiramisu',ru:'бискофф тирамису'}, d:{hy:'',en:'',ru:''} },{ img:IMG_DIR+'page45_img1.jpg', x:65, y:68, price:2700, n:{hy:'պիստակով տիրամիսու',en:'pistachio tiramisu',ru:'фисташковый тирамису'}, d:{hy:'',en:'',ru:''} }]},
-    { dishes:[{ img:IMG_DIR+'page46_img1.jpg', x:50, y:55, price:2600, n:{hy:'հատապտուղներով տիրամիսու',en:'tiramisu with berries',ru:'тирамису с ягодами'}, d:{hy:'',en:'',ru:''} }]},
-    { dishes:[{ img:IMG_DIR+'page47_img1.jpg', x:35, y:35, price:2300, n:{hy:'շոկոլադե չիզքեյք',en:'chocolate cheesecake',ru:'шоколадный чизкейк'}, d:{hy:'',en:'',ru:''} },{ img:IMG_DIR+'page47_img1.jpg', x:65, y:68, price:2100, n:{hy:'շոկոլադային-կարամելային չիզքեյք',en:'chocolate caramel cheesecake',ru:'шоколадно-карамельный чизкейк'}, d:{hy:'',en:'',ru:''} }]},
-    { dishes:[{ img:IMG_DIR+'page48_img1.jpg', x:35, y:35, price:2500, n:{hy:'սան սեբաստիան պիստակի թանձրուկով',en:'san sebastian with pistachio sauce',ru:'сан-себастьян с фисташковым соусом'}, d:{hy:'',en:'',ru:''} },{ img:IMG_DIR+'page48_img1.jpg', x:65, y:68, price:1900, n:{hy:'դասական չիզքեյք',en:'classic cheesecake',ru:'классический чизкейк'}, d:{hy:'',en:'',ru:''} }]},
-    { dishes:[{ img:IMG_DIR+'page49_img2.jpg', x:30, y:25, price:1900, n:{hy:'բրաունի',en:'brownie',ru:'брауни'}, d:{hy:'',en:'',ru:''} },{ img:IMG_DIR+'page49_img2.jpg', x:30, y:52, price:1300, n:{hy:'հատապտղային տարտ',en:'berry tart',ru:'ягодный тарт'}, d:{hy:'',en:'',ru:''} },{ img:IMG_DIR+'page49_img2.jpg', x:70, y:75, price:1600, n:{hy:'աղի կարամելով տանձ',en:'salted caramel pear',ru:'соленая карамельная груша'}, d:{hy:'',en:'',ru:''} }]},
-    { dishes:[{ img:IMG_DIR+'page50_img1.jpg', x:35, y:35, price:1700, n:{hy:'մեղրով տորթ',en:'honey cake',ru:'медовый торт'}, d:{hy:'',en:'',ru:''} },{ img:IMG_DIR+'page50_img1.jpg', x:65, y:68, price:1700, n:{hy:'շոկոլադե հրաբուխ',en:'chocolate volcano',ru:'шоколадный вулкан'}, d:{hy:'',en:'',ru:''} }]}
-  ]},
-  { 
-    id:'pizza', 
-    t:{hy:'Պիցցա',en:'Pizza',ru:'Пицца'}, 
-    scenes:[
-      { dishes:[ { img1: IMG_DIR+'page02_img12.jpg', img2: IMG_DIR+'page03_img12.jpg', price: 2900, n:{hy:'Մարգարիտա',en:'Margherita',ru:'Маргарита'}, d:{hy:'Մոցարելլա, բազիլիկ, տոմատային սոուս և օրեգանո',en:'Mozzarella, basil, tomato sauce and oregano',ru:'Моцарелла, базилик, томатный соус и орегано'} } ] },
-      { dishes:[ { img1: IMG_DIR+'page04_img12.jpg', img2: IMG_DIR+'page05_img12.jpg', price: 3300, n:{hy:'Վեգետարիանական',en:'Vegetariana',ru:'Вегетарианская'}, d:{hy:'Մոցարելլա, սնկեր, բուլղարական պղպեղ, դդմիկ, տոմատային սոուս, միկրոկանաչի և օրեգանո',en:'Mozzarella, mushrooms, bell pepper, zucchini, tomato sauce, microgreens and oregano',ru:'Моцарелла, грибы, болгарский перец, кабачок, томатный соус, микрозелень и орегано'} } ] },
-      { dishes:[ { img1: IMG_DIR+'page06_img12.jpg', img2: IMG_DIR+'page07_img12.jpg', price: 3600, n:{hy:'Դիավոլա',en:'Diavola',ru:'Диавола'}, d:{hy:'Մոցարելլա, սալյամի, կարմիր տաք պղպեղ, տոմատային սոուս, օրեգանո և բազիլիկ',en:'Mozzarella, salami, red hot pepper, tomato sauce, oregano and basil',ru:'Моцарелла, салями, красный острый перец, томатный соус, орегано и базилик'} } ] },
+    { dishes:[{ img:IMG_DIR+'page43_img1.jpg', x:50, y:55, price:'800/3900', n:{hy:'Քաղցր...գանո և բազիլիկ',en:'Mozzarella, salami, red hot pepper, tomato sauce, oregano and basil',ru:'Моцарелла, салями, красный острый перец, томатный соус, орегано и базилик'} } ] },
       { dishes:[ { img1: IMG_DIR+'page08_img12.jpg', img2: IMG_DIR+'page09_img12.jpg', price: 3700, n:{hy:'Պիցցա Ալլա Նորմա',en:'Pizza Alla Norma',ru:'Пицца Алла Норма'}, d:{hy:'Բակլաջան, տոմատային սոուս, պիստակ, բազիլիկ',en:'Eggplant, tomato sauce, pistachios, basil',ru:'Баклажаны, томатный соус, фисташки, базилик'} } ] },
       { dishes:[ { img1: IMG_DIR+'page10_img12.jpg', img2: IMG_DIR+'page11_img12.jpg', price: 3600, n:{hy:'Պեպպերոնի',en:'Pepperoni',ru:'Пепперони'}, d:{hy:'Մոցարելլա, պեպպերոնի, տոմատային սոուս և օրեգանո',en:'Mozzarella, pepperoni, tomato sauce and oregano',ru:'Моцарелла, пепперони, томатный соус и орегано'} } ] },
       { dishes:[ { img1: IMG_DIR+'page12_img12.jpg', img2: IMG_DIR+'page13_img12.jpg', price: 3900, n:{hy:'Պեպպերոնի և Մասկարպոնե',en:'Pepperoni and Mascarpone',ru:'Пепперони и Маскарпоне'}, d:{hy:'Մոցարելլա, մասկարպոնե, պեպպերոնի, տոմատային սոուս, բազիլիկ և օրեգանո',en:'Mozzarella, mascarpone, pepperoni, tomato sauce, basil and oregano',ru:'Моцарелла, маскарпоне, пепперони, томатный соус, базилик и орегано'} } ] },
@@ -625,10 +688,6 @@ const MENU = [
   },
    {id:'bar_special',t:{hy:'Հատուկ կոկտեյլներ',en:'Special Cocktails',ru:'Специальные алкогольные коктейли'},scenes:[
     {dishes:[
-      // ИЗМЕНЕНО: Позиция 1 и 2 поменяны местами
-      // Было: 1. Черная смородина (x35), 2. Голубой кокос (x65)
-      // Стало: 1. Голубой кокос, 2. Черная смородина
-      
       {img:IMG_DIR+'page03_img123.jpg',x:35,y:35,price:3100,n:{hy:'Կապույտ կոկոսային կղզի',en:'Blue Coconut Island',ru:'Голубой кокосовый остров'},d:{hy:'Ջին, օղի, Blue Curacao, կոկոսի սիրոպ, լայմի հյութ, սերուցք',en:'Gin, vodka, Blue Curacao, coconut syrup, lime juice, cream',ru:'Джин, водка, ликер Блю Кюрасао, кокосовый сироп, сок лайма, сливки'}},
       
       {img:IMG_DIR+'page03_img123.jpg',x:65,y:65,price:3100,n:{hy:'Սև հաղարջ ջին',en:'Black Currant Gin',ru:'Чёрная смородина джин'},d:{hy:'Ջին, օղի, Creme de Cacao, արոսենու սիրոպ, կիտրոնի հյութ, սև հաղարջ',en:'Gin, vodka, Creme de Cacao, elderberry syrup, lemon juice, black currant',ru:'Джин, водка, ликер Creme de Cacao, сироп бузины, лимонный сок, черная смородина'}}
@@ -646,19 +705,11 @@ const MENU = [
 
   {id:'bar_mojitos',t:{hy:'Անալկոհոլային մոխիտո',en:'Non-Alcoholic Mojitos',ru:'Безалкогольные мохито'},scenes:[
     {dishes:[
-      // ИЗМЕНЕНО: Позиция 1 и 2 поменяны местами
-      // Было: 1. Черника/Лаванда (x35), 2. Киви/Базилик (x65)
-      // Стало: 1. Киви/Базилик, 2. Черника/Лаванда
-      
       {img:IMG_DIR+'page06_img123.jpg',x:65,y:65,price:2700,n:{hy:'Կիվի-բազիլիկ Մոխիտո',en:'Kiwi Basil Mojito',ru:'Киви-базиликовый мохито'},d:{hy:'Կիվի պյուրե, լայմ, շագանակագույն շաքար, բազիլիկ, գազավորված ջուր',en:'Kiwi puree, lime, brown sugar, basil, sparkling water',ru:'Киви пюре, лайм, коричневый сахар, базилик, газированная вода'}},
       
       {img:IMG_DIR+'page06_img123.jpg',x:35,y:35,price:2800,n:{hy:'Մոխիտո սև հաղարջով և լավանդայով',en:'Blueberry Lavender Mojito',ru:'Мохито с черникой, лавандой и базиликом'},d:{hy:'Սև հաղարջի պյուրե, լավանդայի սիրոպ, լայմ, շագանակագույն շաքար, բազիլիկ',en:'Blueberry puree, lavender syrup, lime, brown sugar, basil',ru:'Пюре из черники, лавандовый сироп, лайм, коричневый сахар, базилик'}}
     ]},
     {dishes:[
-      // ИЗМЕНЕНО: Позиция 1 и 2 поменяны местами
-      // Было: 1. Ежевика/Базилик (x25), 2. Ананас/Базилик (x50)...
-      // Стало: 1. Ананас/Базилик, 2. Ежевика/Базилик...
-      
       {img:IMG_DIR+'page07_img123.jpg',x:50,y:50,price:2700,n:{hy:'Անանաս-բազիլիկ Մոխիտո',en:'Pineapple Basil Mojito',ru:'Ананасово-базиликовый мохито'},d:{hy:'Անանասի պյուրե, լայմ, շագանակագույն շաքար, բազիլիկ, գազավորված ջուր',en:'Pineapple puree, lime, brown sugar, basil, sparkling water',ru:'Ананасовое пюре, лайм, коричневый сахар, базилик, газированная вода'}},
       
       {img:IMG_DIR+'page07_img123.jpg',x:25,y:25,price:2100,n:{hy:'Ելակ-բազիլիկ Մոխիտո',en:'Blackberry Basil Mojito',ru:'Ежевично-базиликовый мохито'},d:{hy:'Ելակ, լայմ, շագանակագույն շաքար, շաքարի սիրոպ, բազիլիկ',en:'Blackberry, lime, brown sugar, sugar syrup, basil',ru:'Ежевика, лайм, коричневый сахар, сахарный сироп, базилик'}},
@@ -678,19 +729,11 @@ const MENU = [
       {img:IMG_DIR+'page11_img123.jpg',x:65,y:65,price:3300,n:{hy:'Negroni',en:'Negroni',ru:'Negroni'},d:{hy:'Ջին, Մարտինի Ռոսսո, Կամպարի',en:'Gin, Martini Rosso, Campari',ru:'Джин, Мартини Россо, Кампари'}}
     ]},
     {dishes:[
-      // ИЗМЕНЕНО: Позиция 1 и 2 поменяны местами
-      // Было: 1. Cherry Spritz (x35), 2. Gin Tonic (x65)
-      // Стало: 1. Gin Tonic, 2. Cherry Spritz
-      
       {img:IMG_DIR+'page12_img123.jpg',x:65,y:65,price:2900,n:{hy:'Gin Tonic',en:'Gin Tonic',ru:'Gin Tonic'},d:{hy:'Ջին Beefeater, տոնիկ, վարունգ, վարդի երթիկներ',en:'Beefeater gin, tonic, cucumber, rose petals',ru:'Джин Beefeater, тоник, огурец, лепестки розы'}},
       
       {img:IMG_DIR+'page12_img123.jpg',x:35,y:35,price:3000,n:{hy:'Cherry Spritz',en:'Cherry Spritz',ru:'Cherry Spritz'},d:{hy:'Բալի սիրոպ, բալի բրենդի, Մարտինի Ռոսսո, տոնիկ, լայմ, նարինջ',en:'Cherry syrup, cherry brandy, Martini Rosso, tonic, lime, orange',ru:'Вишнёвый сироп, вишнёвый бренди, Мартини Россо, тоник, лайм, апельсин'}}
     ]},
     {dishes:[
-      // ИЗМЕНЕНО: Позиция 2 и 3 поменяны местами
-      // Было: 1. Pina Colada, 2. Basil & Strawberry Margarita (x50), 3. Moscow Mule (x75)
-      // Стало: 1. Pina Colada, 2. Moscow Mule, 3. Basil & Strawberry Margarita
-      
       {img:IMG_DIR+'page13_img123.jpg',x:25,y:25,price:3300,n:{hy:'Pina Colada',en:'Pina Colada',ru:'Pina Colada'},d:{hy:'Անանասի հյութ, սպիտակ ռոմ, սերուցք, կոկոսի պյուրե',en:'Pineapple juice, white rum, cream, coconut puree',ru:'Сок ананаса, белый ром, сливки, кокосовое пюре'}},
       
       {img:IMG_DIR+'page13_img123.jpg',x:75,y:75,price:3300,n:{hy:'Moscow Mule',en:'Moscow Mule',ru:'Moscow Mule'},d:{hy:'Օղի, կոճապղպեղի գարեջուր, լայմ',en:'Vodka, ginger beer, lime',ru:'Водка, имбирное пиво, лайм'}},
@@ -709,10 +752,6 @@ const MENU = [
 
   {id:'bar_fruit_tea',t:{hy:'Մրգային թեյեր',en:'Fruit Teas',ru:'Фруктовые чаи'},scenes:[
     {dishes:[
-      // ИЗМЕНЕНО: Позиция 1 и 2 поменяны местами
-      // Было: 1. Ягоды/Мед (x25), 2. Облепиха (x50)...
-      // Стало: 1. Облепиха, 2. Ягоды/Мед...
-      
       {img:IMG_DIR+'page19_img123.jpg',x:50,y:50,price:1400,n:{hy:'Մասրենու թեյ',en:'Sea Buckthorn Tea',ru:'Облепиховый чай'},d:{hy:'Մասրենու պյուրե, դարչինի փայտիկ, նարինջ',en:'Sea buckthorn puree, cinnamon stick, orange',ru:'Облепиховое пюре, палочка корицы, апельсин'}},
       
       {img:IMG_DIR+'page19_img123.jpg',x:25,y:25,price:1600,n:{hy:'Հատապտուղներ և մեղր',en:'Berries & Honey',ru:'Ягоды и мёд'},d:{hy:'Մորի, ելակ, սև հաղարջ, ելակ',en:'Raspberry, blackberry, blackcurrant, strawberry',ru:'Малина, ежевика, черная смородина, клубника'}},
@@ -720,10 +759,6 @@ const MENU = [
       {img:IMG_DIR+'page19_img123.jpg',x:75,y:75,price:1400,n:{hy:'Ցիտրուսային թեյ',en:'Citrus Tea',ru:'Цитрусовый чай'},d:{hy:'Նարինջ, լիմոն, լայմ, գրեյպֆրուտ',en:'Orange, lemon, lime, grapefruit',ru:'Апельсин, лимон, лайм, грейпфрут'}}
     ]},
     {dishes:[
-      // ИЗМЕНЕНО: Позиция 1 и 2 поменяны местами
-      // Было: 1. Малина/Мята (x25), 2. Клубника/Манго (x50)...
-      // Стало: 1. Клубника/Манго, 2. Малина/Мята...
-      
       {img:IMG_DIR+'page20_img123.jpg',x:50,y:50,price:1400,n:{hy:'Ելակ-մանգո թեյ',en:'Strawberry Mango Tea',ru:'Чай с клубникой и манго'},d:{hy:'Ելակի պյուրե, մանգոյի հյութ, կիտրոնի հյութ, ելակ',en:'Strawberry puree, mango juice, lemon juice, strawberry',ru:'Пюре из клубники, манговый сок, лимонный сок, клубника'}},
       
       {img:IMG_DIR+'page20_img123.jpg',x:25,y:25,price:1600,n:{hy:'Մորի-անանուխ թեյ',en:'Raspberry Mint Tea',ru:'Чай с малиной и мятой'},d:{hy:'Մորի, անանուխ, մեղր, դարչինի փայտիկ',en:'Raspberries, mint, honey, cinnamon stick',ru:'Малина, мята, мёд, палочка корицы'}},
@@ -859,7 +894,7 @@ const MENU = [
       {img:IMG_DIR+'page48_img123.jpg',x:50,y:50,price:1700,n:{hy:'Սառը շոկոլադ կոկոսով',en:'Cold Chocolate Coconut',ru:'Холодный шоколад с кокосом'},d:{hy:'Կաթ, շոկոլադ, կոկոսի պյուրե, տաշած կոկոս',en:'Milk, chocolate, coconut puree, grated coconut',ru:'Молоко, шоколад, кокосовое пюре, тертый кокос'}},
       {img:IMG_DIR+'page48_img123.jpg',x:75,y:75,price:1700,n:{hy:'Սառը շոկոլադ էսպրեսոյով',en:'Cold Chocolate Espresso',ru:'Холодный шоколад с эспрессо'},d:{hy:'Կաթ, շոկոլադ, էսպրեսո',en:'Milk, chocolate, espresso',ru:'Молоко, шоколад, эспрессо'}}
     ]}
-  ]}, // <-- ЗДЕСЬ ДОБАВЛЕНА ЗАПЯТАЯ ДЛЯ ИСПРАВЛЕНИЯ ОШИБКИ СИНТАКСИСА
+  ]}, 
   {id:'bar_milkshakes',t:{hy:'Կաթնային կոկտեյլներ',en:'Milkshakes',ru:'Молочные коктейли'},scenes:[
     {dishes:[
       {img:IMG_DIR+'page49_img123.jpg',x:35,y:35,price:1800,n:{hy:'Վանիլային կաթնային կոկտեյլ',en:'Vanilla Milkshake',ru:'Ванильный молочный коктейль'},d:{hy:'Վանիլային պաղպաղակ, կաթ, հարած սերուցք',en:'Vanilla ice cream, milk, whipped cream',ru:'Ванильное мороженое, молоко, взбитые сливки'}},
@@ -938,6 +973,10 @@ setTimeout(revealOnce, 4000);
 
 function closeAllPops(){
   document.querySelectorAll('.hotspot.open').forEach(h => h.classList.remove('open'));
+  // Закрываем все бар-попапы
+  document.querySelectorAll('.bar-detail-popup.show').forEach(p => p.classList.remove('show'));
+  document.querySelectorAll('.bar-marker.show').forEach(m => m.classList.remove('show'));
+  document.querySelectorAll('.bar-drink-item.active').forEach(i => i.classList.remove('active'));
 }
 document.addEventListener('click', closeAllPops);
 
@@ -1053,6 +1092,8 @@ function renderMenu(lang, view = 'all'){
         });
       } else {
         scene.className = 'scene';
+        
+        // Добавляем изображения
         const images = sceneData.dishes.map((dish, imageIndex) => {
           const image = document.createElement('img');
           image.className = 'scene-img' + (imageIndex === 0 ? ' active' : '');
@@ -1065,75 +1106,94 @@ function renderMenu(lang, view = 'all'){
           return image;
         });
 
-        // Проверка: является ли это категорией Бара
         const isBarCategory = cat.id.startsWith('bar_');
 
         if (isBarCategory) {
-          // ЛОГИКА ДЛЯ БАРА: Bottom Sheet
+          // === НОВАЯ ЛОГИКА ДЛЯ БАРА: LIST OVERLAY ===
           
-          // 1. Создаем нижнюю панель один раз на карточку
-          const footerPanel = document.createElement('div');
-          footerPanel.className = 'bar-footer-panel';
-          // Начальная пустота или первое блюдо, заполнится динамически
-          footerPanel.innerHTML = `
-            <div class="bfp-name"></div>
-            <div class="bfp-desc"></div>
-            <div class="bfp-price-row">
-               <span class="bfp-price"></span>
-               <span class="bfp-brand">In Tempo</span>
-            </div>
+          // 1. Создаем контейнер для оверлея
+          const overlayContainer = document.createElement('div');
+          overlayContainer.className = 'bar-overlay-container';
+          
+          // 2. Создаем маркер (точку на карте)
+          const marker = document.createElement('div');
+          marker.className = 'bar-marker';
+          overlayContainer.appendChild(marker);
+
+          // 3. Создаем детальный попап (всплывающее окно с инфо)
+          const detailPopup = document.createElement('div');
+          detailPopup.className = 'bar-detail-popup';
+          detailPopup.innerHTML = `
+            <div class="bdp-close">&times;</div>
+            <div class="bdp-title"></div>
+            <div class="bdp-desc"></div>
+            <div class="bdp-price"></div>
           `;
-          scene.appendChild(footerPanel);
+          overlayContainer.appendChild(detailPopup);
 
-          // 2. Создаем невидимые зоны клика для каждого блюда
-          sceneData.dishes.forEach((dish, dishIndex) => {
-            const hotspot = document.createElement('button');
-            hotspot.className = 'hotspot'; // Используем тот же класс, но CSS его скроет/переопределит
-            // Для бара позиция не важна визуально, так как зона клика вся картинка или большая часть
-            // Но чтобы работать корректно, оставим координаты из данных, они будут использоваться для переключения картинок
-            hotspot.style.left = dish.x + '%';
-            hotspot.style.top = dish.y + '%';
-            hotspot.setAttribute('aria-label', dish.n[lang] || '');
+          // 4. Создаем список напитков внизу
+          const drinksList = document.createElement('div');
+          drinksList.className = 'bar-drinks-list';
+          
+          sceneData.dishes.forEach((dish, idx) => {
+            const item = document.createElement('div');
+            item.className = 'bar-drink-item';
+            item.dataset.index = idx;
+            item.innerHTML = `
+              <span class="bar-drink-name">${idx + 1}. ${dish.n[lang]}</span>
+              <span class="bar-drink-price-mini">${fmtPrice(dish.price)}</span>
+            `;
             
-            // Внутри ничего не рисуем, так как CSS скрыл hs-dot и hs-pop
-            
-            const activateCard = () => {
-              // Переключаем изображения
-              images.forEach((image, imageIndex) => image.classList.toggle('active', imageIndex === dishIndex));
-              
-              // Обновляем контент нижней панели
-              const nameEl = footerPanel.querySelector('.bfp-name');
-              const descEl = footerPanel.querySelector('.bfp-desc');
-              const priceEl = footerPanel.querySelector('.bfp-price');
-              
-              if(nameEl) nameEl.textContent = dish.n[lang];
-              if(descEl) descEl.textContent = dish.d[lang];
-              if(priceEl) priceEl.textContent = fmtPrice(dish.price);
+            // Обработчик клика/ховера на пункте списка
+            const activateDrink = () => {
+              // Подсветить пункт
+              drinksList.querySelectorAll('.bar-drink-item').forEach(el => el.classList.remove('active'));
+              item.classList.add('active');
 
-              // Показываем панель
-              card.classList.add('is-active');
+              // Показать маркер на нужных координатах
+              marker.style.left = dish.x + '%';
+              marker.style.top = dish.y + '%';
+              marker.classList.add('show');
+
+              // Заполнить и показать попап
+              const titleEl = detailPopup.querySelector('.bdp-title');
+              const descEl = detailPopup.querySelector('.bdp-desc');
+              const priceEl = detailPopup.querySelector('.bdp-price');
+              
+              titleEl.textContent = dish.n[lang];
+              descEl.textContent = dish.d[lang] || 'Delicious drink';
+              priceEl.textContent = fmtPrice(dish.price);
+              
+              detailPopup.classList.add('show');
             };
 
-            const deactivateCard = () => {
-               // Опционально: скрывать панель при уходе мыши
-               // card.classList.remove('is-active'); 
+            const deactivateDrink = () => {
+               // Можно оставить активным до клика вне области, или скрывать
+               // Для лучшего UX оставляем активным, пока не выбрали другой или не закрыли вручную
             };
 
-            hotspot.addEventListener('click', event => {
-              event.stopPropagation();
-              activateCard();
+            item.addEventListener('mouseenter', activateDrink);
+            item.addEventListener('click', (e) => {
+              e.stopPropagation();
+              activateDrink();
             });
             
-            if (canHover) {
-              hotspot.addEventListener('mouseenter', activateCard);
-              // hotspot.addEventListener('mouseleave', deactivateCard); // Раскомментируйте, если хотите чтобы исчезало
-            }
-            
-            scene.appendChild(hotspot);
+            drinksList.appendChild(item);
+          });
+          
+          // Закрытие попапа по кнопке X
+          detailPopup.querySelector('.bdp-close').addEventListener('click', (e) => {
+            e.stopPropagation();
+            detailPopup.classList.remove('show');
+            marker.classList.remove('show');
+            drinksList.querySelectorAll('.bar-drink-item').forEach(el => el.classList.remove('active'));
           });
 
+          overlayContainer.appendChild(drinksList);
+          scene.appendChild(overlayContainer);
+
         } else {
-          // ЛОГИКА ДЛЯ ЕДЫ: Старые Тултипы
+          // === СТАРАЯ ЛОГИКА ДЛЯ ЕДЫ: HOTSPOTS ===
           sceneData.dishes.forEach((dish, dishIndex) => {
             const hotspot = document.createElement('button');
             hotspot.className = 'hotspot';
