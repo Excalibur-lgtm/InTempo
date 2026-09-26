@@ -25,16 +25,17 @@
   :root{
     --bg:#b79d74; --bg-deep:#a68c62; --menupage:#c9b18a; --paper:#f1efe9;
     --ink:#2b2622; --muted:rgba(43,38,34,.75); --line:rgba(43,38,34,.16); --red:#d8432a;
-    --logo-bg:#b8a17e; --gold:#e8b04b;
-    --accent-grad:linear-gradient(135deg,#e8b04b 0%,#d8432a 100%);
+    --logo-bg:#b8a17e; 
+    /* ЦВЕТА ДЛЯ ЭФФЕКТА */
+    --glass-bg: rgba(43, 38, 34, 0.92); /* Темный коричневый, почти черный, но теплый */
+    --glass-border: rgba(241, 239, 233, 0.15); /* Светлая граница */
+    --accent-color: var(--red); /* Красный вместо золота */
+    --text-light: #fff;
+    --text-dim: rgba(255,255,255,0.7);
+    
     --nav-h:96px;
     --serif:'Noto Serif',Georgia,serif;
     --sans:'Noto Sans',-apple-system,sans-serif;
-    
-    /* NEW VARIABLES FOR GLASS EFFECT */
-    --glass-bg: rgba(20, 15, 10, 0.65); /* Темный, но прозрачный */
-    --glass-border: rgba(255, 255, 255, 0.15);
-    --glass-blur: blur(12px);
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 80px);}
@@ -178,11 +179,26 @@
   .scene.no-img::after{content:'In Tempo · լուսանկարը շուտով';position:absolute;inset:0;z-index:1;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-style:italic;font-size:15px;letter-spacing:.12em;color:var(--muted);background:repeating-linear-gradient(45deg, rgba(43,38,34,.05) 0 14px, transparent 14px 28px), var(--menupage);}
 
   /* =========================================================
-     НОВЫЙ ЭФФЕКТ: INTERACTIVE LIST OVERLAY (GLASSMORPHISM)
-     Применяется ко ВСЕМ категориям (Еда, Бар, Пицца)
+     PIZZA SPLIT EFFECT (STANDARD)
+     ========================================================= */
+  .pizza-split{position: relative;aspect-ratio: 1.2;overflow: hidden;border-radius: 12px;}
+  .pizza-half{position: absolute;top: 0;width: 50%;height: 100%;overflow: hidden;transition: transform 0.6s cubic-bezier(.22,1,.36,1);}
+  .pizza-half.left{left: 0;border-right: 3px solid var(--paper);}
+  .pizza-half.right{right: 0;border-left: 3px solid var(--paper);}
+  .pizza-half img{width: 200%;height: 100%;object-fit: cover;transition: transform 0.8s cubic-bezier(.22,1,.36,1);}
+  .pizza-half.left img{left: 0;}
+  .pizza-half.right img{right: 0;}
+  .menu-item:hover .pizza-half.left{transform: translateX(-5%);}
+  .menu-item:hover .pizza-half.right{transform: translateX(5%);}
+  .menu-item:hover .pizza-half.left img,.menu-item:hover .pizza-half.right img{transform: scale(1.05);}
+  
+  .pizza-info-overlay {position: absolute;bottom: 0;left: 0;right: 0;padding: 32px 20px 20px 20px;background: linear-gradient(to top, rgba(20, 15, 10, 0.98) 0%, rgba(43, 38, 34, 0.95) 50%, rgba(43, 38, 34, 0.7) 80%, transparent 100%);color: #fff;z-index: 2;}
+
+  /* =========================================================
+     LIST OVERLAY EFFECT (FOOD & BAR)
      ========================================================= */
   
-  /* Скрываем старые точки для всех категорий, так как используем новый список */
+  /* Скрываем старые точки для всех категорий, так как используем список */
   .hotspot { display: none !important; } 
 
   /* Контейнер для списка и оверлея */
@@ -199,14 +215,14 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background: linear-gradient(to top, rgba(20, 15, 10, 0.9) 0%, rgba(20, 15, 10, 0.6) 50%, transparent 100%);
+    background: linear-gradient(to top, rgba(20, 15, 10, 0.95) 0%, rgba(20, 15, 10, 0.7) 60%, transparent 100%);
     padding: 20px 15px 15px;
     display: flex;
     flex-direction: column;
     gap: 6px;
     pointer-events: auto; 
     transition: opacity 0.3s ease;
-    max-height: 60%; /* Ограничиваем высоту, чтобы не закрывать все фото */
+    max-height: 60%; 
     overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: rgba(255,255,255,0.3) transparent;
@@ -230,7 +246,7 @@
 
   .dish-item-row:hover, .dish-item-row.active {
     background: rgba(255,255,255,0.15);
-    border-color: var(--gold);
+    border-color: var(--red); /* Акцент красным */
     color: #fff;
     transform: translateX(4px);
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
@@ -250,7 +266,7 @@
   .dish-price-mini {
     font-size: 12px;
     font-weight: 700;
-    color: var(--gold);
+    color: var(--red); /* Цена тоже красная */
     margin-left: 8px;
   }
 
@@ -262,9 +278,9 @@
     transform: translate(-50%, -50%) scale(0.95);
     width: 85%;
     max-width: 300px;
-    background: var(--glass-bg); /* Полупрозрачный темный */
-    backdrop-filter: var(--glass-blur); /* Размытие фона */
-    -webkit-backdrop-filter: var(--glass-blur);
+    background: var(--glass-bg); 
+    backdrop-filter: blur(12px); 
+    -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--glass-border);
     border-radius: 16px;
     padding: 20px;
@@ -291,9 +307,9 @@
     width: 24px;
     height: 24px;
     border-radius: 50%;
-    background: var(--gold);
+    background: var(--red); /* Красный маркер */
     border: 2px solid #fff;
-    box-shadow: 0 0 15px rgba(232, 176, 75, 0.8);
+    box-shadow: 0 0 15px rgba(216, 67, 42, 0.8);
     transform: translate(-50%, -50%) scale(0);
     transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     z-index: 15;
@@ -305,7 +321,7 @@
     position: absolute;
     inset: -8px;
     border-radius: 50%;
-    border: 1px solid var(--gold);
+    border: 1px solid var(--red);
     animation: markerPulse 1.5s infinite;
     opacity: 0;
   }
@@ -323,7 +339,7 @@
   .dp-title {
     font-family: var(--serif);
     font-size: 18px;
-    color: var(--gold);
+    color: #fff; /* Белый заголовок */
     margin-bottom: 8px;
     line-height: 1.2;
     font-weight: 700;
@@ -331,37 +347,19 @@
   .dp-desc {
     font-size: 13px;
     line-height: 1.5;
-    color: rgba(255,255,255,0.9);
+    color: rgba(255,255,255,0.85);
     margin-bottom: 15px;
   }
   .dp-price {
     font-family: var(--serif);
     font-size: 22px;
     font-weight: 700;
-    color: #fff;
+    color: var(--red); /* Цена красная */
     display: inline-block;
     padding: 4px 12px;
     background: rgba(255,255,255,0.1);
     border-radius: 8px;
   }
-  .dp-close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 24px;
-    height: 24px;
-    background: rgba(255,255,255,0.1);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: #fff;
-    font-size: 14px;
-    transition: background 0.2s;
-    border: none;
-  }
-  .dp-close:hover { background: rgba(255,255,255,0.3); }
 
 
   .scene-modal{position:fixed;inset:0;z-index:95;background:rgba(43,38,34,.93);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:18px;}
@@ -678,27 +676,27 @@ const MENU = [
     id:'pizza', 
     t:{hy:'Պիցցա',en:'Pizza',ru:'Пицца'}, 
     scenes:[
-      { dishes:[ { img: IMG_DIR+'page02_img12.jpg', x:50, y:50, price: 2900, n:{hy:'Մարգարիտա',en:'Margherita',ru:'Маргарита'}, d:{hy:'Մոցարելլա, բազիլիկ, տոմատային սոուս և օրեգանո',en:'Mozzarella, basil, tomato sauce and oregano',ru:'Моцарелла, базилик, томатный соус и орегано'} } ] },
-      { dishes:[ { img: IMG_DIR+'page04_img12.jpg', x:50, y:50, price: 3300, n:{hy:'Վեգետարիանական',en:'Vegetariana',ru:'Вегетарианская'}, d:{hy:'Մոցարելլա, սնկեր, բուլղարական պղպեղ, դդմիկ, տոմատային սոուս, միկրոկանաչի և օրեգանո',en:'Mozzarella, mushrooms, bell pepper, zucchini, tomato sauce, microgreens and oregano',ru:'Моцарелла, грибы, болгарский перец, кабачок, томатный соус, микрозелень и орегано'} } ] },
-      { dishes:[ { img: IMG_DIR+'page06_img12.jpg', x:50, y:50, price: 3600, n:{hy:'Դիավոլա',en:'Diavola',ru:'Диавола'}, d:{hy:'Մոցարելլա, սալյամի, կարմիր տաք պղպեղ, տոմատային սոուս, օրեգանո և բազիլիկ',en:'Mozzarella, salami, red hot pepper, tomato sauce, oregano and basil',ru:'Моцарелла, салями, красный острый перец, томатный соус, орегано и базилик'} } ] },
-      { dishes:[ { img: IMG_DIR+'page08_img12.jpg', x:50, y:50, price: 3700, n:{hy:'Պիցցա Ալլա Նորմա',en:'Pizza Alla Norma',ru:'Пицца Алла Норма'}, d:{hy:'Բակլաջան, տոմատային սոուս, պիստակ, բազիլիկ',en:'Eggplant, tomato sauce, pistachios, basil',ru:'Баклажаны, томатный соус, фисташки, базилик'} } ] },
-      { dishes:[ { img: IMG_DIR+'page10_img12.jpg', x:50, y:50, price: 3600, n:{hy:'Պեպպերոնի',en:'Pepperoni',ru:'Пепперони'}, d:{hy:'Մոցարելլա, պեպպերոնի, տոմատային սոուս և օրեգանո',en:'Mozzarella, pepperoni, tomato sauce and oregano',ru:'Моцарелла, пепперони, томатный соус и орегано'} } ] },
-      { dishes:[ { img: IMG_DIR+'page12_img12.jpg', x:50, y:50, price: 3900, n:{hy:'Պեպպերոնի և Մասկարպոնե',en:'Pepperoni and Mascarpone',ru:'Пепперони и Маскарпоне'}, d:{hy:'Մոցարելլա, մասկարպոնե, պեպպերոնի, տոմատային սոուս, բազիլիկ և օրեգանո',en:'Mozzarella, mascarpone, pepperoni, tomato sauce, basil and oregano',ru:'Моцарелла, маскарпоне, пепперони, томатный соус, базилик и орегано'} } ] },
-      { dishes:[ { img: IMG_DIR+'page14_img12.jpg', x:50, y:50, price: 3800, n:{hy:'Ալ Պոլո',en:'Al Polo',ru:'Ал Поло'}, d:{hy:'Մոցարելլա, տապակած հավի կրծքամիս, չորացրած տոմատներ չերրի, սպիտակ սերուցքային սոուս',en:'Mozzarella, fried chicken breast, dried cherry tomatoes, white cream sauce',ru:'Моцарелла, жареная куриная грудка, вяленые томаты черри, белый сливочный соус'} } ] },
-      { dishes:[ { img: IMG_DIR+'page16_img12.jpg', x:50, y:50, price: 3800, n:{hy:'Լացիո',en:'Lazio',ru:'Лацио'}, d:{hy:'Մոցարելլա, բեկոն, սերուցքային պանիր, պարմեզան, բազիլիկ',en:'Mozzarella, bacon, cream cheese, parmesan, basil',ru:'Моцарелла, бекон, сливочный сыр, пармезан, базилик'} } ] },
-      { dishes:[ { img: IMG_DIR+'page18_img12.jpg', x:50, y:50, price: 3700, n:{hy:'Մորտադելլայով և Ֆիստակներով',en:'With Mortadella and Pistachios',ru:'С Мортаделлой и Фисташками'}, d:{hy:'Սերուցքային սոուս, մորտադելլա, ֆիստակ և բազիլիկ',en:'Cream sauce, mortadella, pistachios and basil',ru:'Сливочный соус, мортаделла, фисташки и базилик'} } ] },
-      { dishes:[ { img: IMG_DIR+'page20_img12.jpg', x:50, y:50, price: 3900, n:{hy:'Չորս անիր',en:'Quattro Formaggi',ru:'Четыре Сыра'}, d:{hy:'Մոցարելլա, պարմեզան, բլու չիզ և ռոքոր, օրեգանո և բազիլիկ',en:'Mozzarella, parmesan, blue cheese and roquefort, oregano and basil',ru:'Моцарелла, пармезан, блю чиз и рокфор, орегано и базилик'} } ] },
-      { dishes:[ { img: IMG_DIR+'page22_img12.jpg', x:50, y:50, price: 3900, n:{hy:'Տրյուֆելով',en:'With Truffle',ru:'С трюфелем'}, d:{hy:'Մոցարելլա, սնկեր, սպիտակ և սև տրյուֆել, սերուցքային սոուս և բազիլիկ',en:'Mozzarella, mushrooms, white and black truffle, cream sauce and basil',ru:'Моцарелла, грибы, белый и чёрный трюфель, сливочный соус и базилик'} } ] },
-      { dishes:[ { img: IMG_DIR+'page24_img12.jpg', x:50, y:50, price: 3900, n:{hy:'Տոսկանա',en:'Toscana',ru:'Тоскана'}, d:{hy:'Մոցարելլա, մասկարպոնե, բեկոն, տոմատային սոուս, օրեգանո և բազիլիկ',en:'Mozzarella, mascarpone, bacon, tomato sauce, oregano and basil',ru:'Моцарелла, маскарпоне, бекон, томатный соус, орегано и базилик'} } ] },
-      { dishes:[ { img: IMG_DIR+'page26_img12.jpg', x:50, y:50, price: 6800, n:{hy:'ԻնՏեմպո',en:'InTempo',ru:'InTempo'}, d:{hy:'Պրոշուտտո, բուրատա, մոցարելլա, բազիլիկ',en:'Prosciutto, burrata, mozzarella, basil',ru:'Прошутто, буррата, моцарелла, базилик'} } ] },
-      { dishes:[ { img: IMG_DIR+'page28_img12.jpg', x:50, y:50, price: 4600, n:{hy:'Պրոշուտտո Ռուկոլայով',en:'Prosciutto & Arugula',ru:'Прошутто с Руколой'}, d:{hy:'Մոցարելլա, պրոշուտտո, տոմատներ չերրի, ռուկոլա, տոմատային սոուս և օրեգանո',en:'Mozzarella, prosciutto, cherry tomatoes, arugula, tomato sauce and oregano',ru:'Моцарелла, прошутто, томаты черри, руккола, томатный соус и орегано'} } ] },
-      { dishes:[ { img: IMG_DIR+'page30_img12.jpg', x:50, y:50, price: 5400, n:{hy:'Սաղմոնով',en:'With Salmon',ru:'С Лососем'}, d:{hy:'Սաղմոն, ավոկադո, մոցարելլա, սպիտակ սերուցքային սոուս, կապերս, օրեգանո և բազիլիկ',en:'Salmon, avocado, mozzarella, white cream sauce, capers, oregano and basil',ru:'Лосось, авокадо, моцарелла, белый сливочный соус, каперсы, орегано и базилик'} } ] },
-      { dishes:[ { img: IMG_DIR+'page32_img12.jpg', x:50, y:50, price: 2900, n:{hy:'Դոլչե Պիցցա',en:'Dolce Pizza',ru:'Долче Пицца'}, d:{hy:'Բանան, ելակ, Nutella, կրեմ և մասկարպոնե',en:'Banana, strawberry, Nutella, cream and mascarpone',ru:'Банан, клубника, Nutella, крем и маскарпоне'} } ] },
-      { dishes:[ { img: IMG_DIR+'page34_img12.jpg', x:50, y:50, price: 1600, n:{hy:'Պինսերե Մարգարիտա',en:'Pinsere Margherita',ru:'Пинсере Маргарита'}, d:{hy:'Մոցարելլա, պոմիդորներ չերրի, տոմատային սոուս',en:'Mozzarella, cherry tomatoes, tomato sauce',ru:'Моцарелла, помидоры черри, томатный соус'} } ] },
-      { dishes:[ { img: IMG_DIR+'page36_img12.jpg', x:50, y:50, price: 1700, n:{hy:'Պինսերե Պեպերոնի',en:'Pinsere Pepperoni',ru:'Пинсере Пеперони'}, d:{hy:'Մոցարելլա, պեպերոնի, տոմատային սոուս',en:'Mozzarella, pepperoni, tomato sauce',ru:'Моцарелла, пепперони, томатный соус'} } ] },
-      { dishes:[ { img: IMG_DIR+'page38_img12.jpg', x:50, y:50, price: 1900, n:{hy:'Պինսերե Սպեչիատա',en:'Pinsere Special',ru:'Пинсере Специата'}, d:{hy:'Մոցարելլա, չորիզո, սոուս չորս պանիր, սերուցքային պանիր, կանաչ ձիթապտուղ',en:'Mozzarella, chorizo, four cheese sauce, cream cheese, green olives',ru:'Моцарелла, чоризо, соус четыре сыра, сливочный сыр, зелёные оливки'} } ] },
-      { dishes:[ { img: IMG_DIR+'page40_img12.jpg', x:50, y:50, price: 1900, n:{hy:'Պինսերե Կրուդո Ձիթապտուղներ',en:'Pinsere Crudo Olives Mix',ru:'Пинсере Крудо Оливки Смесь'}, d:{hy:'Մոցարելլա, ձիթապտուղ կալամատա, կանաչ ձիթապտուղ, պրոշուտտո, սերուցքային պանիր',en:'Mozzarella, kalamata olives, green olives, prosciutto, cream cheese',ru:'Моцарелла, оливки каламата, зелёные оливки, прошутто, сливочный сыр'} } ] },
-      { dishes:[ { img: IMG_DIR+'page42_img12.jpg', x:50, y:50, price: 1900, n:{hy:'Պինսերե Ձիթապտուղ և Պանչետտա',en:'Pinsere Olives and Pancetta Mix',ru:'Пинсере Смесь оливок и Панчетты'}, d:{hy:'Մոցարելլա, տոմատային սոուս, բեկոն, ձիթապտուղ կալամատա, կանաչ ձիթապտուղ, սերուցքային պանիր',en:'Mozzarella, tomato sauce, bacon, kalamata olives, green olives, cream cheese',ru:'Моцарелла, томатный соус, бекон, оливки каламата, зелёные оливки, сливочный сыр'} } ] }
+      { dishes:[ { img1: IMG_DIR+'page02_img12.jpg', img2: IMG_DIR+'page03_img12.jpg', price: 2900, n:{hy:'Մարգարիտա',en:'Margherita',ru:'Маргарита'}, d:{hy:'Մոցարելլա, բազիլիկ, տոմատային սոուս և օրեգանո',en:'Mozzarella, basil, tomato sauce and oregano',ru:'Моцарелла, базилик, томатный соус и орегано'} } ] },
+      { dishes:[ { img1: IMG_DIR+'page04_img12.jpg', img2: IMG_DIR+'page05_img12.jpg', price: 3300, n:{hy:'Վեգետարիանական',en:'Vegetariana',ru:'Вегетарианская'}, d:{hy:'Մոցարելլա, սնկեր, բուլղարական պղպեղ, դդմիկ, տոմատային սոուս, միկրոկանաչի և օրեգանո',en:'Mozzarella, mushrooms, bell pepper, zucchini, tomato sauce, microgreens and oregano',ru:'Моцарелла, грибы, болгарский перец, кабачок, томатный соус, микрозелень и орегано'} } ] },
+      { dishes:[ { img1: IMG_DIR+'page06_img12.jpg', img2: IMG_DIR+'page07_img12.jpg', price: 3600, n:{hy:'Դիավոլա',en:'Diavola',ru:'Диавола'}, d:{hy:'Մոցարելլա, սալյամի, կարմիր տաք պղպեղ, տոմատային սոուս, օրեգանո և բազիլիկ',en:'Mozzarella, salami, red hot pepper, tomato sauce, oregano and basil',ru:'Моцарелла, салями, красный острый перец, томатный соус, орегано и базилик'} } ] },
+      { dishes:[ { img1: IMG_DIR+'page08_img12.jpg', img2: IMG_DIR+'page09_img12.jpg', price: 3700, n:{hy:'Պիցցա Ալլա Նորմա',en:'Pizza Alla Norma',ru:'Пицца Алла Норма'}, d:{hy:'Բակլաջան, տոմատային սոուս, պիստակ, բազիլիկ',en:'Eggplant, tomato sauce, pistachios, basil',ru:'Баклажаны, томатный соус, фисташки, базилик'} } ] },
+      { dishes:[ { img1: IMG_DIR+'page10_img12.jpg', img2: IMG_DIR+'page11_img12.jpg', price: 3600, n:{hy:'Պեպպերոնի',en:'Pepperoni',ru:'Пепперони'}, d:{hy:'Մոցարելլա, պեպպերոնի, տոմատային սոուս և օրեգանո',en:'Mozzarella, pepperoni, tomato sauce and oregano',ru:'Моцарелла, пепперони, томатный соус и орегано'} } ] },
+      { dishes:[ { img1: IMG_DIR+'page12_img12.jpg', img2: IMG_DIR+'page13_img12.jpg', price: 3900, n:{hy:'Պեպպերոնի և Մասկարպոնե',en:'Pepperoni and Mascarpone',ru:'Пепперони и Маскарпоне'}, d:{hy:'Մոցարելլա, մասկարպոնե, պեպպերոնի, տոմատային սոուս, բազիլիկ և օրեգանո',en:'Mozzarella, mascarpone, pepperoni, tomato sauce, basil and oregano',ru:'Моцарелла, маскарпоне, пепперони, томатный соус, базилик и орегано'} } ] },
+      { dishes:[ { img1: IMG_DIR+'page14_img12.jpg', img2: IMG_DIR+'page15_img12.jpg', price: 3800, n:{hy:'Ալ Պոլո',en:'Al Polo',ru:'Ал Поло'}, d:{hy:'Մոցարելլա, տապակած հավի կրծքամիս, չորացրած տոմատներ չերրի, սպիտակ սերուցքային սոուս',en:'Mozzarella, fried chicken breast, dried cherry tomatoes, white cream sauce',ru:'Моцарелла, жареная куриная грудка, вяленые томаты черри, белый сливочный соус'} } ] },
+      { dishes:[ { img1: IMG_DIR+'page16_img12.jpg', img2: IMG_DIR+'page17_img12.jpg', price: 3800, n:{hy:'Լացիո',en:'Lazio',ru:'Лацио'}, d:{hy:'Մոցարելլա, բեկոն, սերուցքային պանիր, պարմեզան, բազիլիկ',en:'Mozzarella, bacon, cream cheese, parmesan, basil',ru:'Моцарелла, бекон, сливочный сыр, пармезан, базилик'} } ] },
+      { dishes:[ { img1: IMG_DIR+'page18_img12.jpg', img2: IMG_DIR+'page19_img12.jpg', price: 3700, n:{hy:'Մորտադելլայով և Ֆիստակներով',en:'With Mortadella and Pistachios',ru:'С Мортаделлой и Фисташками'}, d:{hy:'Սերուցքային սոուս, մորտադելլա, ֆիստակ և բազիլիկ',en:'Cream sauce, mortadella, pistachios and basil',ru:'Сливочный соус, мортаделла, фисташки и базилик'} } ] },
+      { dishes:[ { img1: IMG_DIR+'page20_img12.jpg', img2: IMG_DIR+'page21_img12.jpg', price: 3900, n:{hy:'Չորս անիր',en:'Quattro Formaggi',ru:'Четыре Сыра'}, d:{hy:'Մոցարելլա, պարմեզան, բլու չիզ և ռոքոր, օրեգանո և բազիլիկ',en:'Mozzarella, parmesan, blue cheese and roquefort, oregano and basil',ru:'Моцарелла, пармезан, блю чиз и рокфор, орегано и базилик'} } ] },
+      { dishes:[ { img1: IMG_DIR+'page22_img12.jpg', img2: IMG_DIR+'page23_img12.jpg', price: 3900, n:{hy:'Տրյուֆելով',en:'With Truffle',ru:'С трюфелем'}, d:{hy:'Մոցարելլա, սնկեր, սպիտակ և սև տրյուֆել, սերուցքային սոուս և բազիլիկ',en:'Mozzarella, mushrooms, white and black truffle, cream sauce and basil',ru:'Моцарелла, грибы, белый и чёрный трюфель, сливочный соус и базилик'} } ] },
+      { dishes:[ { img1: IMG_DIR+'page24_img12.jpg', img2: IMG_DIR+'page25_img22.jpg', price: 3900, n:{hy:'Տոսկանա',en:'Toscana',ru:'Тоскана'}, d:{hy:'Մոցարելլա, մասկարպոնե, բեկոն, տոմատային սոուս, օրեգանո և բազիլիկ',en:'Mozzarella, mascarpone, bacon, tomato sauce, oregano and basil',ru:'Моцарелла, маскарпоне, бекон, томатный соус, орегано и базилик'} } ] },
+      { dishes:[ { img1: IMG_DIR+'page26_img12.jpg', img2: IMG_DIR+'page27_img12.jpg', price: 6800, n:{hy:'ԻնՏեմպո',en:'InTempo',ru:'InTempo'}, d:{hy:'Պրոշուտտո, բուրատա, մոցարելլա, բազիլիկ',en:'Prosciutto, burrata, mozzarella, basil',ru:'Прошутто, буррата, моцарелла, базилик'} } ] },
+      { dishes:[ { img1: IMG_DIR+'page28_img12.jpg', img2: IMG_DIR+'page29_img12.jpg', price: 4600, n:{hy:'Պրոշուտտո Ռուկոլայով',en:'Prosciutto & Arugula',ru:'Прошутто с Руколой'}, d:{hy:'Մոցարելլա, պրոշուտտո, տոմատներ չերրի, ռուկոլա, տոմատային սոուս և օրեգանո',en:'Mozzarella, prosciutto, cherry tomatoes, arugula, tomato sauce and oregano',ru:'Моцарелла, прошутто, томаты черри, руккола, томатный соус и орегано'} } ] },
+      { dishes:[ { img1: IMG_DIR+'page30_img12.jpg', img2: IMG_DIR+'page31_img12.jpg', price: 5400, n:{hy:'Սաղմոնով',en:'With Salmon',ru:'С Лососем'}, d:{hy:'Սաղմոն, ավոկադո, մոցարելլա, սպիտակ սերուցքային սոուս, կապերս, օրեգանո և բազիլիկ',en:'Salmon, avocado, mozzarella, white cream sauce, capers, oregano and basil',ru:'Лосось, авокадо, моцарелла, белый сливочный соус, каперсы, орегано и базилик'} } ] },
+      { dishes:[ { img1: IMG_DIR+'page32_img12.jpg', img2: IMG_DIR+'page33_img12.jpg', price: 2900, n:{hy:'Դոլչե Պիցցա',en:'Dolce Pizza',ru:'Долче Пицца'}, d:{hy:'Բանան, ելակ, Nutella, կրեմ և մասկարպոնե',en:'Banana, strawberry, Nutella, cream and mascarpone',ru:'Банан, клубника, Nutella, крем и маскарпоне'} } ] },
+      { dishes:[ { img1: IMG_DIR+'page34_img12.jpg', img2: IMG_DIR+'page35_img12.jpg', price: 1600, n:{hy:'Պինսերե Մարգարիտա',en:'Pinsere Margherita',ru:'Пинсере Маргарита'}, d:{hy:'Մոցարելլա, պոմիդորներ չերրի, տոմատային սոուս',en:'Mozzarella, cherry tomatoes, tomato sauce',ru:'Моцарелла, помидоры черри, томатный соус'} } ] },
+      { dishes:[ { img1: IMG_DIR+'page36_img12.jpg', img2: IMG_DIR+'page37_img12.jpg', price: 1700, n:{hy:'Պինսերե Պեպերոնի',en:'Pinsere Pepperoni',ru:'Пинсере Пеперони'}, d:{hy:'Մոցարելլա, պեպերոնի, տոմատային սոուս',en:'Mozzarella, pepperoni, tomato sauce',ru:'Моцарелла, пепперони, томатный соус'} } ] },
+      { dishes:[ { img1: IMG_DIR+'page38_img12.jpg', img2: IMG_DIR+'page39_img12.jpg', price: 1900, n:{hy:'Պինսերե Սպեչիատա',en:'Pinsere Special',ru:'Пинсере Специата'}, d:{hy:'Մոցարելլա, չորիզո, սոուս չորս պանիր, սերուցքային պանիր, կանաչ ձիթապտուղ',en:'Mozzarella, chorizo, four cheese sauce, cream cheese, green olives',ru:'Моцарелла, чоризо, соус четыре сыра, сливочный сыр, зелёные оливки'} } ] },
+      { dishes:[ { img1: IMG_DIR+'page40_img12.jpg', img2: IMG_DIR+'page41_img12.jpg', price: 1900, n:{hy:'Պինսերե Կրուդո Ձիթապտուղներ',en:'Pinsere Crudo Olives Mix',ru:'Пинсере Крудо Оливки Смесь'}, d:{hy:'Մոցարելլա, ձիթապտուղ կալամատա, կանաչ ձիթապտուղ, պրոշուտտո, սերուցքային պանիր',en:'Mozzarella, kalamata olives, green olives, prosciutto, cream cheese',ru:'Моцарелла, оливки каламата, зелёные оливки, прошутто, сливочный сыр'} } ] },
+      { dishes:[ { img1: IMG_DIR+'page42_img12.jpg', img2: IMG_DIR+'page43_img12.jpg', price: 1900, n:{hy:'Պինսերե Ձիթապտուղ և Պանչետտա',en:'Pinsere Olives and Pancetta Mix',ru:'Пинсере Смесь оливок и Панчетты'}, d:{hy:'Մոցարելլա, տոմատային սոուս, բեկոն, ձիթապտուղ կալամատա, կանաչ ձիթապտուղ, սերուցքային պանիր',en:'Mozzarella, tomato sauce, bacon, kalamata olives, green olives, cream cheese',ru:'Моцарелла, томатный соус, бекон, оливки каламата, зелёные оливки, сливочный сыр'} } ] }
     ]
   },
    {id:'bar_special',t:{hy:'Հատուկ կոկտեյլներ',en:'Special Cocktails',ru:'Специальные алкогольные коктейли'},scenes:[
@@ -1061,107 +1059,139 @@ function renderMenu(lang, view = 'all'){
       card.style.transitionDelay = (index % 4) * 80 + 'ms';
 
       const scene = document.createElement('div');
-      scene.className = 'scene';
       
-      // Добавляем изображения
-      const images = sceneData.dishes.map((dish, imageIndex) => {
-        const image = document.createElement('img');
-        image.className = 'scene-img' + (imageIndex === 0 ? ' active' : '');
-        image.src = dish.img;
-        image.alt = dish.n[lang] || '';
-        image.loading = 'lazy';
-        image.decoding = 'async';
-        attachImgFallback(image);
-        scene.appendChild(image);
-        return image;
-      });
-
-      // === ЕДИНЫЙ ЭФФЕКТ ДЛЯ ВСЕХ КАТЕГОРИЙ ===
-      
-      // 1. Создаем контейнер для оверлея
-      const overlayContainer = document.createElement('div');
-      overlayContainer.className = 'interactive-overlay-container';
-      
-      // 2. Создаем маркер (точку на карте)
-      const marker = document.createElement('div');
-      marker.className = 'location-marker';
-      overlayContainer.appendChild(marker);
-
-      // 3. Создаем детальный попап (Glass Panel)
-      const detailPopup = document.createElement('div');
-      detailPopup.className = 'detail-glass-popup';
-      detailPopup.innerHTML = `
-        <button class="dp-close">&times;</button>
-        <div class="dp-title"></div>
-        <div class="dp-desc"></div>
-        <div class="dp-price"></div>
-      `;
-      overlayContainer.appendChild(detailPopup);
-
-      // 4. Создаем список блюд/напитков внизу
-      const drinksList = document.createElement('div');
-      drinksList.className = 'dish-drinks-list';
-      
-      sceneData.dishes.forEach((dish, idx) => {
-        const item = document.createElement('div');
-        item.className = 'dish-item-row';
-        item.dataset.index = idx;
-        
-        // Если название слишком длинное, обрезаем в списке, но полное показываем в попапе
-        let displayName = dish.n[lang];
-        if(displayName.length > 25) displayName = displayName.substring(0, 22) + '...';
-
-        item.innerHTML = `
-          <span class="dish-name-text">${idx + 1}. ${displayName}</span>
-          <span class="dish-price-mini">${fmtPrice(dish.price)}</span>
-        `;
-        
-        const activateItem = () => {
-          // Подсветить пункт
-          drinksList.querySelectorAll('.dish-item-row').forEach(el => el.classList.remove('active'));
-          item.classList.add('active');
-
-          // Показать маркер на нужных координатах
-          marker.style.left = dish.x + '%';
-          marker.style.top = dish.y + '%';
-          marker.classList.add('show');
-
-          // Заполнить и показать попап
-          const titleEl = detailPopup.querySelector('.dp-title');
-          const descEl = detailPopup.querySelector('.dp-desc');
-          const priceEl = detailPopup.querySelector('.dp-price');
+      if (cat.id === 'pizza') {
+        // === СТАРЫЙ ЭФФЕКТ ДЛЯ ПИЦЦЫ ===
+        scene.className = 'pizza-split';
+        sceneData.dishes.forEach((dish, dishIndex) => {
+          const leftHalf = document.createElement('div');
+          leftHalf.className = 'pizza-half left';
+          const leftImg = document.createElement('img');
+          leftImg.src = dish.img1;
+          leftImg.alt = dish.n[lang] + ' - left';
+          leftImg.loading = 'lazy';
+          leftHalf.appendChild(leftImg);
           
-          titleEl.textContent = dish.n[lang];
-          descEl.textContent = dish.d[lang] || 'Delicious choice';
-          priceEl.textContent = fmtPrice(dish.price);
+          const rightHalf = document.createElement('div');
+          rightHalf.className = 'pizza-half right';
+          const rightImg = document.createElement('img');
+          rightImg.src = dish.img2;
+          rightImg.alt = dish.n[lang] + ' - right';
+          rightImg.loading = 'lazy';
+          rightHalf.appendChild(rightImg);
           
-          detailPopup.classList.add('show');
-        };
-
-        item.addEventListener('mouseenter', activateItem);
-        item.addEventListener('click', (e) => {
-          e.stopPropagation();
-          activateItem();
+          scene.appendChild(leftHalf);
+          scene.appendChild(rightHalf);
+          
+          const infoOverlay = document.createElement('div');
+          infoOverlay.className = 'pizza-info-overlay';
+          infoOverlay.innerHTML = `
+            <div style="font-family:var(--serif);font-size:20px;font-weight:700;margin-bottom:6px;color:#fff;text-shadow:0 2px 4px rgba(0,0,0,0.8);">${dish.n[lang]}</div>
+            <div style="font-size:14px;margin-bottom:12px;color:rgba(255,255,255,0.95);text-shadow:0 1px 3px rgba(0,0,0,0.8);line-height:1.4;">${dish.d[lang]}</div>
+            <div style="font-family:var(--serif);font-style:italic;font-size:20px;color:#fff;font-weight:700;background:var(--red);display:inline-block;padding:6px 14px;border-radius:99px;box-shadow:0 4px 10px rgba(0,0,0,0.4);">${fmtPrice(dish.price)}</div>
+          `;
+          scene.appendChild(infoOverlay);
         });
+      } else {
+        // === НОВЫЙ ЭФФЕКТ ДЛЯ ЕДЫ И БАРА (LIST OVERLAY) ===
+        scene.className = 'scene';
         
-        drinksList.appendChild(item);
-      });
-      
-      // Закрытие попапа по кнопке X
-      detailPopup.querySelector('.dp-close').addEventListener('click', (e) => {
-        e.stopPropagation();
-        detailPopup.classList.remove('show');
-        marker.classList.remove('show');
-        drinksList.querySelectorAll('.dish-item-row').forEach(el => el.classList.remove('active'));
-      });
+        // Добавляем изображения
+        const images = sceneData.dishes.map((dish, imageIndex) => {
+          const image = document.createElement('img');
+          image.className = 'scene-img' + (imageIndex === 0 ? ' active' : '');
+          image.src = dish.img;
+          image.alt = dish.n[lang] || '';
+          image.loading = 'lazy';
+          image.decoding = 'async';
+          attachImgFallback(image);
+          scene.appendChild(image);
+          return image;
+        });
 
-      overlayContainer.appendChild(drinksList);
-      scene.appendChild(overlayContainer);
+        // 1. Создаем контейнер для оверлея
+        const overlayContainer = document.createElement('div');
+        overlayContainer.className = 'interactive-overlay-container';
+        
+        // 2. Создаем маркер (точку на карте)
+        const marker = document.createElement('div');
+        marker.className = 'location-marker';
+        overlayContainer.appendChild(marker);
+
+        // 3. Создаем детальный попап (Glass Panel)
+        const detailPopup = document.createElement('div');
+        detailPopup.className = 'detail-glass-popup';
+        detailPopup.innerHTML = `
+          <div class="dp-title"></div>
+          <div class="dp-desc"></div>
+          <div class="dp-price"></div>
+        `;
+        overlayContainer.appendChild(detailPopup);
+
+        // 4. Создаем список блюд/напитков внизу
+        const drinksList = document.createElement('div');
+        drinksList.className = 'dish-drinks-list';
+        
+        sceneData.dishes.forEach((dish, idx) => {
+          const item = document.createElement('div');
+          item.className = 'dish-item-row';
+          item.dataset.index = idx;
+          
+          let displayName = dish.n[lang];
+          if(displayName.length > 25) displayName = displayName.substring(0, 22) + '...';
+
+          item.innerHTML = `
+            <span class="dish-name-text">${idx + 1}. ${displayName}</span>
+            <span class="dish-price-mini">${fmtPrice(dish.price)}</span>
+          `;
+          
+          const activateItem = () => {
+            // Подсветить пункт
+            drinksList.querySelectorAll('.dish-item-row').forEach(el => el.classList.remove('active'));
+            item.classList.add('active');
+
+            // Показать маркер на нужных координатах
+            marker.style.left = dish.x + '%';
+            marker.style.top = dish.y + '%';
+            marker.classList.add('show');
+
+            // Заполнить и показать попап
+            const titleEl = detailPopup.querySelector('.dp-title');
+            const descEl = detailPopup.querySelector('.dp-desc');
+            const priceEl = detailPopup.querySelector('.dp-price');
+            
+            titleEl.textContent = dish.n[lang];
+            descEl.textContent = dish.d[lang] || 'Delicious choice';
+            priceEl.textContent = fmtPrice(dish.price);
+            
+            detailPopup.classList.add('show');
+          };
+
+          const deactivateItem = () => {
+             // Автоматически скрываем попап при уходе мыши
+             detailPopup.classList.remove('show');
+             marker.classList.remove('show');
+             item.classList.remove('active');
+          };
+
+          item.addEventListener('mouseenter', activateItem);
+          item.addEventListener('mouseleave', deactivateItem);
+          item.addEventListener('click', (e) => {
+            e.stopPropagation();
+            activateItem();
+          });
+          
+          drinksList.appendChild(item);
+        });
+
+        overlayContainer.appendChild(drinksList);
+        scene.appendChild(overlayContainer);
+      }
 
       card.appendChild(scene);
       // На мобильных открываем модальное окно при клике на саму карточку (вне списка)
       card.addEventListener('click', (e) => {
-        if (isMobile() && !e.target.closest('.interactive-overlay-container')) {
+        if (isMobile() && !e.target.closest('.interactive-overlay-container') && !e.target.closest('.pizza-info-overlay')) {
            openSceneModal(card);
         }
       });
