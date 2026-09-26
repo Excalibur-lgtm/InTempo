@@ -32,7 +32,7 @@
     --serif:'Noto Serif',Georgia,serif;
     --sans:'Noto Sans',-apple-system,sans-serif;
   }
-  *{box-sizing:border-box;margin:0;padding:0;}
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
   html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 60px);}
   body{background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;overflow-x:hidden;}
   a{color:inherit;text-decoration:none;} img{display:block;max-width:100%;}
@@ -76,7 +76,6 @@
 
   .nav{position:fixed;top:0;left:0;right:0;z-index:60;height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 6vw;transition:background .4s,box-shadow .4s,transform .45s cubic-bezier(.22,1,.36,1);}
   .nav.scrolled{background:rgba(184,161,126,.96);backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--line);}
-  body.in-menu .nav{transform:translateY(-102%);box-shadow:none;}
   .nav .logo-card{opacity:0;transform:translateY(-16px) scale(.94);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1);}
   .nav.ready .logo-card{opacity:1;transform:none;}
   .nav .nav-right{opacity:0;transform:translateY(-10px);transition:opacity .8s ease .2s,transform .8s cubic-bezier(.22,1,.36,1) .2s;}
@@ -106,8 +105,6 @@
   @keyframes kb{from{transform:scale(1);}to{transform:scale(1.09);}}
   .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(to top, rgba(43,38,34,.78) 0%, rgba(43,38,34,.38) 38%, rgba(43,38,34,.18) 65%, rgba(43,38,34,.42) 100%),radial-gradient(90% 70% at 50% 45%, rgba(43,38,34,.16), rgba(43,38,34,.6) 100%);}
   .hero-in{position:relative;z-index:2;padding:0 6vw;max-width:1040px;color:var(--paper);}
-
-  /* === ЗАГОЛОВОК В ПАЛИТРЕ САЙТА (БЕЗ ЗОЛОТА) === */
   .hero h1{
     font-size:clamp(40px,7.4vw,96px);
     line-height:1.05;
@@ -167,11 +164,18 @@
   .mq-track b{color:var(--red);font-weight:500;}
   @keyframes mq{to{transform:translateX(-50%);}}
 
-  .menu-sec{position:relative;z-index:1;background:rgba(183,157,116,.85);padding:clamp(60px,8vw,100px) 0 clamp(70px,9vw,120px);opacity:0;transform:translateY(30px);transition:opacity 0.6s ease,transform 0.6s ease;display:none;}
+  .menu-sec{position:relative;z-index:1;background:rgba(183,157,116,.85);padding:0 0 clamp(70px,9vw,120px);opacity:0;transform:translateY(30px);transition:opacity 0.6s ease,transform 0.6s ease;display:none;}
   .menu-sec.visible{opacity:1;transform:translateY(0);}
-  .menu-category{max-width:1400px;margin:0 auto;padding:clamp(50px,7vw,90px) 4vw 0;scroll-margin-top:calc(var(--nav-h) + 60px);}
 
-  /* === ЗАГОЛОВКИ КАТЕГОРИЙ (МЕНЮ + БАР) === */
+  /* === ЛИПКАЯ ЛЕНТА ЗАГОЛОВКОВ (ЧИПСЫ) === */
+  .cat-nav{position:sticky;top:var(--nav-h);z-index:45;display:flex;gap:8px;overflow-x:auto;padding:12px 6vw;background:rgba(183,157,116,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-block:1px solid var(--line);scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+  .cat-nav::-webkit-scrollbar{display:none;}
+  .cat-nav:empty{display:none;}
+  .cat-chip{flex:0 0 auto;font:inherit;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:10px 18px;border-radius:999px;border:1px solid var(--line);background:rgba(241,239,233,.6);color:var(--muted);cursor:pointer;transition:background .25s,color .25s,border-color .25s;white-space:nowrap;}
+  .cat-chip:hover{border-color:var(--red);color:var(--red);}
+  .cat-chip.active{background:var(--ink);border-color:var(--ink);color:var(--menupage);}
+
+  .menu-category{max-width:1400px;margin:0 auto;padding:clamp(50px,7vw,90px) 4vw 0;scroll-margin-top:calc(var(--nav-h) + 60px);}
   .category-header{text-align:center;margin-bottom:clamp(32px,4vw,56px);opacity:0;transform:translateY(40px);transition:opacity 1s ease,transform 1s cubic-bezier(.22,1,.36,1);}
   .category-header.in{opacity:1;transform:none;}
   .cat-kicker{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--red);letter-spacing:.14em;display:block;margin-bottom:10px;}
@@ -262,7 +266,58 @@
 
   @media (max-width:900px){.nav{padding:0 4vw;}.nav-right{gap:10px;}}
   @media (max-width:768px){:root{--nav-h:112px;}.nav .logo-img{height:94px;}.nav-link{display:none;}#loader .logo-img{height:400px;}.branch-choices{grid-template-columns:1fr;}}
-  @media (max-width:640px){:root{--nav-h:92px;}.nav .logo-img{height:76px;}.nav .slogan{display:none;}.burger{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:42px;height:42px;background:none;border:0;cursor:pointer;z-index:5;}.burger span{display:block;width:22px;height:2px;background:var(--paper);transition:.3s;}.nav.scrolled .burger span{background:var(--ink);}.nav.open .burger span:nth-child(1){transform:translateY(7px) rotate(45deg);}.nav.open .burger span:nth-child(2){opacity:0;}.nav.open .burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}.nav .nav-right,.nav.ready .nav-right{position:fixed;top:0;left:0;right:0;z-index:4;flex-direction:column;align-items:stretch;gap:14px;padding:calc(var(--nav-h) + 12px) 22px 24px;background:rgba(184,161,126,.98);backdrop-filter:blur(14px);box-shadow:0 20px 40px rgba(43,38,34,.25);opacity:0;visibility:hidden;transform:translateY(-12px);transition:opacity .3s ease,transform .3s ease,visibility .3s;}.nav.open .nav-right{opacity:1;visibility:visible;transform:none;}.langs{justify-content:center;}.lang-btn{padding:9px 16px;font-size:12px;color:var(--muted);text-shadow:none;border-color:var(--line);}.lang-btn.active{background:var(--ink);color:var(--menupage);}.nav-tel{justify-content:center;color:var(--ink);text-shadow:none;border-color:var(--ink);}.mobile-bar{position:fixed;left:0;right:0;bottom:0;z-index:70;display:flex;gap:10px;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(184,161,126,.98);backdrop-filter:blur(14px);box-shadow:0 -10px 30px rgba(43,38,34,.2);transition:transform .35s cubic-bezier(.22,1,.36,1);}.mobile-bar.hidden{transform:translateY(110%);}.mb-call{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:13px;border:1.5px solid var(--ink);border-radius:999px;color:var(--ink);font-weight:600;font-size:14px;box-shadow:0 2px 8px rgba(43,38,34,.15);}.mb-call svg{width:16px;height:16px;}.mb-book{flex:1;display:flex;align-items:center;justify-content:center;padding:13px;border-radius:999px;background:var(--accent-grad);color:#fff;font-weight:600;font-size:14px;box-shadow:0 4px 14px rgba(216,67,42,.4);}footer{padding-bottom:96px;}.hero-sub{margin-top:22px;}.hero-actions{margin-top:36px;gap:16px;}#loader .logo-img{height:340px;}#loader .slogan{font-size:15px;}.hero-in{padding:0 5vw;}.hero h1{font-size:clamp(32px,9vw,48px);}.hero-sub{font-size:11px;}.hero-actions{flex-direction:column;width:100%;max-width:340px;margin:32px auto 0;}.btn{width:100%;justify-content:center;padding:15px 24px;}.mq-track span{font-size:14px;padding:0 16px;}.menu-grid{grid-template-columns:1fr;}.contact-sec{padding:64px 0 90px;}.contact-sub{font-size:14px;padding:0 6vw;}.phone{font-size:clamp(26px,8vw,40px);}.addr{font-size:13px;line-height:1.9;}.delivery-note{margin:22px 5vw 0;font-size:13px;padding:15px 20px;}.soc{width:44px;height:44px;}footer{padding:32px 5vw 24px;}footer .logo-img{height:120px;}.smart-popup{width:min(240px,80%);}}
+  @media (max-width:640px){
+    :root{--nav-h:92px;}
+    .nav .logo-img{height:76px;}
+    .nav .slogan{display:none;}
+    .burger{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:42px;height:42px;background:none;border:0;cursor:pointer;z-index:5;}
+    .burger span{display:block;width:22px;height:2px;background:var(--paper);transition:.3s;}
+    .nav.scrolled .burger span{background:var(--ink);}
+    .nav.open .burger span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+    .nav.open .burger span:nth-child(2){opacity:0;}
+    .nav.open .burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+    .nav .nav-right,.nav.ready .nav-right{position:fixed;top:0;left:0;right:0;z-index:4;flex-direction:column;align-items:stretch;gap:14px;padding:calc(var(--nav-h) + 12px) 22px 24px;background:rgba(184,161,126,.98);backdrop-filter:blur(14px);box-shadow:0 20px 40px rgba(43,38,34,.25);opacity:0;visibility:hidden;transform:translateY(-12px);transition:opacity .3s ease,transform .3s ease,visibility .3s;}
+    .nav.open .nav-right{opacity:1;visibility:visible;transform:none;}
+    .langs{justify-content:center;}
+    .lang-btn{padding:9px 16px;font-size:12px;color:var(--muted);text-shadow:none;border-color:var(--line);}
+    .lang-btn.active{background:var(--ink);color:var(--menupage);}
+    .nav-tel{justify-content:center;color:var(--ink);text-shadow:none;border-color:var(--ink);}
+    .mobile-bar{position:fixed;left:0;right:0;bottom:0;z-index:70;display:flex;gap:10px;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(184,161,126,.98);backdrop-filter:blur(14px);box-shadow:0 -10px 30px rgba(43,38,34,.2);transition:transform .35s cubic-bezier(.22,1,.36,1);}
+    .mobile-bar.hidden{transform:translateY(110%);}
+    .mb-call{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:13px;border:1.5px solid var(--ink);border-radius:999px;color:var(--ink);font-weight:600;font-size:14px;box-shadow:0 2px 8px rgba(43,38,34,.15);}
+    .mb-call svg{width:16px;height:16px;}
+    .mb-book{flex:1;display:flex;align-items:center;justify-content:center;padding:13px;border-radius:999px;background:var(--accent-grad);color:#fff;font-weight:600;font-size:14px;box-shadow:0 4px 14px rgba(216,67,42,.4);}
+    footer{padding-bottom:96px;}
+    .hero-sub{margin-top:22px;}
+    .hero-actions{margin-top:36px;gap:16px;}
+    #loader .logo-img{height:340px;}
+    #loader .slogan{font-size:15px;}
+    .hero-in{padding:0 5vw;}
+    .hero h1{font-size:clamp(32px,9vw,48px);}
+    .hero-sub{font-size:11px;}
+    .hero-actions{flex-direction:column;width:100%;max-width:340px;margin:32px auto 0;}
+    .btn{width:100%;justify-content:center;padding:15px 24px;}
+    .mq-track span{font-size:14px;padding:0 16px;}
+    .menu-grid{grid-template-columns:1fr;gap:18px;}
+    /* МОБИЛЬНАЯ ОПТИМИЗАЦИЯ ЛЕНТЫ И КАРТОЧЕК */
+    .cat-nav{padding:8px 12px;gap:6px;}
+    .cat-chip{font-size:11px;padding:9px 14px;}
+    .menu-category{padding:clamp(36px,9vw,60px) 4vw 0;}
+    .dish-list-overlay{max-height:46%;overflow-y:auto;scrollbar-width:none;padding-top:34px;}
+    .dish-list-overlay::-webkit-scrollbar{display:none;}
+    .dish-row{padding:11px 12px;font-size:14px;}
+    .dish-row-name{font-size:14px;}
+    .dish-row-price{font-size:13px;}
+    .smart-popup{width:min(260px,86%);max-height:56%;overflow-y:auto;}
+    .contact-sec{padding:64px 0 90px;}
+    .contact-sub{font-size:14px;padding:0 6vw;}
+    .phone{font-size:clamp(26px,8vw,40px);}
+    .addr{font-size:13px;line-height:1.9;}
+    .delivery-note{margin:22px 5vw 0;font-size:13px;padding:15px 20px;}
+    .soc{width:44px;height:44px;}
+    footer{padding:32px 5vw 24px;}
+    footer .logo-img{height:120px;}
+  }
   @media (max-width:380px){.nav-tel{display:none;}.lang-btn{padding:5px 8px;font-size:9px;}#loader .logo-img{height:300px;}}
   @media (prefers-reduced-motion:reduce){*{transition-duration:.01ms !important;animation-duration:.01ms !important;}}
 </style>
@@ -344,7 +399,10 @@
   <span>Time To Enjoy. <b>·</b> Pizza And More. <b>·</b></span>
 </div></div>
 
-<section class="menu-sec" id="menu"><div id="menuRoot"></div></section>
+<section class="menu-sec" id="menu">
+  <div class="cat-nav" id="catNav" aria-label="Categories"></div>
+  <div id="menuRoot"></div>
+</section>
 
 <div class="scene-modal" id="sceneModal">
   <div class="scene-modal-body">
@@ -384,6 +442,7 @@ let currentBranch = 'hyusisayin';
 let currentLang = 'hy';
 let menuRendered = false;
 let currentView = 'all';
+let catSections = [];
 
 const MENU = [
   { id:'starters', t:{hy:'Նախուտեստներ',en:'Starters',ru:'Закуски'}, scenes:[
@@ -561,14 +620,14 @@ const MENU = [
   ]},
   {id:'bar_cold_tea',t:{hy:'Սառը թեյեր',en:'Cold Teas',ru:'Холодные чаи'},scenes:[
     {dishes:[
-      {img:IMG_DIR+'page23_img123.jpg',x:50,y:50,price:1800,n:{hy:'Սառը մոշի թեյ',en:'Cold Blackberry Tea',ru:'Холодный ежевичный чай'},d:{hy:'Եփած սև թեյ, ելակի պյուրե, անանուխ, ելակ',en:'Brewed black tea, blackberry puree, mint, blackberry',ru:'Заваренный черный чай, пюре из ежевики, мята, ежевика'}}
+      {img:IMG_DIR+'page23_img123.jpg',x:50,y:50,price:1800,n:{hy:'Սառը մոշի թեյ',en:'Cold Blackberry Tea',ru:'Холодный ежевичный чай'},d:{hy:'Եած սև թեյ, ելակի պյուրե, անանուխ, ելակ',en:'Brewed black tea, blackberry puree, mint, blackberry',ru:'Заваренный черный чай, пюре из ежевики, мята, ежевика'}}
     ]},
     {dishes:[
       {img:IMG_DIR+'page24_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սառը ելակի թեյ',en:'Cold Strawberry Tea',ru:'Клубничный холодный чай'},d:{hy:'Եփած սև թեյ, ելակի պյուրե, ելակ, անանուխ',en:'Brewed black tea, strawberry puree, strawberry, mint',ru:'Заваренный черный чай, клубничное пюре, клубника, мята'}},
-      {img:IMG_DIR+'page24_img123.jpg',x:65,y:65,price:1600,n:{hy:'Սառը մանգոյի թեյ',en:'Cold Mango Tea',ru:'Манговый холодный чай'},d:{hy:'Եփած սև թեյ, մանգոյի սիրոպ, անանուխ, չորացրած մանգո',en:'Brewed black tea, mango syrup, mint, dried mango',ru:'Заваренный черный чай, манговый сироп, мята, сушеное манго'}}
+      {img:IMG_DIR+'page24_img123.jpg',x:65,y:65,price:1600,n:{hy:'Սառը մանգոյի թեյ',en:'Cold Mango Tea',ru:'Манговый холодный чай'},d:{hy:'Եած սև թեյ, մանգոյի սիրոպ, անանուխ, չորացրած մանգո',en:'Brewed black tea, mango syrup, mint, dried mango',ru:'Заваренный черный чай, манговый сироп, мята, сушеное манго'}}
     ]},
     {dishes:[
-      {img:IMG_DIR+'page25_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սառը դեղձի թեյ',en:'Cold Peach Tea',ru:'Персиковый холодный чай'},d:{hy:'Եփած սև թեյ, պերսիկի պյուրե, անանուխ, լայմ, լիմոն',en:'Brewed black tea, peach puree, mint, lime, lemon',ru:'Заваренный черный чай, персиковое пюре, мята, лайм, лимон'}},
+      {img:IMG_DIR+'page25_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սառը դեղձի թեյ',en:'Cold Peach Tea',ru:'Персиковый холодный чай'},d:{hy:'Եած սև թեյ, պերսիկի պյուրե, անանուխ, լայմ, լիմոն',en:'Brewed black tea, peach puree, mint, lime, lemon',ru:'Заваренный черный чай, персиковое пюре, мята, лайм, лимон'}},
       {img:IMG_DIR+'page25_img123.jpg',x:65,y:65,price:1700,n:{hy:'Սառը լավանդայի թեյ',en:'Cold Lavender Tea',ru:'Лавандовый холодный чай'},d:{hy:'Լավանդայի սիրոպ, անանուխ, լիմոն, լայմ, ռոզմարին',en:'Lavender syrup, mint, lemon, lime, rosemary',ru:'Лавандовый сироп, мята, лимон, лайм, розмарин'}}
     ]},
     {dishes:[
@@ -642,7 +701,7 @@ const MENU = [
     ]},
     {dishes:[
       {img:IMG_DIR+'page42_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սուրճ Ֆրապպե',en:'Cafe Frappe',ru:'Кафе фраппе'},d:{hy:'Էսպրեսո, կաթ, շաքար, սերուցք, հարած սերուցք, սուրճի փոշի',en:'Espresso, milk, sugar, cream, whipped cream, coffee powder',ru:'Эспрессо, молоко, сахар, сливки, взбитые сливки, кофейный порошок'}},
-      {img:IMG_DIR+'page42_img123.jpg',x:65,y:65,price:1800,n:{hy:'Նուտելլա Ֆրապպե',en:'Nutella Frappe',ru:'Нутелла фраппе'},d:{hy:'Էսպրեսո, կաթ, Նուտելլա, սերուցք, հարած սերուցք, սուրճի փոշի',en:'Espresso, milk, Nutella, cream, whipped cream, coffee powder',ru:'Эспрессо, молоко, Нутелла, сливки, взбитые сливки, кофейный порошок'}}
+      {img:IMG_DIR+'page42_img123.jpg',x:65,y:65,price:1800,n:{hy:'Նուտելլա Ֆրապպե',en:'Nutella Frappe',ru:'Нутелла фраппе'},d:{hy:'Էսպրեսո, կաթ, Նուտելլա, սերուցք, հարած սերուցք, սուրճի ոշի',en:'Espresso, milk, Nutella, cream, whipped cream, coffee powder',ru:'Эспрессо, молоко, Нутелла, сливки, взбитые сливки, кофейный порошок'}}
     ]}
   ]},
   {id:'bar_shakes',t:{hy:'Էսպրեսո-շեյքեր',en:'Espresso Shakes',ru:'Эспрессо-шейки'},scenes:[
@@ -801,6 +860,56 @@ const io = new IntersectionObserver(es => es.forEach(en => {
   if (en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
 }), {threshold:.1, rootMargin:'0px 0px -40px 0px'});
 
+/* === ЛЕНТА ЗАГОЛОВКОВ: построение, скролл, scroll-spy === */
+function navOffset(){
+  const navH = document.getElementById('nav').offsetHeight;
+  const chipH = document.getElementById('catNav').offsetHeight || 0;
+  return navH + chipH + 8;
+}
+function buildCatNav(cats, lang){
+  const nav = document.getElementById('catNav');
+  nav.innerHTML = '';
+  cats.forEach(cat => {
+    const btn = document.createElement('button');
+    btn.className = 'cat-chip';
+    btn.type = 'button';
+    btn.textContent = cat.t[lang];
+    btn.dataset.target = 'cat-' + cat.id;
+    btn.addEventListener('click', () => {
+      const sec = document.getElementById('cat-' + cat.id);
+      if (!sec) return;
+      const y = sec.getBoundingClientRect().top + window.scrollY - navOffset();
+      window.scrollTo({top: Math.max(0, y), behavior:'smooth'});
+    });
+    nav.appendChild(btn);
+  });
+}
+function centerChip(chip){
+  const row = chip.parentElement;
+  const target = chip.offsetLeft - row.clientWidth / 2 + chip.clientWidth / 2;
+  row.scrollTo({left: Math.max(0, target), behavior:'smooth'});
+}
+function updateActiveChip(){
+  if (!catSections.length) return;
+  const pos = window.scrollY + navOffset() + 60;
+  let activeId = null;
+  for (const sec of catSections){
+    const top = sec.getBoundingClientRect().top + window.scrollY;
+    if (top <= pos) activeId = sec.id;
+  }
+  document.querySelectorAll('.cat-chip').forEach(ch => {
+    const on = ch.dataset.target === activeId;
+    if (on && !ch.classList.contains('active')) centerChip(ch);
+    ch.classList.toggle('active', on);
+  });
+}
+let spyTick = false;
+window.addEventListener('scroll', () => {
+  if (spyTick) return;
+  spyTick = true;
+  requestAnimationFrame(() => { spyTick = false; if (menuRendered) updateActiveChip(); });
+}, {passive:true});
+
 function renderMenu(lang, view){
   view = view || 'all';
   const root = document.getElementById('menuRoot');
@@ -811,6 +920,9 @@ function renderMenu(lang, view){
     : (view === 'bar'
       ? MENU.filter(cat => cat.id.startsWith('bar_'))
       : MENU.filter(cat => !cat.id.startsWith('bar_') && cat.id !== 'pizza'));
+
+  buildCatNav(categoriesToShow, lang);
+  catSections = [];
 
   categoriesToShow.forEach(cat => {
     const sec = document.createElement('div');
@@ -932,7 +1044,10 @@ function renderMenu(lang, view){
 
     io.observe(sec.querySelector('.category-header'));
     root.appendChild(sec);
+    catSections.push(sec);
   });
+
+  requestAnimationFrame(updateActiveChip);
 }
 
 function openMenu(view){
