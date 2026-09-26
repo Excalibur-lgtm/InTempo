@@ -27,13 +27,13 @@
     --ink:#2b2622; --muted:rgba(43,38,34,.75); --line:rgba(43,38,34,.16); --red:#d8432a;
     --logo-bg:#b8a17e; --gold:#e8b04b;
     --accent-grad:linear-gradient(135deg,#e8b04b 0%,#d8432a 100%);
-    --glass-bg:rgba(43,38,34,.85); --glass-border:rgba(241,239,233,.18);
-    --nav-h:96px;
+    --glass-bg:rgba(43,38,34,.88); --glass-border:rgba(241,239,233,.16);
+    --nav-h:126px;
     --serif:'Noto Serif',Georgia,serif;
     --sans:'Noto Sans',-apple-system,sans-serif;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
-  html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 80px);}
+  html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 60px);}
   body{background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;overflow-x:hidden;}
   a{color:inherit;text-decoration:none;} img{display:block;max-width:100%;}
   ::selection{background:var(--red);color:#fff;}
@@ -46,10 +46,12 @@
   .site-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(183,157,116,.52),rgba(183,157,116,.52)),radial-gradient(ellipse 900px 500px at 15% -10%,rgba(255,255,255,.14),transparent 60%);}
 
   .logo-img{height:110px;width:auto;max-width:38vw;object-fit:contain;display:block;}
-  .nav .logo-img{height:calc(var(--nav-h) - 22px);max-width:34vw;}
+  /* ЛОГОТИП +50% */
+  .nav .logo-img{height:110px;max-width:40vw;}
   .logo-card{display:inline-flex;flex-direction:column;align-items:center;gap:0;background:transparent;padding:4px 10px;border-radius:12px;}
   .logo-card .slogan{margin-top:-2px;}
   .slogan{font-family:var(--serif);font-style:italic;font-size:11px;letter-spacing:.14em;color:var(--muted);}
+  .nav .slogan{font-size:12px;color:rgba(43,38,34,.65);}
 
   #loader{position:fixed;inset:0;z-index:300;background:var(--logo-bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;transition:transform .9s cubic-bezier(.76,0,.24,1),opacity .9s ease,visibility .9s;overflow:hidden;}
   #loader.done{transform:translateY(-100%);opacity:0;visibility:hidden;}
@@ -95,7 +97,7 @@
   .nav.scrolled .nav-tel{border-color:var(--ink);color:var(--ink);text-shadow:none;}
   .nav.scrolled .nav-tel:hover{background:var(--ink);color:var(--menupage);}
   .burger{display:none;}
-  .branch-toggle{font:inherit;font-size:12px;font-weight:600;letter-spacing:.05em;padding:8px 14px;border:1.5px solid rgba(241,239,233,.75);border-radius:999px;background:none;color:var(--paper);cursor:pointer;transition:.25s;text-shadow:0 1px 6px rgba(43,38,34,.55);box-shadow:0 2px 6px rgba(43,38,34,.12);white-space:nowrap;display:flex;align-items:center;gap:6px;}
+  .branch-toggle{font:inherit;font-size:12px;font-weight:600;letter-spacing:.05em;padding:8px 16px;border:1.5px solid rgba(241,239,233,.75);border-radius:999px;background:none;color:var(--paper);cursor:pointer;transition:.25s;text-shadow:0 1px 6px rgba(43,38,34,.55);box-shadow:0 2px 6px rgba(43,38,34,.12);white-space:nowrap;display:flex;align-items:center;gap:6px;}
   .nav.scrolled .branch-toggle{border-color:var(--line);color:var(--muted);text-shadow:none;}
   .branch-toggle:hover{background:var(--menupage);color:var(--ink);text-shadow:none;}
 
@@ -104,18 +106,55 @@
   .hero-media video{width:100%;height:100%;object-fit:cover;animation:kb 26s ease-in-out infinite alternate;}
   @keyframes kb{from{transform:scale(1);}to{transform:scale(1.09);}}
   .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(to top, rgba(43,38,34,.78) 0%, rgba(43,38,34,.38) 38%, rgba(43,38,34,.18) 65%, rgba(43,38,34,.42) 100%),radial-gradient(90% 70% at 50% 45%, rgba(43,38,34,.16), rgba(43,38,34,.6) 100%);}
-  .hero-in{position:relative;z-index:2;padding:0 6vw;max-width:980px;color:var(--paper);}
-  .hero h1{font-size:clamp(34px,6.4vw,80px);color:var(--paper);text-shadow:0 4px 12px rgba(0,0,0,.4);}
-  .hero h1 em{color:#e9d7b4;}
+  .hero-in{position:relative;z-index:2;padding:0 6vw;max-width:1040px;color:var(--paper);}
+
+  /* === КРАСИВЫЙ ЗАГОЛОВОК С ЭФФЕКТОМ === */
+  .hero h1{
+    font-size:clamp(38px,7vw,92px);
+    line-height:1.06;
+    letter-spacing:.005em;
+    text-wrap:balance;
+    background:linear-gradient(100deg,#ffffff 0%,#f6ead2 28%,#e9d7b4 50%,#ffffff 72%,#f6ead2 100%);
+    background-size:220% auto;
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    -webkit-text-fill-color:transparent;
+    filter:drop-shadow(0 6px 24px rgba(20,15,10,.55));
+    animation:sheen 9s linear infinite;
+  }
+  @keyframes sheen{0%{background-position:0% center;}100%{background-position:220% center;}}
+  .hero h1 em{
+    font-style:italic;
+    background:linear-gradient(95deg,#f0b45c 0%,#d8432a 55%,#b8321c 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    -webkit-text-fill-color:transparent;
+  }
   .line{display:block;overflow:hidden;}
   .line-in{display:block;transform:translateY(110%);transition:transform 1.1s cubic-bezier(.22,1,.36,1);}
   .hero.ready .line-in{transform:translateY(0);}
   .hero.ready .line:nth-child(2) .line-in{transition-delay:.18s;}
-  .hero-sub{margin:24px auto 0;max-width:560px;color:rgba(241,239,233,.95);font-size:17px;line-height:1.7;opacity:0;transition:opacity 1s ease .6s;text-shadow:0 1px 10px rgba(43,38,34,.5);font-weight:300;letter-spacing:0.05em;}
+  .hero-sub{
+    display:inline-block;
+    margin:26px auto 0;
+    padding-top:14px;
+    border-top:1px solid rgba(241,239,233,.35);
+    max-width:560px;
+    color:rgba(241,239,233,.9);
+    font-size:13px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    line-height:1.7;
+    opacity:0;transition:opacity 1s ease .6s;
+    text-shadow:0 1px 10px rgba(43,38,34,.5);
+    font-weight:500;
+  }
   .hero.ready .hero-sub{opacity:1;}
   .hero-actions{margin-top:32px;display:flex;gap:14px;flex-wrap:wrap;justify-content:center;opacity:0;transition:opacity 1s ease .8s;}
   .hero.ready .hero-actions{opacity:1;}
-  .btn{display:inline-flex;align-items:center;gap:10px;padding:16px 30px;border-radius:999px;font-weight:600;font-size:15px;border:0;cursor:pointer;transition:.25s;box-shadow:0 3px 10px rgba(43,38,34,.2);}
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:16px 32px;border-radius:999px;font-weight:600;font-size:15px;border:0;cursor:pointer;transition:.25s;box-shadow:0 3px 10px rgba(43,38,34,.2);}
   .btn-primary{background:var(--menupage);color:var(--ink);}
   .btn-primary:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 10px 20px rgba(216,67,42,.3);}
   .btn-ghost{border:1.5px solid rgba(241,239,233,.7);background:none;color:var(--paper);box-shadow:0 2px 8px rgba(43,38,34,.18);}
@@ -132,7 +171,7 @@
 
   .menu-sec{position:relative;z-index:1;background:rgba(183,157,116,.85);padding:clamp(60px,8vw,100px) 0 clamp(70px,9vw,120px);opacity:0;transform:translateY(30px);transition:opacity 0.6s ease,transform 0.6s ease;display:none;}
   .menu-sec.visible{opacity:1;transform:translateY(0);}
-  .menu-category{max-width:1400px;margin:0 auto;padding:clamp(50px,7vw,90px) 4vw 0;scroll-margin-top:calc(var(--nav-h) + 80px);}
+  .menu-category{max-width:1400px;margin:0 auto;padding:clamp(50px,7vw,90px) 4vw 0;scroll-margin-top:calc(var(--nav-h) + 60px);}
   .category-header{text-align:center;margin-bottom:clamp(32px,4vw,56px);opacity:0;transform:translateY(40px);transition:opacity 1s ease,transform 1s cubic-bezier(.22,1,.36,1);}
   .category-header.in{opacity:1;transform:none;}
   .cat-kicker{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--red);letter-spacing:.14em;display:block;margin-bottom:10px;}
@@ -152,7 +191,6 @@
   .menu-item:hover .scene-img{transform:scale(1.06);}
   .scene.no-img::after{content:'In Tempo · լուսանկարը շուտով';position:absolute;inset:0;z-index:1;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-style:italic;font-size:15px;letter-spacing:.12em;color:var(--muted);background:repeating-linear-gradient(45deg, rgba(43,38,34,.05) 0 14px, transparent 14px 28px), var(--menupage);}
 
-  /* --- ПИЦЦА: старый сплит-эффект --- */
   .pizza-split{position:relative;aspect-ratio:1.2;overflow:hidden;border-radius:12px;}
   .pizza-half{position:absolute;top:0;width:50%;height:100%;overflow:hidden;transition:transform 0.6s cubic-bezier(.22,1,.36,1);}
   .pizza-half.left{left:0;border-right:3px solid var(--paper);}
@@ -165,7 +203,6 @@
   .menu-item:hover .pizza-half.left img,.menu-item:hover .pizza-half.right img{transform:scale(1.05);}
   .pizza-info-overlay{position:absolute;bottom:0;left:0;right:0;padding:32px 20px 20px 20px;background:linear-gradient(to top, rgba(20,15,10,0.98) 0%, rgba(43,38,34,0.95) 50%, rgba(43,38,34,0.7) 80%, transparent 100%);color:#fff;z-index:2;}
 
-  /* --- ЕДА И БАР: список внизу + умный угол --- */
   .dish-list-overlay{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top, rgba(20,15,10,.92) 0%, rgba(20,15,10,.55) 60%, transparent 100%);padding:28px 12px 10px;display:flex;flex-direction:column;gap:4px;z-index:5;}
   .dish-row{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;cursor:pointer;color:rgba(255,255,255,.85);font-size:13px;border-left:2px solid transparent;transition:background .25s,color .25s,border-color .25s;}
   .dish-row:hover,.dish-row.active{background:rgba(255,255,255,.12);color:#fff;border-left-color:var(--red);}
@@ -203,7 +240,7 @@
   .soc svg{width:21px;height:21px;}
 
   footer{position:relative;z-index:1;border-top:1px solid var(--line);background:rgba(201,177,138,.92);backdrop-filter:blur(8px);padding:40px 6vw 30px;display:flex;flex-direction:column;align-items:center;gap:14px;color:var(--muted);font-size:13px;text-align:center;}
-  footer .logo-img{height:112px;max-width:60vw;object-fit:contain;}
+  footer .logo-img{height:150px;max-width:60vw;object-fit:contain;}
   .foot-line{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;}
 
   .rv{opacity:0;transform:translateY(30px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);}
@@ -217,16 +254,15 @@
   .branch-modal-inner h2{font-family:var(--serif);font-size:clamp(28px,5vw,44px);color:var(--paper);margin-bottom:12px;}
   .branch-modal-inner p{color:rgba(241,239,233,.75);font-size:16px;margin-bottom:40px;}
   .branch-choices{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
-  .branch-choice{background:var(--menupage);border:2px solid rgba(43,38,34,0.2);border-radius:20px;padding:40px 24px;cursor:pointer;transition:all 0.3s ease;text-align:center;color:var(--ink);}
+  .branch-choice{background:var(--menupage);border:2px solid rgba(43,38,34,0.2);border-radius:20px;padding:36px 24px;cursor:pointer;transition:all 0.3s ease;text-align:center;color:var(--ink);}
   .branch-choice:hover{background:var(--bg);border-color:var(--red);transform:translateY(-6px);box-shadow:0 20px 40px rgba(0,0,0,0.2);}
   .branch-choice:active{transform:scale(0.96);}
-  .branch-choice .icon{font-size:56px;margin-bottom:16px;filter:drop-shadow(0 4px 6px rgba(0,0,0,0.1));}
   .branch-choice .name{font-family:var(--serif);font-size:26px;color:var(--ink);margin-bottom:8px;font-weight:600;}
   .branch-choice .desc{font-size:14px;color:var(--muted);}
 
   @media (max-width:900px){.nav{padding:0 4vw;}.nav-right{gap:10px;}}
-  @media (max-width:768px){:root{--nav-h:84px;}.nav-link{display:none;}#loader .logo-img{height:383px;}.branch-choices{grid-template-columns:1fr;}}
-  @media (max-width:640px){:root{--nav-h:72px;}html{scroll-padding-top:calc(var(--nav-h) + 80px);}.nav .slogan{display:none;}.burger{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:42px;height:42px;background:none;border:0;cursor:pointer;z-index:5;}.burger span{display:block;width:22px;height:2px;background:var(--paper);transition:.3s;}.nav.scrolled .burger span{background:var(--ink);}.nav.open .burger span:nth-child(1){transform:translateY(7px) rotate(45deg);}.nav.open .burger span:nth-child(2){opacity:0;}.nav.open .burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}.nav .nav-right,.nav.ready .nav-right{position:fixed;top:0;left:0;right:0;z-index:4;flex-direction:column;align-items:stretch;gap:14px;padding:calc(var(--nav-h) + 12px) 22px 24px;background:rgba(184,161,126,.98);backdrop-filter:blur(14px);box-shadow:0 20px 40px rgba(43,38,34,.25);opacity:0;visibility:hidden;transform:translateY(-12px);transition:opacity .3s ease,transform .3s ease,visibility .3s;}.nav.open .nav-right{opacity:1;visibility:visible;transform:none;}.langs{justify-content:center;}.lang-btn{padding:9px 16px;font-size:12px;color:var(--muted);text-shadow:none;border-color:var(--line);}.lang-btn.active{background:var(--ink);color:var(--menupage);}.nav-tel{justify-content:center;color:var(--ink);text-shadow:none;border-color:var(--ink);}.mobile-bar{position:fixed;left:0;right:0;bottom:0;z-index:70;display:flex;gap:10px;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(184,161,126,.98);backdrop-filter:blur(14px);box-shadow:0 -10px 30px rgba(43,38,34,.2);transition:transform .35s cubic-bezier(.22,1,.36,1);}.mobile-bar.hidden{transform:translateY(110%);}.mb-call{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:13px;border:1.5px solid var(--ink);border-radius:999px;color:var(--ink);font-weight:600;font-size:14px;box-shadow:0 2px 8px rgba(43,38,34,.15);}.mb-call svg{width:16px;height:16px;}.mb-book{flex:1;display:flex;align-items:center;justify-content:center;padding:13px;border-radius:999px;background:var(--accent-grad);color:#fff;font-weight:600;font-size:14px;box-shadow:0 4px 14px rgba(216,67,42,.4);}footer{padding-bottom:96px;}.hero-sub{margin-top:22px;}.hero-actions{margin-top:36px;gap:16px;}#loader .logo-img{height:337px;}#loader .slogan{font-size:15px;}.hero-in{padding:0 5vw;}.hero h1{font-size:clamp(30px,9vw,44px);}.hero-sub{font-size:15px;}.hero-actions{flex-direction:column;width:100%;max-width:340px;margin:32px auto 0;}.btn{width:100%;justify-content:center;padding:15px 24px;}.mq-track span{font-size:14px;padding:0 16px;}.menu-grid{grid-template-columns:1fr;}.contact-sec{padding:64px 0 90px;}.contact-sub{font-size:14px;padding:0 6vw;}.phone{font-size:clamp(26px,8vw,40px);}.addr{font-size:13px;line-height:1.9;}.delivery-note{margin:22px 5vw 0;font-size:13px;padding:15px 20px;}.soc{width:44px;height:44px;}footer{padding:32px 5vw 24px;}footer .logo-img{height:92px;}.smart-popup{width:min(240px,80%);}}
+  @media (max-width:768px){:root{--nav-h:104px;}.nav .logo-img{height:88px;}.nav-link{display:none;}#loader .logo-img{height:383px;}.branch-choices{grid-template-columns:1fr;}}
+  @media (max-width:640px){:root{--nav-h:86px;}.nav .logo-img{height:72px;}.nav .slogan{display:none;}.burger{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:42px;height:42px;background:none;border:0;cursor:pointer;z-index:5;}.burger span{display:block;width:22px;height:2px;background:var(--paper);transition:.3s;}.nav.scrolled .burger span{background:var(--ink);}.nav.open .burger span:nth-child(1){transform:translateY(7px) rotate(45deg);}.nav.open .burger span:nth-child(2){opacity:0;}.nav.open .burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}.nav .nav-right,.nav.ready .nav-right{position:fixed;top:0;left:0;right:0;z-index:4;flex-direction:column;align-items:stretch;gap:14px;padding:calc(var(--nav-h) + 12px) 22px 24px;background:rgba(184,161,126,.98);backdrop-filter:blur(14px);box-shadow:0 20px 40px rgba(43,38,34,.25);opacity:0;visibility:hidden;transform:translateY(-12px);transition:opacity .3s ease,transform .3s ease,visibility .3s;}.nav.open .nav-right{opacity:1;visibility:visible;transform:none;}.langs{justify-content:center;}.lang-btn{padding:9px 16px;font-size:12px;color:var(--muted);text-shadow:none;border-color:var(--line);}.lang-btn.active{background:var(--ink);color:var(--menupage);}.nav-tel{justify-content:center;color:var(--ink);text-shadow:none;border-color:var(--ink);}.mobile-bar{position:fixed;left:0;right:0;bottom:0;z-index:70;display:flex;gap:10px;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(184,161,126,.98);backdrop-filter:blur(14px);box-shadow:0 -10px 30px rgba(43,38,34,.2);transition:transform .35s cubic-bezier(.22,1,.36,1);}.mobile-bar.hidden{transform:translateY(110%);}.mb-call{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:13px;border:1.5px solid var(--ink);border-radius:999px;color:var(--ink);font-weight:600;font-size:14px;box-shadow:0 2px 8px rgba(43,38,34,.15);}.mb-call svg{width:16px;height:16px;}.mb-book{flex:1;display:flex;align-items:center;justify-content:center;padding:13px;border-radius:999px;background:var(--accent-grad);color:#fff;font-weight:600;font-size:14px;box-shadow:0 4px 14px rgba(216,67,42,.4);}footer{padding-bottom:96px;}.hero-sub{margin-top:22px;}.hero-actions{margin-top:36px;gap:16px;}#loader .logo-img{height:337px;}#loader .slogan{font-size:15px;}.hero-in{padding:0 5vw;}.hero h1{font-size:clamp(30px,9vw,46px);}.hero-sub{font-size:11px;}.hero-actions{flex-direction:column;width:100%;max-width:340px;margin:32px auto 0;}.btn{width:100%;justify-content:center;padding:15px 24px;}.mq-track span{font-size:14px;padding:0 16px;}.menu-grid{grid-template-columns:1fr;}.contact-sec{padding:64px 0 90px;}.contact-sub{font-size:14px;padding:0 6vw;}.phone{font-size:clamp(26px,8vw,40px);}.addr{font-size:13px;line-height:1.9;}.delivery-note{margin:22px 5vw 0;font-size:13px;padding:15px 20px;}.soc{width:44px;height:44px;}footer{padding:32px 5vw 24px;}footer .logo-img{height:110px;}.smart-popup{width:min(240px,80%);}}
   @media (max-width:380px){.nav-tel{display:none;}.lang-btn{padding:5px 8px;font-size:9px;}#loader .logo-img{height:300px;}}
   @media (prefers-reduced-motion:reduce){*{transition-duration:.01ms !important;animation-duration:.01ms !important;}}
 </style>
@@ -243,12 +279,10 @@
     <p data-i18n="branch_subtitle">Меню отличается в зависимости от филиала</p>
     <div class="branch-choices">
       <div class="branch-choice" data-branch="hyusisayin">
-        <div class="icon">🏛️</div>
         <div class="name">Հյուսիսային</div>
         <div class="desc" data-i18n="branch_big">Большой филиал</div>
       </div>
       <div class="branch-choice" data-branch="mega">
-        <div class="icon">🛍️</div>
         <div class="name">Mega Mall</div>
         <div class="desc" data-i18n="branch_small">Маленький филиал</div>
       </div>
@@ -271,7 +305,7 @@
   <div class="nav-right" id="navRight">
     <a class="nav-link" href="#menu" data-i18n="nav_menu">Մենյու</a>
     <a class="nav-link" href="#contact" data-i18n="nav_contact">Կապ</a>
-    <button class="branch-toggle" id="branchToggle" title="Сменить филиал">🏛️ Հյուսիսային</button>
+    <button class="branch-toggle" id="branchToggle" title="Сменить филиал">Հյուսիսային</button>
     <div class="langs">
       <button class="lang-btn active" data-lang="hy">HY</button>
       <button class="lang-btn" data-lang="en">EN</button>
@@ -293,9 +327,9 @@
     </h1>
     <p class="hero-sub" data-i18n="hero_sub">Բաց է 09:00–24:00</p>
     <div class="hero-actions" id="heroActions" style="display:none;">
-      <button class="btn btn-primary" id="showMenuBtn">📋 <span data-i18n="tab_main">Հիմնական մենյու</span></button>
-      <button class="btn btn-ghost" id="showBarBtn">🍸 <span data-i18n="tab_bar">Բար</span></button>
-      <button class="btn btn-ghost" id="showPizzaBtn">🍕 <span data-i18n="tab_pizza">Պիցցա</span></button>
+      <button class="btn btn-primary" id="showMenuBtn"><span data-i18n="tab_main">Հիմնական մենյու</span></button>
+      <button class="btn btn-ghost" id="showBarBtn"><span data-i18n="tab_bar">Բար</span></button>
+      <button class="btn btn-ghost" id="showPizzaBtn"><span data-i18n="tab_pizza">Պիցցա</span></button>
     </div>
   </div>
   <div class="scroll-cue"><i></i><span data-i18n="cue">թերթեք</span></div>
@@ -316,7 +350,7 @@
   <div class="scene-modal-body">
     <button class="scene-modal-close" id="sceneModalClose" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
     <div id="sceneModalBody"></div>
-    <div class="scene-modal-hint" data-i18n="tap">Սեղմեք կետերին</div>
+    <div class="scene-modal-hint" data-i18n="tap">Ընտրեք ուտեստը ցանկից</div>
   </div>
 </div>
 
@@ -539,7 +573,7 @@ const MENU = [
     ]},
     {dishes:[
       {img:IMG_DIR+'page26_img123.jpg',x:35,y:35,price:1700,n:{hy:'Վարդագույն սառը թեյ',en:'Pink Cold Tea',ru:'Розовый холодный чай'},d:{hy:'Եփած սև թեյ, վարդի սիրոպ, անանուխ',en:'Brewed black tea, rose syrup, mint',ru:'Заваренный черный чай, розовый сироп, мята'}},
-      {img:IMG_DIR+'page26_img123.jpg',x:65,y:65,price:1600,n:{hy:'Սառը նարնջի թեյ',en:'Orange Cold Tea',ru:'Апельсиновый холодный чай'},d:{hy:'Եած սև թեյ, նարնջի հյութ, շաքարի սիրոպ, անանուխ',en:'Brewed black tea, orange juice, sugar syrup, mint',ru:'Заваренный черный чай, апельсиновый сок, сироп с сахаром, мята'}}
+      {img:IMG_DIR+'page26_img123.jpg',x:65,y:65,price:1600,n:{hy:'Սառը նարնջի թեյ',en:'Orange Cold Tea',ru:'Апельсиновый холодный чай'},d:{hy:'Եփած սև թեյ, նարնջի հյութ, շաքարի սիրոպ, անանուխ',en:'Brewed black tea, orange juice, sugar syrup, mint',ru:'Заваренный черный чай, апельсиновый сок, сироп с сахаром, мята'}}
     ]}
   ]},
   {id:'bar_detox',t:{hy:'Դետոքս',en:'Detox',ru:'Детокс'},scenes:[
@@ -607,8 +641,8 @@ const MENU = [
       {img:IMG_DIR+'page41_img123.jpg',x:65,y:65,price:2100,n:{hy:'Սուրճ Գլասե կարամելով',en:'Cafe Glasse Caramel',ru:'Кафе глассе с карамелью'},d:{hy:'Վանիլային պաղպաղակ, էսպրեսո, կաթի փրփուր, կարամելի սոուս',en:'Vanilla ice cream, espresso, milk foam, caramel sauce',ru:'Ванильное мороженое, эспрессо, молочная пена, карамельный соус'}}
     ]},
     {dishes:[
-      {img:IMG_DIR+'page42_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սուրճ Ֆրապպե',en:'Cafe Frappe',ru:'Кафе фраппе'},d:{hy:'Էսպրեսո, կաթ, շաքար, սերուցք, հարած սերուցք, սուրճի փոշի',en:'Espresso, milk, sugar, cream, whipped cream, coffee powder',ru:'Эспрессо, молоко, сахар, сливки, взбитые сливки, кофейный порошок'}},
-      {img:IMG_DIR+'page42_img123.jpg',x:65,y:65,price:1800,n:{hy:'Նուտելլա Ֆրապպե',en:'Nutella Frappe',ru:'Нутелла фраппе'},d:{hy:'Էսպրեսո, կաթ, Նուտելլա, սերուցք, հարած սերուցք, սուրճի փոշի',en:'Espresso, milk, Nutella, cream, whipped cream, coffee powder',ru:'Эспрессо, молоко, Нутелла, сливки, взбитые сливки, кофейный порошок'}}
+      {img:IMG_DIR+'page42_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սուրճ Ֆրապպե',en:'Cafe Frappe',ru:'Кафе фраппе'},d:{hy:'Էսպրեսո, կաթ, շաքար, սերուցք, հարած սերուցք, սուրճի ոշի',en:'Espresso, milk, sugar, cream, whipped cream, coffee powder',ru:'Эспрессо, молоко, сахар, сливки, взбитые сливки, кофейный порошок'}},
+      {img:IMG_DIR+'page42_img123.jpg',x:65,y:65,price:1800,n:{hy:'Նուտելլա Ֆրապպե',en:'Nutella Frappe',ru:'Нутелла фраппе'},d:{hy:'Էսպրեսո, կաթ, Նուտելլա, սերուցք, հարած սերուցք, սուրճի ոշի',en:'Espresso, milk, Nutella, cream, whipped cream, coffee powder',ru:'Эспрессо, молоко, Нутелла, сливки, взбитые сливки, кофейный порошок'}}
     ]}
   ]},
   {id:'bar_shakes',t:{hy:'Էսպրեսո-շեյքեր',en:'Espresso Shakes',ru:'Эспрессо-шейки'},scenes:[
@@ -704,7 +738,7 @@ window.addEventListener('load', () => {
   const branchModal = document.getElementById('branchModal');
   if (savedBranch) {
     currentBranch = savedBranch;
-    document.getElementById('branchToggle').textContent = currentBranch === 'hyusisayin' ? '🏛️ Հյուսիսային' : '🛍️ Mega Mall';
+    document.getElementById('branchToggle').textContent = currentBranch === 'hyusisayin' ? 'Հյուսիսային' : 'Mega Mall';
     document.getElementById('heroActions').style.display = 'flex';
     branchModal.classList.remove('open');
   } else {
@@ -795,7 +829,6 @@ function renderMenu(lang, view){
       const card = document.createElement('div');
       card.className = 'menu-item';
       card.style.transitionDelay = (index % 4) * 80 + 'ms';
-
       const scene = document.createElement('div');
 
       if (cat.id === 'pizza') {
@@ -808,7 +841,6 @@ function renderMenu(lang, view){
           leftImg.alt = dish.n[lang];
           leftImg.loading = 'lazy';
           leftHalf.appendChild(leftImg);
-
           const rightHalf = document.createElement('div');
           rightHalf.className = 'pizza-half right';
           const rightImg = document.createElement('img');
@@ -816,10 +848,8 @@ function renderMenu(lang, view){
           rightImg.alt = dish.n[lang];
           rightImg.loading = 'lazy';
           rightHalf.appendChild(rightImg);
-
           scene.appendChild(leftHalf);
           scene.appendChild(rightHalf);
-
           const infoOverlay = document.createElement('div');
           infoOverlay.className = 'pizza-info-overlay';
           infoOverlay.innerHTML =
@@ -954,7 +984,7 @@ function selectBranch(branch){
   currentBranch = branch;
   try{ localStorage.setItem('intempo_branch', branch); }catch(e){}
   closeBranchModal();
-  branchToggle.textContent = currentBranch === 'hyusisayin' ? '🏛️ Հյուսիսային' : '🛍️ Mega Mall';
+  branchToggle.textContent = currentBranch === 'hyusisayin' ? 'Հյուսիսային' : 'Mega Mall';
   document.getElementById('heroActions').style.display = 'flex';
   if (menuRendered) renderMenu(currentLang, currentView);
 }
