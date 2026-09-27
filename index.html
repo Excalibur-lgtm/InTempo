@@ -28,13 +28,12 @@
     --logo-bg:#b8a17e;
     --accent-grad:linear-gradient(135deg,#e8b04b 0%,#d8432a 100%);
     --glass-bg:rgba(43,38,34,.88); --glass-border:rgba(241,239,233,.16);
-    --nav-top-h:110px;
-    --nav-chips-h:46px;
+    --nav-h:140px;
     --serif:'Noto Serif',Georgia,serif;
     --sans:'Noto Sans',-apple-system,sans-serif;
   }
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-  html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-top-h) + var(--nav-chips-h) + 16px);}
+  html{scroll-behavior:smooth;scroll-padding-top:60px;} /* ИЗМЕНЕНО: отступ под липкую ленту чипсов, а не под шапку */
   body{background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;overflow-x:hidden;}
   a{color:inherit;text-decoration:none;} img{display:block;max-width:100%;}
   ::selection{background:var(--red);color:#fff;}
@@ -47,9 +46,11 @@
   .site-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(183,157,116,.52),rgba(183,157,116,.52)),radial-gradient(ellipse 900px 500px at 15% -10%,rgba(255,255,255,.14),transparent 60%);}
 
   .logo-img{height:110px;width:auto;max-width:38vw;object-fit:contain;display:block;}
+  .nav .logo-img{height:120px;max-width:44vw;}
   .logo-card{display:inline-flex;flex-direction:column;align-items:center;gap:0;background:transparent;padding:4px 10px;border-radius:12px;}
   .logo-card .slogan{margin-top:-2px;}
   .slogan{font-family:var(--serif);font-style:italic;font-size:11px;letter-spacing:.14em;color:var(--muted);}
+  .nav .slogan{font-size:12px;color:rgba(43,38,34,.65);}
 
   #loader{position:fixed;inset:0;z-index:300;background:var(--logo-bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;transition:transform .9s cubic-bezier(.76,0,.24,1),opacity .9s ease,visibility .9s;overflow:hidden;}
   #loader.done{transform:translateY(-100%);opacity:0;visibility:hidden;}
@@ -73,29 +74,9 @@
   @keyframes loadbar{0%{transform:translateX(-110%);}100%{transform:translateX(360%);}}
   @keyframes logoIn{to{opacity:1;transform:none;}}
 
-  /* === ДВУХЭТАЖНАЯ ШАПКА (фиксированная, всегда видна) === */
-  .nav{
-    position:fixed;
-    top:0;left:0;right:0;
-    z-index:60;
-    display:flex;
-    flex-direction:column;
-    background:rgba(184,161,126,.0);
-    transition:background .4s,box-shadow .4s;
-  }
-  .nav.scrolled{
-    background:rgba(184,161,126,.96);
-    backdrop-filter:blur(14px);
-    -webkit-backdrop-filter:blur(14px);
-    box-shadow:0 1px 0 var(--line);
-  }
-  .nav-top{
-    height:var(--nav-top-h);
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:0 6vw;
-  }
+  /* ИЗМЕНЕНО: шапка больше не fixed — она остаётся на месте вверху страницы и уходит при скролле */
+  .nav{position:absolute;top:0;left:0;right:0;z-index:60;height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 6vw;transition:background .4s,box-shadow .4s,transform .45s cubic-bezier(.22,1,.36,1);}
+  .nav.scrolled{background:rgba(184,161,126,.96);backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--line);}
   .nav .logo-card{opacity:0;transform:translateY(-16px) scale(.94);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1);}
   .nav.ready .logo-card{opacity:1;transform:none;}
   .nav .nav-right{opacity:0;transform:translateY(-10px);transition:opacity .8s ease .2s,transform .8s cubic-bezier(.22,1,.36,1) .2s;}
@@ -118,58 +99,6 @@
   .branch-toggle{font:inherit;font-size:12px;font-weight:600;letter-spacing:.05em;padding:8px 16px;border:1.5px solid rgba(241,239,233,.75);border-radius:999px;background:none;color:var(--paper);cursor:pointer;transition:.25s;text-shadow:0 1px 6px rgba(43,38,34,.55);box-shadow:0 2px 6px rgba(43,38,34,.12);white-space:nowrap;display:flex;align-items:center;gap:6px;}
   .nav.scrolled .branch-toggle{border-color:var(--line);color:var(--muted);text-shadow:none;}
   .branch-toggle:hover{background:var(--menupage);color:var(--ink);text-shadow:none;}
-
-  /* === ВТОРОЙ ЭТАЖ: ГОРИЗОНТАЛЬНАЯ ЛЕНТА ЧИПСОВ === */
-  .nav-chips{
-    height:0;
-    overflow:hidden;
-    border-top:0 solid var(--line);
-    background:rgba(201,177,138,.0);
-    backdrop-filter:blur(0);
-    transition:height .35s cubic-bezier(.22,1,.36,1),border-top-width .3s,background .4s,backdrop-filter .4s;
-    display:flex;
-    align-items:center;
-  }
-  .nav.menu-open .nav-chips{
-    height:var(--nav-chips-h);
-    border-top-width:1px;
-    background:rgba(201,177,138,.92);
-    backdrop-filter:blur(12px);
-    -webkit-backdrop-filter:blur(12px);
-  }
-  .nav.scrolled.menu-open .nav-chips{
-    background:rgba(201,177,138,.98);
-  }
-  .cat-nav{
-    display:flex;
-    gap:8px;
-    overflow-x:auto;
-    padding:0 6vw;
-    scrollbar-width:none;
-    -webkit-overflow-scrolling:touch;
-    flex:1;
-    height:100%;
-    align-items:center;
-  }
-  .cat-nav::-webkit-scrollbar{display:none;}
-  .cat-chip{
-    flex:0 0 auto;
-    font:inherit;
-    font-size:11px;
-    font-weight:600;
-    letter-spacing:.1em;
-    text-transform:uppercase;
-    padding:8px 16px;
-    border-radius:999px;
-    border:1px solid var(--line);
-    background:rgba(241,239,233,.5);
-    color:var(--muted);
-    cursor:pointer;
-    transition:background .25s,color .25s,border-color .25s,transform .2s;
-    white-space:nowrap;
-  }
-  .cat-chip:hover{border-color:var(--red);color:var(--red);}
-  .cat-chip.active{background:var(--ink);border-color:var(--ink);color:var(--menupage);}
 
   .hero{position:relative;z-index:1;min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;background-color:var(--bg);background-image:url('Images-final/page03_img1.jpg');background-size:cover;background-position:center;}
   .hero-media{position:absolute;inset:0;}
@@ -239,7 +168,16 @@
   .menu-sec{position:relative;z-index:1;background:rgba(183,157,116,.85);padding:0 0 clamp(70px,9vw,120px);opacity:0;transform:translateY(30px);transition:opacity 0.6s ease,transform 0.6s ease;display:none;}
   .menu-sec.visible{opacity:1;transform:translateY(0);}
 
-  .menu-category{max-width:1400px;margin:0 auto;padding:clamp(50px,7vw,90px) 4vw 0;scroll-margin-top:calc(var(--nav-top-h) + var(--nav-chips-h) + 20px);}
+  /* ИЗМЕНЕНО: лента чипсов липнет к самому верху экрана (top:0) и компактнее */
+  .cat-nav{position:sticky;top:0;z-index:45;display:flex;gap:8px;overflow-x:auto;padding:8px 6vw;background:rgba(183,157,116,.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-block:1px solid var(--line);scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+  .cat-nav::-webkit-scrollbar{display:none;}
+  .cat-nav:empty{display:none;}
+  .cat-chip{flex:0 0 auto;font:inherit;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:10px 18px;border-radius:999px;border:1px solid var(--line);background:rgba(241,239,233,.6);color:var(--muted);cursor:pointer;transition:background .25s,color .25s,border-color .25s;white-space:nowrap;}
+  .cat-chip:hover{border-color:var(--red);color:var(--red);}
+  .cat-chip.active{background:var(--ink);border-color:var(--ink);color:var(--menupage);}
+
+  /* ИЗМЕНЕНО: отступ сверху у раздела = высота ленты чипсов, заголовок не прячется */
+  .menu-category{max-width:1400px;margin:0 auto;padding:clamp(50px,7vw,90px) 4vw 0;scroll-margin-top:60px;}
   .category-header{text-align:center;margin-bottom:clamp(32px,4vw,56px);opacity:0;transform:translateY(40px);transition:opacity 1s ease,transform 1s cubic-bezier(.22,1,.36,1);}
   .category-header.in{opacity:1;transform:none;}
   .cat-kicker{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--red);letter-spacing:.14em;display:block;margin-bottom:10px;}
@@ -328,13 +266,11 @@
   .branch-choice .name{font-family:var(--serif);font-size:26px;color:var(--ink);margin-bottom:8px;font-weight:600;}
   .branch-choice .desc{font-size:14px;color:var(--muted);}
 
-  @media (max-width:900px){.nav-top{padding:0 4vw;}.cat-nav{padding:0 4vw;}.nav-right{gap:10px;}}
-  @media (max-width:768px){:root{--nav-top-h:90px;}.nav .logo-img{height:94px;}.nav-link{display:none;}#loader .logo-img{height:400px;}.branch-choices{grid-template-columns:1fr;}}
+  @media (max-width:900px){.nav{padding:0 4vw;}.nav-right{gap:10px;}}
+  @media (max-width:768px){:root{--nav-h:112px;}.nav .logo-img{height:94px;}.nav-link{display:none;}#loader .logo-img{height:400px;}.branch-choices{grid-template-columns:1fr;}}
   @media (max-width:640px){
-    :root{--nav-top-h:70px;--nav-chips-h:42px;}
-    .nav-top{padding:0 16px;}
-    .cat-nav{padding:0 12px;gap:6px;}
-    .nav .logo-img{height:54px;}
+    :root{--nav-h:92px;}
+    .nav .logo-img{height:76px;}
     .nav .slogan{display:none;}
     .burger{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:42px;height:42px;background:none;border:0;cursor:pointer;z-index:5;}
     .burger span{display:block;width:22px;height:2px;background:var(--paper);transition:.3s;}
@@ -342,7 +278,7 @@
     .nav.open .burger span:nth-child(1){transform:translateY(7px) rotate(45deg);}
     .nav.open .burger span:nth-child(2){opacity:0;}
     .nav.open .burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
-    .nav .nav-right,.nav.ready .nav-right{position:fixed;top:var(--nav-top-h);left:0;right:0;z-index:4;flex-direction:column;align-items:stretch;gap:14px;padding:16px 22px 24px;background:rgba(184,161,126,.98);backdrop-filter:blur(14px);box-shadow:0 20px 40px rgba(43,38,34,.25);opacity:0;visibility:hidden;transform:translateY(-12px);transition:opacity .3s ease,transform .3s ease,visibility .3s;}
+    .nav .nav-right,.nav.ready .nav-right{position:fixed;top:0;left:0;right:0;z-index:4;flex-direction:column;align-items:stretch;gap:14px;padding:calc(var(--nav-h) + 12px) 22px 24px;background:rgba(184,161,126,.98);backdrop-filter:blur(14px);box-shadow:0 20px 40px rgba(43,38,34,.25);opacity:0;visibility:hidden;transform:translateY(-12px);transition:opacity .3s ease,transform .3s ease,visibility .3s;}
     .nav.open .nav-right{opacity:1;visibility:visible;transform:none;}
     .langs{justify-content:center;}
     .lang-btn{padding:9px 16px;font-size:12px;color:var(--muted);text-shadow:none;border-color:var(--line);}
@@ -365,7 +301,8 @@
     .btn{width:100%;justify-content:center;padding:15px 24px;}
     .mq-track span{font-size:14px;padding:0 16px;}
     .menu-grid{grid-template-columns:1fr;gap:18px;}
-    .cat-chip{font-size:10px;padding:7px 13px;}
+    .cat-nav{padding:6px 12px;gap:6px;} /* ИЗМЕНЕНО: компактнее на мобильном */
+    .cat-chip{font-size:11px;padding:9px 14px;}
     .menu-category{padding:clamp(36px,9vw,60px) 4vw 0;}
     .dish-list-overlay{max-height:46%;overflow-y:auto;scrollbar-width:none;padding-top:34px;}
     .dish-list-overlay::-webkit-scrollbar{display:none;}
@@ -420,24 +357,19 @@
 <script>setTimeout(function(){var l=document.getElementById('loader');if(l&&!l.classList.contains('done'))l.classList.add('done');},4000);</script>
 
 <nav class="nav" id="nav">
-  <div class="nav-top">
-    <a class="logo-card" href="#top" aria-label="In Tempo — Time to enjoy"><img class="logo-img" src="images/logoIntempo.png" alt="In Tempo"><span class="slogan">Time to enjoy</span></a>
-    <div class="nav-right" id="navRight">
-      <a class="nav-link" href="#menu" data-i18n="nav_menu">Մենյու</a>
-      <a class="nav-link" href="#contact" data-i18n="nav_contact">Կապ</a>
-      <button class="branch-toggle" id="branchToggle" title="Сменить филиал">Հյուսիսային</button>
-      <div class="langs">
-        <button class="lang-btn active" data-lang="hy">HY</button>
-        <button class="lang-btn" data-lang="en">EN</button>
-        <button class="lang-btn" data-lang="ru">RU</button>
-      </div>
-      <a class="nav-tel" href="tel:+37477966933">+374 77 966 933</a>
+  <a class="logo-card" href="#top" aria-label="In Tempo — Time to enjoy"><img class="logo-img" src="images/logoIntempo.png" alt="In Tempo"><span class="slogan">Time to enjoy</span></a>
+  <div class="nav-right" id="navRight">
+    <a class="nav-link" href="#menu" data-i18n="nav_menu">Մենյու</a>
+    <a class="nav-link" href="#contact" data-i18n="nav_contact">Կապ</a>
+    <button class="branch-toggle" id="branchToggle" title="Сменить филиал">Հյուսիսային</button>
+    <div class="langs">
+      <button class="lang-btn active" data-lang="hy">HY</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="ru">RU</button>
     </div>
-    <button class="burger" id="burgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+    <a class="nav-tel" href="tel:+37477966933">+374 77 966 933</a>
   </div>
-  <div class="nav-chips" id="navChips" aria-label="Categories">
-    <div class="cat-nav" id="catNav"></div>
-  </div>
+  <button class="burger" id="burgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
 
 <header class="hero" id="top">
@@ -470,6 +402,7 @@
 </div></div>
 
 <section class="menu-sec" id="menu">
+  <div class="cat-nav" id="catNav" aria-label="Categories"></div>
   <div id="menuRoot"></div>
 </section>
 
@@ -525,14 +458,14 @@ const MENU = [
       { img:IMG_DIR+'03b_croissant_olympia_pistachio_variant2.png', x:65, y:60, price:1500, n:{hy:'Կրուասան Պիստակի Կրեմով',en:'Croissant with Pistachio Cream',ru:'Круассан с фисташковым кремом'}, d:{hy:'',en:'',ru:''} }
     ]},
     { dishes:[
-      { img:IMG_DIR+'04_waffles_signature_cream.png', x:50, y:55, price:2100, n:{hy:'Վաֆլի Ֆիրմային Կրեմով',en:'Waffles with Signature Cream',ru:'Вафли со фирменным кремом'}, d:{hy:'Վաֆլի, հապալաս, ֆիրմային կրեմ, բալի ջեմ',en:'Waffles, blueberries, cream, cherry jam',ru:'Вафли, черника, фирменный крем, вишневый джем'} }
+      { img:IMG_DIR+'04_waffles_signature_cream.png', x:50, y:55, price:2100, n:{hy:'Վաֆլի Ֆիրմային Կրեմով',en:'Waffles with Signature Cream',ru:'Вафли с фирменным кремом'}, d:{hy:'Վաֆլի, հապալաս, ֆիրմային կրեմ, բալի ջեմ',en:'Waffles, blueberries, cream, cherry jam',ru:'Вафли, черника, фирменный крем, вишневый джем'} }
     ]},
     { dishes:[
       { img:IMG_DIR+'05_waffles_pistachio_cream.png', x:50, y:55, price:2200, n:{hy:'Վաֆլի Պիստակի Կրեմով',en:'Waffles with Pistachio Cream',ru:'Вафли с фисташковым кремом'}, d:{hy:'Վաֆլի, պիստակի կրեմ, հապալաս, մանգոյի ջեմ, պիստակ',en:'Waffles, pistachio cream, blueberries, mango jam, pistachios',ru:'Вафли, фисташковый крем, черника, манговый джем, фисташки'} }
     ]},
     { dishes:[
-      { img:IMG_DIR+'06_croissant_mortadella_prosciutto.png', x:35, y:40, price:1800, n:{hy:'Կրուասան Մորտադելլայով',en:'Croissant with Mortadella',ru:'Круассан с Мортаделлой'}, d:{hy:'Կրուասան, սերուցքային պանիր, ռուկոլա, մորտադելլա, պարմեզան, էքստրա վիրջին ձիթայուղ, բազիլիկ, պիստակ',en:'Croissant, cream cheese, arugula, mortadella, parmesan, extra virgin olive oil, basil, pistachios',ru:'Круассан, сливочный сыр, рукола, мортаделла, пармезан, оливковое масло extra virgin, базилик, фисташки'} },
-      { img:IMG_DIR+'06_croissant_mortadella_prosciutto.png', x:65, y:60, price:1900, n:{hy:'Կրուասան Պրոշուտոյով',en:'Croissant with Prosciutto',ru:'Круассан с Прошутто'}, d:{hy:'Կրուասան, ֆիրմային սոուս, ռուկոլա, պրոշուտո, պարմեզան, էքստրա վիրջին ձիթայուղ, բազիլիկ',en:'Croissant, signature sauce, arugula, prosciutto, parmesan, extra virgin olive oil, basil',ru:'Круассан, фирменный соус, рукола, прошутто, пармезан, оливковое масло extra virgin, базилик'} }
+      { img:IMG_DIR+'06_croissant_mortadella_prosciutto.png', x:35, y:40, price:1800, n:{hy:'Կրուասան Մորտադելլայով',en:'Croissant with Mortadella',ru:'Круассан с Мортаделлой'}, d:{hy:'Կրուասան, սերուցքային պանիր, ռուկոլա, մորտադելլա, պարմեզան, էքստրա վիրջին ձիթայուղ, բազիլիկ, պիստակ',en:'Croissant, cream cheese, arugula, mortadella, parmesan, extra virgin olive oil, basil, pistachios',ru:'Круассан, сливочный сыр, руккола, мортаделла, пармезан, оливковое масло extra virgin, базилик, фисташки'} },
+      { img:IMG_DIR+'06_croissant_mortadella_prosciutto.png', x:65, y:60, price:1900, n:{hy:'Կրուասան Պրոշուտոյով',en:'Croissant with Prosciutto',ru:'Круассан с Прошутто'}, d:{hy:'Կրուասան, ֆիրմային սոուս, ռուկոլա, պրոշուտո, պարմեզան, էքստրա վիրջին ձիթայուղ, բազիլիկ',en:'Croissant, signature sauce, arugula, prosciutto, parmesan, extra virgin olive oil, basil',ru:'Круассан, фирменный соус, руккола, прошутто, пармезан, оливковое масло extra virgin, базилик'} }
     ]},
     { dishes:[
       { img:IMG_DIR+'07_armenian_tomato_omelette.png', x:50, y:55, price:2300, n:{hy:'Հայկական Լոլիկով Ձվածեղ',en:'Armenian Tomato Omelette',ru:'Армянский омлет с помидорами'}, d:{hy:'Լոլիկ, սերուցքային պանիր, բազիլիկ, ֆիրմային հաց, պարմեզան պանիր',en:'Tomatoes, cream cheese, basil, signature bread, parmesan cheese',ru:'Помидор, сливочный сыр, базилик, фирменный хлеб, сыр пармезан'} }
@@ -719,14 +652,14 @@ const MENU = [
   ]},
   {id:'bar_cold_tea',t:{hy:'Սառը թեյեր',en:'Cold Teas',ru:'Холодные чаи'},scenes:[
     {dishes:[
-      {img:IMG_DIR+'page23_img123.jpg',x:50,y:50,price:1800,n:{hy:'Սառը մոշի թեյ',en:'Cold Blackberry Tea',ru:'Холодный ежевичный чай'},d:{hy:'Եած սև թեյ, ելակի պյուրե, անանուխ, ելակ',en:'Brewed black tea, blackberry puree, mint, blackberry',ru:'Заваренный черный чай, пюре из ежевики, мята, ежевика'}}
+      {img:IMG_DIR+'page23_img123.jpg',x:50,y:50,price:1800,n:{hy:'Սառը մոշի թեյ',en:'Cold Blackberry Tea',ru:'Холодный ежевичный чай'},d:{hy:'Եփած սև թեյ, մոշի պյուրե, անանուխ, մոշ',en:'Brewed black tea, blackberry puree, mint, blackberry',ru:'Заваренный черный чай, пюре из ежевики, мята, ежевика'}}
     ]},
     {dishes:[
       {img:IMG_DIR+'page24_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սառը ելակի թեյ',en:'Cold Strawberry Tea',ru:'Клубничный холодный чай'},d:{hy:'Եփած սև թեյ, ելակի պյուրե, ելակ, անանուխ',en:'Brewed black tea, strawberry puree, strawberry, mint',ru:'Заваренный черный чай, клубничное пюре, клубника, мята'}},
       {img:IMG_DIR+'page24_img123.jpg',x:65,y:65,price:1600,n:{hy:'Սառը մանգոյի թեյ',en:'Cold Mango Tea',ru:'Манговый холодный чай'},d:{hy:'Եած սև թեյ, մանգոյի սիրոպ, անանուխ, չորացրած մանգո',en:'Brewed black tea, mango syrup, mint, dried mango',ru:'Заваренный черный чай, манговый сироп, мята, сушеное манго'}}
     ]},
     {dishes:[
-      {img:IMG_DIR+'page25_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սառը դեղձի թեյ',en:'Cold Peach Tea',ru:'Персиковый холодный чай'},d:{hy:'Եած սև թեյ, պերսիկի պյուրե, անանուխ, լայմ, լիմոն',en:'Brewed black tea, peach puree, mint, lime, lemon',ru:'Заваренный черный чай, персиковое пюре, мята, лайм, лимон'}},
+      {img:IMG_DIR+'page25_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սառը դեղձի թեյ',en:'Cold Peach Tea',ru:'Персиковый холодный чай'},d:{hy:'Եփած սև թեյ, պերսիկի պյուրե, անանուխ, լայմ, լիմոն',en:'Brewed black tea, peach puree, mint, lime, lemon',ru:'Заваренный черный чай, персиковое пюре, мята, лайм, лимон'}},
       {img:IMG_DIR+'page25_img123.jpg',x:65,y:65,price:1700,n:{hy:'Սառը լավանդայի թեյ',en:'Cold Lavender Tea',ru:'Лавандовый холодный чай'},d:{hy:'Լավանդայի սիրոպ, անանուխ, լիմոն, լայմ, ռոզմարին',en:'Lavender syrup, mint, lemon, lime, rosemary',ru:'Лавандовый сироп, мята, лимон, лайм, розмарин'}}
     ]},
     {dishes:[
@@ -745,7 +678,7 @@ const MENU = [
   ]},
   {id:'bar_lemonades',t:{hy:'Լիմոնադներ',en:'Lemonades',ru:'Лимонады'},scenes:[
     {dishes:[
-      {img:IMG_DIR+'page28_img123.jpg',x:50,y:50,price:'1800 / 4800',n:{hy:'Հատապտղային Լիմոնադ',en:'Berry Lemonade',ru:'Ягодный лимонад'},d:{hy:'Ելակ, ելակ, մորի, սև հաղարջ, գազավորված ջուր',en:'Strawberry, blackberry, raspberry, black currant, sparkling water',ru:'Клубника, ежевика, малина, чёрная смородина, газированная вода'}}
+      {img:IMG_DIR+'page28_img123.jpg',x:50,y:50,price:'1800 / 4800',n:{hy:'Հատապտղային Լիմոնադ',en:'Berry Lemonade',ru:'Ягодный лимонад'},d:{hy:'Ելակ, մոշ, սև հաղարջ, գազավորված ջուր',en:'Strawberry, blackberry, raspberry, black currant, sparkling water',ru:'Клубника, ежевика, малина, чёрная смородина, газированная вода'}}
     ]},
     {dishes:[
       {img:IMG_DIR+'page29_img123.jpg',x:35,y:35,price:'1800 / 4800',n:{hy:'Էկզոտիկ Լիմոնադ',en:'Exotic Lemonade',ru:'Экзотический лимонад'},d:{hy:'Մարակույայի պյուրե, անանուխ, նարինջ, լիմոն, գրեյպֆրուտ, կիտրոնի հյութ, ելակ',en:'Passionfruit puree, mint, orange, lemon, grapefruit, lemon juice, strawberry',ru:'Пюре маракуйи, мята, апельсин, лимон, грейпфрут, лимонный сок, клубника'}},
@@ -766,7 +699,7 @@ const MENU = [
   {id:'bar_hot_coffee',t:{hy:'Տաք սուրճ',en:'Hot Coffee',ru:'Горячий кофе'},scenes:[
     {dishes:[
       {img:IMG_DIR+'page35_img123.jpg',x:35,y:35,price:1800,n:{hy:'Սուրճ Նուտելլա',en:'Coffee Nutella',ru:'Кофе Нутелла'},d:{hy:'Էսպրեսո, նուտելլա, կաթ, հարած սերուցք',en:'Espresso, nutella, milk, whipped cream',ru:'Эспрессо, нутелла, молоко, взбитые сливки'}},
-      {img:IMG_DIR+'page35_img123.jpg',x:65,y:65,price:1800,n:{hy:'Սուրճ Վենա',en:'Coffee Vienna',ru:'Кофе Вена'},d:{hy:'Էսպրեսո, կաթ, հարած սերուցք',en:'Espresso, milk, whipped cream',ru:'Эспрессо, молоко, взбитые сливки'}}
+      {img:IMG_DIR+'page35_img123.jpg',x:65,y:65,price:1800,n:{hy:'Սուրճ Վիեննա',en:'Coffee Vienna',ru:'Кофе Вена'},d:{hy:'Էսպրեսո, կաթ, հարած սերուցք',en:'Espresso, milk, whipped cream',ru:'Эспрессо, молоко, взбитые сливки'}}
     ]},
     {dishes:[
       {img:IMG_DIR+'page36_img123.jpg',x:35,y:35,price:2300,n:{hy:'Լատտե ընկույզով',en:'Latte with Hazelnut',ru:'Латте с фундуком'},d:{hy:'Էսպրեսո, կաթ, ընկույզի սիրոպ',en:'Espresso, milk, hazelnut syrup',ru:'Эспрессо, молоко, фундучный сироп'}},
@@ -874,6 +807,7 @@ const DICT = {
 };
 
 const fmtPrice = n => (n == null ? '—' : (typeof n === 'number' ? String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' ') : String(n))) + ' ֏';
+const canHover = window.matchMedia('(hover:hover)').matches;
 const isMobile = () => window.matchMedia('(max-width:640px)').matches;
 
 let revealed = false;
@@ -911,15 +845,7 @@ setTimeout(revealOnce, 4000);
   document.head.appendChild(l);
 })();
 
-// Шапка при скролле — всегда видна (не скрывается)
 const navEl = document.getElementById('nav');
-let lastScroll = 0;
-window.addEventListener('scroll', () => {
-  const y = window.scrollY;
-  navEl.classList.toggle('scrolled', y > 40);
-  lastScroll = y;
-}, {passive:true});
-
 const burgerBtn = document.getElementById('burgerBtn');
 burgerBtn.addEventListener('click', e => {
   e.stopPropagation();
@@ -966,18 +892,15 @@ const io = new IntersectionObserver(es => es.forEach(en => {
   if (en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
 }), {threshold:.1, rootMargin:'0px 0px -40px 0px'});
 
-/* === ГОРИЗОНТАЛЬНАЯ ЛЕНТА ЧИПСОВ ВО ВТОРОМ РЯДУ ШАПКИ === */
+/* === ЛЕНТА ЧИПСОВ: построение, скролл, scroll-spy === */
+/* ИЗМЕНЕНО: шапка больше не фиксирована, поэтому offset = только высота ленты чипсов */
 function navOffset(){
-  const navH = navEl.getBoundingClientRect().height;
-  return navH + 16;
+  const chipH = document.getElementById('catNav').offsetHeight || 0;
+  return chipH + 8;
 }
 function buildCatNav(cats, lang){
   const nav = document.getElementById('catNav');
   nav.innerHTML = '';
-  if (cats.length < 2) {
-    navEl.classList.remove('menu-open');
-    return;
-  }
   cats.forEach(cat => {
     const btn = document.createElement('button');
     btn.className = 'cat-chip';
@@ -992,7 +915,6 @@ function buildCatNav(cats, lang){
     });
     nav.appendChild(btn);
   });
-  navEl.classList.add('menu-open');
 }
 function centerChip(chip){
   const row = chip.parentElement;
@@ -1001,7 +923,7 @@ function centerChip(chip){
 }
 function updateActiveChip(){
   if (!catSections.length) return;
-  const pos = window.scrollY + navOffset();
+  const pos = window.scrollY + navOffset() + 60;
   let activeId = null;
   for (const sec of catSections){
     const top = sec.getBoundingClientRect().top + window.scrollY;
