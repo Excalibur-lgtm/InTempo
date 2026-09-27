@@ -167,12 +167,20 @@
   .menu-sec{position:relative;z-index:1;background:rgba(183,157,116,.85);padding:0 0 clamp(70px,9vw,120px);opacity:0;transform:translateY(30px);transition:opacity 0.6s ease,transform 0.6s ease;display:none;}
   .menu-sec.visible{opacity:1;transform:translateY(0);}
 
-  .cat-nav{position:sticky;top:var(--nav-h);z-index:45;display:flex;gap:8px;overflow-x:auto;padding:12px 6vw;background:rgba(183,157,116,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-block:1px solid var(--line);scrollbar-width:none;-webkit-overflow-scrolling:touch;}
-  .cat-nav::-webkit-scrollbar{display:none;}
+  /* === КОМПАКТНАЯ КНОПКА-ДРОПДАУН РАЗДЕЛОВ (вместо ленты чипсов) === */
+  .cat-nav{position:sticky;top:var(--nav-h);z-index:45;padding:10px 6vw 22px;background:linear-gradient(to bottom, rgba(183,157,116,.92) 0%, rgba(183,157,116,.55) 60%, rgba(183,157,116,0) 100%);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
   .cat-nav:empty{display:none;}
-  .cat-chip{flex:0 0 auto;font:inherit;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:10px 18px;border-radius:999px;border:1px solid var(--line);background:rgba(241,239,233,.6);color:var(--muted);cursor:pointer;transition:background .25s,color .25s,border-color .25s;white-space:nowrap;}
-  .cat-chip:hover{border-color:var(--red);color:var(--red);}
-  .cat-chip.active{background:var(--ink);border-color:var(--ink);color:var(--menupage);}
+  .cat-drop{position:relative;display:inline-block;}
+  .cat-drop-btn{display:inline-flex;align-items:center;gap:10px;font:inherit;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:10px 20px;border-radius:999px;border:1px solid rgba(241,239,233,.25);background:rgba(43,38,34,.92);color:var(--menupage);cursor:pointer;box-shadow:0 6px 18px rgba(43,38,34,.28);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:background .25s,transform .2s;}
+  .cat-drop-btn:hover{background:var(--ink);transform:translateY(-1px);}
+  .cat-drop-btn .arr{font-size:10px;transition:transform .3s;}
+  .cat-drop.open .cat-drop-btn .arr{transform:rotate(180deg);}
+  .cat-drop-panel{position:absolute;top:calc(100% + 8px);left:0;min-width:250px;max-height:320px;overflow-y:auto;background:rgba(43,38,34,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(241,239,233,.16);border-radius:14px;padding:6px;opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .25s,transform .25s,visibility .25s;box-shadow:0 18px 44px rgba(0,0,0,.35);scrollbar-width:none;}
+  .cat-drop-panel::-webkit-scrollbar{display:none;}
+  .cat-drop.open .cat-drop-panel{opacity:1;visibility:visible;transform:translateY(0);}
+  .cat-drop-item{display:flex;width:100%;text-align:left;font:inherit;font-size:13px;font-weight:600;letter-spacing:.04em;padding:10px 14px;border:0;border-radius:10px;background:none;color:rgba(241,239,233,.85);cursor:pointer;transition:background .2s,color .2s;}
+  .cat-drop-item:hover{background:rgba(241,239,233,.12);color:#fff;}
+  .cat-drop-item.active{background:var(--red);color:#fff;}
 
   .menu-category{max-width:1400px;margin:0 auto;padding:clamp(50px,7vw,90px) 4vw 0;scroll-margin-top:calc(var(--nav-h) + 60px);}
   .category-header{text-align:center;margin-bottom:clamp(32px,4vw,56px);opacity:0;transform:translateY(40px);transition:opacity 1s ease,transform 1s cubic-bezier(.22,1,.36,1);}
@@ -298,8 +306,9 @@
     .btn{width:100%;justify-content:center;padding:15px 24px;}
     .mq-track span{font-size:14px;padding:0 16px;}
     .menu-grid{grid-template-columns:1fr;gap:18px;}
-    .cat-nav{padding:8px 12px;gap:6px;}
-    .cat-chip{font-size:11px;padding:9px 14px;}
+    .cat-nav{padding:8px 12px 16px;}
+    .cat-drop-btn{font-size:11px;padding:9px 16px;}
+    .cat-drop-panel{min-width:210px;max-height:260px;}
     .menu-category{padding:clamp(36px,9vw,60px) 4vw 0;}
     .dish-list-overlay{max-height:46%;overflow-y:auto;scrollbar-width:none;padding-top:34px;}
     .dish-list-overlay::-webkit-scrollbar{display:none;}
@@ -889,6 +898,7 @@ const io = new IntersectionObserver(es => es.forEach(en => {
   if (en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
 }), {threshold:.1, rootMargin:'0px 0px -40px 0px'});
 
+/* === КНОПКА-ДРОПДАУН РАЗДЕЛОВ: построение, скролл, scroll-spy === */
 function navOffset(){
   const navH = document.getElementById('nav').offsetHeight;
   const chipH = document.getElementById('catNav').offsetHeight || 0;
@@ -897,26 +907,41 @@ function navOffset(){
 function buildCatNav(cats, lang){
   const nav = document.getElementById('catNav');
   nav.innerHTML = '';
+  if (cats.length < 2) return; // Пицца и Завтраки: навигация не нужна
+  const drop = document.createElement('div');
+  drop.className = 'cat-drop';
+  drop.innerHTML =
+    '<button class="cat-drop-btn" type="button"><span class="lbl"></span><span class="arr">▾</span></button>' +
+    '<div class="cat-drop-panel"></div>';
+  const btn = drop.querySelector('.cat-drop-btn');
+  const lbl = drop.querySelector('.lbl');
+  const panel = drop.querySelector('.cat-drop-panel');
   cats.forEach(cat => {
-    const btn = document.createElement('button');
-    btn.className = 'cat-chip';
-    btn.type = 'button';
-    btn.textContent = cat.t[lang];
-    btn.dataset.target = 'cat-' + cat.id;
-    btn.addEventListener('click', () => {
+    const item = document.createElement('button');
+    item.type = 'button';
+    item.className = 'cat-drop-item';
+    item.textContent = cat.t[lang];
+    item.dataset.target = 'cat-' + cat.id;
+    item.addEventListener('click', () => {
+      drop.classList.remove('open');
       const sec = document.getElementById('cat-' + cat.id);
       if (!sec) return;
       const y = sec.getBoundingClientRect().top + window.scrollY - navOffset();
       window.scrollTo({top: Math.max(0, y), behavior:'smooth'});
     });
-    nav.appendChild(btn);
+    panel.appendChild(item);
   });
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    drop.classList.toggle('open');
+  });
+  lbl.textContent = cats[0].t[lang];
+  nav.appendChild(drop);
 }
-function centerChip(chip){
-  const row = chip.parentElement;
-  const target = chip.offsetLeft - row.clientWidth / 2 + chip.clientWidth / 2;
-  row.scrollTo({left: Math.max(0, target), behavior:'smooth'});
-}
+document.addEventListener('click', e => {
+  const d = document.querySelector('.cat-drop.open');
+  if (d && !d.contains(e.target)) d.classList.remove('open');
+});
 function updateActiveChip(){
   if (!catSections.length) return;
   const pos = window.scrollY + navOffset() + 60;
@@ -925,10 +950,13 @@ function updateActiveChip(){
     const top = sec.getBoundingClientRect().top + window.scrollY;
     if (top <= pos) activeId = sec.id;
   }
-  document.querySelectorAll('.cat-chip').forEach(ch => {
-    const on = ch.dataset.target === activeId;
-    if (on && !ch.classList.contains('active')) centerChip(ch);
-    ch.classList.toggle('active', on);
+  const drop = document.querySelector('.cat-drop');
+  if (!drop) return;
+  const lbl = drop.querySelector('.lbl');
+  drop.querySelectorAll('.cat-drop-item').forEach(it => {
+    const on = it.dataset.target === activeId;
+    it.classList.toggle('active', on);
+    if (on && lbl.textContent !== it.textContent) lbl.textContent = it.textContent;
   });
 }
 let spyTick = false;
