@@ -33,7 +33,7 @@
     --sans:'Noto Sans',-apple-system,sans-serif;
   }
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-  html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 60px);}
+  html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 20px);}
   body{background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;overflow-x:hidden;}
   a{color:inherit;text-decoration:none;} img{display:block;max-width:100%;}
   ::selection{background:var(--red);color:#fff;}
@@ -167,22 +167,71 @@
   .menu-sec{position:relative;z-index:1;background:rgba(183,157,116,.85);padding:0 0 clamp(70px,9vw,120px);opacity:0;transform:translateY(30px);transition:opacity 0.6s ease,transform 0.6s ease;display:none;}
   .menu-sec.visible{opacity:1;transform:translateY(0);}
 
-  /* === КОМПАКТНАЯ КНОПКА-ДРОПДАУН РАЗДЕЛОВ (вместо ленты чипсов) === */
-  .cat-nav{position:sticky;top:var(--nav-h);z-index:45;padding:10px 6vw 22px;background:linear-gradient(to bottom, rgba(183,157,116,.92) 0%, rgba(183,157,116,.55) 60%, rgba(183,157,116,0) 100%);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
-  .cat-nav:empty{display:none;}
-  .cat-drop{position:relative;display:inline-block;}
-  .cat-drop-btn{display:inline-flex;align-items:center;gap:10px;font:inherit;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:10px 20px;border-radius:999px;border:1px solid rgba(241,239,233,.25);background:rgba(43,38,34,.92);color:var(--menupage);cursor:pointer;box-shadow:0 6px 18px rgba(43,38,34,.28);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:background .25s,transform .2s;}
-  .cat-drop-btn:hover{background:var(--ink);transform:translateY(-1px);}
-  .cat-drop-btn .arr{font-size:10px;transition:transform .3s;}
-  .cat-drop.open .cat-drop-btn .arr{transform:rotate(180deg);}
-  .cat-drop-panel{position:absolute;top:calc(100% + 8px);left:0;min-width:250px;max-height:320px;overflow-y:auto;background:rgba(43,38,34,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(241,239,233,.16);border-radius:14px;padding:6px;opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .25s,transform .25s,visibility .25s;box-shadow:0 18px 44px rgba(0,0,0,.35);scrollbar-width:none;}
-  .cat-drop-panel::-webkit-scrollbar{display:none;}
-  .cat-drop.open .cat-drop-panel{opacity:1;visibility:visible;transform:translateY(0);}
-  .cat-drop-item{display:flex;width:100%;text-align:left;font:inherit;font-size:13px;font-weight:600;letter-spacing:.04em;padding:10px 14px;border:0;border-radius:10px;background:none;color:rgba(241,239,233,.85);cursor:pointer;transition:background .2s,color .2s;}
-  .cat-drop-item:hover{background:rgba(241,239,233,.12);color:#fff;}
-  .cat-drop-item.active{background:var(--red);color:#fff;}
+  /* === ВЕРТИКАЛЬНАЯ НАВИГАЦИЯ СБОКУ (ПРЕМИУМ) === */
+  .cat-rail{
+    position:fixed;
+    right:22px;
+    top:50%;
+    transform:translateY(-50%);
+    z-index:45;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-end;
+    gap:4px;
+    max-height:70vh;
+    overflow-y:auto;
+    scrollbar-width:none;
+    padding:4px 0;
+  }
+  .cat-rail::-webkit-scrollbar{display:none;}
+  .cat-rail:empty{display:none;}
+  .cat-rail-item{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:6px 12px 6px 16px;
+    border:0;
+    background:transparent;
+    cursor:pointer;
+    font:inherit;
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--muted);
+    transition:color .25s,transform .25s;
+    position:relative;
+    border-radius:999px 0 0 999px;
+    white-space:nowrap;
+  }
+  .cat-rail-item:hover{color:var(--ink);transform:translateX(-3px);}
+  .cat-rail-item::before{
+    content:"";
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:var(--line);
+    flex-shrink:0;
+    transition:background .25s,transform .25s;
+  }
+  .cat-rail-item.active{color:var(--ink);}
+  .cat-rail-item.active::before{
+    background:var(--red);
+    transform:scale(1.3);
+    box-shadow:0 0 0 3px rgba(216,67,42,.18);
+  }
+  .cat-rail-track{
+    position:absolute;
+    right:14px;
+    top:50%;
+    bottom:50%;
+    width:1px;
+    background:var(--line);
+    pointer-events:none;
+    display:none;
+  }
 
-  .menu-category{max-width:1400px;margin:0 auto;padding:clamp(50px,7vw,90px) 4vw 0;scroll-margin-top:calc(var(--nav-h) + 60px);}
+  .menu-category{max-width:1400px;margin:0 auto;padding:clamp(50px,7vw,90px) 4vw 0;scroll-margin-top:calc(var(--nav-h) + 20px);}
   .category-header{text-align:center;margin-bottom:clamp(32px,4vw,56px);opacity:0;transform:translateY(40px);transition:opacity 1s ease,transform 1s cubic-bezier(.22,1,.36,1);}
   .category-header.in{opacity:1;transform:none;}
   .cat-kicker{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--red);letter-spacing:.14em;display:block;margin-bottom:10px;}
@@ -306,9 +355,6 @@
     .btn{width:100%;justify-content:center;padding:15px 24px;}
     .mq-track span{font-size:14px;padding:0 16px;}
     .menu-grid{grid-template-columns:1fr;gap:18px;}
-    .cat-nav{padding:8px 12px 16px;}
-    .cat-drop-btn{font-size:11px;padding:9px 16px;}
-    .cat-drop-panel{min-width:210px;max-height:260px;}
     .menu-category{padding:clamp(36px,9vw,60px) 4vw 0;}
     .dish-list-overlay{max-height:46%;overflow-y:auto;scrollbar-width:none;padding-top:34px;}
     .dish-list-overlay::-webkit-scrollbar{display:none;}
@@ -324,6 +370,45 @@
     .soc{width:44px;height:44px;}
     footer{padding:32px 5vw 24px;}
     footer .logo-img{height:120px;}
+
+    /* === МОБИЛЬНАЯ ВЕРСИЯ: точки внизу над панелью звонков === */
+    .cat-rail{
+      position:fixed;
+      right:auto;
+      top:auto;
+      bottom:calc(80px + env(safe-area-inset-bottom));
+      left:50%;
+      transform:translateX(-50%);
+      flex-direction:row;
+      gap:6px;
+      max-height:none;
+      padding:8px 14px;
+      background:rgba(43,38,34,.92);
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+      border-radius:999px;
+      border:1px solid var(--glass-border);
+      box-shadow:0 10px 30px rgba(0,0,0,.3);
+      max-width:calc(100vw - 24px);
+      overflow-x:auto;
+      scrollbar-width:none;
+    }
+    .cat-rail::-webkit-scrollbar{display:none;}
+    .cat-rail-item{
+      padding:0;
+      font-size:0;
+      gap:0;
+    }
+    .cat-rail-item::before{
+      width:8px;
+      height:8px;
+    }
+    .cat-rail-item.active::before{
+      background:var(--red);
+      transform:scale(1.2);
+      box-shadow:0 0 0 3px rgba(216,67,42,.25);
+    }
+    .cat-rail-item:hover{transform:none;}
   }
   @media (max-width:380px){.nav-tel{display:none;}.lang-btn{padding:5px 8px;font-size:9px;}#loader .logo-img{height:300px;}}
   @media (prefers-reduced-motion:reduce){*{transition-duration:.01ms !important;animation-duration:.01ms !important;}}
@@ -408,7 +493,7 @@
 </div></div>
 
 <section class="menu-sec" id="menu">
-  <div class="cat-nav" id="catNav" aria-label="Categories"></div>
+  <div class="cat-rail" id="catRail" aria-label="Categories"></div>
   <div id="menuRoot"></div>
 </section>
 
@@ -464,14 +549,14 @@ const MENU = [
       { img:IMG_DIR+'03b_croissant_olympia_pistachio_variant2.png', x:65, y:60, price:1500, n:{hy:'Կրուասան Պիստակի Կրեմով',en:'Croissant with Pistachio Cream',ru:'Круассан с фисташковым кремом'}, d:{hy:'',en:'',ru:''} }
     ]},
     { dishes:[
-      { img:IMG_DIR+'04_waffles_signature_cream.png', x:50, y:55, price:2100, n:{hy:'Վաֆլի Ֆիրմային Կրեմով',en:'Waffles with Signature Cream',ru:'Вафли с фирменным кремом'}, d:{hy:'Վաֆլի, հապալաս, ֆիրմային կրեմ, բալի ջեմ',en:'Waffles, blueberries, cream, cherry jam',ru:'Вафли, черника, фирменный крем, вишневый джем'} }
+      { img:IMG_DIR+'04_waffles_signature_cream.png', x:50, y:55, price:2100, n:{hy:'Վաֆլի Ֆիրմային Կրեմով',en:'Waffles with Signature Cream',ru:'Вафли со фирменным кремом'}, d:{hy:'Վաֆլի, հապալաս, ֆիրմային կրեմ, բալի ջեմ',en:'Waffles, blueberries, cream, cherry jam',ru:'Вафли, черника, фирменный крем, вишневый джем'} }
     ]},
     { dishes:[
       { img:IMG_DIR+'05_waffles_pistachio_cream.png', x:50, y:55, price:2200, n:{hy:'Վաֆլի Պիստակի Կրեմով',en:'Waffles with Pistachio Cream',ru:'Вафли с фисташковым кремом'}, d:{hy:'Վաֆլի, պիստակի կրեմ, հապալաս, մանգոյի ջեմ, պիստակ',en:'Waffles, pistachio cream, blueberries, mango jam, pistachios',ru:'Вафли, фисташковый крем, черника, манговый джем, фисташки'} }
     ]},
     { dishes:[
-      { img:IMG_DIR+'06_croissant_mortadella_prosciutto.png', x:35, y:40, price:1800, n:{hy:'Կրուասան Մորտադելլայով',en:'Croissant with Mortadella',ru:'Круассан с Мортаделлой'}, d:{hy:'Կրուասան, սերուցքային պանիր, ռուկոլա, մորտադելլա, պարմեզան, էքստրա վիրջին ձիթայուղ, բազիլիկ, պիստակ',en:'Croissant, cream cheese, arugula, mortadella, parmesan, extra virgin olive oil, basil, pistachios',ru:'Круассан, сливочный сыр, руккола, мортаделла, пармезан, оливковое масло extra virgin, базилик, фисташки'} },
-      { img:IMG_DIR+'06_croissant_mortadella_prosciutto.png', x:65, y:60, price:1900, n:{hy:'Կրուասան Պրոշուտոյով',en:'Croissant with Prosciutto',ru:'Круассан с Прошутто'}, d:{hy:'Կրուասան, ֆիրմային սոուս, ռուկոլա, պրոշուտո, պարմեզան, էքստրա վիրջին ձիթայուղ, բազիլիկ',en:'Croissant, signature sauce, arugula, prosciutto, parmesan, extra virgin olive oil, basil',ru:'Круассан, фирменный соус, руккола, прошутто, пармезан, оливковое масло extra virgin, базилик'} }
+      { img:IMG_DIR+'06_croissant_mortadella_prosciutto.png', x:35, y:40, price:1800, n:{hy:'Կրուասան Մորտադելլայով',en:'Croissant with Mortadella',ru:'Круассан с Мортаделлой'}, d:{hy:'Կրուասան, սերուցքային պանիր, ռուկոլա, մորտադելլա, պարմեզան, էքստրա վիրջին ձիթայուղ, բազիլիկ, պիստակ',en:'Croissant, cream cheese, arugula, mortadella, parmesan, extra virgin olive oil, basil, pistachios',ru:'Круассан, сливочный сыр, рукола, мортаделла, пармезан, оливковое масло extra virgin, базилик, фисташки'} },
+      { img:IMG_DIR+'06_croissant_mortadella_prosciutto.png', x:65, y:60, price:1900, n:{hy:'Կրուասան Պրոշուտոյով',en:'Croissant with Prosciutto',ru:'Круассан с Прошутто'}, d:{hy:'Կրուասան, ֆիրմային սոուս, ռուկոլա, պրոշուտո, պարմեզան, էքստրա վիրջին ձիթայուղ, բազիլիկ',en:'Croissant, signature sauce, arugula, prosciutto, parmesan, extra virgin olive oil, basil',ru:'Круассан, фирменный соус, рукола, прошутто, пармезан, оливковое масло extra virgin, базилик'} }
     ]},
     { dishes:[
       { img:IMG_DIR+'07_armenian_tomato_omelette.png', x:50, y:55, price:2300, n:{hy:'Հայկական Լոլիկով Ձվածեղ',en:'Armenian Tomato Omelette',ru:'Армянский омлет с помидорами'}, d:{hy:'Լոլիկ, սերուցքային պանիր, բազիլիկ, ֆիրմային հաց, պարմեզան պանիր',en:'Tomatoes, cream cheese, basil, signature bread, parmesan cheese',ru:'Помидор, сливочный сыр, базилик, фирменный хлеб, сыр пармезан'} }
@@ -898,72 +983,56 @@ const io = new IntersectionObserver(es => es.forEach(en => {
   if (en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
 }), {threshold:.1, rootMargin:'0px 0px -40px 0px'});
 
-/* === КНОПКА-ДРОПДАУН РАЗДЕЛОВ: построение, скролл, scroll-spy === */
-function navOffset(){
-  const navH = document.getElementById('nav').offsetHeight;
-  const chipH = document.getElementById('catNav').offsetHeight || 0;
-  return navH + chipH + 8;
-}
-function buildCatNav(cats, lang){
-  const nav = document.getElementById('catNav');
-  nav.innerHTML = '';
+/* === ВЕРТИКАЛЬНАЯ НАВИГАЦИЯ СБОКУ (ПРЕМИУМ) === */
+function buildCatRail(cats, lang){
+  const rail = document.getElementById('catRail');
+  rail.innerHTML = '';
   if (cats.length < 2) return; // Пицца и Завтраки: навигация не нужна
-  const drop = document.createElement('div');
-  drop.className = 'cat-drop';
-  drop.innerHTML =
-    '<button class="cat-drop-btn" type="button"><span class="lbl"></span><span class="arr">▾</span></button>' +
-    '<div class="cat-drop-panel"></div>';
-  const btn = drop.querySelector('.cat-drop-btn');
-  const lbl = drop.querySelector('.lbl');
-  const panel = drop.querySelector('.cat-drop-panel');
   cats.forEach(cat => {
-    const item = document.createElement('button');
-    item.type = 'button';
-    item.className = 'cat-drop-item';
-    item.textContent = cat.t[lang];
-    item.dataset.target = 'cat-' + cat.id;
-    item.addEventListener('click', () => {
-      drop.classList.remove('open');
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'cat-rail-item';
+    btn.textContent = cat.t[lang];
+    btn.dataset.target = 'cat-' + cat.id;
+    btn.addEventListener('click', () => {
       const sec = document.getElementById('cat-' + cat.id);
       if (!sec) return;
-      const y = sec.getBoundingClientRect().top + window.scrollY - navOffset();
+      const navH = document.getElementById('nav').offsetHeight;
+      const y = sec.getBoundingClientRect().top + window.scrollY - navH - 20;
       window.scrollTo({top: Math.max(0, y), behavior:'smooth'});
     });
-    panel.appendChild(item);
+    rail.appendChild(btn);
   });
-  btn.addEventListener('click', e => {
-    e.stopPropagation();
-    drop.classList.toggle('open');
-  });
-  lbl.textContent = cats[0].t[lang];
-  nav.appendChild(drop);
 }
-document.addEventListener('click', e => {
-  const d = document.querySelector('.cat-drop.open');
-  if (d && !d.contains(e.target)) d.classList.remove('open');
-});
-function updateActiveChip(){
+function updateActiveRail(){
   if (!catSections.length) return;
-  const pos = window.scrollY + navOffset() + 60;
+  const navH = document.getElementById('nav').offsetHeight;
+  const pos = window.scrollY + navH + 80;
   let activeId = null;
   for (const sec of catSections){
     const top = sec.getBoundingClientRect().top + window.scrollY;
     if (top <= pos) activeId = sec.id;
   }
-  const drop = document.querySelector('.cat-drop');
-  if (!drop) return;
-  const lbl = drop.querySelector('.lbl');
-  drop.querySelectorAll('.cat-drop-item').forEach(it => {
+  const rail = document.getElementById('catRail');
+  if (!rail) return;
+  const items = rail.querySelectorAll('.cat-rail-item');
+  items.forEach(it => {
     const on = it.dataset.target === activeId;
     it.classList.toggle('active', on);
-    if (on && lbl.textContent !== it.textContent) lbl.textContent = it.textContent;
+    // На мобильном: скроллим горизонтальную ленту, чтобы активный был в центре
+    if (on && isMobile()) {
+      const railRect = rail.getBoundingClientRect();
+      const itRect = it.getBoundingClientRect();
+      const scrollTarget = rail.scrollLeft + (itRect.left - railRect.left) - (railRect.width / 2) + (itRect.width / 2);
+      rail.scrollTo({left: Math.max(0, scrollTarget), behavior:'smooth'});
+    }
   });
 }
 let spyTick = false;
 window.addEventListener('scroll', () => {
   if (spyTick) return;
   spyTick = true;
-  requestAnimationFrame(() => { spyTick = false; if (menuRendered) updateActiveChip(); });
+  requestAnimationFrame(() => { spyTick = false; if (menuRendered) updateActiveRail(); });
 }, {passive:true});
 
 function renderMenu(lang, view){
@@ -977,9 +1046,9 @@ function renderMenu(lang, view){
       ? MENU.filter(cat => cat.id.startsWith('bar_'))
       : (view === 'breakfast'
         ? MENU.filter(cat => cat.id === 'breakfast')
-        : MENU)); // ← ИСПРАВЛЕНО: теперь 'all' показывает ВСЕ категории
+        : MENU.filter(cat => !cat.id.startsWith('bar_') && cat.id !== 'pizza' && cat.id !== 'breakfast')));
 
-  buildCatNav(categoriesToShow, lang);
+  buildCatRail(categoriesToShow, lang);
   catSections = [];
 
   categoriesToShow.forEach(cat => {
@@ -1105,7 +1174,7 @@ function renderMenu(lang, view){
     catSections.push(sec);
   });
 
-  requestAnimationFrame(updateActiveChip);
+  requestAnimationFrame(updateActiveRail);
 }
 
 function openMenu(view){
