@@ -25,7 +25,7 @@
   :root{
     --bg:#b79d74; --bg-deep:#a68c62; --menupage:#c9b18a; --paper:#f1efe9;
     --ink:#2b2622; --muted:rgba(43,38,34,.75); --line:rgba(43,38,34,.16); --red:#d8432a;
-    --logo-bg:#b8a17e;
+    --logo-bg:#b8a17e; --gold:#e8b04b;
     --accent-grad:linear-gradient(135deg,#e8b04b 0%,#d8432a 100%);
     --glass-bg:rgba(43,38,34,.88); --glass-border:rgba(241,239,233,.16);
     --nav-h:140px;
@@ -33,7 +33,7 @@
     --sans:'Noto Sans',-apple-system,sans-serif;
   }
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-  html{scroll-behavior:smooth;scroll-padding-top:60px;} /* ИЗМЕНЕНО: отступ под липкую ленту чипсов, а не под шапку */
+  html{scroll-behavior:smooth;scroll-padding-top:60px;}
   body{background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;overflow-x:hidden;}
   a{color:inherit;text-decoration:none;} img{display:block;max-width:100%;}
   ::selection{background:var(--red);color:#fff;}
@@ -74,7 +74,6 @@
   @keyframes loadbar{0%{transform:translateX(-110%);}100%{transform:translateX(360%);}}
   @keyframes logoIn{to{opacity:1;transform:none;}}
 
-  /* ИЗМЕНЕНО: шапка больше не fixed — она остаётся на месте вверху страницы и уходит при скролле */
   .nav{position:absolute;top:0;left:0;right:0;z-index:60;height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 6vw;transition:background .4s,box-shadow .4s,transform .45s cubic-bezier(.22,1,.36,1);}
   .nav.scrolled{background:rgba(184,161,126,.96);backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--line);}
   .nav .logo-card{opacity:0;transform:translateY(-16px) scale(.94);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1);}
@@ -168,20 +167,21 @@
   .menu-sec{position:relative;z-index:1;background:rgba(183,157,116,.85);padding:0 0 clamp(70px,9vw,120px);opacity:0;transform:translateY(30px);transition:opacity 0.6s ease,transform 0.6s ease;display:none;}
   .menu-sec.visible{opacity:1;transform:translateY(0);}
 
-  /* ИЗМЕНЕНО: лента чипсов липнет к самому верху экрана (top:0) и компактнее */
-  .cat-nav{position:sticky;top:0;z-index:45;display:flex;gap:8px;overflow-x:auto;padding:8px 6vw;background:rgba(183,157,116,.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-block:1px solid var(--line);scrollbar-width:none;-webkit-overflow-scrolling:touch;}
-  .cat-nav::-webkit-scrollbar{display:none;}
+  /* === ПРЕМИУМ-ЛЕНТА ЗАГОЛОВКОВ: стеклянная капсула с золотой кромкой === */
+  .cat-nav{position:sticky;top:0;z-index:45;display:flex;justify-content:center;padding:14px 6vw 26px;background:linear-gradient(to bottom, rgba(183,157,116,.96) 0%, rgba(183,157,116,.72) 55%, rgba(183,157,116,0) 100%);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);}
   .cat-nav:empty{display:none;}
-  .cat-chip{flex:0 0 auto;font:inherit;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:10px 18px;border-radius:999px;border:1px solid var(--line);background:rgba(241,239,233,.6);color:var(--muted);cursor:pointer;transition:background .25s,color .25s,border-color .25s;white-space:nowrap;}
-  .cat-chip:hover{border-color:var(--red);color:var(--red);}
-  .cat-chip.active{background:var(--ink);border-color:var(--ink);color:var(--menupage);}
+  .cat-nav-track{display:flex;gap:4px;overflow-x:auto;max-width:100%;padding:6px;border-radius:999px;background:rgba(43,38,34,.58);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(232,176,75,.28);box-shadow:0 14px 36px rgba(43,38,34,.30), inset 0 1px 0 rgba(241,239,233,.14);scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+  .cat-nav-track::-webkit-scrollbar{display:none;}
+  .cat-chip{flex:0 0 auto;font-family:var(--serif);font-style:italic;font-size:14px;font-weight:500;letter-spacing:.06em;padding:9px 20px;border-radius:999px;border:1px solid transparent;background:none;color:rgba(241,239,233,.72);cursor:pointer;transition:color .25s,background .25s,box-shadow .25s,transform .25s;white-space:nowrap;}
+  .cat-chip:hover{color:#fff;background:rgba(241,239,233,.10);transform:translateY(-1px);}
+  .cat-chip.active{background:var(--accent-grad);color:#fff;font-weight:600;box-shadow:0 6px 18px rgba(216,67,42,.38), inset 0 1px 0 rgba(255,255,255,.28);}
 
-  /* ИЗМЕНЕНО: отступ сверху у раздела = высота ленты чипсов, заголовок не прячется */
   .menu-category{max-width:1400px;margin:0 auto;padding:clamp(50px,7vw,90px) 4vw 0;scroll-margin-top:60px;}
   .category-header{text-align:center;margin-bottom:clamp(32px,4vw,56px);opacity:0;transform:translateY(40px);transition:opacity 1s ease,transform 1s cubic-bezier(.22,1,.36,1);}
   .category-header.in{opacity:1;transform:none;}
+  .category-header::before{content:"";display:block;width:86px;height:2px;margin:0 auto 18px;border-radius:2px;background:linear-gradient(90deg,transparent 0%,var(--gold) 30%,var(--red) 50%,var(--gold) 70%,transparent 100%);box-shadow:0 0 12px rgba(232,176,75,.45);}
   .cat-kicker{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--red);letter-spacing:.14em;display:block;margin-bottom:10px;}
-  .category-header h2{font-size:clamp(28px,4.6vw,52px);text-transform:uppercase;letter-spacing:.04em;color:var(--ink);}
+  .category-header h2{font-size:clamp(28px,4.6vw,52px);text-transform:uppercase;letter-spacing:.04em;color:var(--ink);text-shadow:0 1px 0 rgba(241,239,233,.55);}
   .cat-line{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:16px;color:var(--muted);font-size:12px;letter-spacing:.22em;text-transform:uppercase;}
   .cat-line::before,.cat-line::after{content:"";height:1px;width:clamp(30px,6vw,80px);background:var(--line);}
 
@@ -230,17 +230,32 @@
   .scene-modal-close{position:absolute;top:-46px;right:0;width:40px;height:40px;border-radius:50%;border:1.5px solid rgba(241,239,233,.7);background:none;color:var(--paper);cursor:pointer;display:flex;align-items:center;justify-content:center;}
   .scene-modal-hint{color:rgba(241,239,233,.75);font-size:11px;letter-spacing:.2em;text-transform:uppercase;text-align:center;margin-top:12px;}
 
-  .contact-sec{position:relative;z-index:1;padding:clamp(80px,11vw,140px) 0;text-align:center;background:rgba(201,177,138,.88);backdrop-filter:blur(8px);border-top:1px solid var(--line);}
-  .contact-sec h2{font-size:clamp(30px,5vw,58px);margin:14px 0 12px;}
+  /* === ПРЕМИУМ-БЛОК РЕЗЕРВА: каскад, водяной знак, золотые акценты === */
+  .contact-sec{position:relative;z-index:1;padding:clamp(90px,12vw,160px) 6vw;text-align:center;overflow:hidden;background:
+    radial-gradient(ellipse 820px 420px at 50% 0%, rgba(232,176,75,.12), transparent 62%),
+    radial-gradient(ellipse 900px 520px at 50% 100%, rgba(43,38,34,.10), transparent 62%),
+    rgba(201,177,138,.9);
+  backdrop-filter:blur(8px);border-top:1px solid var(--line);}
+  .contact-sec::before{content:"";position:absolute;inset:0;background-image:repeating-linear-gradient(45deg, rgba(43,38,34,.028) 0 2px, transparent 2px 16px);pointer-events:none;}
+  .contact-sec::after{content:"Reserve";position:absolute;right:-3%;top:6%;font-family:var(--serif);font-style:italic;font-size:clamp(120px,22vw,300px);line-height:1;color:rgba(43,38,34,.05);pointer-events:none;user-select:none;}
+  .contact-sec .rv{transition-delay:calc(var(--i,0) * 110ms);}
+  .contact-kicker{position:relative;display:inline-flex;align-items:center;gap:14px;font-family:var(--serif);font-style:italic;font-size:14px;letter-spacing:.28em;text-transform:uppercase;color:var(--red);margin-bottom:20px;}
+  .contact-kicker::before,.contact-kicker::after{content:"";width:44px;height:1px;background:linear-gradient(90deg,transparent,var(--gold));}
+  .contact-kicker::after{background:linear-gradient(90deg,var(--gold),transparent);}
+  .contact-sec h2{font-size:clamp(32px,5.4vw,64px);margin:0 0 14px;letter-spacing:-.015em;text-shadow:0 1px 0 rgba(241,239,233,.5);}
   .contact-sub{color:var(--muted);max-width:460px;margin:0 auto;line-height:1.7;}
-  .phones{margin:clamp(36px,5vw,56px) 0 10px;display:flex;flex-direction:column;gap:10px;align-items:center;}
-  .phone{font-family:var(--serif);font-size:clamp(30px,5.6vw,58px);line-height:1.15;color:var(--ink);transition:.3s;}
-  .phone:hover{color:var(--red);}
-  .addr{margin-top:26px;color:var(--muted);font-size:14px;line-height:2;letter-spacing:.06em;}
-  .delivery-note{margin:28px auto 0;max-width:620px;background:rgba(241,239,233,.55);border:1px solid var(--line);border-radius:14px;padding:18px 26px;font-size:14px;line-height:1.75;color:var(--ink);}
+  .phones{margin:clamp(40px,6vw,64px) 0 20px;display:flex;flex-direction:column;gap:10px;align-items:center;}
+  .phone{position:relative;display:inline-block;font-family:var(--serif);font-size:clamp(34px,6.4vw,68px);line-height:1.15;color:var(--ink);transition:color .3s,transform .3s cubic-bezier(.22,1,.36,1);}
+  .phone::after{content:"";position:absolute;left:50%;bottom:-8px;transform:translateX(-50%) scaleX(0);width:86%;height:3px;border-radius:3px;background:var(--accent-grad);box-shadow:0 4px 14px rgba(216,67,42,.35);transition:transform .4s cubic-bezier(.22,1,.36,1);}
+  .phone:hover{color:var(--red);transform:translateY(-2px);}
+  .phone:hover::after{transform:translateX(-50%) scaleX(1);}
+  .contact-meta{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;color:var(--muted);font-size:12px;letter-spacing:.24em;text-transform:uppercase;}
+  .cm-sep{color:var(--red);font-size:10px;line-height:1;}
+  .delivery-note{position:relative;margin:38px auto 0;max-width:640px;background:rgba(241,239,233,.68);border:1px solid rgba(232,176,75,.38);border-radius:16px;padding:24px 30px;font-size:14px;line-height:1.75;color:var(--ink);box-shadow:0 16px 44px rgba(43,38,34,.12);}
+  .delivery-note::before{content:"";position:absolute;top:-2px;left:50%;transform:translateX(-50%);width:70px;height:4px;border-radius:4px;background:var(--accent-grad);box-shadow:0 3px 10px rgba(216,67,42,.35);}
   .delivery-note b{color:var(--red);font-weight:600;}
   .delivery-note .delivery-title{display:block;font-family:var(--serif);font-style:italic;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
-  .soc-row{display:flex;gap:12px;justify-content:center;margin-top:28px;}
+  .soc-row{display:flex;gap:12px;justify-content:center;margin-top:32px;}
   .soc{width:48px;height:48px;border-radius:50%;border:1.5px solid var(--line);display:inline-flex;align-items:center;justify-content:center;color:var(--ink);transition:.25s;box-shadow:0 2px 8px rgba(43,38,34,.12);}
   .soc:hover{background:var(--ink);color:var(--menupage);transform:translateY(-3px);box-shadow:0 10px 22px rgba(43,38,34,.25);}
   .soc svg{width:21px;height:21px;}
@@ -301,8 +316,9 @@
     .btn{width:100%;justify-content:center;padding:15px 24px;}
     .mq-track span{font-size:14px;padding:0 16px;}
     .menu-grid{grid-template-columns:1fr;gap:18px;}
-    .cat-nav{padding:6px 12px;gap:6px;} /* ИЗМЕНЕНО: компактнее на мобильном */
-    .cat-chip{font-size:11px;padding:9px 14px;}
+    .cat-nav{padding:8px 12px 18px;}
+    .cat-nav-track{padding:4px;gap:2px;}
+    .cat-chip{font-size:12px;padding:8px 15px;}
     .menu-category{padding:clamp(36px,9vw,60px) 4vw 0;}
     .dish-list-overlay{max-height:46%;overflow-y:auto;scrollbar-width:none;padding-top:34px;}
     .dish-list-overlay::-webkit-scrollbar{display:none;}
@@ -310,11 +326,13 @@
     .dish-row-name{font-size:14px;}
     .dish-row-price{font-size:13px;}
     .smart-popup{width:min(260px,86%);max-height:56%;overflow-y:auto;}
-    .contact-sec{padding:64px 0 90px;}
-    .contact-sub{font-size:14px;padding:0 6vw;}
-    .phone{font-size:clamp(26px,8vw,40px);}
-    .addr{font-size:13px;line-height:1.9;}
-    .delivery-note{margin:22px 5vw 0;font-size:13px;padding:15px 20px;}
+    .contact-sec{padding:72px 5vw 96px;}
+    .contact-kicker{font-size:11px;letter-spacing:.22em;gap:10px;}
+    .contact-kicker::before,.contact-kicker::after{width:26px;}
+    .contact-sub{font-size:14px;padding:0 4vw;}
+    .phone{font-size:clamp(28px,9vw,44px);}
+    .contact-meta{font-size:10px;gap:10px;letter-spacing:.18em;padding:0 4vw;}
+    .delivery-note{margin:26px 4vw 0;font-size:13px;padding:18px 20px;}
     .soc{width:44px;height:44px;}
     footer{padding:32px 5vw 24px;}
     footer .logo-img{height:120px;}
@@ -415,15 +433,20 @@
 </div>
 
 <section class="contact-sec" id="contact">
-  <h2 class="rv" data-i18n-html="c_h2">Զանգեք — և սեղանը <em>սպասում է</em></h2>
-  <p class="contact-sub rv" data-i18n="c_sub">Մեկ հպում — և մնացածը մենք կհոգանք.</p>
-  <div class="phones rv"><a class="phone" href="tel:+37477966933">+374 77 966 933</a></div>
-  <p class="addr rv"><span data-i18n="c_addr1">Երևան, Հյուսիսային 10/3</span><br><span data-i18n="c_addr2">Ամեն օր 09:00 – 24:00</span></p>
-  <div class="delivery-note rv">
+  <span class="contact-kicker rv" style="--i:0">In Tempo · Reserve</span>
+  <h2 class="rv" style="--i:1" data-i18n-html="c_h2">Զանգեք — և սեղանը <em>սպասում է</em></h2>
+  <p class="contact-sub rv" style="--i:2" data-i18n="c_sub">Մեկ հպում — և մնացածը մենք կհոգանք.</p>
+  <div class="phones rv" style="--i:3"><a class="phone" href="tel:+37477966933">+374 77 966 933</a></div>
+  <div class="contact-meta rv" style="--i:4">
+    <span class="cm-item" data-i18n="c_addr1">Երևան, Հյուսիսային 10/3</span>
+    <span class="cm-sep">✦</span>
+    <span class="cm-item" data-i18n="c_addr2">Ամեն օր 09:00 – 24:00</span>
+  </div>
+  <div class="delivery-note rv" style="--i:5">
     <span class="delivery-title" data-i18n="c_delivery_title">Առաքում</span>
     <span data-i18n-html="c_delivery">Առաքում պատվիրելու համար կարող եք օգտվել <b>Glovo</b>, <b>Yandex</b>, <b>Buy.am</b> հավելվածներից կամ զանգահարել <b>8811</b> Buy.am</span>
   </div>
-  <div class="soc-row rv">
+  <div class="soc-row rv" style="--i:6">
     <a class="soc" href="https://www.instagram.com/intempo_italian_restaurant?stkn=dmNidWlnbmxpbm12" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"></circle></svg></a>
   </div>
 </section>
@@ -652,11 +675,11 @@ const MENU = [
   ]},
   {id:'bar_cold_tea',t:{hy:'Սառը թեյեր',en:'Cold Teas',ru:'Холодные чаи'},scenes:[
     {dishes:[
-      {img:IMG_DIR+'page23_img123.jpg',x:50,y:50,price:1800,n:{hy:'Սառը մոշի թեյ',en:'Cold Blackberry Tea',ru:'Холодный ежевичный чай'},d:{hy:'Եփած սև թեյ, մոշի պյուրե, անանուխ, մոշ',en:'Brewed black tea, blackberry puree, mint, blackberry',ru:'Заваренный черный чай, пюре из ежевики, мята, ежевика'}}
+      {img:IMG_DIR+'page23_img123.jpg',x:50,y:50,price:1800,n:{hy:'Սառը մոշի թեյ',en:'Cold Blackberry Tea',ru:'Холодный ежевичный чай'},d:{hy:'Եած սև թեյ, մոշի պյուրե, անանուխ, մոշ',en:'Brewed black tea, blackberry puree, mint, blackberry',ru:'Заваренный черный чай, пюре из ежевики, мята, ежевика'}}
     ]},
     {dishes:[
-      {img:IMG_DIR+'page24_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սառը ելակի թեյ',en:'Cold Strawberry Tea',ru:'Клубничный холодный чай'},d:{hy:'Եփած սև թեյ, ելակի պյուրե, ելակ, անանուխ',en:'Brewed black tea, strawberry puree, strawberry, mint',ru:'Заваренный черный чай, клубничное пюре, клубника, мята'}},
-      {img:IMG_DIR+'page24_img123.jpg',x:65,y:65,price:1600,n:{hy:'Սառը մանգոյի թեյ',en:'Cold Mango Tea',ru:'Манговый холодный чай'},d:{hy:'Եած սև թեյ, մանգոյի սիրոպ, անանուխ, չորացրած մանգո',en:'Brewed black tea, mango syrup, mint, dried mango',ru:'Заваренный черный чай, манговый сироп, мята, сушеное манго'}}
+      {img:IMG_DIR+'page24_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սառը ելակի թեյ',en:'Cold Strawberry Tea',ru:'Клубничный холодный чай'},d:{hy:'Եած սև թեյ, ելակի պյուրե, ելակ, անանուխ',en:'Brewed black tea, strawberry puree, strawberry, mint',ru:'Заваренный черный чай, клубничное пюре, клубника, мята'}},
+      {img:IMG_DIR+'page24_img123.jpg',x:65,y:65,price:1600,n:{hy:'Սառը մանգոյի թեյ',en:'Cold Mango Tea',ru:'Манговый холодный чай'},d:{hy:'Եփած սև թեյ, մանգոյի սիրոպ, անանուխ, չորացրած մանգո',en:'Brewed black tea, mango syrup, mint, dried mango',ru:'Заваренный черный чай, манговый сироп, мята, сушеное манго'}}
     ]},
     {dishes:[
       {img:IMG_DIR+'page25_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սառը դեղձի թեյ',en:'Cold Peach Tea',ru:'Персиковый холодный чай'},d:{hy:'Եփած սև թեյ, պերսիկի պյուրե, անանուխ, լայմ, լիմոն',en:'Brewed black tea, peach puree, mint, lime, lemon',ru:'Заваренный черный чай, персиковое пюре, мята, лайм, лимон'}},
@@ -664,7 +687,7 @@ const MENU = [
     ]},
     {dishes:[
       {img:IMG_DIR+'page26_img123.jpg',x:35,y:35,price:1700,n:{hy:'Վարդագույն սառը թեյ',en:'Pink Cold Tea',ru:'Розовый холодный чай'},d:{hy:'Եփած սև թեյ, վարդի սիրոպ, անանուխ',en:'Brewed black tea, rose syrup, mint',ru:'Заваренный черный чай, розовый сироп, мята'}},
-      {img:IMG_DIR+'page26_img123.jpg',x:65,y:65,price:1600,n:{hy:'Սառը նարնջի թեյ',en:'Orange Cold Tea',ru:'Апельсиновый холодный чай'},d:{hy:'Եփած սև թեյ, նարնջի հյութ, շաքարի սիրոպ, անանուխ',en:'Brewed black tea, orange juice, sugar syrup, mint',ru:'Заваренный черный чай, апельсиновый сок, сироп с сахаром, мята'}}
+      {img:IMG_DIR+'page26_img123.jpg',x:65,y:65,price:1600,n:{hy:'Սառը նարնջի թեյ',en:'Orange Cold Tea',ru:'Апельсиновый холодный чай'},d:{hy:'Եած սև թեյ, նարնջի հյութ, շաքարի սիրոպ, անանուխ',en:'Brewed black tea, orange juice, sugar syrup, mint',ru:'Заваренный черный чай, апельсиновый сок, сироп с сахаром, мята'}}
     ]}
   ]},
   {id:'bar_detox',t:{hy:'Դետոքս',en:'Detox',ru:'Детокс'},scenes:[
@@ -711,7 +734,7 @@ const MENU = [
     ]},
     {dishes:[
       {img:IMG_DIR+'page38_img123.jpg',x:25,y:25,price:2300,n:{hy:'Իռլանդական սուրճ',en:'Irish Coffee',ru:'Ирландский кофе'},d:{hy:'Իռլանդական վիսկի, էսպրեսո լունգո, շագանակագույն շաքար, հարած սերուցք',en:'Irish whiskey, espresso lungo, brown sugar, whipped cream',ru:'Ирландский виски, эспрессо лунго, коричневый сахар, взбитые сливки'}},
-      {img:IMG_DIR+'page38_img123.jpg',x:50,y:50,price:2100,n:{hy:'Սառը սուրճ Բեյլիսով',en:'Cold Coffee Baileys',ru:'Холодный кофе с Бейлисом'},d:{hy:'Բեյլիս լիկյոր, էսպրեսո, կոճապղպեղի թխվածքի սիրոպ, առանց յուղի կաթ',en:'Baileys liqueur, espresso, gingerbread syrup, skim milk',ru:'Ликер Бейлис, эспрессо, сироп имбирного печенья, обезжиренное молоко'}},
+      {img:IMG_DIR+'page38_img123.jpg',x:50,y:50,price:2100,n:{hy:'Սառը սուրճ եյլիսով',en:'Cold Coffee Baileys',ru:'Холодный кофе с Бейлисом'},d:{hy:'Բեյլիս լիկյոր, էսպրեսո, կոճապղպեղի թխվածքի սիրոպ, առանց յուղի կաթ',en:'Baileys liqueur, espresso, gingerbread syrup, skim milk',ru:'Ликер Бейлис, эспрессо, сироп имбирного печенья, обезжиренное молоко'}},
       {img:IMG_DIR+'page38_img123.jpg',x:75,y:75,price:2500,n:{hy:'Բեյլիս սառը սուրճ կոկոսով',en:'Baileys Cold Coffee Coconut',ru:'Бейлис холодный кофе с кокосом'},d:{hy:'Բեյլիս լիկյոր, էսպրեսո, կոճապղպեղի թխվածքի սիրոպ, առանց յուղի կաթ, կոկոսի սիրոպ',en:'Baileys liqueur, espresso, gingerbread syrup, skim milk, coconut syrup',ru:'Ликер Бейлис, эспрессо, сироп имбирного печенья, обезжиренное молоко, кокосовый сироп'}}
     ]}
   ]},
@@ -893,7 +916,6 @@ const io = new IntersectionObserver(es => es.forEach(en => {
 }), {threshold:.1, rootMargin:'0px 0px -40px 0px'});
 
 /* === ЛЕНТА ЧИПСОВ: построение, скролл, scroll-spy === */
-/* ИЗМЕНЕНО: шапка больше не фиксирована, поэтому offset = только высота ленты чипсов */
 function navOffset(){
   const chipH = document.getElementById('catNav').offsetHeight || 0;
   return chipH + 8;
@@ -901,6 +923,9 @@ function navOffset(){
 function buildCatNav(cats, lang){
   const nav = document.getElementById('catNav');
   nav.innerHTML = '';
+  if (cats.length < 2) return;
+  const track = document.createElement('div');
+  track.className = 'cat-nav-track';
   cats.forEach(cat => {
     const btn = document.createElement('button');
     btn.className = 'cat-chip';
@@ -913,8 +938,9 @@ function buildCatNav(cats, lang){
       const y = sec.getBoundingClientRect().top + window.scrollY - navOffset();
       window.scrollTo({top: Math.max(0, y), behavior:'smooth'});
     });
-    nav.appendChild(btn);
+    track.appendChild(btn);
   });
+  nav.appendChild(track);
 }
 function centerChip(chip){
   const row = chip.parentElement;
