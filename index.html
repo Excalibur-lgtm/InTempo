@@ -6,10 +6,13 @@
 <title>In Tempo — Իտալական խոհանոց · Երևան</title>
 <meta name="description" content="In Tempo — իտալական խոհանոց Երևանի կենտրոնում։ Բաց է 09:00–24:00։ Time to enjoy.">
 <link rel="preload" href="images/logoIntempo.png" as="image" type="image/png">
+<link rel="preload" as="image" href="Images-final/page03_img1.jpg">
+<link rel="preload" as="image" href="Images-final/page20_img1.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <script>
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  try{ if(!localStorage.getItem('intempo_branch')) document.documentElement.classList.add('gate'); }catch(e){ document.documentElement.classList.add('gate'); }
   document.addEventListener('DOMContentLoaded', function(){
     document.documentElement.style.scrollBehavior = 'auto';
     window.scrollTo(0, 0);
@@ -34,6 +37,7 @@
   }
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
   html{scroll-behavior:smooth;scroll-padding-top:60px;}
+  html.gate{overflow:hidden;}
   body{background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;overflow-x:hidden;}
   a{color:inherit;text-decoration:none;} img{display:block;max-width:100%;}
   ::selection{background:var(--red);color:#fff;}
@@ -197,10 +201,12 @@
   .category-header.in{opacity:1;transform:none;}
   .category-header::before{content:"";display:block;width:86px;height:2px;margin:0 auto 18px;border-radius:2px;background:linear-gradient(90deg,transparent 0%,var(--red) 50%,transparent 100%);box-shadow:0 0 12px rgba(216,67,42,.35);}
   .cat-kicker{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--red);letter-spacing:.14em;display:block;margin-bottom:12px;}
-  /* === ЧАСЫ ДЕЙСТВИЯ: бумажная капсула в палитре страницы (ink + paper + red) === */
-  .cat-hours{display:inline-flex;align-items:center;justify-content:center;gap:10px;margin:0 0 16px;padding:10px 22px 10px 16px;border-radius:999px;background:rgba(241,239,233,.85);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(43,38,34,.16);box-shadow:0 8px 22px rgba(43,38,34,.12), inset 0 1px 0 rgba(255,255,255,.6);font-family:var(--serif);font-style:normal;font-size:16px;font-weight:600;letter-spacing:.01em;color:var(--ink);line-height:1.25;max-width:100%;}
-  .cat-hours svg{width:18px;height:18px;flex-shrink:0;color:var(--red);}
-  .cat-hours-text{text-align:left;}
+  /* === ЧАСЫ ДЕЙСТВИЯ: крупная премиальная капсула (+35%) === */
+  .cat-hours{display:inline-flex;align-items:center;justify-content:center;gap:14px;margin:0 0 18px;padding:12px 28px;border-radius:999px;background:rgba(241,239,233,.9);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(43,38,34,.18);outline:1px solid rgba(216,67,42,.35);outline-offset:-5px;box-shadow:0 12px 30px rgba(43,38,34,.16), inset 0 1px 0 rgba(255,255,255,.7);max-width:100%;}
+  .cat-hours::before,.cat-hours::after{content:"";width:16px;height:1px;background:rgba(43,38,34,.35);flex-shrink:0;}
+  .cat-hours-ico{width:36px;height:36px;border-radius:50%;border:1px solid rgba(216,67,42,.45);background:rgba(216,67,42,.07);display:flex;align-items:center;justify-content:center;color:var(--red);flex-shrink:0;}
+  .cat-hours-ico svg{width:20px;height:20px;}
+  .cat-hours-text{font-family:var(--serif);font-style:normal;font-weight:600;font-size:22px;letter-spacing:.01em;line-height:1.2;color:var(--ink);text-align:left;}
   .category-header h2{font-size:clamp(28px,4.6vw,52px);text-transform:uppercase;letter-spacing:.04em;color:var(--ink);text-shadow:0 1px 0 rgba(241,239,233,.55);}
   .cat-line{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:16px;color:var(--muted);font-size:12px;letter-spacing:.22em;text-transform:uppercase;}
   .cat-line::before,.cat-line::after{content:"";height:1px;width:clamp(30px,6vw,80px);background:var(--line);}
@@ -216,6 +222,13 @@
   .scene-img.active{opacity:1;}
   .menu-item:hover .scene-img{transform:scale(1.06);}
   .scene.no-img::after{content:'In Tempo · լուսանկարը շուտով';position:absolute;inset:0;z-index:1;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-style:italic;font-size:15px;letter-spacing:.12em;color:var(--muted);background:repeating-linear-gradient(45deg, rgba(43,38,34,.05) 0 14px, transparent 14px 28px), var(--menupage);}
+
+  /* компактная подпись карточки (только мобилка) */
+  .card-cap{display:none;}
+  .cap-row{display:flex;justify-content:space-between;align-items:baseline;gap:8px;}
+  .cap-name{font-family:var(--serif);font-weight:600;font-size:12px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .cap-price{font-weight:700;font-size:11px;color:var(--red);white-space:nowrap;}
+  .cap-more{font-size:10px;letter-spacing:.08em;color:var(--muted);}
 
   .pizza-split{position:relative;aspect-ratio:1.2;overflow:hidden;border-radius:12px;}
   .pizza-half{position:absolute;top:0;width:50%;height:100%;overflow:hidden;transition:transform 0.6s cubic-bezier(.22,1,.36,1);}
@@ -288,17 +301,21 @@
 
   .mobile-bar{display:none;}
 
+  /* === МОДАЛКА ВЫБОРА ФИЛИАЛА: фото-баннер + жёсткий гейт === */
   .branch-modal{position:fixed;inset:0;z-index:350;background:rgba(43,38,34,.96);backdrop-filter:blur(16px);display:none;align-items:center;justify-content:center;padding:24px;}
   .branch-modal.open{display:flex;}
-  .branch-modal-inner{max-width:720px;width:100%;text-align:center;}
+  .branch-modal-inner{max-width:560px;width:100%;text-align:center;max-height:92vh;overflow-y:auto;padding:6px;scrollbar-width:none;}
+  .branch-modal-inner::-webkit-scrollbar{display:none;}
+  .branch-media{position:relative;width:min(100%,440px);margin:0 auto 24px;aspect-ratio:16/10;border-radius:18px;overflow:hidden;border:1px solid rgba(241,239,233,.2);box-shadow:0 26px 60px rgba(0,0,0,.5);}
+  .branch-media img{width:100%;height:100%;object-fit:cover;animation:kb 22s ease-in-out infinite alternate;}
+  .branch-media::after{content:"";position:absolute;inset:0;background:linear-gradient(to top, rgba(43,38,34,.55), transparent 55%);pointer-events:none;}
   .branch-modal-inner h2{font-family:var(--serif);font-size:clamp(28px,5vw,44px);color:var(--paper);margin-bottom:12px;}
-  .branch-modal-inner p{color:rgba(241,239,233,.75);font-size:16px;margin-bottom:40px;}
-  .branch-choices{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
-  .branch-choice{background:var(--menupage);border:2px solid rgba(43,38,34,0.2);border-radius:20px;padding:36px 24px;cursor:pointer;transition:all 0.3s ease;text-align:center;color:var(--ink);}
+  .branch-modal-inner p{color:rgba(241,239,233,.75);font-size:16px;margin-bottom:32px;}
+  .branch-choices{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  .branch-choice{background:var(--menupage);border:2px solid rgba(43,38,34,0.2);border-radius:20px;padding:30px 20px;cursor:pointer;transition:all 0.3s ease;text-align:center;color:var(--ink);}
   .branch-choice:hover{background:var(--bg);border-color:var(--red);transform:translateY(-6px);box-shadow:0 20px 40px rgba(0,0,0,0.2);}
   .branch-choice:active{transform:scale(0.96);}
-  .branch-choice .name{font-family:var(--serif);font-size:26px;color:var(--ink);margin-bottom:8px;font-weight:600;}
-  .branch-choice .desc{font-size:14px;color:var(--muted);}
+  .branch-choice .name{font-family:var(--serif);font-size:24px;color:var(--ink);font-weight:600;}
 
   @media (max-width:900px){.nav{padding:0 4vw;}.nav-right{gap:10px;}}
   @media (max-width:768px){:root{--nav-h:112px;}.nav .logo-img{height:94px;}.nav-link{display:none;}#loader .logo-img{height:400px;}.branch-choices{grid-template-columns:1fr;}}
@@ -332,12 +349,25 @@
     #loader .logo-img{height:340px;}
     #loader .slogan{font-size:15px;}
     .mq-track span{font-size:14px;padding:0 16px;}
-    .menu-grid{grid-template-columns:1fr;gap:18px;}
+    /* === МОБИЛКА: 2 КАРТОЧКИ В РЯД + ПОДПИСЬ + ОПИСАНИЕ В МОДАЛКЕ === */
+    .menu-grid{grid-template-columns:repeat(2,1fr);gap:12px;}
+    .scene{aspect-ratio:1/1;}
+    .scene-modal .scene{aspect-ratio:3/4;}
+    .menu-item .dish-list-overlay{display:none;}
+    .menu-item .smart-popup{display:none;}
+    .menu-item .card-cap{display:flex;flex-direction:column;gap:4px;padding:10px 12px 12px;background:rgba(241,239,233,.94);border-top:1px solid var(--line);}
+    .pizza-info-overlay{padding:16px 10px 10px;}
+    .pizza-info-overlay > div:nth-child(1){font-size:13px !important;margin-bottom:4px;}
+    .pizza-info-overlay > div:nth-child(2){display:none;}
+    .pizza-info-overlay > div:nth-child(3){font-size:12px !important;padding:4px 10px;}
     .cat-nav{padding:8px 12px 18px;}
     .cat-nav-track{padding:4px;gap:2px;}
     .cat-chip{font-size:12px;padding:8px 15px;}
-    .cat-hours{font-size:13px;padding:9px 16px 9px 13px;border-radius:16px;gap:8px;}
-    .cat-hours svg{width:15px;height:15px;}
+    .cat-hours{gap:10px;padding:10px 18px;}
+    .cat-hours::before,.cat-hours::after{width:10px;}
+    .cat-hours-ico{width:28px;height:28px;}
+    .cat-hours-ico svg{width:16px;height:16px;}
+    .cat-hours-text{font-size:17px;}
     .menu-category{padding:clamp(36px,9vw,60px) 4vw 0;}
     .dish-list-overlay{max-height:46%;overflow-y:auto;scrollbar-width:none;padding-top:34px;}
     .dish-list-overlay::-webkit-scrollbar{display:none;}
@@ -355,6 +385,11 @@
     .soc{width:44px;height:44px;}
     footer{padding:32px 5vw 24px;}
     footer .logo-img{height:120px;}
+    .branch-modal{padding:16px;}
+    .branch-media{margin-bottom:18px;}
+    .branch-modal-inner p{font-size:14px;margin-bottom:22px;}
+    .branch-choice{padding:22px 16px;}
+    .branch-choice .name{font-size:20px;}
   }
   @media (max-width:380px){.nav-tel{display:none;}.lang-btn{padding:5px 8px;font-size:9px;}#loader .logo-img{height:300px;}}
   @media (prefers-reduced-motion:reduce){*{transition-duration:.01ms !important;animation-duration:.01ms !important;}}
@@ -368,16 +403,15 @@
 
 <div class="branch-modal open" id="branchModal">
   <div class="branch-modal-inner">
+    <div class="branch-media"><img src="Images-final/page20_img1.jpg" alt="In Tempo" loading="eager" fetchpriority="high"></div>
     <h2 data-i18n="branch_title">Выберите филиал</h2>
     <p data-i18n="branch_subtitle">Меню отличается в зависимости от филиала</p>
     <div class="branch-choices">
       <div class="branch-choice" data-branch="hyusisayin">
         <div class="name">Հյուսիսային</div>
-        <div class="desc" data-i18n="branch_big">Большой филиал</div>
       </div>
       <div class="branch-choice" data-branch="mega">
         <div class="name">Mega Mall</div>
-        <div class="desc" data-i18n="branch_small">Маленький филиал</div>
       </div>
     </div>
   </div>
@@ -481,12 +515,14 @@
 </div>
 
 <script>
-const IMG_DIR = 'https://raw.githubusercontent.com/Excalibur-lgtm/InTempo/main/Images-final/';
+const IMG_DIR = 'https://cdn.jsdelivr.net/gh/Excalibur-lgtm/InTempo@main/Images-final/';
 let currentBranch = 'hyusisayin';
 let currentLang = 'hy';
 let menuRendered = false;
 let currentView = 'all';
 let catSections = [];
+let branchGate = true;
+try{ branchGate = !localStorage.getItem('intempo_branch'); }catch(e){ branchGate = true; }
 
 const MENU = [
   // === ЗАВТРАКИ ===
@@ -500,10 +536,10 @@ const MENU = [
       { img:IMG_DIR+'03b_croissant_olympia_pistachio_variant2.png', x:65, y:60, price:1500, n:{hy:'Կրուասան Պիստակի Կրեմով',en:'Croissant with Pistachio Cream',ru:'Круассан с фисташковым кремом'}, d:{hy:'',en:'',ru:''} }
     ]},
     { dishes:[
-      { img:IMG_DIR+'04_waffles_signature_cream.png', x:50, y:55, price:2100, n:{hy:'Վաֆլի իրմային Կրեմով',en:'Waffles with Signature Cream',ru:'Вафли с фирменным кремом'}, d:{hy:'Վաֆլի, հապալաս, ֆիրմային կրեմ, բալի ջեմ',en:'Waffles, blueberries, cream, cherry jam',ru:'Вафли, черника, фирменный крем, вишневый джем'} }
+      { img:IMG_DIR+'04_waffles_signature_cream.png', x:50, y:55, price:2100, n:{hy:'Վաֆլի Ֆիրմային Կրեմով',en:'Waffles with Signature Cream',ru:'Вафли с фирменным кремом'}, d:{hy:'Վաֆլի, հապալաս, ֆիրմային կրեմ, բալի ջեմ',en:'Waffles, blueberries, cream, cherry jam',ru:'Вафли, черника, фирменный крем, вишневый джем'} }
     ]},
     { dishes:[
-      { img:IMG_DIR+'05_waffles_pistachio_cream.png', x:50, y:55, price:2200, n:{hy:'Վաֆլի իստակի րեմով',en:'Waffles with Pistachio Cream',ru:'Вафли с фисташковым кремом'}, d:{hy:'Վաֆլի, պիստակի կրեմ, հապալաս, մանգոյի ջեմ, պիստակ',en:'Waffles, pistachio cream, blueberries, mango jam, pistachios',ru:'Вафли, фисташковый крем, черника, манговый джем, фисташки'} }
+      { img:IMG_DIR+'05_waffles_pistachio_cream.png', x:50, y:55, price:2200, n:{hy:'Վաֆլի Պիստակի Կրեմով',en:'Waffles with Pistachio Cream',ru:'Вафли с фисташковым кремом'}, d:{hy:'Վաֆլի, պիստակի կրեմ, հապալաս, մանգոյի ջեմ, պիստակ',en:'Waffles, pistachio cream, blueberries, mango jam, pistachios',ru:'Вафли, фисташковый крем, черника, манговый джем, фисташки'} }
     ]},
     { dishes:[
       { img:IMG_DIR+'06_croissant_mortadella_prosciutto.png', x:35, y:40, price:1800, n:{hy:'Կրուասան Մորտադելլայով',en:'Croissant with Mortadella',ru:'Круассан с Мортаделлой'}, d:{hy:'Կրուասան, սերուցքային պանիր, ռուկոլա, մորտադելլա, պարմեզան, էքստրա վիրջին ձիթայուղ, բազիլիկ, պիստակ',en:'Croissant, cream cheese, arugula, mortadella, parmesan, extra virgin olive oil, basil, pistachios',ru:'Круассан, сливочный сыр, руккола, мортаделла, пармезан, оливковое масло extra virgin, базилик, фисташки'} },
@@ -544,7 +580,7 @@ const MENU = [
       { img:IMG_DIR+'08_chicken_schnitzel_four_cheese.png', x:50, y:55, price:2600, n:{hy:'Հավի շնիցել չորս պանիր սոուսով',en:'Chicken Schnitzel with Four Cheese Sauce',ru:'Куриный шницель с соусом из четырёх сыров'}, d:{hy:'Հավի կրծքամիս, միքս աղցան, չորս պանիր սոուս',en:'Chicken breast, mixed salad, four cheese sauce',ru:'Куриная грудка, микс салат, соус из четырёх сыров'} }
     ]},
     { dishes:[
-      { img:IMG_DIR+'09_beef_fillet_rice_salad.png', x:50, y:55, price:2600, n:{hy:'Տավարի ֆիլե՝ բրնձով և թարմ աղցանով',en:'Beef Fillet with Rice & Fresh Salad',ru:'Говяжье филе с рисом и свежим салатом'}, d:{hy:'Տավարի ֆիլե, բրինձ, չորացրած լոլիկ, միքս աղցան',en:'Beef, rice, sundried tomatoes, mixed salad',ru:'Говяжье филе, рис, сушеные помидоры, микс салат'} }
+      { img:IMG_DIR+'09_beef_fillet_rice_salad.png', x:50, y:55, price:2600, n:{hy:'Տավարի ֆիլե՝ բրնձով և թարմ աղցանով',en:'Beef Fillet with Rice & Fresh Salad',ru:'Говяжье филе с рисом и свежим салатом'}, d:{hy:'Տավարի ֆիլե, բրինձ, որացրած ոլիկ, միքս աղցան',en:'Beef, rice, sundried tomatoes, mixed salad',ru:'Говяжье филе, рис, сушеные помидоры, микс салат'} }
     ]},
     { dishes:[
       { img:IMG_DIR+'10_pizza_margherita_pepperoni.png', x:35, y:40, price:1600, n:{hy:'Մարգարիտա',en:'Margherita',ru:'Маргарита'}, d:{hy:'25 սմ · Մոցարելլա պանիր, պարմեզան պանիր, լոլիկի սոուս, բազիլիկ',en:'25cm · Mozzarella cheese, parmesan cheese, tomato sauce, basil',ru:'25 см · Сыр моцарелла, пармезан, томатный соус, базилик'} },
@@ -552,7 +588,7 @@ const MENU = [
     ]},
     { dishes:[
       { img:IMG_DIR+'11_pizza_al_pollo_four_cheese.png', x:35, y:40, price:1900, n:{hy:'Ալ Պոլո',en:'Al Pollo',ru:'Аль Полло'}, d:{hy:'25 սմ · Մոցարելլա պանիր, գրիլ արված հավի կրծքամիս, սունկ, սերուցքային սոուս, բազիլիկ',en:'25cm · Mozzarella cheese, grilled chicken breast, mushrooms, cream sauce, basil',ru:'25 см · Сыр моцарелла, куриная грудка на гриле, грибы, сливочный соус, базилик'} },
-      { img:IMG_DIR+'11_pizza_al_pollo_four_cheese.png', x:65, y:60, price:1900, n:{hy:'Չորս պանիր',en:'Four Cheese',ru:'Четыре сыра'}, d:{hy:'25 սմ · Մոցարելլա, պարմեզան, ռոքոր, բլյու իզ',en:'25cm · Mozzarella, parmesan, Roquefort, blue cheese',ru:'25 см · Моцарелла, пармезан, рокфор, блю-чиз'} }
+      { img:IMG_DIR+'11_pizza_al_pollo_four_cheese.png', x:65, y:60, price:1900, n:{hy:'Չորս պանիր',en:'Four Cheese',ru:'Четыре сыра'}, d:{hy:'25 սմ · Մոցարելլա, պարմեզան, ռոքֆոր, բլյու չիզ',en:'25cm · Mozzarella, parmesan, Roquefort, blue cheese',ru:'25 см · Моцарелла, пармезан, рокфор, блю-чиз'} }
     ]},
     { dishes:[
       { img:IMG_DIR+'12_pizza_tuscany_diavola.png', x:35, y:40, price:2200, n:{hy:'Տոսկանա',en:'Tuscany',ru:'Тоскана'}, d:{hy:'25 սմ · Մոցարելլա պանիր, բեկոն, մասկարպոնե պանիր, լոլիկի սոուս, բազիլիկ',en:'25cm · Mozzarella cheese, bacon, mascarpone cheese, tomato sauce, basil',ru:'25 см · Сыр моцарелла, бекон, сыр маскарпоне, томатный соус, базилик'} },
@@ -565,7 +601,7 @@ const MENU = [
   { id:'starters', t:{hy:'Նախուտեստներ',en:'Starters',ru:'Закуски'}, scenes:[
     { dishes:[{ img:IMG_DIR+'page03_img1.jpg', x:50, y:55, price:2700, n:{hy:'Բրուսկետտա պրոշուտտոյով և տապենադով',en:'Bruschetta Crudo with Tapenade',ru:'Брускетта с прошутто и тапенадом'}, d:{hy:'Պրոշուտո, կալամատա, սերուցքային պանիր, բազիլիկ',en:'Crudo, kalamata olives, cream cheese, basil',ru:'Прошутто, каламата, сливочный сыр, базилик'} }]},
     { dishes:[{ img:IMG_DIR+'page04_img1.jpg', x:35, y:35, price:2100, n:{hy:'Բրուսկետտա լոլիկով ոչ ավանդական',en:'Bruschetta with Tomatoes Non-Traditional',ru:'Брускетта с помидорами нетрадиционная'}, d:{hy:'Լոլիկ, սերուցքային պանիր, բազիլիկ',en:'Tomatoes, cream cheese, basil',ru:'Помидор, сливочный сыр, базилик'} },{ img:IMG_DIR+'page04_img1.jpg', x:65, y:68, price:2300, n:{hy:'Բրուսկետտա մորտադելլայով և պիստակի կրեմով',en:'Bruschetta Mortadella with Pistachio Cream',ru:'Брускетта с мортаделлой и фисташковым кремом'}, d:{hy:'Մորտադելլա, պիստակի կրեմ, բազիլիկ',en:'Mortadella, pistachio cream, basil',ru:'Мортаделла, фисташковый крем, базилик'} }]},
-    { dishes:[{ img:IMG_DIR+'page05_img1.jpg', x:50, y:55, price:2400, n:{hy:'Գրիլ վրայի բանջարեղեն',en:'Grilled Vegetables',ru:'Овощи на гриле'}, d:{hy:'Պղպեղ, դդմիկ, սունկ, չերի ոլիկ, արմեր սոուս',en:'Pepper, zucchini, mushroom, cherry tomatoes, Farmer sauce',ru:'Перец, кабачки, грибы, черри, фермерский соус'} }]},
+    { dishes:[{ img:IMG_DIR+'page05_img1.jpg', x:50, y:55, price:2400, n:{hy:'Գրիլ վրայի բանջարեղեն',en:'Grilled Vegetables',ru:'Овощи на гриле'}, d:{hy:'Պղպեղ, դդմիկ, սունկ, չերի լոլիկ, ֆարմեր սոուս',en:'Pepper, zucchini, mushroom, cherry tomatoes, Farmer sauce',ru:'Перец, кабачки, грибы, черри, фермерский соус'} }]},
     { dishes:[{ img:IMG_DIR+'page06_img1.jpg', x:50, y:55, price:1900, n:{hy:'Մոցարելլայի ձողիկներ ԻնՏեմպո ոճով',en:'Mozzarella Sticks InTempo Style',ru:'Палочки из моцареллы в стиле InTempo'}, d:{hy:'Մոցարելլայի ձողիկներ, ֆիրմային մայոնեզ, չեդեր, բեկոն, պարմեզան, կանաչ սոխ',en:'Mozzarella sticks, signature mayonnaise, cheddar, bacon, parmesan, green onion',ru:'Палочки из моцареллы, фирменный майонез, чеддер, бекон, пармезан, зелёный лук'} }]},
     { dishes:[{ img:IMG_DIR+'page07_img1.jpg', x:50, y:55, price:2100, n:{hy:'Խրթափավ հավի կրծքամիս կարտոֆիլ ֆրիով և չեդեր պանրով',en:'Crispy Chicken Breast with French Fries and Cheddar',ru:'Салат с хрустящей курицей, картофелем фри и чеддером'}, d:{hy:'Հավի կրծքամիս, կարտոֆիլ ֆրի, ֆիրմային սոուս, չեդեր պանիր, բեկոն',en:'Chicken breast, French fries, signature sauce, cheddar, bacon',ru:'Куриная грудка, картофель фри, фирменный соус, чеддер, бекон'} }]},
     { dishes:[{ img:IMG_DIR+'page08_img1.jpg', x:50, y:55, price:2100, n:{hy:'Հավի տեմպուրա ԻնՏեմպոյում',en:'Chicken Tempura at InTempo',ru:'Куриная темпура в InTempo'}, d:{hy:'Հավի կրծքամիս, չեդեր',en:'Chicken breast, cheddar',ru:'Куриная грудка, чеддер'} }]},
@@ -635,7 +671,7 @@ const MENU = [
     { dishes:[ { img1: IMG_DIR+'page14_img12.jpg', img2: IMG_DIR+'page15_img12.jpg', price: 3800, n:{hy:'Ալ Պոլո',en:'Al Polo',ru:'Ал Поло'}, d:{hy:'Մոցարելլա, տապակած հավի կրծքամիս, չորացրած տոմատներ չերրի, սպիտակ սերուցքային սոուս',en:'Mozzarella, fried chicken breast, dried cherry tomatoes, white cream sauce',ru:'Моцарелла, жареная куриная грудка, вяленые томаты черри, белый сливочный соус'} } ] },
     { dishes:[ { img1: IMG_DIR+'page16_img12.jpg', img2: IMG_DIR+'page17_img12.jpg', price: 3800, n:{hy:'Լացիո',en:'Lazio',ru:'Лацио'}, d:{hy:'Մոցարելլա, բեկոն, սերուցքային պանիր, պարմեզան, բազիլիկ',en:'Mozzarella, bacon, cream cheese, parmesan, basil',ru:'Моцарелла, бекон, сливочный сыр, пармезан, базилик'} } ] },
     { dishes:[ { img1: IMG_DIR+'page18_img12.jpg', img2: IMG_DIR+'page19_img12.jpg', price: 3700, n:{hy:'Մորտադելլայով և Ֆիստակներով',en:'With Mortadella and Pistachios',ru:'С Мортаделлой и Фисташками'}, d:{hy:'Սերուցքային սոուս, մորտադելլա, ֆիստակ և բազիլիկ',en:'Cream sauce, mortadella, pistachios and basil',ru:'Сливочный соус, мортаделла, фисташки и базилик'} } ] },
-    { dishes:[ { img1: IMG_DIR+'page20_img12.jpg', img2: IMG_DIR+'page21_img12.jpg', price: 3900, n:{hy:'Չորս անիր',en:'Quattro Formaggi',ru:'Четыре Сыра'}, d:{hy:'Մոցարելլա, պարմեզան, բլու չիզ և ռոքֆոր, օրեգանո և բազիլիկ',en:'Mozzarella, parmesan, blue cheese and roquefort, oregano and basil',ru:'Моцарелла, пармезан, блю чиз и рокфор, орегано и базилик'} } ] },
+    { dishes:[ { img1: IMG_DIR+'page20_img12.jpg', img2: IMG_DIR+'page21_img12.jpg', price: 3900, n:{hy:'Չորս Պանիր',en:'Quattro Formaggi',ru:'Четыре Сыра'}, d:{hy:'Մոցարելլա, պարմեզան, բլու չիզ և ռոքֆոր, օրեգանո և բազիլիկ',en:'Mozzarella, parmesan, blue cheese and roquefort, oregano and basil',ru:'Моцарелла, пармезан, блю чиз и рокфор, орегано и базилик'} } ] },
     { dishes:[ { img1: IMG_DIR+'page22_img12.jpg', img2: IMG_DIR+'page23_img12.jpg', price: 3900, n:{hy:'Տրյուֆելով',en:'With Truffle',ru:'С трюфелем'}, d:{hy:'Մոցարելլա, սնկեր, սպիտակ և սև տրյուֆել, սերուցքային սոուս և բազիլիկ',en:'Mozzarella, mushrooms, white and black truffle, cream sauce and basil',ru:'Моцарелла, грибы, белый и чёрный трюфель, сливочный соус и базилик'} } ] },
     { dishes:[ { img1: IMG_DIR+'page24_img12.jpg', img2: IMG_DIR+'page25_img22.jpg', price: 3900, n:{hy:'Տոսկանա',en:'Toscana',ru:'Тоскана'}, d:{hy:'Մոցարելլա, մասկարպոնե, բեկոն, տոմատային սոուս, օրեգանո և բազիլիկ',en:'Mozzarella, mascarpone, bacon, tomato sauce, oregano and basil',ru:'Моцарелла, маскарпоне, бекон, томатный соус, орегано и базилик'} } ] },
     { dishes:[ { img1: IMG_DIR+'page26_img12.jpg', img2: IMG_DIR+'page27_img12.jpg', price: 6800, n:{hy:'ԻնՏեմպո',en:'InTempo',ru:'InTempo'}, d:{hy:'Պրոշուտտո, բուրատա, մոցարելլա, բազիլիկ',en:'Prosciutto, burrata, mozzarella, basil',ru:'Прошутто, буррата, моцарелла, базилик'} } ] },
@@ -740,7 +776,7 @@ const MENU = [
       {img:IMG_DIR+'page23_img123.jpg',x:50,y:50,price:1800,n:{hy:'Սառը մոշի թեյ',en:'Cold Blackberry Tea',ru:'Холодный ежевичный чай'},d:{hy:'Եփած սև թեյ, մոշի պյուրե, անանուխ, մոշ',en:'Brewed black tea, blackberry puree, mint, blackberry',ru:'Заваренный черный чай, пюре из ежевики, мята, ежевика'}}
     ]},
     {dishes:[
-      {img:IMG_DIR+'page24_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սառը ելակի թեյ',en:'Cold Strawberry Tea',ru:'Клубничный холодный чай'},d:{hy:'Եփած սև թեյ, ելակի պյուրե, ելակ, անանուխ',en:'Brewed black tea, strawberry puree, strawberry, mint',ru:'Заваренный черный чай, клубничное пюре, клубника, мята'}},
+      {img:IMG_DIR+'page24_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սառը ելակի թեյ',en:'Cold Strawberry Tea',ru:'Клубничный холодный чай'},d:{hy:'Եած սև թեյ, ելակի պյուրե, ելակ, անանուխ',en:'Brewed black tea, strawberry puree, strawberry, mint',ru:'Заваренный черный чай, клубничное пюре, клубника, мята'}},
       {img:IMG_DIR+'page24_img123.jpg',x:65,y:65,price:1600,n:{hy:'Սառը մանգոյի թեյ',en:'Cold Mango Tea',ru:'Манговый холодный чай'},d:{hy:'Եփած սև թեյ, մանգոյի սիրոպ, անանուխ, չորացրած մանգո',en:'Brewed black tea, mango syrup, mint, dried mango',ru:'Заваренный черный чай, манговый сироп, мята, сушеное манго'}}
     ]},
     {dishes:[
@@ -773,7 +809,7 @@ const MENU = [
       {img:IMG_DIR+'page30_img123.jpg',x:50,y:50,price:'1800 / 4800',n:{hy:'Վարդագույն Լիչի Լիմոնադ',en:'Pink Lychee Lemonade',ru:'Розовый личи лимонад'},d:{hy:'Վարդագույն լիչիի սիրոպ, մորի, կիտրոնի հյութ, անանուխ, գազավորված ջուր',en:'Pink lychee syrup, raspberry, lemon juice, mint, sparkling water',ru:'Сироп розового личи, малина, лимонный сок, мята, газированная вода'}}
     ]},
     {dishes:[
-      {img:IMG_DIR+'page31_img123.jpg',x:35,y:35,price:'1800 / 4800',n:{hy:'Դեղձ-Խնձոր իմոնադ',en:'Peach Apple Lemonade',ru:'Персиково-яблочный лимонад'},d:{hy:'Պերսիկի պյուրե, խնձորի հյութ, խնձոր, անանուխ, գազավորված ջուր',en:'Peach puree, apple juice, apple, mint, sparkling water',ru:'Персиковое пюре, яблочный сок, яблоко, мята, газированная вода'}},
+      {img:IMG_DIR+'page31_img123.jpg',x:35,y:35,price:'1800 / 4800',n:{hy:'Դեղձ-նձոր Լիմոնադ',en:'Peach Apple Lemonade',ru:'Персиково-яблочный лимонад'},d:{hy:'Պերսիկի պյուրե, խնձորի հյութ, խնձոր, անանուխ, գազավորված ջուր',en:'Peach puree, apple juice, apple, mint, sparkling water',ru:'Персиковое пюре, яблочный сок, яблоко, мята, газированная вода'}},
       {img:IMG_DIR+'page31_img123.jpg',x:65,y:65,price:'1800 / 4800',n:{hy:'Ելակի Լիմոնադ',en:'Strawberry Lemonade',ru:'Клубничный лимонад'},d:{hy:'Ելակի պյուրե, կիտրոնի հյութ, ելակ, անանուխ, գազավորված ջուր',en:'Strawberry puree, lemon juice, strawberry, mint, sparkling water',ru:'Пюре клубники, лимонный сок, клубника, мята, газированная вода'}}
     ]},
     {dishes:[
@@ -813,11 +849,11 @@ const MENU = [
       {img:IMG_DIR+'page40_img123.jpg',x:65,y:65,price:1700,n:{hy:'Աֆֆոգատո',en:'Affogato',ru:'Аффогато'},d:{hy:'Վանիլային պաղպաղակ, էսպրեսո',en:'Vanilla ice cream, espresso',ru:'Ванильное мороженое, эспрессо'}}
     ]},
     {dishes:[
-      {img:IMG_DIR+'page41_img123.jpg',x:35,y:35,price:1900,n:{hy:'Սուր Գլասե',en:'Cafe Glasse',ru:'Кафе глассе'},d:{hy:'Վանիլային պաղպաղակ, էսպրեսո, կաթի փրփուր',en:'Vanilla ice cream, espresso, milk foam',ru:'Ванильное мороженое, эспрессо, молочная пена'}},
-      {img:IMG_DIR+'page41_img123.jpg',x:65,y:65,price:2100,n:{hy:'Սուր Գլասե կարամելով',en:'Cafe Glasse Caramel',ru:'Кафе глассе с карамелью'},d:{hy:'Վանիլային պաղպաղակ, էսպրեսո, կաթի փրփուր, կարամելի սոուս',en:'Vanilla ice cream, espresso, milk foam, caramel sauce',ru:'Ванильное мороженое, эспрессо, молочная пена, карамельный соус'}}
+      {img:IMG_DIR+'page41_img123.jpg',x:35,y:35,price:1900,n:{hy:'Սուրճ Գլասե',en:'Cafe Glasse',ru:'Кафе глассе'},d:{hy:'Վանիլային պաղպաղակ, էսպրեսո, կաթի փրփուր',en:'Vanilla ice cream, espresso, milk foam',ru:'Ванильное мороженое, эспрессо, молочная пена'}},
+      {img:IMG_DIR+'page41_img123.jpg',x:65,y:65,price:2100,n:{hy:'Սուրճ Գլասե կարամելով',en:'Cafe Glasse Caramel',ru:'Кафе глассе с карамелью'},d:{hy:'Վանիլային պաղպաղակ, էսպրեսո, կաթի փրփուր, կարամելի սոուս',en:'Vanilla ice cream, espresso, milk foam, caramel sauce',ru:'Ванильное мороженое, эспрессо, молочная пена, карамельный соус'}}
     ]},
     {dishes:[
-      {img:IMG_DIR+'page42_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սուր Ֆրապպե',en:'Cafe Frappe',ru:'Кафе фраппе'},d:{hy:'Էսպրեսո, կաթ, շաքար, սերուցք, հարած սերուցք, սուրճի փոշի',en:'Espresso, milk, sugar, cream, whipped cream, coffee powder',ru:'Эспрессо, молоко, сахар, сливки, взбитые сливки, кофейный порошок'}},
+      {img:IMG_DIR+'page42_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սուրճ Ֆրապպե',en:'Cafe Frappe',ru:'Кафе фраппе'},d:{hy:'Էսպրեսո, կաթ, շաքար, սերուցք, հարած սերուցք, սուրճի փոշի',en:'Espresso, milk, sugar, cream, whipped cream, coffee powder',ru:'Эспрессо, молоко, сахар, сливки, взбитые сливки, кофейный порошок'}},
       {img:IMG_DIR+'page42_img123.jpg',x:65,y:65,price:1800,n:{hy:'Նուտելլա Ֆրապպե',en:'Nutella Frappe',ru:'Нутелла фраппе'},d:{hy:'Էսպրեսո, կաթ, Նուտելլա, սերուցք, հարած սերուցք, սուրճի ոշի',en:'Espresso, milk, Nutella, cream, whipped cream, coffee powder',ru:'Эспрессо, молоко, Нутелла, сливки, взбитые сливки, кофейный порошок'}}
     ]}
   ]},
@@ -837,13 +873,13 @@ const MENU = [
   ]},
   {id:'bar_hot_choc',t:{hy:'Տաք շոկոլադ',en:'Hot Chocolate',ru:'Горячий шоколад'},scenes:[
     {dishes:[
-      {img:IMG_DIR+'page46_img123.jpg',x:35,y:35,price:2300,n:{hy:'Տաք ոկոլադ Բեյլիսով',en:'Hot Chocolate Baileys',ru:'Горячий шоколад с Бейлисом'},d:{hy:'Կաթ, շոկոլադ, Բեյլիս',en:'Milk, chocolate, Baileys',ru:'Молоко, шоколад, Бейлис'}},
+      {img:IMG_DIR+'page46_img123.jpg',x:35,y:35,price:2300,n:{hy:'Տաք շոկոլադ Բեյլիսով',en:'Hot Chocolate Baileys',ru:'Горячий шоколад с Бейлисом'},d:{hy:'Կաթ, շոկոլադ, Բեյլիս',en:'Milk, chocolate, Baileys',ru:'Молоко, шоколад, Бейлис'}},
       {img:IMG_DIR+'page46_img123.jpg',x:65,y:65,price:2100,n:{hy:'Տաք շոկոլադ կոկոսով',en:'Hot Chocolate Coconut',ru:'Горячий шоколад с кокосом'},d:{hy:'Կաթ, շոկոլադ, կոկոսի պյուրե, տաշած կոկոս',en:'Milk, chocolate, coconut puree, grated coconut',ru:'Молоко, шоколад, кокосовое пюре, тертый кокос'}}
     ]},
     {dishes:[
-      {img:IMG_DIR+'page47_img123.jpg',x:25,y:25,price:1500,n:{hy:'Տաք ոկոլադ',en:'Hot Chocolate',ru:'Горячий шоколад'},d:{hy:'Կաթ, շոկոլադ',en:'Milk, chocolate',ru:'Молоко, шоколад'}},
+      {img:IMG_DIR+'page47_img123.jpg',x:25,y:25,price:1500,n:{hy:'Տաք շոկոլադ',en:'Hot Chocolate',ru:'Горячий шоколад'},d:{hy:'Կաթ, շոկոլադ',en:'Milk, chocolate',ru:'Молоко, шоколад'}},
       {img:IMG_DIR+'page47_img123.jpg',x:50,y:50,price:2500,n:{hy:'Տաք շոկոլադ ռոմով',en:'Hot Chocolate Rum',ru:'Горячий шоколад с ромом'},d:{hy:'Կաթ, ռոմ, շոկոլադ, հարած սերուցք, տաշած շոկոլադ',en:'Milk, rum, chocolate, whipped cream, grated chocolate',ru:'Молоко, ром, шоколад, взбитые сливки, тертый шоколад'}},
-      {img:IMG_DIR+'page47_img123.jpg',x:75,y:75,price:1800,n:{hy:'Տաք ոկոլադ դարչինով',en:'Hot Chocolate Cinnamon',ru:'Горячий шоколад с корицей'},d:{hy:'Կաթ, շոկոլադ, աղացած դարչին',en:'Milk, chocolate, ground cinnamon',ru:'Молоко, шоколад, молотая корица'}},
+      {img:IMG_DIR+'page47_img123.jpg',x:75,y:75,price:1800,n:{hy:'Տաք շոկոլադ դարչինով',en:'Hot Chocolate Cinnamon',ru:'Горячий шоколад с корицей'},d:{hy:'Կաթ, շոկոլադ, աղացած դարչին',en:'Milk, chocolate, ground cinnamon',ru:'Молоко, шоколад, молотая корица'}},
       {img:IMG_DIR+'page47_img123.jpg',x:50,y:25,price:1800,n:{hy:'Էսպրեսո Տաք Շոկոլադ',en:'Espresso Hot Chocolate',ru:'Эспрессо горячий шоколад'},d:{hy:'Կաթ, շոկոլադ, էսպրեսո',en:'Milk, chocolate, espresso',ru:'Молоко, шоколад, эспрессо'}}
     ]}
   ]},
@@ -886,9 +922,9 @@ const MENU = [
 ];
 
 const DICT = {
-  hy:{title:'In Tempo — Իտալական խոհանոց · Երևան',nav_menu:'Մենյու',nav_contact:'Կապ',hero_l1:'Իտալական խոհանոց',hero_l2:'Երևանի <em>Կենտրոնում</em>',hero_sub:'Բաց է 09:00–24:00',cue:'թերթեք',tap:'Ընտրեք ուտեստը ցանկից',mb_call:'Զանգել',mb_book:'Ամրագրել',c_h2:'Զանգեք — և սեղանը <em>սպասում է</em>',c_sub:'Մեկ հպում — և մնացածը մենք կհոգանք.',c_addr1:'Երևան, Հյուսիսային 10/3',c_addr2:'Ամեն օր 09:00 – 24:00',c_delivery_title:'Առաքում',c_delivery:'Առաքում պատվիրելու համար կարող եք օգտվել <b>Glovo</b>, <b>Yandex</b>, <b>Buy.am</b> հավելվածներից կամ զանգահարել <b>8811</b> Buy.am',f_line:'© 2026 In Tempo · Իտալական խոհանոց',branch_title:'Ընտրեք մասնաճյուղ',branch_subtitle:'Մենյուն տարբերվում է ըստ մասնաճյուղի',branch_big:'Մեծ մասնաճյուղ',branch_small:'Փոքր մասնաճյուղ',tab_main:'Հիմնական մենյու',tab_breakfast:'Նախաճաշ',tab_lunch:'Լանչ',tab_bar:'Բար',tab_pizza:'Պիցցա',bf_hours:'Նախաճաշը գործում է 09:00–12:00',lunch_hours:'Գործում է երկուշաբթիից ուրբաթ, 12:00–16:00',coming_soon:'Բաժինը շուտով կլինի'},
-  en:{title:'In Tempo — Italian Kitchen · Yerevan',nav_menu:'Menu',nav_contact:'Contact',hero_l1:'Italian kitchen',hero_l2:'in the heart of <em>Yerevan</em>',hero_sub:'Open 09:00 – 24:00',cue:'scroll',tap:'Select a dish from the list',mb_call:'Call',mb_book:'Book a table',c_h2:'Call us — and the table <em>is waiting</em>',c_sub:'One tap — and we will take care of the rest.',c_addr1:'Yerevan, 10/3 Northern Avenue',c_addr2:'Daily 09:00 – 24:00',c_delivery_title:'Delivery',c_delivery:'To order delivery, you can use the <b>Glovo</b>, <b>Yandex</b> or <b>Buy.am</b> apps, or call <b>8811</b> Buy.am',f_line:'© 2026 In Tempo · Italian kitchen',branch_title:'Choose branch',branch_subtitle:'Menu differs by branch',branch_big:'Big branch',branch_small:'Small branch',tab_main:'Main Menu',tab_breakfast:'Breakfast',tab_lunch:'Lunch',tab_bar:'Bar',tab_pizza:'Pizza',bf_hours:'Breakfast served 09:00 – 12:00',lunch_hours:'Available Monday to Friday, 12:00 – 16:00',coming_soon:'Section coming soon'},
-  ru:{title:'In Tempo — Итальянская кухня · Ереван',nav_menu:'Меню',nav_contact:'Контакты',hero_l1:'Итальянская кухня',hero_l2:'в центре <em>Еревана</em>',hero_sub:'Открыта с 09:00 до 24:00',cue:'листайте',tap:'Выберите блюдо из списка',mb_call:'Позвонить',mb_book:'Забронировать',c_h2:'Позвоните — и столик <em>ждёт</em>',c_sub:'Одно касание — и мы позаботимся обо всём остальном.',c_addr1:'Ереван, Северный проспект 10/3',c_addr2:'Ежедневно 09:00 – 24:00',c_delivery_title:'Доставка',c_delivery:'Заказать доставку можно через приложения <b>Glovo</b>, <b>Yandex</b>, <b>Buy.am</b> или позвонить <b>8811</b> Buy.am',f_line:'© 2026 In Tempo · Итальянская кухня',branch_title:'Выберите филиал',branch_subtitle:'Меню отличается в зависимости от филиала',branch_big:'Большой филиал',branch_small:'Маленький филиал',tab_main:'Основное меню',tab_breakfast:'Завтрак',tab_lunch:'Ланч',tab_bar:'Бар',tab_pizza:'Пицца',bf_hours:'Завтраки действуют с 09:00 до 12:00',lunch_hours:'Действует с понедельника по пятницу, с 12:00 до 16:00',coming_soon:'Раздел скоро будет доступен'}
+  hy:{title:'In Tempo — Իտալական խոհանոց · Երևան',nav_menu:'Մենյու',nav_contact:'Կապ',hero_l1:'Իտալական խոհանոց',hero_l2:'Երևանի <em>Կենտրոնում</em>',hero_sub:'Բաց է 09:00–24:00',cue:'թերթեք',tap:'Ընտրեք ուտեստը ցանկից',mb_call:'Զանգել',mb_book:'Ամրագրել',c_h2:'Զանգեք — և սեղանը <em>սպասում է</em>',c_sub:'Մեկ հպում — և մնացածը մենք կհոգանք.',c_addr1:'Երևան, Հյուսիսային 10/3',c_addr2:'Ամեն օր 09:00 – 24:00',c_delivery_title:'Առաքում',c_delivery:'Առաքում պատվիրելու համար կարող եք օգտվել <b>Glovo</b>, <b>Yandex</b>, <b>Buy.am</b> հավելվածներից կամ զանգահարել <b>8811</b> Buy.am',f_line:'© 2026 In Tempo · Իտալական խոհանոց',branch_title:'Ընտրեք մասնաճյուղ',branch_subtitle:'Մենյուն տարբերվում է ըստ մասնաճյուղի',tab_main:'Հիմնական մենյու',tab_breakfast:'Նախաճաշ',tab_lunch:'Լանչ',tab_bar:'Բար',tab_pizza:'Պիցցա',bf_hours:'Նախաճաշը գործում է 09:00–12:00',lunch_hours:'Գործում է երկուշաբթիից ուրբաթ, 12:00–16:00',coming_soon:'Բաժինը շուտով կլինի'},
+  en:{title:'In Tempo — Italian Kitchen · Yerevan',nav_menu:'Menu',nav_contact:'Contact',hero_l1:'Italian kitchen',hero_l2:'in the heart of <em>Yerevan</em>',hero_sub:'Open 09:00 – 24:00',cue:'scroll',tap:'Select a dish from the list',mb_call:'Call',mb_book:'Book a table',c_h2:'Call us — and the table <em>is waiting</em>',c_sub:'One tap — and we will take care of the rest.',c_addr1:'Yerevan, 10/3 Northern Avenue',c_addr2:'Daily 09:00 – 24:00',c_delivery_title:'Delivery',c_delivery:'To order delivery, you can use the <b>Glovo</b>, <b>Yandex</b> or <b>Buy.am</b> apps, or call <b>8811</b> Buy.am',f_line:'© 2026 In Tempo · Italian kitchen',branch_title:'Choose branch',branch_subtitle:'Menu differs by branch',tab_main:'Main Menu',tab_breakfast:'Breakfast',tab_lunch:'Lunch',tab_bar:'Bar',tab_pizza:'Pizza',bf_hours:'Breakfast served 09:00 – 12:00',lunch_hours:'Available Monday to Friday, 12:00 – 16:00',coming_soon:'Section coming soon'},
+  ru:{title:'In Tempo — Итальянская кухня · Ереван',nav_menu:'Меню',nav_contact:'Контакты',hero_l1:'Итальянская кухня',hero_l2:'в центре <em>Еревана</em>',hero_sub:'Открыта с 09:00 до 24:00',cue:'листайте',tap:'Выберите блюдо из списка',mb_call:'Позвонить',mb_book:'Забронировать',c_h2:'Позвоните — и столик <em>ждёт</em>',c_sub:'Одно касание — и мы позаботимся обо всём остальном.',c_addr1:'Ереван, Северный проспект 10/3',c_addr2:'Ежедневно 09:00 – 24:00',c_delivery_title:'Доставка',c_delivery:'Заказать доставку можно через приложения <b>Glovo</b>, <b>Yandex</b>, <b>Buy.am</b> или позвонить <b>8811</b> Buy.am',f_line:'© 2026 In Tempo · Итальянская кухня',branch_title:'Выберите филиал',branch_subtitle:'Меню отличается в зависимости от филиала',tab_main:'Основное меню',tab_breakfast:'Завтрак',tab_lunch:'Ланч',tab_bar:'Бар',tab_pizza:'Пицца',bf_hours:'Завтраки действуют с 09:00 до 12:00',lunch_hours:'Действует с понедельника по пятницу, с 12:00 до 16:00',coming_soon:'Раздел скоро будет доступен'}
 };
 
 const fmtPrice = n => (n == null ? '—' : (typeof n === 'number' ? String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' ') : String(n))) + ' ֏';
@@ -914,10 +950,13 @@ window.addEventListener('load', () => {
   const branchModal = document.getElementById('branchModal');
   if (savedBranch) {
     currentBranch = savedBranch;
+    branchGate = false;
+    document.documentElement.classList.remove('gate');
     document.getElementById('branchToggle').textContent = currentBranch === 'hyusisayin' ? 'Հյուսիսային' : 'Mega Mall';
     document.getElementById('heroActions').style.display = 'flex';
     branchModal.classList.remove('open');
   } else {
+    branchGate = true;
     branchModal.classList.add('open');
   }
 });
@@ -949,6 +988,9 @@ let modalCard = null;
 function openSceneModal(card){
   const sc = card.querySelector('.scene');
   if (!sc) return;
+  // сброс залипших состояний, чтобы ничего не глючило
+  sc.querySelectorAll('.smart-popup.show').forEach(p => p.classList.remove('show'));
+  sc.querySelectorAll('.dish-row.active').forEach(r => r.classList.remove('active'));
   modalCard = card;
   sceneModalBody.appendChild(sc);
   sceneModal.classList.add('open');
@@ -957,7 +999,11 @@ function openSceneModal(card){
 function closeSceneModal(){
   if (modalCard){
     const sc = sceneModalBody.querySelector('.scene');
-    if (sc) modalCard.appendChild(sc);
+    if (sc){
+      sc.querySelectorAll('.smart-popup.show').forEach(p => p.classList.remove('show'));
+      sc.querySelectorAll('.dish-row.active').forEach(r => r.classList.remove('active'));
+      modalCard.appendChild(sc);
+    }
     modalCard = null;
   }
   sceneModal.classList.remove('open');
@@ -977,7 +1023,7 @@ const io = new IntersectionObserver(es => es.forEach(en => {
   if (en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
 }), {threshold:.1, rootMargin:'0px 0px -40px 0px'});
 
-/* === ЛЕНТА ЧИПСОВ: построение, скролл, scroll-spy === */
+/* === ЛЕНТА ЧИПСОВ === */
 function navOffset(){
   const chipH = document.getElementById('catNav').offsetHeight || 0;
   return chipH + 8;
@@ -1057,7 +1103,7 @@ function renderMenu(lang, view){
     const others = Object.keys(cat.t).filter(k => k !== lang).map(k => cat.t[k]).join('  ·  ');
     const d = DICT[lang] || DICT.hy;
     const hoursLine = (cat.id === 'breakfast' || cat.id === 'lunch')
-      ? '<span class="cat-hours">' + CLOCK_SVG + '<span class="cat-hours-text">' + (cat.id === 'breakfast' ? d.bf_hours : d.lunch_hours) + '</span></span>'
+      ? '<span class="cat-hours"><span class="cat-hours-ico">' + CLOCK_SVG + '</span><span class="cat-hours-text">' + (cat.id === 'breakfast' ? d.bf_hours : d.lunch_hours) + '</span></span>'
       : '';
     sec.innerHTML =
       '<div class="category-header">' +
@@ -1073,6 +1119,7 @@ function renderMenu(lang, view){
       card.className = 'menu-item';
       card.style.transitionDelay = (index % 4) * 80 + 'ms';
       const scene = document.createElement('div');
+      const eager = index < 2; // первые карточки грузим сразу
 
       if (cat.id === 'pizza') {
         scene.className = 'pizza-split';
@@ -1082,14 +1129,16 @@ function renderMenu(lang, view){
           const leftImg = document.createElement('img');
           leftImg.src = dish.img1;
           leftImg.alt = dish.n[lang];
-          leftImg.loading = 'lazy';
+          leftImg.loading = eager ? 'eager' : 'lazy';
+          if (eager) leftImg.setAttribute('fetchpriority','high');
           leftHalf.appendChild(leftImg);
           const rightHalf = document.createElement('div');
           rightHalf.className = 'pizza-half right';
           const rightImg = document.createElement('img');
           rightImg.src = dish.img2;
           rightImg.alt = dish.n[lang];
-          rightImg.loading = 'lazy';
+          rightImg.loading = eager ? 'eager' : 'lazy';
+          if (eager) rightImg.setAttribute('fetchpriority','high');
           rightHalf.appendChild(rightImg);
           scene.appendChild(leftHalf);
           scene.appendChild(rightHalf);
@@ -1109,7 +1158,8 @@ function renderMenu(lang, view){
           image.className = 'scene-img' + (imageIndex === 0 ? ' active' : '');
           image.src = dish.img;
           image.alt = dish.n[lang] || '';
-          image.loading = 'lazy';
+          image.loading = eager ? 'eager' : 'lazy';
+          if (eager) image.setAttribute('fetchpriority','high');
           image.decoding = 'async';
           attachImgFallback(image);
           scene.appendChild(image);
@@ -1168,6 +1218,23 @@ function renderMenu(lang, view){
           }
         });
       }
+
+      // компактная подпись для мобилки (на десктопе скрыта)
+      const cap = document.createElement('div');
+      cap.className = 'card-cap';
+      sceneData.dishes.slice(0,2).forEach(dish => {
+        const r = document.createElement('span');
+        r.className = 'cap-row';
+        r.innerHTML = '<span class="cap-name">' + (dish.n[lang] || '') + '</span><span class="cap-price">' + fmtPrice(dish.price) + '</span>';
+        cap.appendChild(r);
+      });
+      if (sceneData.dishes.length > 2){
+        const m = document.createElement('span');
+        m.className = 'cap-more';
+        m.textContent = '+' + (sceneData.dishes.length - 2);
+        cap.appendChild(m);
+      }
+      card.appendChild(cap);
 
       grid.appendChild(card);
       io.observe(card);
@@ -1230,7 +1297,9 @@ const branchToggle = document.getElementById('branchToggle');
 function closeBranchModal(){ branchModal.classList.remove('open'); }
 function selectBranch(branch){
   currentBranch = branch;
+  branchGate = false;
   try{ localStorage.setItem('intempo_branch', branch); }catch(e){}
+  document.documentElement.classList.remove('gate');
   closeBranchModal();
   branchToggle.textContent = currentBranch === 'hyusisayin' ? 'Հյուսիսային' : 'Mega Mall';
   document.getElementById('heroActions').style.display = 'flex';
@@ -1241,7 +1310,8 @@ document.querySelectorAll('.branch-choice').forEach(choice => {
   choice.addEventListener('click', () => selectBranch(choice.dataset.branch));
 });
 branchToggle.addEventListener('click', () => branchModal.classList.add('open'));
-branchModal.addEventListener('click', e => { if (e.target === branchModal) closeBranchModal(); });
+// закрытие по фону ТОЛЬКО если филиал уже выбран (гейт не отпускает без выбора)
+branchModal.addEventListener('click', e => { if (e.target === branchModal && !branchGate) closeBranchModal(); });
 
 document.querySelectorAll('.rv').forEach(el => io.observe(el));
 </script>
