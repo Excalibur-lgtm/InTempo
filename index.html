@@ -44,6 +44,7 @@
   body::-webkit-scrollbar{width:10px;} body::-webkit-scrollbar-track{background:var(--bg);} body::-webkit-scrollbar-thumb{background:var(--bg-deep);border-radius:99px;}
   h1,h2{font-family:var(--serif);font-weight:600;line-height:1.12;letter-spacing:-.01em;color:var(--ink);}
   em{font-style:italic;color:var(--red);}
+  .dish-row,.menu-item,.cat-chip,.btn,.branch-choice{touch-action:manipulation;}
 
   .site-bg{position:fixed;left:0;right:0;top:-20vh;height:140vh;z-index:0;pointer-events:none;overflow:hidden;will-change:transform;}
   .site-bg img{width:100%;height:100%;object-fit:cover;filter:blur(6px) brightness(.72) saturate(1.1);transform:scale(1.06);}
@@ -202,7 +203,6 @@
   .category-header::before{content:"";display:block;width:86px;height:2px;margin:0 auto 18px;border-radius:2px;background:linear-gradient(90deg,transparent 0%,var(--red) 50%,transparent 100%);box-shadow:0 0 12px rgba(216,67,42,.35);}
   .cat-kicker{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--red);letter-spacing:.14em;display:block;margin-bottom:12px;}
 
-  /* ЧАСЫ + КОМПЛИМЕНТ В ОДНОЙ КАПСУЛЕ */
   .cat-hours{
     display:inline-flex;
     align-items:center;
@@ -304,7 +304,6 @@
   .menu-item.in{opacity:1;transform:translateY(0);}
   .menu-item:hover{transform:translateY(-5px);box-shadow:0 15px 30px rgba(43,38,34,.15),0 0 0 1px rgba(216,67,42,.1);border-color:rgba(216,67,42,.3);background:rgba(241,239,233,.85);}
 
-  /* ФОТО-БЛОК: padding-top вместо aspect-ratio — работает на всех мобильных браузерах */
   .scene{position:relative;overflow:hidden;background:var(--menupage);}
   .scene::before{content:"";display:block;padding-top:133.333%;}
   .scene-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .6s ease,transform .9s cubic-bezier(.22,1,.36,1);}
@@ -351,6 +350,11 @@
   .scene-modal .scene{width:100%;opacity:1;transform:none;box-shadow:0 30px 70px rgba(0,0,0,.5);}
   .scene-modal-close{position:absolute;top:-46px;right:0;width:40px;height:40px;border-radius:50%;border:1.5px solid rgba(241,239,233,.7);background:none;color:var(--paper);cursor:pointer;display:flex;align-items:center;justify-content:center;}
   .scene-modal-hint{color:rgba(241,239,233,.75);font-size:11px;letter-spacing:.2em;text-transform:uppercase;text-align:center;margin-top:12px;}
+  /* описание блюда блоком под фото (мобилка) */
+  .modal-desc{display:none;}
+  .md-title{font-family:var(--serif);font-weight:700;font-size:16px;line-height:1.3;color:var(--ink);margin-bottom:6px;}
+  .md-desc{font-size:13px;line-height:1.55;color:var(--muted);margin-bottom:8px;}
+  .md-price{font-family:var(--serif);font-style:italic;font-weight:700;font-size:18px;color:var(--red);}
 
   .contact-sec{position:relative;z-index:1;padding:clamp(90px,12vw,160px) 6vw;text-align:center;overflow:hidden;background:
     radial-gradient(ellipse 820px 420px at 50% 0%, rgba(241,239,233,.25), transparent 62%),
@@ -388,14 +392,16 @@
   .rv{opacity:0;transform:translateY(30px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);}
   .rv.in{opacity:1;transform:none;}
 
-  /* === ВЫБОР ФИЛИАЛА: ФОТО НА ВЕСЬ ЭКРАН === */
-  .branch-modal{position:fixed;inset:0;z-index:350;display:none;align-items:center;justify-content:center;background:rgba(20,15,10,.55);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);}
+  /* === ВЫБОР ФИЛИАЛА: УРОВЕНЬ B — НЕПРОЗРАЧНЫЙ ЭКРАН + BLUR ФОТО === */
+  .branch-modal{position:fixed;inset:0;z-index:350;display:none;align-items:center;justify-content:center;background:var(--ink);transition:opacity .45s ease, visibility .45s ease;}
   .branch-modal.open{display:flex;}
+  .branch-modal.closing{opacity:0;visibility:hidden;}
   .branch-media{position:absolute;inset:0;z-index:0;overflow:hidden;}
-  .branch-media img{width:100%;height:100%;object-fit:cover;animation:kb 26s ease-in-out infinite alternate;}
-  .branch-media::after{content:"";position:absolute;inset:0;background:linear-gradient(to top, rgba(20,15,10,.90) 0%, rgba(20,15,10,.55) 40%, rgba(20,15,10,.30) 70%, rgba(20,15,10,.60) 100%);}
+  .branch-media img{width:100%;height:100%;object-fit:cover;filter:blur(7px) brightness(.85) saturate(1.05);transform:scale(1.08);}
+  .branch-media::after{content:"";position:absolute;inset:0;background:linear-gradient(to top, rgba(24,18,14,.92) 0%, rgba(24,18,14,.66) 45%, rgba(24,18,14,.78) 100%);}
   .branch-modal-inner{position:relative;z-index:1;max-width:640px;width:100%;text-align:center;max-height:100vh;overflow-y:auto;padding:40px 22px;scrollbar-width:none;}
   .branch-modal-inner::-webkit-scrollbar{display:none;}
+  .branch-logo{height:92px;width:auto;margin:0 auto 18px;filter:drop-shadow(0 4px 14px rgba(0,0,0,.5));}
   .branch-modal-inner h2{font-family:var(--serif);font-size:clamp(30px,5vw,46px);color:#fff;margin-bottom:12px;text-shadow:0 2px 18px rgba(0,0,0,.6);}
   .branch-modal-inner p{color:rgba(241,239,233,.85);font-size:15px;margin-bottom:34px;text-shadow:0 1px 8px rgba(0,0,0,.5);}
   .branch-choices{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
@@ -433,7 +439,6 @@
     .mq-track span{font-size:14px;padding:0 16px;}
     .menu-grid{grid-template-columns:repeat(2,1fr);gap:12px;}
     .scene::before{padding-top:100%;}
-    .scene-modal .scene::before{padding-top:133.333%;}
     .menu-item .dish-list-overlay{display:none;}
     .menu-item .smart-popup{display:none;}
     .menu-item .card-cap{display:flex;flex-direction:column;gap:4px;padding:10px 12px 12px;background:rgba(241,239,233,.94);border-top:1px solid var(--line);}
@@ -441,7 +446,6 @@
     .pizza-info-overlay > div:nth-child(1){font-size:13px !important;margin-bottom:4px;}
     .pizza-info-overlay > div:nth-child(2){display:none;}
     .pizza-info-overlay > div:nth-child(3){font-size:12px !important;padding:4px 10px;}
-    /* ЛЕНТА ЗАГОЛОВКОВ ВНИЗУ ВМЕСТО ПАНЕЛИ ЗВОНКА */
     .cat-nav{position:fixed;top:auto;bottom:0;left:0;right:0;padding:8px 12px calc(8px + env(safe-area-inset-bottom));background:rgba(43,38,34,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid rgba(241,239,233,.14);box-shadow:0 -10px 30px rgba(0,0,0,.25);}
     .cat-nav-track{padding:4px;gap:2px;background:rgba(241,239,233,.08);border-color:rgba(241,239,233,.12);}
     .cat-chip{font-size:12px;padding:8px 15px;}
@@ -452,12 +456,18 @@
     .cat-hours-ico svg{width:18px;height:18px;}
     .cat-hours-text{font-size:18px;}
     .cat-hours-note{font-size:11px;}
+    /* модалка блюда на мобилке */
+    .scene-modal{padding:14px;}
+    .scene-modal-body{width:min(94vw,480px);}
+    .scene-modal .scene::before{padding-top:100%;}
+    .scene-modal-close{position:fixed;top:calc(10px + env(safe-area-inset-top));right:10px;z-index:96;background:rgba(43,38,34,.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);}
+    .scene-modal .smart-popup{display:none !important;}
+    .modal-desc.show{display:block;margin-top:12px;background:rgba(241,239,233,.96);border:1px solid rgba(43,38,34,.14);border-radius:14px;padding:14px 16px;box-shadow:0 10px 26px rgba(0,0,0,.25);text-align:left;}
     .dish-list-overlay{max-height:46%;overflow-y:auto;scrollbar-width:none;padding-top:34px;}
     .dish-list-overlay::-webkit-scrollbar{display:none;}
     .dish-row{padding:11px 12px;font-size:14px;}
     .dish-row-name{font-size:14px;}
     .dish-row-price{font-size:13px;}
-    .smart-popup{width:min(260px,86%);max-height:56%;overflow-y:auto;}
     .contact-sec{padding:72px 5vw 96px;}
     .contact-kicker{font-size:11px;letter-spacing:.22em;gap:10px;}
     .contact-kicker::before,.contact-kicker::after{width:26px;}
@@ -469,6 +479,7 @@
     footer{padding:32px 5vw 24px;}
     footer .logo-img{height:120px;}
     .branch-modal-inner{padding:28px 16px;}
+    .branch-logo{height:70px;margin-bottom:14px;}
     .branch-modal-inner p{font-size:14px;margin-bottom:24px;}
     .branch-choice{padding:22px 16px;}
     .branch-choice .name{font-size:20px;}
@@ -486,6 +497,7 @@
 <div class="branch-modal open" id="branchModal">
   <div class="branch-media"><img src="Images-final/page20_img1.jpg" alt="In Tempo" loading="eager" fetchpriority="high"></div>
   <div class="branch-modal-inner">
+    <img class="branch-logo" src="images/logoIntempo.png" alt="In Tempo">
     <h2 data-i18n="branch_title">Выберите филиал</h2>
     <p data-i18n="branch_subtitle">Меню отличается в зависимости от филиала</p>
     <div class="branch-choices">
@@ -563,6 +575,11 @@
   <div class="scene-modal-body">
     <button class="scene-modal-close" id="sceneModalClose" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
     <div id="sceneModalBody"></div>
+    <div class="modal-desc" id="modalDesc">
+      <div class="md-title"></div>
+      <div class="md-desc"></div>
+      <div class="md-price"></div>
+    </div>
     <div class="scene-modal-hint" data-i18n="tap">Ընտրեք ուտեստը ցանկից</div>
   </div>
 </div>
@@ -850,14 +867,14 @@ const MENU = [
   ]},
   {id:'bar_cold_tea',t:{hy:'Սառը թեյեր',en:'Cold Teas',ru:'Холодные чаи'},scenes:[
     {dishes:[
-      {img:IMG_DIR+'page23_img123.jpg',x:50,y:50,price:1800,n:{hy:'Սառը մոշի թեյ',en:'Cold Blackberry Tea',ru:'Холодный ежевичный чай'},d:{hy:'Եած սև թեյ, մոշի պյուրե, անանուխ, մոշ',en:'Brewed black tea, blackberry puree, mint, blackberry',ru:'Заваренный черный чай, пюре из ежевики, мята, ежевика'}}
+      {img:IMG_DIR+'page23_img123.jpg',x:50,y:50,price:1800,n:{hy:'Սառը մոշի թեյ',en:'Cold Blackberry Tea',ru:'Холодный ежевичный чай'},d:{hy:'Եփած սև թեյ, մոշի պյուրե, անանուխ, մոշ',en:'Brewed black tea, blackberry puree, mint, blackberry',ru:'Заваренный черный чай, пюре из ежевики, мята, ежевика'}}
     ]},
     {dishes:[
-      {img:IMG_DIR+'page24_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սառը ելակի թեյ',en:'Cold Strawberry Tea',ru:'Клубничный холодный чай'},d:{hy:'Եած սև թեյ, ելակի պյուրե, ելակ, անանուխ',en:'Brewed black tea, strawberry puree, strawberry, mint',ru:'Заваренный черный чай, клубничное пюре, клубника, мята'}},
+      {img:IMG_DIR+'page24_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սառը ելակի թեյ',en:'Cold Strawberry Tea',ru:'Клубничный холодный чай'},d:{hy:'Եփած սև թեյ, ելակի պյուրե, ելակ, անանուխ',en:'Brewed black tea, strawberry puree, strawberry, mint',ru:'Заваренный черный чай, клубничное пюре, клубника, мята'}},
       {img:IMG_DIR+'page24_img123.jpg',x:65,y:65,price:1600,n:{hy:'Սառը մանգոյի թեյ',en:'Cold Mango Tea',ru:'Манговый холодный чай'},d:{hy:'Եփած սև թեյ, մանգոյի սիրոպ, անանուխ, չորացրած մանգո',en:'Brewed black tea, mango syrup, mint, dried mango',ru:'Заваренный черный чай, манговый сироп, мята, сушеное манго'}}
     ]},
     {dishes:[
-      {img:IMG_DIR+'page25_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սառը դեղձի թեյ',en:'Cold Peach Tea',ru:'Персиковый холодный чай'},d:{hy:'Եած սև թեյ, պերսիկի պյուրե, անանուխ, լայմ, լիմոն',en:'Brewed black tea, peach puree, mint, lime, lemon',ru:'Заваренный черный чай, персиковое пюре, мята, лайм, лимон'}},
+      {img:IMG_DIR+'page25_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սառը դեղձի թեյ',en:'Cold Peach Tea',ru:'Персиковый холодный чай'},d:{hy:'Եփած սև թեյ, պերսիկի պյուրե, անանուխ, լայմ, լիմոն',en:'Brewed black tea, peach puree, mint, lime, lemon',ru:'Заваренный черный чай, персиковое пюре, мята, лайм, лимон'}},
       {img:IMG_DIR+'page25_img123.jpg',x:65,y:65,price:1700,n:{hy:'Սառը լավանդայի թեյ',en:'Cold Lavender Tea',ru:'Лавандовый холодный чай'},d:{hy:'Լավանդայի սիրոպ, անանուխ, լիմոն, լայմ, ռոզմարին',en:'Lavender syrup, mint, lemon, lime, rosemary',ru:'Лавандовый сироп, мята, лимон, лайм, розмарин'}}
     ]},
     {dishes:[
@@ -1061,7 +1078,16 @@ document.getElementById('navRight').addEventListener('click', e => {
 
 const sceneModal = document.getElementById('sceneModal');
 const sceneModalBody = document.getElementById('sceneModalBody');
+const modalDesc = document.getElementById('modalDesc');
 let modalCard = null;
+function fillDesc(dish, lang){
+  modalDesc.querySelector('.md-title').textContent = dish.n[lang] || '';
+  const dd = modalDesc.querySelector('.md-desc');
+  dd.textContent = dish.d[lang] || '';
+  dd.style.display = (dish.d[lang] || '') ? '' : 'none';
+  modalDesc.querySelector('.md-price').textContent = fmtPrice(dish.price);
+  modalDesc.classList.add('show');
+}
 function openSceneModal(card){
   const sc = card.querySelector('.scene');
   if (!sc) return;
@@ -1071,6 +1097,10 @@ function openSceneModal(card){
   sceneModalBody.appendChild(sc);
   sceneModal.classList.add('open');
   document.body.style.overflow = 'hidden';
+  if (isMobile()){
+    const firstRow = sc.querySelector('.dish-row');
+    if (firstRow) firstRow.click();
+  }
 }
 function closeSceneModal(){
   if (modalCard){
@@ -1082,6 +1112,7 @@ function closeSceneModal(){
     }
     modalCard = null;
   }
+  modalDesc.classList.remove('show');
   sceneModal.classList.remove('open');
   document.body.style.overflow = '';
 }
@@ -1099,7 +1130,6 @@ const io = new IntersectionObserver(es => es.forEach(en => {
   if (en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
 }), {threshold:.1, rootMargin:'0px 0px -40px 0px'});
 
-/* ЛЕНТА ЧИПСОВ: на компе сверху, на мобилке снизу */
 function navOffset(){
   if (isMobile()) return 8;
   const chipH = document.getElementById('catNav').offsetHeight || 0;
@@ -1272,17 +1302,21 @@ function renderMenu(lang, view){
             if (dish.y < 50) { popup.style.top = 'auto'; popup.style.bottom = (list.offsetHeight + 12) + 'px'; }
             else { popup.style.top = '10px'; popup.style.bottom = 'auto'; }
             popup.classList.add('show');
+            if (sceneModal.classList.contains('open')) fillDesc(dish, lang);
           };
           const hide = () => {
             row.classList.remove('active');
             popup.classList.remove('show');
           };
 
-          row.addEventListener('mouseenter', show);
-          row.addEventListener('mouseleave', hide);
+          if (canHover){
+            row.addEventListener('mouseenter', show);
+            row.addEventListener('mouseleave', hide);
+          }
           row.addEventListener('click', e => {
             e.stopPropagation();
-            if (row.classList.contains('active')) hide(); else show();
+            if (isMobile()) { show(); }
+            else { if (row.classList.contains('active')) hide(); else show(); }
           });
 
           list.appendChild(row);
@@ -1373,7 +1407,14 @@ applyLang(savedLang);
 const branchModal = document.getElementById('branchModal');
 const branchToggle = document.getElementById('branchToggle');
 
-function closeBranchModal(){ branchModal.classList.remove('open'); }
+function closeBranchModal(){
+  if (!branchModal.classList.contains('open')) return;
+  branchModal.classList.add('closing');
+  setTimeout(() => {
+    branchModal.classList.remove('open');
+    branchModal.classList.remove('closing');
+  }, 460);
+}
 function selectBranch(branch){
   currentBranch = branch;
   branchGate = false;
