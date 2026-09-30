@@ -44,7 +44,7 @@
   body::-webkit-scrollbar{width:10px;} body::-webkit-scrollbar-track{background:var(--bg);} body::-webkit-scrollbar-thumb{background:var(--bg-deep);border-radius:99px;}
   h1,h2{font-family:var(--serif);font-weight:600;line-height:1.12;letter-spacing:-.01em;color:var(--ink);}
   em{font-style:italic;color:var(--red);}
-  .dish-row,.menu-item,.cat-chip,.btn,.branch-choice,.cap-head{touch-action:manipulation;}
+  .dish-row,.menu-item,.cat-chip,.btn,.branch-choice{touch-action:manipulation;}
 
   .site-bg{position:fixed;left:0;right:0;top:-20vh;height:140vh;z-index:0;pointer-events:none;overflow:hidden;will-change:transform;}
   .site-bg img{width:100%;height:100%;object-fit:cover;filter:blur(6px) brightness(.72) saturate(1.1);transform:scale(1.06);}
@@ -311,18 +311,6 @@
   .menu-item:hover .scene-img{transform:scale(1.06);}
   .scene.no-img::after{content:'In Tempo · լուսանկարը շուտով';position:absolute;inset:0;z-index:1;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-style:italic;font-size:15px;letter-spacing:.12em;color:var(--muted);background:repeating-linear-gradient(45deg, rgba(43,38,34,.05) 0 14px, transparent 14px 28px), var(--menupage);}
 
-  .card-list{display:none;}
-  .cap-item{border-bottom:1px solid rgba(43,38,34,.08);}
-  .cap-item:last-child{border-bottom:none;}
-  .cap-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;width:100%;padding:10px 12px;background:none;border:0;cursor:pointer;text-align:left;}
-  .cap-head::after{content:'+';font-family:var(--sans);font-size:14px;font-weight:600;color:var(--muted);flex-shrink:0;line-height:1;}
-  .cap-item.open .cap-head::after{content:'\2212';color:var(--red);}
-  .cap-name{font-family:var(--serif);font-weight:600;font-size:12px;line-height:1.35;color:var(--ink);}
-  .cap-price{font-weight:700;font-size:11px;color:var(--red);white-space:nowrap;}
-  .cap-body{display:none;padding:0 12px 12px;font-size:11px;line-height:1.55;color:var(--muted);}
-  .cap-item.open .cap-body{display:block;}
-  .cap-item.open .cap-name{color:var(--red);}
-
   .pizza-split{position:relative;overflow:hidden;border-radius:12px;}
   .pizza-split::before{content:"";display:block;padding-top:83.333%;}
   .pizza-half{position:absolute;top:0;width:50%;height:100%;overflow:hidden;transition:transform 0.6s cubic-bezier(.22,1,.36,1);}
@@ -407,7 +395,7 @@
   @media (max-width:768px){:root{--nav-h:112px;}.nav .logo-img{height:94px;}.nav-link{display:none;}#loader .logo-img{height:400px;}.branch-choices{grid-template-columns:1fr;}}
   @media (max-width:640px){
     :root{--nav-h:92px;}
-    html{scroll-padding-top:16px;}
+    html{scroll-padding-top:56px;}
     .nav .logo-img{height:76px;}
     .nav .slogan{display:none;}
     .burger{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:42px;height:42px;background:none;border:0;cursor:pointer;z-index:5;}
@@ -431,27 +419,13 @@
     #loader .logo-img{height:340px;}
     #loader .slogan{font-size:15px;}
     .mq-track span{font-size:14px;padding:0 16px;}
-    /* ОДНА КОЛОНКА В ПОРТРЕТЕ — карточки широкие, текст читаемый */
-    .menu-grid{grid-template-columns:1fr;gap:16px;}
-    .scene::before{padding-top:100%;}
-    .menu-item .dish-list-overlay{display:none;}
-    .menu-item .smart-popup{display:none;}
-    .menu-item .pizza-info-overlay{display:none;}
-    .menu-item .card-list{display:block;background:rgba(241,239,233,.94);border-top:1px solid var(--line);}
-    /* УВЕЛИЧЕННЫЙ ТЕКСТ В КАРТОЧКАХ */
-    .cap-head{padding:12px 14px;}
-    .cap-name{font-size:14px;line-height:1.4;}
-    .cap-price{font-size:13px;}
-    .cap-body{font-size:12px;line-height:1.6;padding:0 14px 14px;}
-    /* заголовки разделов: точки у правого края + подпись активного */
-    .cat-nav{position:fixed;top:50%;right:4px;transform:translateY(-50%);left:auto;bottom:auto;padding:8px 5px;background:rgba(43,38,34,.55);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(241,239,233,.14);border-radius:999px;box-shadow:0 8px 24px rgba(0,0,0,.3);max-height:70vh;overflow-y:auto;scrollbar-width:none;}
-    .cat-nav::-webkit-scrollbar{display:none;}
-    .cat-nav-track{flex-direction:column;overflow:visible;max-height:none;padding:0;gap:12px;background:none;border:none;box-shadow:none;align-items:center;border-radius:0;}
-    .cat-chip{position:relative;width:10px;height:10px;padding:0;border-radius:50%;background:rgba(241,239,233,.35);color:transparent;font-size:0;overflow:visible;max-width:none;white-space:nowrap;}
-    .cat-chip:hover{background:rgba(241,239,233,.6);transform:none;}
-    .cat-chip.active{background:var(--red);color:transparent;transform:scale(1.3);box-shadow:0 0 0 3px rgba(216,67,42,.25);}
-    .cat-chip.active::before{content:attr(data-label);position:absolute;right:calc(100% + 10px);top:50%;transform:translateY(-50%);background:rgba(43,38,34,.88);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:var(--paper);font-family:var(--serif);font-style:italic;font-size:11px;font-weight:500;letter-spacing:.04em;padding:5px 12px;border-radius:999px;white-space:nowrap;pointer-events:none;box-shadow:0 4px 14px rgba(0,0,0,.3);}
-    .menu-category{padding:clamp(36px,9vw,60px) 36px 0 4vw;scroll-margin-top:16px;}
+    /* ЛЕНТА ЗАГОЛОВКОВ СВЕРХУ, ЛИПНЕТ К ВЕРХУ ПРИ СКРОЛЛЕ */
+    .cat-nav{position:sticky;top:0;padding:8px 4vw 10px;background:rgba(184,161,126,.97);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line);box-shadow:0 6px 18px rgba(43,38,34,.12);}
+    .cat-nav-track{justify-content:flex-start;padding:4px;}
+    .cat-chip{font-size:12px;padding:7px 16px;}
+    /* КАРТОЧКИ: ТОТ ЖЕ ЭФФЕКТ, ЧТО НА КОМПЕ (одна колонка, фото 3:4, список и попап поверх) */
+    .menu-grid{grid-template-columns:1fr;gap:18px;}
+    .menu-category{padding:clamp(36px,9vw,60px) 4vw 0;scroll-margin-top:56px;}
     .cat-hours{gap:10px;padding:12px 20px;border-radius:22px;}
     .cat-hours-ico{width:32px;height:32px;}
     .cat-hours-ico svg{width:18px;height:18px;}
@@ -473,7 +447,7 @@
     .branch-choice{padding:22px 16px;}
     .branch-choice .name{font-size:20px;}
   }
-  @media (max-width:380px){.nav-tel{display:none;}.lang-btn{padding:5px 8px;font-size:9px;}#loader .logo-img{height:300px;}.menu-category{padding-right:32px;}.menu-grid{gap:14px;}.cap-name{font-size:13px;}.cap-price{font-size:12px;}.cap-body{font-size:11px;}}
+  @media (max-width:380px){.nav-tel{display:none;}.lang-btn{padding:5px 8px;font-size:9px;}#loader .logo-img{height:300px;}.cat-chip{font-size:11px;padding:6px 12px;}}
   @media (prefers-reduced-motion:reduce){*{transition-duration:.01ms !important;animation-duration:.01ms !important;}}
 </style>
 </head>
@@ -594,6 +568,9 @@ let catSections = [];
 let branchGate = true;
 try{ branchGate = !localStorage.getItem('intempo_branch'); }catch(e){ branchGate = true; }
 
+/* === ДОСТУПНОСТЬ ПО ФИЛИАЛАМ ===
+   У блюда или категории добавьте поле no:['mega'] или no:['hyusisayin'],
+   чтобы скрыть его в выбранном филиале. Список позиций пришлёте позже. */
 const MENU = [
   // === ЗАВТРАКИ ===
   { id:'breakfast', t:{hy:'Նախաճաշ',en:'Breakfast',ru:'Завтрак'}, scenes:[
@@ -843,18 +820,18 @@ const MENU = [
   ]},
   {id:'bar_cold_tea',t:{hy:'Սառը թեյեր',en:'Cold Teas',ru:'Холодные чаи'},scenes:[
     {dishes:[
-      {img:IMG_DIR+'page23_img123.jpg',x:50,y:50,price:1800,n:{hy:'Սառը մոշի թեյ',en:'Cold Blackberry Tea',ru:'Холодный ежевичный чай'},d:{hy:'Եած սև թեյ, մոշի պյուրե, անանուխ, մոշ',en:'Brewed black tea, blackberry puree, mint, blackberry',ru:'Заваренный черный чай, пюре из ежевики, мята, ежевика'}}
+      {img:IMG_DIR+'page23_img123.jpg',x:50,y:50,price:1800,n:{hy:'Սառը մոշի թեյ',en:'Cold Blackberry Tea',ru:'Холодный ежевичный чай'},d:{hy:'Եփած սև թեյ, մոշի պյուրե, անանուխ, մոշ',en:'Brewed black tea, blackberry puree, mint, blackberry',ru:'Заваренный черный чай, пюре из ежевики, мята, ежевика'}}
     ]},
     {dishes:[
       {img:IMG_DIR+'page24_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սառը ելակի թեյ',en:'Cold Strawberry Tea',ru:'Клубничный холодный чай'},d:{hy:'Եած սև թեյ, ելակի պյուրե, ելակ, անանուխ',en:'Brewed black tea, strawberry puree, strawberry, mint',ru:'Заваренный черный чай, клубничное пюре, клубника, мята'}},
       {img:IMG_DIR+'page24_img123.jpg',x:65,y:65,price:1600,n:{hy:'Սառը մանգոյի թեյ',en:'Cold Mango Tea',ru:'Манговый холодный чай'},d:{hy:'Եած սև թեյ, մանգոյի սիրոպ, անանուխ, չորացրած մանգո',en:'Brewed black tea, mango syrup, mint, dried mango',ru:'Заваренный черный чай, манговый сироп, мята, сушеное манго'}}
     ]},
     {dishes:[
-      {img:IMG_DIR+'page25_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սառը դեղձի թեյ',en:'Cold Peach Tea',ru:'Персиковый холодный чай'},d:{hy:'Եած սև թեյ, պերսիկի պյուրե, անանուխ, լայմ, լիմոն',en:'Brewed black tea, peach puree, mint, lime, lemon',ru:'Заваренный черный чай, персиковое пюре, мята, лайм, лимон'}},
+      {img:IMG_DIR+'page25_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սառը դեղձի թեյ',en:'Cold Peach Tea',ru:'Персиковый холодный чай'},d:{hy:'Եփած սև թեյ, պերսիկի պյուրե, անանուխ, լայմ, լիմոն',en:'Brewed black tea, peach puree, mint, lime, lemon',ru:'Заваренный черный чай, персиковое пюре, мята, лайм, лимон'}},
       {img:IMG_DIR+'page25_img123.jpg',x:65,y:65,price:1700,n:{hy:'Սառը լավանդայի թեյ',en:'Cold Lavender Tea',ru:'Лавандовый холодный чай'},d:{hy:'Լավանդայի սիրոպ, անանուխ, լիմոն, լայմ, ռոզմարին',en:'Lavender syrup, mint, lemon, lime, rosemary',ru:'Лавандовый сироп, мята, лимон, лайм, розмарин'}}
     ]},
     {dishes:[
-      {img:IMG_DIR+'page26_img123.jpg',x:35,y:35,price:1700,n:{hy:'Վարդագույն սառը թեյ',en:'Pink Cold Tea',ru:'Розовый холодный чай'},d:{hy:'Եած սև թեյ, վարդի սիրոպ, անանուխ',en:'Brewed black tea, rose syrup, mint',ru:'Заваренный черный чай, розовый сироп, мята'}},
+      {img:IMG_DIR+'page26_img123.jpg',x:35,y:35,price:1700,n:{hy:'Վարդագույն սառը թեյ',en:'Pink Cold Tea',ru:'Розовый холодный чай'},d:{hy:'Եփած սև թեյ, վարդի սիրոպ, անանուխ',en:'Brewed black tea, rose syrup, mint',ru:'Заваренный черный чай, розовый сироп, мята'}},
       {img:IMG_DIR+'page26_img123.jpg',x:65,y:65,price:1600,n:{hy:'Սառը նարնջի թեյ',en:'Orange Cold Tea',ru:'Апельсиновый холодный чай'},d:{hy:'Եած սև թեյ, նարնջի հյութ, շաքարի սիրոպ, անանուխ',en:'Brewed black tea, orange juice, sugar syrup, mint',ru:'Заваренный черный чай, апельсиновый сок, сироп с сахаром, мята'}}
     ]}
   ]},
@@ -923,7 +900,7 @@ const MENU = [
       {img:IMG_DIR+'page41_img123.jpg',x:65,y:65,price:2100,n:{hy:'Սուրճ Գլասե կարամելով',en:'Cafe Glasse Caramel',ru:'Кафе глассе с карамелью'},d:{hy:'Վանիլային պաղպաղակ, էսպրեսո, կաթի փրփուր, կարամելի սոուս',en:'Vanilla ice cream, espresso, milk foam, caramel sauce',ru:'Ванильное мороженое, эспрессо, молочная пена, карамельный соус'}}
     ]},
     {dishes:[
-      {img:IMG_DIR+'page42_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սուրճ Ֆրապպե',en:'Cafe Frappe',ru:'Кафе фраппе'},d:{hy:'Էսպրեսո, կաթ, շաքար, սերուցք, հարած սերուցք, սուրճի փոշի',en:'Espresso, milk, sugar, cream, whipped cream, coffee powder',ru:'Эспрессо, молоко, сахар, сливки, взбитые сливки, кофейный порошок'}},
+      {img:IMG_DIR+'page42_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սուրճ Ֆրապպե',en:'Cafe Frappe',ru:'Кафе фраппе'},d:{hy:'Էսպրեսո, կաթ, շաքար, սերուցք, հարած սերուցք, սուրճի ոշի',en:'Espresso, milk, sugar, cream, whipped cream, coffee powder',ru:'Эспрессо, молоко, сахар, сливки, взбитые сливки, кофейный порошок'}},
       {img:IMG_DIR+'page42_img123.jpg',x:65,y:65,price:1800,n:{hy:'Նուտելլա Ֆրապպե',en:'Nutella Frappe',ru:'Нутелла фраппе'},d:{hy:'Էսպրեսո, կաթ, Նուտելլա, սերուցք, հարած սերուցք, սուրճի ոշի',en:'Espresso, milk, Nutella, cream, whipped cream, coffee powder',ru:'Эспрессо, молоко, Нутелла, сливки, взбитые сливки, кофейный порошок'}}
     ]}
   ]},
@@ -1066,7 +1043,6 @@ const io = new IntersectionObserver(es => es.forEach(en => {
 }), {threshold:.1, rootMargin:'0px 0px -40px 0px'});
 
 function navOffset(){
-  if (isMobile()) return 8;
   const chipH = document.getElementById('catNav').offsetHeight || 0;
   return chipH + 8;
 }
@@ -1081,7 +1057,6 @@ function buildCatNav(cats, lang){
     btn.className = 'cat-chip';
     btn.type = 'button';
     btn.textContent = cat.t[lang];
-    btn.dataset.label = cat.t[lang];
     btn.dataset.target = 'cat-' + cat.id;
     btn.addEventListener('click', () => {
       const sec = document.getElementById('cat-' + cat.id);
@@ -1095,13 +1070,8 @@ function buildCatNav(cats, lang){
 }
 function centerChip(chip){
   const row = chip.parentElement;
-  if (isMobile()){
-    const target = chip.offsetTop - row.clientHeight / 2 + chip.clientHeight / 2;
-    row.scrollTo({top: Math.max(0, target), behavior:'smooth'});
-  } else {
-    const target = chip.offsetLeft - row.clientWidth / 2 + chip.clientWidth / 2;
-    row.scrollTo({left: Math.max(0, target), behavior:'smooth'});
-  }
+  const target = chip.offsetLeft - row.clientWidth / 2 + chip.clientWidth / 2;
+  row.scrollTo({left: Math.max(0, target), behavior:'smooth'});
 }
 function updateActiveChip(){
   if (!catSections.length) return;
@@ -1268,33 +1238,6 @@ function renderMenu(lang, view){
         scene.appendChild(popup);
         card.appendChild(scene);
       }
-
-      /* читаемый список позиций под фото (мобилка) */
-      const cardList = document.createElement('div');
-      cardList.className = 'card-list';
-      dishes.forEach(dish => {
-        const item = document.createElement('div');
-        item.className = 'cap-item';
-        const head = document.createElement('button');
-        head.type = 'button';
-        head.className = 'cap-head';
-        head.innerHTML =
-          '<span class="cap-name">' + (dish.n[lang] || '') + '</span>' +
-          '<span class="cap-price">' + fmtPrice(dish.price) + '</span>';
-        const body = document.createElement('div');
-        body.className = 'cap-body';
-        body.textContent = dish.d[lang] || '';
-        head.addEventListener('click', e => {
-          e.stopPropagation();
-          const wasOpen = item.classList.contains('open');
-          cardList.querySelectorAll('.cap-item.open').forEach(i => i.classList.remove('open'));
-          if (!wasOpen && body.textContent) item.classList.add('open');
-        });
-        item.appendChild(head);
-        item.appendChild(body);
-        cardList.appendChild(item);
-      });
-      card.appendChild(cardList);
 
       grid.appendChild(card);
       io.observe(card);
