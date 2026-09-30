@@ -407,7 +407,7 @@
   @media (max-width:768px){:root{--nav-h:112px;}.nav .logo-img{height:94px;}.nav-link{display:none;}#loader .logo-img{height:400px;}.branch-choices{grid-template-columns:1fr;}}
   @media (max-width:640px){
     :root{--nav-h:92px;}
-    html{scroll-padding-top:70px;}
+    html{scroll-padding-top:16px;}
     .nav .logo-img{height:76px;}
     .nav .slogan{display:none;}
     .burger{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:42px;height:42px;background:none;border:0;cursor:pointer;z-index:5;}
@@ -431,31 +431,32 @@
     #loader .logo-img{height:340px;}
     #loader .slogan{font-size:15px;}
     .mq-track span{font-size:14px;padding:0 16px;}
-    /* КРУПНЫЕ КАРТОЧКИ В ОДНУ КОЛОНКУ */
-    .menu-grid{grid-template-columns:1fr;gap:18px;}
+    /* ОДНА КОЛОНКА В ПОРТРЕТЕ — карточки широкие, текст читаемый */
+    .menu-grid{grid-template-columns:1fr;gap:16px;}
     .scene::before{padding-top:100%;}
     .menu-item .dish-list-overlay{display:none;}
     .menu-item .smart-popup{display:none;}
     .menu-item .pizza-info-overlay{display:none;}
-    .menu-item .card-list{display:block;background:rgba(241,239,233,.96);border-top:1px solid var(--line);}
+    .menu-item .card-list{display:block;background:rgba(241,239,233,.94);border-top:1px solid var(--line);}
+    /* УВЕЛИЧЕННЫЙ ТЕКСТ В КАРТОЧКАХ */
     .cap-head{padding:12px 14px;}
-    .cap-name{font-size:14px;}
+    .cap-name{font-size:14px;line-height:1.4;}
     .cap-price{font-size:13px;}
-    .cap-head::after{font-size:16px;}
-    .cap-body{padding:0 14px 14px;font-size:12px;}
-    /* ЗАГОЛОВКИ СВЕРХУ, КАК НА ШИРОКОЙ ВЕРСИИ */
-    .cat-nav{position:sticky;top:0;left:auto;right:auto;bottom:auto;transform:none;padding:10px 12px 14px;background:linear-gradient(to bottom, rgba(183,157,116,.97) 0%, rgba(183,157,116,.8) 55%, rgba(183,157,116,0) 100%);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:none;border-radius:0;box-shadow:none;max-height:none;overflow:visible;}
-    .cat-nav-track{flex-direction:row;justify-content:flex-start;align-items:center;overflow-x:auto;overflow-y:hidden;max-width:100%;padding:5px;gap:4px;background:rgba(43,38,34,.58);border:1px solid rgba(241,239,233,.16);border-radius:999px;box-shadow:0 10px 26px rgba(43,38,34,.25), inset 0 1px 0 rgba(241,239,233,.12);}
-    .cat-chip{width:auto;height:auto;max-width:none;padding:8px 16px;border-radius:999px;background:none;color:rgba(241,239,233,.75);font-size:12px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;align-self:auto;text-align:center;}
-    .cat-chip:hover{background:rgba(241,239,233,.10);color:#fff;transform:none;}
-    .cat-chip.active{background:var(--red);color:#fff;transform:none;box-shadow:0 4px 14px rgba(216,67,42,.35), inset 0 1px 0 rgba(255,255,255,.2);}
-    .cat-chip.active::before{content:none;}
-    .menu-category{padding:clamp(28px,7vw,44px) 4vw 0;scroll-margin-top:70px;}
+    .cap-body{font-size:12px;line-height:1.6;padding:0 14px 14px;}
+    /* заголовки разделов: точки у правого края + подпись активного */
+    .cat-nav{position:fixed;top:50%;right:4px;transform:translateY(-50%);left:auto;bottom:auto;padding:8px 5px;background:rgba(43,38,34,.55);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(241,239,233,.14);border-radius:999px;box-shadow:0 8px 24px rgba(0,0,0,.3);max-height:70vh;overflow-y:auto;scrollbar-width:none;}
+    .cat-nav::-webkit-scrollbar{display:none;}
+    .cat-nav-track{flex-direction:column;overflow:visible;max-height:none;padding:0;gap:12px;background:none;border:none;box-shadow:none;align-items:center;border-radius:0;}
+    .cat-chip{position:relative;width:10px;height:10px;padding:0;border-radius:50%;background:rgba(241,239,233,.35);color:transparent;font-size:0;overflow:visible;max-width:none;white-space:nowrap;}
+    .cat-chip:hover{background:rgba(241,239,233,.6);transform:none;}
+    .cat-chip.active{background:var(--red);color:transparent;transform:scale(1.3);box-shadow:0 0 0 3px rgba(216,67,42,.25);}
+    .cat-chip.active::before{content:attr(data-label);position:absolute;right:calc(100% + 10px);top:50%;transform:translateY(-50%);background:rgba(43,38,34,.88);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:var(--paper);font-family:var(--serif);font-style:italic;font-size:11px;font-weight:500;letter-spacing:.04em;padding:5px 12px;border-radius:999px;white-space:nowrap;pointer-events:none;box-shadow:0 4px 14px rgba(0,0,0,.3);}
+    .menu-category{padding:clamp(36px,9vw,60px) 36px 0 4vw;scroll-margin-top:16px;}
     .cat-hours{gap:10px;padding:12px 20px;border-radius:22px;}
     .cat-hours-ico{width:32px;height:32px;}
     .cat-hours-ico svg{width:18px;height:18px;}
     .cat-hours-text{font-size:18px;}
-    .cat-hours-note{font-size:12px;}
+    .cat-hours-note{font-size:11px;}
     .contact-sec{padding:72px 5vw 96px;}
     .contact-kicker{font-size:11px;letter-spacing:.22em;gap:10px;}
     .contact-kicker::before,.contact-kicker::after{width:26px;}
@@ -472,7 +473,7 @@
     .branch-choice{padding:22px 16px;}
     .branch-choice .name{font-size:20px;}
   }
-  @media (max-width:380px){.nav-tel{display:none;}.lang-btn{padding:5px 8px;font-size:9px;}#loader .logo-img{height:300px;}.menu-grid{gap:14px;}}
+  @media (max-width:380px){.nav-tel{display:none;}.lang-btn{padding:5px 8px;font-size:9px;}#loader .logo-img{height:300px;}.menu-category{padding-right:32px;}.menu-grid{gap:14px;}.cap-name{font-size:13px;}.cap-price{font-size:12px;}.cap-body{font-size:11px;}}
   @media (prefers-reduced-motion:reduce){*{transition-duration:.01ms !important;animation-duration:.01ms !important;}}
 </style>
 </head>
@@ -593,9 +594,6 @@ let catSections = [];
 let branchGate = true;
 try{ branchGate = !localStorage.getItem('intempo_branch'); }catch(e){ branchGate = true; }
 
-/* === ДОСТУПНОСТЬ ПО ФИЛИАЛАМ ===
-   У блюда или категории добавьте поле no:['mega'] или no:['hyusisayin'],
-   чтобы скрыть его в выбранном филиале. Список позиций пришлёте позже. */
 const MENU = [
   // === ЗАВТРАКИ ===
   { id:'breakfast', t:{hy:'Նախաճաշ',en:'Breakfast',ru:'Завтрак'}, scenes:[
@@ -848,15 +846,15 @@ const MENU = [
       {img:IMG_DIR+'page23_img123.jpg',x:50,y:50,price:1800,n:{hy:'Սառը մոշի թեյ',en:'Cold Blackberry Tea',ru:'Холодный ежевичный чай'},d:{hy:'Եած սև թեյ, մոշի պյուրե, անանուխ, մոշ',en:'Brewed black tea, blackberry puree, mint, blackberry',ru:'Заваренный черный чай, пюре из ежевики, мята, ежевика'}}
     ]},
     {dishes:[
-      {img:IMG_DIR+'page24_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սառը ելակի թեյ',en:'Cold Strawberry Tea',ru:'Клубничный холодный чай'},d:{hy:'Եփած սև թեյ, ելակի պյուրե, ելակ, անանուխ',en:'Brewed black tea, strawberry puree, strawberry, mint',ru:'Заваренный черный чай, клубничное пюре, клубника, мята'}},
-      {img:IMG_DIR+'page24_img123.jpg',x:65,y:65,price:1600,n:{hy:'Սառը մանգոյի թեյ',en:'Cold Mango Tea',ru:'Манговый холодный чай'},d:{hy:'Եփած սև թեյ, մանգոյի սիրոպ, անանուխ, չորացրած մանգո',en:'Brewed black tea, mango syrup, mint, dried mango',ru:'Заваренный черный чай, манговый сироп, мята, сушеное манго'}}
+      {img:IMG_DIR+'page24_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սառը ելակի թեյ',en:'Cold Strawberry Tea',ru:'Клубничный холодный чай'},d:{hy:'Եած սև թեյ, ելակի պյուրե, ելակ, անանուխ',en:'Brewed black tea, strawberry puree, strawberry, mint',ru:'Заваренный черный чай, клубничное пюре, клубника, мята'}},
+      {img:IMG_DIR+'page24_img123.jpg',x:65,y:65,price:1600,n:{hy:'Սառը մանգոյի թեյ',en:'Cold Mango Tea',ru:'Манговый холодный чай'},d:{hy:'Եած սև թեյ, մանգոյի սիրոպ, անանուխ, չորացրած մանգո',en:'Brewed black tea, mango syrup, mint, dried mango',ru:'Заваренный черный чай, манговый сироп, мята, сушеное манго'}}
     ]},
     {dishes:[
-      {img:IMG_DIR+'page25_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սառը դեղձի թեյ',en:'Cold Peach Tea',ru:'Персиковый холодный чай'},d:{hy:'Եփած սև թեյ, պերսիկի պյուրե, անանուխ, լայմ, լիմոն',en:'Brewed black tea, peach puree, mint, lime, lemon',ru:'Заваренный черный чай, персиковое пюре, мята, лайм, лимон'}},
+      {img:IMG_DIR+'page25_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սառը դեղձի թեյ',en:'Cold Peach Tea',ru:'Персиковый холодный чай'},d:{hy:'Եած սև թեյ, պերսիկի պյուրե, անանուխ, լայմ, լիմոն',en:'Brewed black tea, peach puree, mint, lime, lemon',ru:'Заваренный черный чай, персиковое пюре, мята, лайм, лимон'}},
       {img:IMG_DIR+'page25_img123.jpg',x:65,y:65,price:1700,n:{hy:'Սառը լավանդայի թեյ',en:'Cold Lavender Tea',ru:'Лавандовый холодный чай'},d:{hy:'Լավանդայի սիրոպ, անանուխ, լիմոն, լայմ, ռոզմարին',en:'Lavender syrup, mint, lemon, lime, rosemary',ru:'Лавандовый сироп, мята, лимон, лайм, розмарин'}}
     ]},
     {dishes:[
-      {img:IMG_DIR+'page26_img123.jpg',x:35,y:35,price:1700,n:{hy:'Վարդագույն սառը թեյ',en:'Pink Cold Tea',ru:'Розовый холодный чай'},d:{hy:'Եփած սև թեյ, վարդի սիրոպ, անանուխ',en:'Brewed black tea, rose syrup, mint',ru:'Заваренный черный чай, розовый сироп, мята'}},
+      {img:IMG_DIR+'page26_img123.jpg',x:35,y:35,price:1700,n:{hy:'Վարդագույն սառը թեյ',en:'Pink Cold Tea',ru:'Розовый холодный чай'},d:{hy:'Եած սև թեյ, վարդի սիրոպ, անանուխ',en:'Brewed black tea, rose syrup, mint',ru:'Заваренный черный чай, розовый сироп, мята'}},
       {img:IMG_DIR+'page26_img123.jpg',x:65,y:65,price:1600,n:{hy:'Սառը նարնջի թեյ',en:'Orange Cold Tea',ru:'Апельсиновый холодный чай'},d:{hy:'Եած սև թեյ, նարնջի հյութ, շաքարի սիրոպ, անանուխ',en:'Brewed black tea, orange juice, sugar syrup, mint',ru:'Заваренный черный чай, апельсиновый сок, сироп с сахаром, мята'}}
     ]}
   ]},
@@ -881,7 +879,7 @@ const MENU = [
       {img:IMG_DIR+'page30_img123.jpg',x:50,y:50,price:'1800 / 4800',n:{hy:'Վարդագույն Լիչի Լիմոնադ',en:'Pink Lychee Lemonade',ru:'Розовый личи лимонад'},d:{hy:'Վարդագույն լիչիի սիրոպ, մորի, կիտրոնի հյութ, անանուխ, գազավորված ջուր',en:'Pink lychee syrup, raspberry, lemon juice, mint, sparkling water',ru:'Сироп розового личи, малина, лимонный сок, мята, газированная вода'}}
     ]},
     {dishes:[
-      {img:IMG_DIR+'page31_img123.jpg',x:35,y:35,price:'1800 / 4800',n:{hy:'Դեղձ-նձոր Լիմոնադ',en:'Peach Apple Lemonade',ru:'Персиково-яблочный лимонад'},d:{hy:'Պերսիկի պյուրե, խնձորի հյութ, խնձոր, անանուխ, գազավորված ջուր',en:'Peach puree, apple juice, apple, mint, sparkling water',ru:'Персиковое пюре, яблочный сок, яблоко, мята, газированная вода'}},
+      {img:IMG_DIR+'page31_img123.jpg',x:35,y:35,price:'1800 / 4800',n:{hy:'Դեղձ-Խնձոր Լիմոնադ',en:'Peach Apple Lemonade',ru:'Персиково-яблочный лимонад'},d:{hy:'Պերսիկի պյուրե, խնձորի հյութ, խնձոր, անանուխ, գազավորված ջուր',en:'Peach puree, apple juice, apple, mint, sparkling water',ru:'Персиковое пюре, яблочный сок, яблоко, мята, газированная вода'}},
       {img:IMG_DIR+'page31_img123.jpg',x:65,y:65,price:'1800 / 4800',n:{hy:'Ելակի Լիմոնադ',en:'Strawberry Lemonade',ru:'Клубничный лимонад'},d:{hy:'Ելակի պյուրե, կիտրոնի հյութ, ելակ, անանուխ, գազավորված ջուր',en:'Strawberry puree, lemon juice, strawberry, mint, sparkling water',ru:'Пюре клубники, лимонный сок, клубника, мята, газированная вода'}}
     ]},
     {dishes:[
@@ -925,7 +923,7 @@ const MENU = [
       {img:IMG_DIR+'page41_img123.jpg',x:65,y:65,price:2100,n:{hy:'Սուրճ Գլասե կարամելով',en:'Cafe Glasse Caramel',ru:'Кафе глассе с карамелью'},d:{hy:'Վանիլային պաղպաղակ, էսպրեսո, կաթի փրփուր, կարամելի սոուս',en:'Vanilla ice cream, espresso, milk foam, caramel sauce',ru:'Ванильное мороженое, эспрессо, молочная пена, карамельный соус'}}
     ]},
     {dishes:[
-      {img:IMG_DIR+'page42_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սուրճ Ֆրապպե',en:'Cafe Frappe',ru:'Кафе фраппе'},d:{hy:'Էսպրեսո, կաթ, շաքար, սերուցք, հարած սերուցք, սուրճի ոշի',en:'Espresso, milk, sugar, cream, whipped cream, coffee powder',ru:'Эспрессо, молоко, сахар, сливки, взбитые сливки, кофейный порошок'}},
+      {img:IMG_DIR+'page42_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սուրճ Ֆրապպե',en:'Cafe Frappe',ru:'Кафе фраппе'},d:{hy:'Էսպրեսո, կաթ, շաքար, սերուցք, հարած սերուցք, սուրճի փոշի',en:'Espresso, milk, sugar, cream, whipped cream, coffee powder',ru:'Эспрессо, молоко, сахар, сливки, взбитые сливки, кофейный порошок'}},
       {img:IMG_DIR+'page42_img123.jpg',x:65,y:65,price:1800,n:{hy:'Նուտելլա Ֆրապպե',en:'Nutella Frappe',ru:'Нутелла фраппе'},d:{hy:'Էսպրեսո, կաթ, Նուտելլա, սերուցք, հարած սերուցք, սուրճի ոշի',en:'Espresso, milk, Nutella, cream, whipped cream, coffee powder',ru:'Эспрессо, молоко, Нутелла, сливки, взбитые сливки, кофейный порошок'}}
     ]}
   ]},
@@ -994,4 +992,405 @@ const MENU = [
 ];
 
 const DICT = {
-  hy:{title:'In Tempo — Իտալական խ
+  hy:{title:'In Tempo — Իտալական խոհանոց · Երևան',nav_menu:'Մենյու',nav_contact:'Կապ',hero_l1:'Իտալական խոհանոց',hero_l2:'Երևանի <em>Կենտրոնում</em>',hero_sub:'Բաց է 09:00–24:00',cue:'թերթեք',c_h2:'Զանգեք — և սեղանը <em>սպասում է</em>',c_sub:'Մեկ հպում — և մնացածը մենք կհոգանք.',c_addr1:'Երևան, Հյուսիսային 10/3',c_addr2:'Ամեն օր 09:00 – 24:00',c_delivery_title:'Առաքում',c_delivery:'Առաքում պատվիրելու համար կարող եք օգտվել <b>Glovo</b>, <b>Yandex</b>, <b>Buy.am</b> հավելվածներից կամ զանգահարել <b>8811</b> Buy.am',f_line:'© 2026 In Tempo · Իտալական խոհանոց',branch_title:'Ընտրեք մասնաճյուղ',branch_subtitle:'Մենյուն տարբերվում է ըստ մասնաճյուղի',tab_main:'Հիմնական մենյու',tab_breakfast:'Նախաճաշ',tab_lunch:'Լանչ',tab_bar:'Բար',tab_pizza:'Պիցցա',bf_hours:'Նախաճաշը գործում է 09:00–12:00',lunch_hours:'Գործում է երկուշաբթիից ուրբաթ, 12:00–16:00',complimentary_info:'Ֆիրմային լիմոնադը նվեր · 0% սպասարկման վճար',coming_soon:'Բաժինը շուտով կլինի'},
+  en:{title:'In Tempo — Italian Kitchen · Yerevan',nav_menu:'Menu',nav_contact:'Contact',hero_l1:'Italian kitchen',hero_l2:'in the heart of <em>Yerevan</em>',hero_sub:'Open 09:00 – 24:00',cue:'scroll',c_h2:'Call us — and the table <em>is waiting</em>',c_sub:'One tap — and we will take care of the rest.',c_addr1:'Yerevan, 10/3 Northern Avenue',c_addr2:'Daily 09:00 – 24:00',c_delivery_title:'Delivery',c_delivery:'To order delivery, you can use the <b>Glovo</b>, <b>Yandex</b> or <b>Buy.am</b> apps, or call <b>8811</b> Buy.am',f_line:'© 2026 In Tempo · Italian kitchen',branch_title:'Choose branch',branch_subtitle:'Menu differs by branch',tab_main:'Main Menu',tab_breakfast:'Breakfast',tab_lunch:'Lunch',tab_bar:'Bar',tab_pizza:'Pizza',bf_hours:'Breakfast served 09:00 – 12:00',lunch_hours:'Available Monday to Friday, 12:00 – 16:00',complimentary_info:'Complimentary Signature Lemonade · 0% Service Charge',coming_soon:'Section coming soon'},
+  ru:{title:'In Tempo — Итальянская кухня · Ереван',nav_menu:'Меню',nav_contact:'Контакты',hero_l1:'Итальянская кухня',hero_l2:'в центре <em>Еревана</em>',hero_sub:'Открыта с 09:00 до 24:00',cue:'листайте',c_h2:'Позвоните — и столик <em>ждёт</em>',c_sub:'Одно касание — и мы позаботимся обо всём остальном.',c_addr1:'Ереван, Северный проспект 10/3',c_addr2:'Ежедневно 09:00 – 24:00',c_delivery_title:'Доставка',c_delivery:'Заказать доставку можно через приложения <b>Glovo</b>, <b>Yandex</b>, <b>Buy.am</b> или позвонить <b>8811</b> Buy.am',f_line:'© 2026 In Tempo · Итальянская кухня',branch_title:'Выберите филиал',branch_subtitle:'Меню отличается в зависимости от филиала',tab_main:'Основное меню',tab_breakfast:'Завтрак',tab_lunch:'Ланч',tab_bar:'Бар',tab_pizza:'Пицца',bf_hours:'Завтраки действуют с 09:00 до 12:00',lunch_hours:'Действует с понедельника по пятницу, с 12:00 до 16:00',complimentary_info:'Фирменный лимонад в подарок · 0% сервисный сбор',coming_soon:'Раздел скоро будет доступен'}
+};
+
+const fmtPrice = n => (n == null ? '—' : (typeof n === 'number' ? String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' ') : String(n))) + ' ֏';
+const canHover = window.matchMedia('(hover:hover)').matches;
+const isMobile = () => window.matchMedia('(max-width:640px)').matches;
+const branchHidden = item => !!(item && item.no && item.no.includes(currentBranch));
+
+let revealed = false;
+function revealOnce(){
+  if (revealed) return;
+  if (document.documentElement.classList.contains('gate')) return;
+  revealed = true;
+  const l = document.getElementById('loader');
+  if (l) l.classList.add('done');
+  const n = document.getElementById('nav');
+  if (n) n.classList.add('ready');
+  const h = document.querySelector('.hero');
+  if (h) h.classList.add('ready');
+}
+
+window.addEventListener('load', () => {
+  window.scrollTo(0, 0);
+  setTimeout(revealOnce, 1200);
+  const savedBranch = localStorage.getItem('intempo_branch');
+  const branchModal = document.getElementById('branchModal');
+  if (savedBranch) {
+    currentBranch = savedBranch;
+    branchGate = false;
+    document.documentElement.classList.remove('gate');
+    document.getElementById('branchToggle').textContent = currentBranch === 'hyusisayin' ? 'Հյուսիսային' : 'Mega Mall';
+    document.getElementById('heroActions').style.display = 'flex';
+    branchModal.classList.remove('open');
+  } else {
+    branchGate = true;
+    branchModal.classList.add('open');
+  }
+});
+setTimeout(revealOnce, 4000);
+
+(function(){
+  var l = document.createElement('link');
+  l.rel = 'stylesheet';
+  l.href = 'https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap';
+  document.head.appendChild(l);
+})();
+
+const navEl = document.getElementById('nav');
+const burgerBtn = document.getElementById('burgerBtn');
+burgerBtn.addEventListener('click', e => {
+  e.stopPropagation();
+  navEl.classList.toggle('open');
+});
+document.addEventListener('click', e => {
+  if (navEl.classList.contains('open') && !navEl.contains(e.target)) navEl.classList.remove('open');
+});
+document.getElementById('navRight').addEventListener('click', e => {
+  if (e.target.closest('a') || e.target.closest('.lang-btn') || e.target.closest('.branch-toggle')) navEl.classList.remove('open');
+});
+
+function attachImgFallback(imgEl){
+  imgEl.addEventListener('error', () => {
+    const wrap = imgEl.closest('.scene');
+    if (wrap) wrap.classList.add('no-img');
+  }, {once:true});
+}
+
+const io = new IntersectionObserver(es => es.forEach(en => {
+  if (en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+}), {threshold:.1, rootMargin:'0px 0px -40px 0px'});
+
+function navOffset(){
+  if (isMobile()) return 8;
+  const chipH = document.getElementById('catNav').offsetHeight || 0;
+  return chipH + 8;
+}
+function buildCatNav(cats, lang){
+  const nav = document.getElementById('catNav');
+  nav.innerHTML = '';
+  if (cats.length < 2) return;
+  const track = document.createElement('div');
+  track.className = 'cat-nav-track';
+  cats.forEach(cat => {
+    const btn = document.createElement('button');
+    btn.className = 'cat-chip';
+    btn.type = 'button';
+    btn.textContent = cat.t[lang];
+    btn.dataset.label = cat.t[lang];
+    btn.dataset.target = 'cat-' + cat.id;
+    btn.addEventListener('click', () => {
+      const sec = document.getElementById('cat-' + cat.id);
+      if (!sec) return;
+      const y = sec.getBoundingClientRect().top + window.scrollY - navOffset();
+      window.scrollTo({top: Math.max(0, y), behavior:'smooth'});
+    });
+    track.appendChild(btn);
+  });
+  nav.appendChild(track);
+}
+function centerChip(chip){
+  const row = chip.parentElement;
+  if (isMobile()){
+    const target = chip.offsetTop - row.clientHeight / 2 + chip.clientHeight / 2;
+    row.scrollTo({top: Math.max(0, target), behavior:'smooth'});
+  } else {
+    const target = chip.offsetLeft - row.clientWidth / 2 + chip.clientWidth / 2;
+    row.scrollTo({left: Math.max(0, target), behavior:'smooth'});
+  }
+}
+function updateActiveChip(){
+  if (!catSections.length) return;
+  const pos = window.scrollY + navOffset() + 60;
+  let activeId = null;
+  for (const sec of catSections){
+    const top = sec.getBoundingClientRect().top + window.scrollY;
+    if (top <= pos) activeId = sec.id;
+  }
+  document.querySelectorAll('.cat-chip').forEach(ch => {
+    const on = ch.dataset.target === activeId;
+    if (on && !ch.classList.contains('active')) centerChip(ch);
+    ch.classList.toggle('active', on);
+  });
+}
+let spyTick = false;
+window.addEventListener('scroll', () => {
+  if (spyTick) return;
+  spyTick = true;
+  requestAnimationFrame(() => { spyTick = false; if (menuRendered) updateActiveChip(); });
+}, {passive:true});
+
+const CLOCK_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3.2 1.9"></path></svg>';
+
+function renderMenu(lang, view){
+  view = view || 'all';
+  const root = document.getElementById('menuRoot');
+  root.innerHTML = '';
+
+  const categoriesToShow = (view === 'pizza'
+    ? MENU.filter(cat => cat.id === 'pizza')
+    : (view === 'bar'
+      ? MENU.filter(cat => cat.id.startsWith('bar_'))
+      : (view === 'breakfast'
+        ? MENU.filter(cat => cat.id === 'breakfast')
+        : (view === 'lunch'
+          ? MENU.filter(cat => cat.id === 'lunch')
+          : MENU.filter(cat => !cat.id.startsWith('bar_') && cat.id !== 'pizza' && cat.id !== 'breakfast' && cat.id !== 'lunch'))))
+    ).filter(cat => !branchHidden(cat));
+
+  buildCatNav(categoriesToShow, lang);
+  catSections = [];
+
+  categoriesToShow.forEach(cat => {
+    const sec = document.createElement('div');
+    sec.className = 'menu-category';
+    sec.id = 'cat-' + cat.id;
+    const others = Object.keys(cat.t).filter(k => k !== lang).map(k => cat.t[k]).join('  ·  ');
+    const d = DICT[lang] || DICT.hy;
+    const hoursText = cat.id === 'breakfast' ? d.bf_hours : (cat.id === 'lunch' ? d.lunch_hours : '');
+    const noteText = cat.id === 'lunch' ? d.complimentary_info : '';
+    const hoursLine = hoursText
+      ? '<span class="cat-hours"><span class="cat-hours-ico">' + CLOCK_SVG + '</span><span class="cat-hours-lines"><span class="cat-hours-text">' + hoursText + '</span>' + (noteText ? '<span class="cat-hours-note">' + noteText + '</span>' : '') + '</span></span>'
+      : '';
+    sec.innerHTML =
+      '<div class="category-header">' +
+        '<span class="cat-kicker">In Tempo · ' + cat.t.en + '</span>' +
+        hoursLine +
+        '<h2>' + cat.t[lang] + '</h2>' +
+        '<div class="cat-line">' + others + '</div>' +
+      '</div><div class="menu-grid"></div>';
+    const grid = sec.querySelector('.menu-grid');
+
+    cat.scenes.forEach((sceneData, index) => {
+      const dishes = sceneData.dishes.filter(dz => !branchHidden(dz));
+      if (!dishes.length) return;
+      const card = document.createElement('div');
+      card.className = 'menu-item';
+      card.style.transitionDelay = (index % 4) * 80 + 'ms';
+      const scene = document.createElement('div');
+      const eager = index < 2;
+      let images = [];
+
+      if (cat.id === 'pizza') {
+        scene.className = 'pizza-split';
+        dishes.forEach(dish => {
+          const leftHalf = document.createElement('div');
+          leftHalf.className = 'pizza-half left';
+          const leftImg = document.createElement('img');
+          leftImg.src = dish.img1;
+          leftImg.alt = dish.n[lang];
+          leftImg.loading = eager ? 'eager' : 'lazy';
+          if (eager) leftImg.setAttribute('fetchpriority','high');
+          leftHalf.appendChild(leftImg);
+          const rightHalf = document.createElement('div');
+          rightHalf.className = 'pizza-half right';
+          const rightImg = document.createElement('img');
+          rightImg.src = dish.img2;
+          rightImg.alt = dish.n[lang];
+          rightImg.loading = eager ? 'eager' : 'lazy';
+          if (eager) rightImg.setAttribute('fetchpriority','high');
+          rightHalf.appendChild(rightImg);
+          scene.appendChild(leftHalf);
+          scene.appendChild(rightHalf);
+          const infoOverlay = document.createElement('div');
+          infoOverlay.className = 'pizza-info-overlay';
+          infoOverlay.innerHTML =
+            '<div style="font-family:var(--serif);font-size:20px;font-weight:700;margin-bottom:6px;color:#fff;text-shadow:0 2px 4px rgba(0,0,0,0.8);">' + dish.n[lang] + '</div>' +
+            '<div style="font-size:14px;margin-bottom:12px;color:rgba(255,255,255,0.95);text-shadow:0 1px 3px rgba(0,0,0,0.8);line-height:1.4;">' + dish.d[lang] + '</div>' +
+            '<div style="font-family:var(--serif);font-style:italic;font-size:20px;color:#fff;font-weight:700;background:var(--red);display:inline-block;padding:6px 14px;border-radius:99px;box-shadow:0 4px 10px rgba(0,0,0,0.4);">' + fmtPrice(dish.price) + '</div>';
+          scene.appendChild(infoOverlay);
+        });
+        card.appendChild(scene);
+      } else {
+        scene.className = 'scene';
+        images = dishes.map((dish, imageIndex) => {
+          const image = document.createElement('img');
+          image.className = 'scene-img' + (imageIndex === 0 ? ' active' : '');
+          image.src = dish.img;
+          image.alt = dish.n[lang] || '';
+          image.loading = eager ? 'eager' : 'lazy';
+          if (eager) image.setAttribute('fetchpriority','high');
+          image.decoding = 'async';
+          attachImgFallback(image);
+          scene.appendChild(image);
+          return image;
+        });
+
+        const popup = document.createElement('div');
+        popup.className = 'smart-popup';
+        popup.innerHTML = '<div class="sp-title"></div><div class="sp-desc"></div><div class="sp-price"></div>';
+
+        const list = document.createElement('div');
+        list.className = 'dish-list-overlay';
+
+        dishes.forEach((dish, idx) => {
+          const row = document.createElement('div');
+          row.className = 'dish-row';
+          row.innerHTML =
+            '<span class="dish-row-name">' + (idx + 1) + '. ' + (dish.n[lang] || '') + '</span>' +
+            '<span class="dish-row-price">' + fmtPrice(dish.price) + '</span>';
+
+          const show = () => {
+            list.querySelectorAll('.dish-row').forEach(r => r.classList.remove('active'));
+            row.classList.add('active');
+            images.forEach((im, i) => im.classList.toggle('active', i === idx));
+            popup.querySelector('.sp-title').textContent = dish.n[lang] || '';
+            popup.querySelector('.sp-desc').textContent = dish.d[lang] || '';
+            popup.querySelector('.sp-price').textContent = fmtPrice(dish.price);
+            if (dish.x < 50) { popup.style.left = 'auto'; popup.style.right = '10px'; }
+            else { popup.style.left = '10px'; popup.style.right = 'auto'; }
+            if (dish.y < 50) { popup.style.top = 'auto'; popup.style.bottom = (list.offsetHeight + 12) + 'px'; }
+            else { popup.style.top = '10px'; popup.style.bottom = 'auto'; }
+            popup.classList.add('show');
+          };
+          const hide = () => {
+            row.classList.remove('active');
+            popup.classList.remove('show');
+          };
+
+          if (canHover){
+            row.addEventListener('mouseenter', show);
+            row.addEventListener('mouseleave', hide);
+          }
+          row.addEventListener('click', e => {
+            e.stopPropagation();
+            if (row.classList.contains('active')) hide(); else show();
+          });
+
+          list.appendChild(row);
+        });
+
+        scene.appendChild(list);
+        scene.appendChild(popup);
+        card.appendChild(scene);
+      }
+
+      /* читаемый список позиций под фото (мобилка) */
+      const cardList = document.createElement('div');
+      cardList.className = 'card-list';
+      dishes.forEach(dish => {
+        const item = document.createElement('div');
+        item.className = 'cap-item';
+        const head = document.createElement('button');
+        head.type = 'button';
+        head.className = 'cap-head';
+        head.innerHTML =
+          '<span class="cap-name">' + (dish.n[lang] || '') + '</span>' +
+          '<span class="cap-price">' + fmtPrice(dish.price) + '</span>';
+        const body = document.createElement('div');
+        body.className = 'cap-body';
+        body.textContent = dish.d[lang] || '';
+        head.addEventListener('click', e => {
+          e.stopPropagation();
+          const wasOpen = item.classList.contains('open');
+          cardList.querySelectorAll('.cap-item.open').forEach(i => i.classList.remove('open'));
+          if (!wasOpen && body.textContent) item.classList.add('open');
+        });
+        item.appendChild(head);
+        item.appendChild(body);
+        cardList.appendChild(item);
+      });
+      card.appendChild(cardList);
+
+      grid.appendChild(card);
+      io.observe(card);
+    });
+
+    io.observe(sec.querySelector('.category-header'));
+    root.appendChild(sec);
+    catSections.push(sec);
+  });
+
+  requestAnimationFrame(updateActiveChip);
+}
+
+function openMenu(view){
+  view = view || 'all';
+  const menuSec = document.getElementById('menu');
+  menuSec.style.display = 'block';
+  currentView = view;
+  renderMenu(currentLang, view);
+  menuRendered = true;
+  requestAnimationFrame(() => {
+    menuSec.classList.add('visible');
+    menuSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+}
+
+document.getElementById('showMenuBtn').addEventListener('click', () => openMenu('all'));
+document.getElementById('showBreakfastBtn').addEventListener('click', () => openMenu('breakfast'));
+document.getElementById('showLunchBtn').addEventListener('click', () => openMenu('lunch'));
+document.getElementById('showPizzaBtn').addEventListener('click', () => openMenu('pizza'));
+document.getElementById('showBarBtn').addEventListener('click', () => openMenu('bar'));
+
+function showComingSoon(){
+  alert(DICT[currentLang].coming_soon);
+}
+
+function applyLang(lang){
+  currentLang = lang;
+  const d = DICT[lang] || DICT.hy;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k = el.getAttribute('data-i18n'); if (d[k] !== undefined) el.textContent = d[k];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el=>{
+    const k = el.getAttribute('data-i18n-html'); if (d[k] !== undefined) el.innerHTML = d[k];
+  });
+  document.documentElement.lang = lang;
+  document.title = d.title;
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active', b.dataset.lang===lang));
+  try{ localStorage.setItem('intempo_lang', lang); }catch(e){}
+  if (menuRendered) renderMenu(lang, currentView);
+}
+document.querySelectorAll('.lang-btn').forEach(b=>b.addEventListener('click', ()=>applyLang(b.dataset.lang)));
+let savedLang = 'hy';
+try{ savedLang = localStorage.getItem('intempo_lang') || 'hy'; }catch(e){}
+applyLang(savedLang);
+
+const branchModal = document.getElementById('branchModal');
+const branchToggle = document.getElementById('branchToggle');
+
+function closeBranchModal(){
+  if (!branchModal.classList.contains('open')) return;
+  branchModal.classList.add('closing');
+  setTimeout(() => {
+    branchModal.classList.remove('open');
+    branchModal.classList.remove('closing');
+  }, 460);
+}
+function selectBranch(branch){
+  currentBranch = branch;
+  branchGate = false;
+  try{ localStorage.setItem('intempo_branch', branch); }catch(e){}
+  document.documentElement.classList.remove('gate');
+  closeBranchModal();
+  branchToggle.textContent = currentBranch === 'hyusisayin' ? 'Հյուսիսային' : 'Mega Mall';
+  document.getElementById('heroActions').style.display = 'flex';
+  if (menuRendered) renderMenu(currentLang, currentView);
+  setTimeout(revealOnce, 900);
+}
+
+document.querySelectorAll('.branch-choice').forEach(choice => {
+  choice.addEventListener('click', () => selectBranch(choice.dataset.branch));
+});
+branchToggle.addEventListener('click', () => branchModal.classList.add('open'));
+branchModal.addEventListener('click', e => { if (e.target === branchModal && !branchGate) closeBranchModal(); });
+
+document.querySelectorAll('.rv').forEach(el => io.observe(el));
+</script>
+
+<script>
+  setTimeout(function(){
+    if (document.documentElement.classList.contains('gate')) return;
+    var n = document.getElementById('nav');
+    var h = document.querySelector('.hero');
+    if (n && !n.classList.contains('ready')) n.classList.add('ready');
+    if (h && !h.classList.contains('ready')) h.classList.add('ready');
+  }, 4200);
+</script>
+</body>
+</html>
