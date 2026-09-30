@@ -44,7 +44,7 @@
   body::-webkit-scrollbar{width:10px;} body::-webkit-scrollbar-track{background:var(--bg);} body::-webkit-scrollbar-thumb{background:var(--bg-deep);border-radius:99px;}
   h1,h2{font-family:var(--serif);font-weight:600;line-height:1.12;letter-spacing:-.01em;color:var(--ink);}
   em{font-style:italic;color:var(--red);}
-  .dish-row,.menu-item,.cat-chip,.btn,.branch-choice,.modal-pill{touch-action:manipulation;}
+  .dish-row,.menu-item,.cat-chip,.btn,.branch-choice,.scene-arrow{touch-action:manipulation;}
 
   .site-bg{position:fixed;left:0;right:0;top:-20vh;height:140vh;z-index:0;pointer-events:none;overflow:hidden;will-change:transform;}
   .site-bg img{width:100%;height:100%;object-fit:cover;filter:blur(6px) brightness(.72) saturate(1.1);transform:scale(1.06);}
@@ -311,11 +311,17 @@
   .menu-item:hover .scene-img{transform:scale(1.06);}
   .scene.no-img::after{content:'In Tempo · լուսանկարը շուտով';position:absolute;inset:0;z-index:1;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-style:italic;font-size:15px;letter-spacing:.12em;color:var(--muted);background:repeating-linear-gradient(45deg, rgba(43,38,34,.05) 0 14px, transparent 14px 28px), var(--menupage);}
 
+  /* стрелки и счётчик позиций (мобилка, вариант 2) */
+  .scene-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:6;width:30px;height:30px;border-radius:50%;background:rgba(43,38,34,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid rgba(241,239,233,.25);color:var(--paper);display:none;align-items:center;justify-content:center;cursor:pointer;transition:background .2s;}
+  .scene-arrow:active{background:rgba(216,67,42,.8);}
+  .scene-arrow.prev{left:8px;}
+  .scene-arrow.next{right:8px;}
+  .scene-counter{position:absolute;top:8px;right:8px;z-index:6;background:rgba(43,38,34,.6);backdrop-filter:blur(4px);color:var(--paper);font-size:10px;font-weight:700;padding:3px 9px;border-radius:999px;display:none;letter-spacing:.06em;}
+
   .card-cap{display:none;}
   .cap-row{display:flex;justify-content:space-between;align-items:baseline;gap:8px;}
-  .cap-name{font-family:var(--serif);font-weight:600;font-size:12px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .cap-name{font-family:var(--serif);font-weight:600;font-size:12px;color:var(--ink);}
   .cap-price{font-weight:700;font-size:11px;color:var(--red);white-space:nowrap;}
-  .cap-more{font-size:10px;letter-spacing:.08em;color:var(--muted);}
 
   .pizza-split{position:relative;overflow:hidden;border-radius:12px;}
   .pizza-split::before{content:"";display:block;padding-top:83.333%;}
@@ -344,18 +350,21 @@
   .sp-desc:empty{display:none;}
   .sp-price{font-family:var(--serif);font-style:italic;font-weight:700;font-size:18px;color:var(--red);}
 
+  /* шторка блюда (мобилка) */
   .scene-modal{position:fixed;inset:0;z-index:95;background:rgba(43,38,34,.93);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:18px;}
   .scene-modal.open{display:flex;}
   .scene-modal-body{width:min(92vw,520px);position:relative;}
   .scene-modal .scene{width:100%;opacity:1;transform:none;box-shadow:0 30px 70px rgba(0,0,0,.5);}
   .scene-modal-close{position:absolute;top:-46px;right:0;width:40px;height:40px;border-radius:50%;border:1.5px solid rgba(241,239,233,.7);background:none;color:var(--paper);cursor:pointer;display:flex;align-items:center;justify-content:center;}
-  .scene-modal-hint{color:rgba(241,239,233,.75);font-size:11px;letter-spacing:.2em;text-transform:uppercase;text-align:center;margin-top:12px;}
-  .modal-desc{display:none;}
-  .md-title{font-family:var(--serif);font-weight:700;font-size:16px;line-height:1.3;color:var(--ink);margin-bottom:6px;}
-  .md-desc{font-size:13px;line-height:1.55;color:var(--muted);margin-bottom:8px;}
-  .md-price{font-family:var(--serif);font-style:italic;font-weight:700;font-size:18px;color:var(--red);}
-  /* пилюли-табы позиций (мобилка, вариант B) */
-  .modal-pills{display:none;}
+  .sheet-handle{position:sticky;top:0;z-index:5;width:44px;height:4px;border-radius:4px;background:rgba(43,38,34,.3);margin:0 auto 10px;display:none;}
+  .sheet-list{margin-top:12px;}
+  .sheet-item{padding:12px 2px;border-bottom:1px solid var(--line);}
+  .sheet-item:last-child{border-bottom:none;}
+  .sheet-head{display:flex;justify-content:space-between;gap:10px;align-items:baseline;}
+  .sheet-name{font-family:var(--serif);font-weight:700;font-size:15px;color:var(--ink);line-height:1.3;}
+  .sheet-price{font-family:var(--serif);font-style:italic;font-weight:700;font-size:15px;color:var(--red);white-space:nowrap;}
+  .sheet-desc{font-size:12px;line-height:1.55;color:var(--muted);margin-top:5px;}
+  .sheet-desc:empty{display:none;}
 
   .contact-sec{position:relative;z-index:1;padding:clamp(90px,12vw,160px) 6vw;text-align:center;overflow:hidden;background:
     radial-gradient(ellipse 820px 420px at 50% 0%, rgba(241,239,233,.25), transparent 62%),
@@ -429,6 +438,8 @@
     .lang-btn{padding:9px 16px;font-size:12px;color:var(--muted);text-shadow:none;border-color:var(--line);}
     .lang-btn.active{background:var(--ink);color:var(--menupage);}
     .nav-tel{justify-content:center;color:var(--ink);text-shadow:none;border-color:var(--ink);}
+    /* ВЕСЬ ТЕКСТ ГЕРОЯ ВИДЕН: сплошной цвет вместо градиент-заливки */
+    .hero h1{background:none;-webkit-background-clip:border-box;background-clip:border-box;-webkit-text-fill-color:currentColor;color:var(--paper);filter:none;animation:none;text-shadow:0 3px 22px rgba(20,15,10,.7);}
     .hero-in{padding:0 5vw;}
     .hero h1{font-size:clamp(32px,9vw,48px);}
     .hero-sub{font-size:11px;margin-top:22px;}
@@ -442,34 +453,33 @@
     .menu-item .dish-list-overlay{display:none;}
     .menu-item .smart-popup{display:none;}
     .menu-item .card-cap{display:flex;flex-direction:column;gap:4px;padding:10px 12px 12px;background:rgba(241,239,233,.94);border-top:1px solid var(--line);}
+    .cap-name{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;white-space:normal;font-size:11px;line-height:1.35;}
+    .scene-arrow{display:flex;}
+    .scene-counter{display:block;}
     .pizza-info-overlay{padding:16px 10px 10px;}
     .pizza-info-overlay > div:nth-child(1){font-size:13px !important;margin-bottom:4px;}
     .pizza-info-overlay > div:nth-child(2){display:none;}
     .pizza-info-overlay > div:nth-child(3){font-size:12px !important;padding:4px 10px;}
-    .cat-nav{position:fixed;top:auto;bottom:0;left:0;right:0;padding:8px 12px calc(8px + env(safe-area-inset-bottom));background:rgba(43,38,34,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid rgba(241,239,233,.14);box-shadow:0 -10px 30px rgba(0,0,0,.25);}
-    .cat-nav-track{padding:4px;gap:2px;background:rgba(241,239,233,.08);border-color:rgba(241,239,233,.12);}
-    .cat-chip{font-size:12px;padding:8px 15px;}
-    body.rail-bottom footer{padding-bottom:calc(76px + env(safe-area-inset-bottom));}
-    .menu-category{padding:clamp(36px,9vw,60px) 4vw 0;scroll-margin-top:16px;}
+    /* ЗАГОЛОВКИ РАЗДЕЛОВ: вертикальная колонка у правого края */
+    .cat-nav{position:fixed;top:50%;right:6px;transform:translateY(-50%);left:auto;bottom:auto;padding:6px 4px;background:rgba(43,38,34,.6);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(241,239,233,.14);border-radius:999px;box-shadow:0 10px 30px rgba(0,0,0,.35);max-height:74vh;overflow-y:auto;scrollbar-width:none;}
+    .cat-nav::-webkit-scrollbar{display:none;}
+    .cat-nav-track{flex-direction:column;overflow:visible;max-height:none;padding:2px;gap:6px;background:none;border:none;box-shadow:none;align-items:flex-end;border-radius:0;}
+    .cat-chip{font-size:10px;padding:6px 10px;max-width:96px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;align-self:flex-end;text-align:right;}
+    .menu-category{padding:clamp(36px,9vw,60px) 108px 0 4vw;scroll-margin-top:16px;}
     .cat-hours{gap:10px;padding:12px 20px;border-radius:22px;}
     .cat-hours-ico{width:32px;height:32px;}
     .cat-hours-ico svg{width:18px;height:18px;}
     .cat-hours-text{font-size:18px;}
     .cat-hours-note{font-size:11px;}
-    /* модалка блюда: пилюли сверху, список поверх фото убираем */
-    .scene-modal{padding:14px;}
-    .scene-modal-body{width:min(94vw,480px);max-height:96vh;overflow-y:auto;scrollbar-width:none;}
+    /* ШТОРКА СНІЗУ */
+    .scene-modal{padding:0;background:rgba(20,15,10,.6);backdrop-filter:blur(4px);align-items:flex-end;}
+    .scene-modal-body{width:100%;max-height:88vh;overflow-y:auto;scrollbar-width:none;background:rgba(241,239,233,.98);border-radius:22px 22px 0 0;padding:10px 16px calc(16px + env(safe-area-inset-bottom));box-shadow:0 -20px 60px rgba(0,0,0,.4);}
     .scene-modal-body::-webkit-scrollbar{display:none;}
+    .sheet-handle{display:block;}
+    .scene-modal .scene{border-radius:16px;overflow:hidden;box-shadow:0 16px 40px rgba(43,38,34,.25);}
     .scene-modal .scene::before{padding-top:100%;}
-    .scene-modal-close{position:fixed;top:calc(10px + env(safe-area-inset-top));right:10px;z-index:96;background:rgba(43,38,34,.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);}
-    .scene-modal .smart-popup{display:none !important;}
-    .scene-modal .dish-list-overlay{display:none;}
-    .modal-pills{display:flex;gap:6px;overflow-x:auto;padding:2px 2px 10px;margin-bottom:10px;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
-    .modal-pills::-webkit-scrollbar{display:none;}
-    .modal-pills:empty{display:none;}
-    .modal-pill{flex:0 0 auto;font-family:var(--serif);font-style:italic;font-size:12px;font-weight:500;letter-spacing:.04em;padding:8px 14px;border-radius:999px;border:1px solid rgba(241,239,233,.35);background:rgba(241,239,233,.10);color:rgba(241,239,233,.85);cursor:pointer;transition:background .25s,color .25s,border-color .25s,box-shadow .25s;white-space:nowrap;}
-    .modal-pill.active{background:var(--red);border-color:var(--red);color:#fff;font-weight:600;box-shadow:0 4px 14px rgba(216,67,42,.4);}
-    .modal-desc.show{display:block;margin-top:12px;background:rgba(241,239,233,.96);border:1px solid rgba(43,38,34,.14);border-radius:14px;padding:14px 16px;box-shadow:0 10px 26px rgba(0,0,0,.25);text-align:left;}
+    .scene-modal .scene-arrow,.scene-modal .scene-counter{display:none !important;}
+    .scene-modal-close{position:fixed;top:calc(10px + env(safe-area-inset-top));right:10px;z-index:96;background:rgba(43,38,34,.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border-color:rgba(241,239,233,.4);}
     .contact-sec{padding:72px 5vw 96px;}
     .contact-kicker{font-size:11px;letter-spacing:.22em;gap:10px;}
     .contact-kicker::before,.contact-kicker::after{width:26px;}
@@ -486,7 +496,7 @@
     .branch-choice{padding:22px 16px;}
     .branch-choice .name{font-size:20px;}
   }
-  @media (max-width:380px){.nav-tel{display:none;}.lang-btn{padding:5px 8px;font-size:9px;}#loader .logo-img{height:300px;}}
+  @media (max-width:380px){.nav-tel{display:none;}.lang-btn{padding:5px 8px;font-size:9px;}#loader .logo-img{height:300px;}.menu-category{padding-right:100px;}}
   @media (prefers-reduced-motion:reduce){*{transition-duration:.01ms !important;animation-duration:.01ms !important;}}
 </style>
 </head>
@@ -575,15 +585,10 @@
 
 <div class="scene-modal" id="sceneModal">
   <div class="scene-modal-body">
+    <div class="sheet-handle"></div>
     <button class="scene-modal-close" id="sceneModalClose" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
-    <div class="modal-pills" id="modalPills"></div>
     <div id="sceneModalBody"></div>
-    <div class="modal-desc" id="modalDesc">
-      <div class="md-title"></div>
-      <div class="md-desc"></div>
-      <div class="md-price"></div>
-    </div>
-    <div class="scene-modal-hint" data-i18n="tap">Ընտրեք ուտեստը ցանկից</div>
+    <div class="sheet-list" id="sheetList"></div>
   </div>
 </div>
 
@@ -873,11 +878,11 @@ const MENU = [
   ]},
   {id:'bar_cold_tea',t:{hy:'Սառը թեյեր',en:'Cold Teas',ru:'Холодные чаи'},scenes:[
     {dishes:[
-      {img:IMG_DIR+'page23_img123.jpg',x:50,y:50,price:1800,n:{hy:'Սառը մոշի թեյ',en:'Cold Blackberry Tea',ru:'Холодный ежевичный чай'},d:{hy:'Եած սև թեյ, մոշի պյուրե, անանուխ, մոշ',en:'Brewed black tea, blackberry puree, mint, blackberry',ru:'Заваренный черный чай, пюре из ежевики, мята, ежевика'}}
+      {img:IMG_DIR+'page23_img123.jpg',x:50,y:50,price:1800,n:{hy:'Սառը մոշի թեյ',en:'Cold Blackberry Tea',ru:'Холодный ежевичный чай'},d:{hy:'Եփած սև թեյ, մոշի պյուրե, անանուխ, մոշ',en:'Brewed black tea, blackberry puree, mint, blackberry',ru:'Заваренный черный чай, пюре из ежевики, мята, ежевика'}}
     ]},
     {dishes:[
-      {img:IMG_DIR+'page24_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սառը ելակի թեյ',en:'Cold Strawberry Tea',ru:'Клубничный холодный чай'},d:{hy:'Եփած սև թեյ, ելակի պյուրե, ելակ, անանուխ',en:'Brewed black tea, strawberry puree, strawberry, mint',ru:'Заваренный черный чай, клубничное пюре, клубника, мята'}},
-      {img:IMG_DIR+'page24_img123.jpg',x:65,y:65,price:1600,n:{hy:'Սառը մանգոյի թեյ',en:'Cold Mango Tea',ru:'Манговый холодный чай'},d:{hy:'Եած սև թեյ, մանգոյի սիրոպ, անանուխ, չորացրած մանգո',en:'Brewed black tea, mango syrup, mint, dried mango',ru:'Заваренный черный чай, манговый сироп, мята, сушеное манго'}}
+      {img:IMG_DIR+'page24_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սառը ելակի թեյ',en:'Cold Strawberry Tea',ru:'Клубничный холодный чай'},d:{hy:'Եած սև թեյ, ելակի պյուրե, ելակ, անանուխ',en:'Brewed black tea, strawberry puree, strawberry, mint',ru:'Заваренный черный чай, клубничное пюре, клубника, мята'}},
+      {img:IMG_DIR+'page24_img123.jpg',x:65,y:65,price:1600,n:{hy:'Սառը մանգոյի թեյ',en:'Cold Mango Tea',ru:'Манговый холодный чай'},d:{hy:'Եփած սև թեյ, մանգոյի սիրոպ, անանուխ, չորացրած մանգո',en:'Brewed black tea, mango syrup, mint, dried mango',ru:'Заваренный черный чай, манговый сироп, мята, сушеное манго'}}
     ]},
     {dishes:[
       {img:IMG_DIR+'page25_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սառը դեղձի թեյ',en:'Cold Peach Tea',ru:'Персиковый холодный чай'},d:{hy:'Եփած սև թեյ, պերսիկի պյուրե, անանուխ, լայմ, լիմոն',en:'Brewed black tea, peach puree, mint, lime, lemon',ru:'Заваренный черный чай, персиковое пюре, мята, лайм, лимон'}},
@@ -885,7 +890,7 @@ const MENU = [
     ]},
     {dishes:[
       {img:IMG_DIR+'page26_img123.jpg',x:35,y:35,price:1700,n:{hy:'Վարդագույն սառը թեյ',en:'Pink Cold Tea',ru:'Розовый холодный чай'},d:{hy:'Եփած սև թեյ, վարդի սիրոպ, անանուխ',en:'Brewed black tea, rose syrup, mint',ru:'Заваренный черный чай, розовый сироп, мята'}},
-      {img:IMG_DIR+'page26_img123.jpg',x:65,y:65,price:1600,n:{hy:'Սառը նարնջի թեյ',en:'Orange Cold Tea',ru:'Апельсиновый холодный чай'},d:{hy:'Եփած սև թեյ, նարնջի հյութ, շաքարի սիրոպ, անանուխ',en:'Brewed black tea, orange juice, sugar syrup, mint',ru:'Заваренный черный чай, апельсиновый сок, сироп с сахаром, мята'}}
+      {img:IMG_DIR+'page26_img123.jpg',x:65,y:65,price:1600,n:{hy:'Սառը նարնջի թեյ',en:'Orange Cold Tea',ru:'Апельсиновый холодный чай'},d:{hy:'Եած սև թեյ, նարնջի հյութ, շաքարի սիրոպ, անանուխ',en:'Brewed black tea, orange juice, sugar syrup, mint',ru:'Заваренный черный чай, апельсиновый сок, сироп с сахаром, мята'}}
     ]}
   ]},
   {id:'bar_detox',t:{hy:'Դետոքս',en:'Detox',ru:'Детокс'},scenes:[
@@ -909,7 +914,7 @@ const MENU = [
       {img:IMG_DIR+'page30_img123.jpg',x:50,y:50,price:'1800 / 4800',n:{hy:'Վարդագույն Լիչի Լիմոնադ',en:'Pink Lychee Lemonade',ru:'Розовый личи лимонад'},d:{hy:'Վարդագույն լիչիի սիրոպ, մորի, կիտրոնի հյութ, անանուխ, գազավորված ջուր',en:'Pink lychee syrup, raspberry, lemon juice, mint, sparkling water',ru:'Сироп розового личи, малина, лимонный сок, мята, газированная вода'}}
     ]},
     {dishes:[
-      {img:IMG_DIR+'page31_img123.jpg',x:35,y:35,price:'1800 / 4800',n:{hy:'Դեղձ-նձոր Լիմոնադ',en:'Peach Apple Lemonade',ru:'Персиково-яблочный лимонад'},d:{hy:'Պերսիկի պյուրե, խնձորի հյութ, խնձոր, անանուխ, գազավորված ջուր',en:'Peach puree, apple juice, apple, mint, sparkling water',ru:'Персиковое пюре, яблочный сок, яблоко, мята, газированная вода'}},
+      {img:IMG_DIR+'page31_img123.jpg',x:35,y:35,price:'1800 / 4800',n:{hy:'Դեղձ-Խնձոր Լիմոնադ',en:'Peach Apple Lemonade',ru:'Персиково-яблочный лимонад'},d:{hy:'Պերսիկի պյուրե, խնձորի հյութ, խնձոր, անանուխ, գազավորված ջուր',en:'Peach puree, apple juice, apple, mint, sparkling water',ru:'Персиковое пюре, яблочный сок, яблоко, мята, газированная вода'}},
       {img:IMG_DIR+'page31_img123.jpg',x:65,y:65,price:'1800 / 4800',n:{hy:'Ելակի Լիմոնադ',en:'Strawberry Lemonade',ru:'Клубничный лимонад'},d:{hy:'Ելակի պյուրե, կիտրոնի հյութ, ելակ, անանուխ, գազավորված ջուր',en:'Strawberry puree, lemon juice, strawberry, mint, sparkling water',ru:'Пюре клубники, лимонный сок, клубника, мята, газированная вода'}}
     ]},
     {dishes:[
@@ -1022,15 +1027,18 @@ const MENU = [
 ];
 
 const DICT = {
-  hy:{title:'In Tempo — Իտալական խոհանոց · Երևան',nav_menu:'Մենյու',nav_contact:'Կապ',hero_l1:'Իտալական խոհանոց',hero_l2:'Երևանի <em>Կենտրոնում</em>',hero_sub:'Բաց է 09:00–24:00',cue:'թերթեք',tap:'Ընտրեք ուտեստը ցանկից',c_h2:'Զանգեք — և սեղանը <em>սպասում է</em>',c_sub:'Մեկ հպում — և մնացածը մենք կհոգանք.',c_addr1:'Երևան, Հյուսիսային 10/3',c_addr2:'Ամեն օր 09:00 – 24:00',c_delivery_title:'Առաքում',c_delivery:'Առաքում պատվիրելու համար կարող եք օգտվել <b>Glovo</b>, <b>Yandex</b>, <b>Buy.am</b> հավելվածներից կամ զանգահարել <b>8811</b> Buy.am',f_line:'© 2026 In Tempo · Իտալական խոհանոց',branch_title:'Ընտրեք մասնաճյուղ',branch_subtitle:'Մենյուն տարբերվում է ըստ մասնաճյուղի',tab_main:'Հիմնական մենյու',tab_breakfast:'Նախաճաշ',tab_lunch:'Լանչ',tab_bar:'Բար',tab_pizza:'Պիցցա',bf_hours:'Նախաճաշը գործում է 09:00–12:00',lunch_hours:'Գործում է երկուշաբթիից ուրբաթ, 12:00–16:00',complimentary_info:'Ֆիրմային լիմոնադը նվեր · 0% սպասարկման վճար',coming_soon:'Բաժինը շուտով կլինի'},
-  en:{title:'In Tempo — Italian Kitchen · Yerevan',nav_menu:'Menu',nav_contact:'Contact',hero_l1:'Italian kitchen',hero_l2:'in the heart of <em>Yerevan</em>',hero_sub:'Open 09:00 – 24:00',cue:'scroll',tap:'Select a dish from the list',c_h2:'Call us — and the table <em>is waiting</em>',c_sub:'One tap — and we will take care of the rest.',c_addr1:'Yerevan, 10/3 Northern Avenue',c_addr2:'Daily 09:00 – 24:00',c_delivery_title:'Delivery',c_delivery:'To order delivery, you can use the <b>Glovo</b>, <b>Yandex</b> or <b>Buy.am</b> apps, or call <b>8811</b> Buy.am',f_line:'© 2026 In Tempo · Italian kitchen',branch_title:'Choose branch',branch_subtitle:'Menu differs by branch',tab_main:'Main Menu',tab_breakfast:'Breakfast',tab_lunch:'Lunch',tab_bar:'Bar',tab_pizza:'Pizza',bf_hours:'Breakfast served 09:00 – 12:00',lunch_hours:'Available Monday to Friday, 12:00 – 16:00',complimentary_info:'Complimentary Signature Lemonade · 0% Service Charge',coming_soon:'Section coming soon'},
-  ru:{title:'In Tempo — Итальянская кухня · Ереван',nav_menu:'Меню',nav_contact:'Контакты',hero_l1:'Итальянская кухня',hero_l2:'в центре <em>Еревана</em>',hero_sub:'Открыта с 09:00 до 24:00',cue:'листайте',tap:'Выберите блюдо из списка',c_h2:'Позвоните — и столик <em>ждёт</em>',c_sub:'Одно касание — и мы позаботимся обо всём остальном.',c_addr1:'Ереван, Северный проспект 10/3',c_addr2:'Ежедневно 09:00 – 24:00',c_delivery_title:'Доставка',c_delivery:'Заказать доставку можно через приложения <b>Glovo</b>, <b>Yandex</b>, <b>Buy.am</b> или позвонить <b>8811</b> Buy.am',f_line:'© 2026 In Tempo · Итальянская кухня',branch_title:'Выберите филиал',branch_subtitle:'Меню отличается в зависимости от филиала',tab_main:'Основное меню',tab_breakfast:'Завтрак',tab_lunch:'Ланч',tab_bar:'Бар',tab_pizza:'Пицца',bf_hours:'Завтраки действуют с 09:00 до 12:00',lunch_hours:'Действует с понедельника по пятницу, с 12:00 до 16:00',complimentary_info:'Фирменный лимонад в подарок · 0% сервисный сбор',coming_soon:'Раздел скоро будет доступен'}
+  hy:{title:'In Tempo — Իտալական խոհանոց · Երևան',nav_menu:'Մենյու',nav_contact:'Կապ',hero_l1:'Իտալական խոհանոց',hero_l2:'Երևանի <em>Կենտրոնում</em>',hero_sub:'Բաց է 09:00–24:00',cue:'թերթեք',c_h2:'Զանգեք — և սեղանը <em>սպասում է</em>',c_sub:'Մեկ հպում — և մնացածը մենք կհոգանք.',c_addr1:'Երևան, Հյուսիսային 10/3',c_addr2:'Ամեն օր 09:00 – 24:00',c_delivery_title:'Առաքում',c_delivery:'Առաքում պատվիրելու համար կարող եք օգտվել <b>Glovo</b>, <b>Yandex</b>, <b>Buy.am</b> հավելվածներից կամ զանգահարել <b>8811</b> Buy.am',f_line:'© 2026 In Tempo · Իտալական խոհանոց',branch_title:'Ընտրեք մասնաճյուղ',branch_subtitle:'Մենյուն տարբերվում է ըստ մասնաճյուղի',tab_main:'Հիմնական մենյու',tab_breakfast:'Նախաճաշ',tab_lunch:'Լանչ',tab_bar:'Բար',tab_pizza:'Պիցցա',bf_hours:'Նախաճաշը գործում է 09:00–12:00',lunch_hours:'Գործում է երկուշաբթիից ուրբաթ, 12:00–16:00',complimentary_info:'Ֆիրմային լիմոնադը նվեր · 0% սպասարկման վճար',coming_soon:'Բաժինը շուտով կլինի'},
+  en:{title:'In Tempo — Italian Kitchen · Yerevan',nav_menu:'Menu',nav_contact:'Contact',hero_l1:'Italian kitchen',hero_l2:'in the heart of <em>Yerevan</em>',hero_sub:'Open 09:00 – 24:00',cue:'scroll',c_h2:'Call us — and the table <em>is waiting</em>',c_sub:'One tap — and we will take care of the rest.',c_addr1:'Yerevan, 10/3 Northern Avenue',c_addr2:'Daily 09:00 – 24:00',c_delivery_title:'Delivery',c_delivery:'To order delivery, you can use the <b>Glovo</b>, <b>Yandex</b> or <b>Buy.am</b> apps, or call <b>8811</b> Buy.am',f_line:'© 2026 In Tempo · Italian kitchen',branch_title:'Choose branch',branch_subtitle:'Menu differs by branch',tab_main:'Main Menu',tab_breakfast:'Breakfast',tab_lunch:'Lunch',tab_bar:'Bar',tab_pizza:'Pizza',bf_hours:'Breakfast served 09:00 – 12:00',lunch_hours:'Available Monday to Friday, 12:00 – 16:00',complimentary_info:'Complimentary Signature Lemonade · 0% Service Charge',coming_soon:'Section coming soon'},
+  ru:{title:'In Tempo — Итальянская кухня · Ереван',nav_menu:'Меню',nav_contact:'Контакты',hero_l1:'Итальянская кухня',hero_l2:'в центре <em>Еревана</em>',hero_sub:'Открыта с 09:00 до 24:00',cue:'листайте',c_h2:'Позвоните — и столик <em>ждёт</em>',c_sub:'Одно касание — и мы позаботимся обо всём остальном.',c_addr1:'Ереван, Северный проспект 10/3',c_addr2:'Ежедневно 09:00 – 24:00',c_delivery_title:'Доставка',c_delivery:'Заказать доставку можно через приложения <b>Glovo</b>, <b>Yandex</b>, <b>Buy.am</b> или позвонить <b>8811</b> Buy.am',f_line:'© 2026 In Tempo · Итальянская кухня',branch_title:'Выберите филиал',branch_subtitle:'Меню отличается в зависимости от филиала',tab_main:'Основное меню',tab_breakfast:'Завтрак',tab_lunch:'Ланч',tab_bar:'Бар',tab_pizza:'Пицца',bf_hours:'Завтраки действуют с 09:00 до 12:00',lunch_hours:'Действует с понедельника по пятницу, с 12:00 до 16:00',complimentary_info:'Фирменный лимонад в подарок · 0% сервисный сбор',coming_soon:'Раздел скоро будет доступен'}
 };
 
 const fmtPrice = n => (n == null ? '—' : (typeof n === 'number' ? String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' ') : String(n))) + ' ֏';
 const canHover = window.matchMedia('(hover:hover)').matches;
 const isMobile = () => window.matchMedia('(max-width:640px)').matches;
 const branchHidden = item => !!(item && item.no && item.no.includes(currentBranch));
+
+const CHEV_L = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M15 18l-6-6 6-6"/></svg>';
+const CHEV_R = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M9 18l6-6-6-6"/></svg>';
 
 let revealed = false;
 function revealOnce(){
@@ -1086,69 +1094,34 @@ document.getElementById('navRight').addEventListener('click', e => {
 
 const sceneModal = document.getElementById('sceneModal');
 const sceneModalBody = document.getElementById('sceneModalBody');
-const modalDesc = document.getElementById('modalDesc');
-const modalPills = document.getElementById('modalPills');
+const sheetList = document.getElementById('sheetList');
 let modalCard = null;
-function fillDesc(dish, lang){
-  modalDesc.querySelector('.md-title').textContent = dish.n[lang] || '';
-  const dd = modalDesc.querySelector('.md-desc');
-  dd.textContent = dish.d[lang] || '';
-  dd.style.display = (dish.d[lang] || '') ? '' : 'none';
-  modalDesc.querySelector('.md-price').textContent = fmtPrice(dish.price);
-  modalDesc.classList.add('show');
-}
-function centerPill(pill){
-  const target = pill.offsetLeft - modalPills.clientWidth / 2 + pill.clientWidth / 2;
-  modalPills.scrollTo({left: Math.max(0, target), behavior:'smooth'});
-}
-function syncPills(idx){
-  modalPills.querySelectorAll('.modal-pill').forEach(p => {
-    const on = +p.dataset.idx === idx;
-    p.classList.toggle('active', on);
-    if (on) centerPill(p);
-  });
-}
-function buildPills(sc){
-  modalPills.innerHTML = '';
-  sc.querySelectorAll('.dish-row').forEach((row, i) => {
-    const nameEl = row.querySelector('.dish-row-name');
-    const label = (nameEl ? nameEl.textContent : '').replace(/^\s*\d+\.\s*/, '');
-    const pill = document.createElement('button');
-    pill.type = 'button';
-    pill.className = 'modal-pill';
-    pill.dataset.idx = i;
-    pill.textContent = label;
-    pill.addEventListener('click', () => row.click());
-    modalPills.appendChild(pill);
-  });
-}
 function openSceneModal(card){
   const sc = card.querySelector('.scene');
   if (!sc) return;
-  sc.querySelectorAll('.smart-popup.show').forEach(p => p.classList.remove('show'));
-  sc.querySelectorAll('.dish-row.active').forEach(r => r.classList.remove('active'));
   modalCard = card;
   sceneModalBody.appendChild(sc);
+  sheetList.innerHTML = '';
+  const dishes = card._dishes || [];
+  const lang = card._lang || currentLang;
+  dishes.forEach(dish => {
+    const item = document.createElement('div');
+    item.className = 'sheet-item';
+    item.innerHTML =
+      '<div class="sheet-head"><span class="sheet-name">' + (dish.n[lang] || '') + '</span><span class="sheet-price">' + fmtPrice(dish.price) + '</span></div>' +
+      '<div class="sheet-desc">' + (dish.d[lang] || '') + '</div>';
+    sheetList.appendChild(item);
+  });
   sceneModal.classList.add('open');
   document.body.style.overflow = 'hidden';
-  if (isMobile()){
-    buildPills(sc);
-    const firstRow = sc.querySelector('.dish-row');
-    if (firstRow) firstRow.click();
-  }
 }
 function closeSceneModal(){
   if (modalCard){
     const sc = sceneModalBody.querySelector('.scene');
-    if (sc){
-      sc.querySelectorAll('.smart-popup.show').forEach(p => p.classList.remove('show'));
-      sc.querySelectorAll('.dish-row.active').forEach(r => r.classList.remove('active'));
-      modalCard.appendChild(sc);
-    }
+    if (sc) modalCard.appendChild(sc);
     modalCard = null;
   }
-  modalDesc.classList.remove('show');
-  modalPills.innerHTML = '';
+  sheetList.innerHTML = '';
   sceneModal.classList.remove('open');
   document.body.style.overflow = '';
 }
@@ -1174,7 +1147,7 @@ function navOffset(){
 function buildCatNav(cats, lang){
   const nav = document.getElementById('catNav');
   nav.innerHTML = '';
-  if (cats.length < 2){ document.body.classList.remove('rail-bottom'); return; }
+  if (cats.length < 2) return;
   const track = document.createElement('div');
   track.className = 'cat-nav-track';
   cats.forEach(cat => {
@@ -1192,12 +1165,16 @@ function buildCatNav(cats, lang){
     track.appendChild(btn);
   });
   nav.appendChild(track);
-  document.body.classList.toggle('rail-bottom', isMobile());
 }
 function centerChip(chip){
   const row = chip.parentElement;
-  const target = chip.offsetLeft - row.clientWidth / 2 + chip.clientWidth / 2;
-  row.scrollTo({left: Math.max(0, target), behavior:'smooth'});
+  if (isMobile()){
+    const target = chip.offsetTop - row.clientHeight / 2 + chip.clientHeight / 2;
+    row.scrollTo({top: Math.max(0, target), behavior:'smooth'});
+  } else {
+    const target = chip.offsetLeft - row.clientWidth / 2 + chip.clientWidth / 2;
+    row.scrollTo({left: Math.max(0, target), behavior:'smooth'});
+  }
 }
 function updateActiveChip(){
   if (!catSections.length) return;
@@ -1267,8 +1244,11 @@ function renderMenu(lang, view){
       const card = document.createElement('div');
       card.className = 'menu-item';
       card.style.transitionDelay = (index % 4) * 80 + 'ms';
+      card._dishes = dishes;
+      card._lang = lang;
       const scene = document.createElement('div');
       const eager = index < 2;
+      let images = [];
 
       if (cat.id === 'pizza') {
         scene.className = 'pizza-split';
@@ -1302,7 +1282,7 @@ function renderMenu(lang, view){
         card.appendChild(scene);
       } else {
         scene.className = 'scene';
-        const images = dishes.map((dish, imageIndex) => {
+        images = dishes.map((dish, imageIndex) => {
           const image = document.createElement('img');
           image.className = 'scene-img' + (imageIndex === 0 ? ' active' : '');
           image.src = dish.img;
@@ -1341,7 +1321,6 @@ function renderMenu(lang, view){
             if (dish.y < 50) { popup.style.top = 'auto'; popup.style.bottom = (list.offsetHeight + 12) + 'px'; }
             else { popup.style.top = '10px'; popup.style.bottom = 'auto'; }
             popup.classList.add('show');
-            if (sceneModal.classList.contains('open')){ fillDesc(dish, lang); syncPills(idx); }
           };
           const hide = () => {
             row.classList.remove('active');
@@ -1366,26 +1345,54 @@ function renderMenu(lang, view){
         card.appendChild(scene);
 
         card.addEventListener('click', e => {
+          if (e.target.closest('.scene-arrow')) return;
           if (isMobile() && !e.target.closest('.dish-list-overlay') && !e.target.closest('.smart-popup')) {
             openSceneModal(card);
           }
         });
       }
 
+      /* подпись карточки + стрелки + счётчик (вариант 2) */
       const cap = document.createElement('div');
       cap.className = 'card-cap';
-      dishes.slice(0,2).forEach(dish => {
-        const r = document.createElement('span');
-        r.className = 'cap-row';
-        r.innerHTML = '<span class="cap-name">' + (dish.n[lang] || '') + '</span><span class="cap-price">' + fmtPrice(dish.price) + '</span>';
-        cap.appendChild(r);
-      });
-      if (dishes.length > 2){
-        const m = document.createElement('span');
-        m.className = 'cap-more';
-        m.textContent = '+' + (dishes.length - 2);
-        cap.appendChild(m);
+      const capRow = document.createElement('span');
+      capRow.className = 'cap-row';
+      const capName = document.createElement('span');
+      capName.className = 'cap-name';
+      const capPrice = document.createElement('span');
+      capPrice.className = 'cap-price';
+      capRow.appendChild(capName);
+      capRow.appendChild(capPrice);
+      cap.appendChild(capRow);
+
+      let cur = 0;
+      let counter = null;
+      function setCur(i){
+        cur = (i + dishes.length) % dishes.length;
+        const dish = dishes[cur];
+        capName.textContent = dish.n[lang] || '';
+        capPrice.textContent = fmtPrice(dish.price);
+        if (counter) counter.textContent = (cur + 1) + '/' + dishes.length;
+        if (images.length) images.forEach((im, k) => im.classList.toggle('active', k === cur));
       }
+      if (dishes.length > 1){
+        const prev = document.createElement('button');
+        prev.type = 'button';
+        prev.className = 'scene-arrow prev';
+        prev.innerHTML = CHEV_L;
+        prev.addEventListener('click', e => { e.stopPropagation(); setCur(cur - 1); });
+        const next = document.createElement('button');
+        next.type = 'button';
+        next.className = 'scene-arrow next';
+        next.innerHTML = CHEV_R;
+        next.addEventListener('click', e => { e.stopPropagation(); setCur(cur + 1); });
+        counter = document.createElement('span');
+        counter.className = 'scene-counter';
+        scene.appendChild(prev);
+        scene.appendChild(next);
+        scene.appendChild(counter);
+      }
+      setCur(0);
       card.appendChild(cap);
 
       grid.appendChild(card);
