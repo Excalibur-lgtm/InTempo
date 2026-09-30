@@ -44,7 +44,7 @@
   body::-webkit-scrollbar{width:10px;} body::-webkit-scrollbar-track{background:var(--bg);} body::-webkit-scrollbar-thumb{background:var(--bg-deep);border-radius:99px;}
   h1,h2{font-family:var(--serif);font-weight:600;line-height:1.12;letter-spacing:-.01em;color:var(--ink);}
   em{font-style:italic;color:var(--red);}
-  .dish-row,.menu-item,.cat-chip,.btn,.branch-choice{touch-action:manipulation;}
+  .dish-row,.menu-item,.cat-chip,.btn,.branch-choice,.modal-pill{touch-action:manipulation;}
 
   .site-bg{position:fixed;left:0;right:0;top:-20vh;height:140vh;z-index:0;pointer-events:none;overflow:hidden;will-change:transform;}
   .site-bg img{width:100%;height:100%;object-fit:cover;filter:blur(6px) brightness(.72) saturate(1.1);transform:scale(1.06);}
@@ -350,11 +350,12 @@
   .scene-modal .scene{width:100%;opacity:1;transform:none;box-shadow:0 30px 70px rgba(0,0,0,.5);}
   .scene-modal-close{position:absolute;top:-46px;right:0;width:40px;height:40px;border-radius:50%;border:1.5px solid rgba(241,239,233,.7);background:none;color:var(--paper);cursor:pointer;display:flex;align-items:center;justify-content:center;}
   .scene-modal-hint{color:rgba(241,239,233,.75);font-size:11px;letter-spacing:.2em;text-transform:uppercase;text-align:center;margin-top:12px;}
-  /* описание блюда блоком под фото (мобилка) */
   .modal-desc{display:none;}
   .md-title{font-family:var(--serif);font-weight:700;font-size:16px;line-height:1.3;color:var(--ink);margin-bottom:6px;}
   .md-desc{font-size:13px;line-height:1.55;color:var(--muted);margin-bottom:8px;}
   .md-price{font-family:var(--serif);font-style:italic;font-weight:700;font-size:18px;color:var(--red);}
+  /* пилюли-табы позиций (мобилка, вариант B) */
+  .modal-pills{display:none;}
 
   .contact-sec{position:relative;z-index:1;padding:clamp(90px,12vw,160px) 6vw;text-align:center;overflow:hidden;background:
     radial-gradient(ellipse 820px 420px at 50% 0%, rgba(241,239,233,.25), transparent 62%),
@@ -392,7 +393,6 @@
   .rv{opacity:0;transform:translateY(30px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);}
   .rv.in{opacity:1;transform:none;}
 
-  /* === ВЫБОР ФИЛИАЛА: УРОВЕНЬ B — НЕПРОЗРАЧНЫЙ ЭКРАН + BLUR ФОТО === */
   .branch-modal{position:fixed;inset:0;z-index:350;display:none;align-items:center;justify-content:center;background:var(--ink);transition:opacity .45s ease, visibility .45s ease;}
   .branch-modal.open{display:flex;}
   .branch-modal.closing{opacity:0;visibility:hidden;}
@@ -456,18 +456,20 @@
     .cat-hours-ico svg{width:18px;height:18px;}
     .cat-hours-text{font-size:18px;}
     .cat-hours-note{font-size:11px;}
-    /* модалка блюда на мобилке */
+    /* модалка блюда: пилюли сверху, список поверх фото убираем */
     .scene-modal{padding:14px;}
-    .scene-modal-body{width:min(94vw,480px);}
+    .scene-modal-body{width:min(94vw,480px);max-height:96vh;overflow-y:auto;scrollbar-width:none;}
+    .scene-modal-body::-webkit-scrollbar{display:none;}
     .scene-modal .scene::before{padding-top:100%;}
     .scene-modal-close{position:fixed;top:calc(10px + env(safe-area-inset-top));right:10px;z-index:96;background:rgba(43,38,34,.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);}
     .scene-modal .smart-popup{display:none !important;}
+    .scene-modal .dish-list-overlay{display:none;}
+    .modal-pills{display:flex;gap:6px;overflow-x:auto;padding:2px 2px 10px;margin-bottom:10px;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+    .modal-pills::-webkit-scrollbar{display:none;}
+    .modal-pills:empty{display:none;}
+    .modal-pill{flex:0 0 auto;font-family:var(--serif);font-style:italic;font-size:12px;font-weight:500;letter-spacing:.04em;padding:8px 14px;border-radius:999px;border:1px solid rgba(241,239,233,.35);background:rgba(241,239,233,.10);color:rgba(241,239,233,.85);cursor:pointer;transition:background .25s,color .25s,border-color .25s,box-shadow .25s;white-space:nowrap;}
+    .modal-pill.active{background:var(--red);border-color:var(--red);color:#fff;font-weight:600;box-shadow:0 4px 14px rgba(216,67,42,.4);}
     .modal-desc.show{display:block;margin-top:12px;background:rgba(241,239,233,.96);border:1px solid rgba(43,38,34,.14);border-radius:14px;padding:14px 16px;box-shadow:0 10px 26px rgba(0,0,0,.25);text-align:left;}
-    .dish-list-overlay{max-height:46%;overflow-y:auto;scrollbar-width:none;padding-top:34px;}
-    .dish-list-overlay::-webkit-scrollbar{display:none;}
-    .dish-row{padding:11px 12px;font-size:14px;}
-    .dish-row-name{font-size:14px;}
-    .dish-row-price{font-size:13px;}
     .contact-sec{padding:72px 5vw 96px;}
     .contact-kicker{font-size:11px;letter-spacing:.22em;gap:10px;}
     .contact-kicker::before,.contact-kicker::after{width:26px;}
@@ -519,7 +521,7 @@
   <div class="loader-progress"><i></i></div>
 </div>
 
-<script>setTimeout(function(){var l=document.getElementById('loader');if(l&&!l.classList.contains('done'))l.classList.add('done');},4000);</script>
+<script>setTimeout(function(){var l=document.getElementById('loader');if(l&&!l.classList.contains('done')&&!document.documentElement.classList.contains('gate'))l.classList.add('done');},4000);</script>
 
 <nav class="nav" id="nav">
   <a class="logo-card" href="#top" aria-label="In Tempo — Time to enjoy"><img class="logo-img" src="images/logoIntempo.png" alt="In Tempo"><span class="slogan">Time to enjoy</span></a>
@@ -574,6 +576,7 @@
 <div class="scene-modal" id="sceneModal">
   <div class="scene-modal-body">
     <button class="scene-modal-close" id="sceneModalClose" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+    <div class="modal-pills" id="modalPills"></div>
     <div id="sceneModalBody"></div>
     <div class="modal-desc" id="modalDesc">
       <div class="md-title"></div>
@@ -618,6 +621,9 @@ let catSections = [];
 let branchGate = true;
 try{ branchGate = !localStorage.getItem('intempo_branch'); }catch(e){ branchGate = true; }
 
+/* === ДОСТУПНОСТЬ ПО ФИЛИАЛАМ ===
+   У блюда или категории добавьте поле no:['mega'] или no:['hyusisayin'],
+   чтобы скрыть его в выбранном филиале. Список позиций пришлёте позже. */
 const MENU = [
   // === ЗАВТРАКИ ===
   { id:'breakfast', t:{hy:'Նախաճաշ',en:'Breakfast',ru:'Завтрак'}, scenes:[
@@ -867,11 +873,11 @@ const MENU = [
   ]},
   {id:'bar_cold_tea',t:{hy:'Սառը թեյեր',en:'Cold Teas',ru:'Холодные чаи'},scenes:[
     {dishes:[
-      {img:IMG_DIR+'page23_img123.jpg',x:50,y:50,price:1800,n:{hy:'Սառը մոշի թեյ',en:'Cold Blackberry Tea',ru:'Холодный ежевичный чай'},d:{hy:'Եփած սև թեյ, մոշի պյուրե, անանուխ, մոշ',en:'Brewed black tea, blackberry puree, mint, blackberry',ru:'Заваренный черный чай, пюре из ежевики, мята, ежевика'}}
+      {img:IMG_DIR+'page23_img123.jpg',x:50,y:50,price:1800,n:{hy:'Սառը մոշի թեյ',en:'Cold Blackberry Tea',ru:'Холодный ежевичный чай'},d:{hy:'Եած սև թեյ, մոշի պյուրե, անանուխ, մոշ',en:'Brewed black tea, blackberry puree, mint, blackberry',ru:'Заваренный черный чай, пюре из ежевики, мята, ежевика'}}
     ]},
     {dishes:[
       {img:IMG_DIR+'page24_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սառը ելակի թեյ',en:'Cold Strawberry Tea',ru:'Клубничный холодный чай'},d:{hy:'Եփած սև թեյ, ելակի պյուրե, ելակ, անանուխ',en:'Brewed black tea, strawberry puree, strawberry, mint',ru:'Заваренный черный чай, клубничное пюре, клубника, мята'}},
-      {img:IMG_DIR+'page24_img123.jpg',x:65,y:65,price:1600,n:{hy:'Սառը մանգոյի թեյ',en:'Cold Mango Tea',ru:'Манговый холодный чай'},d:{hy:'Եփած սև թեյ, մանգոյի սիրոպ, անանուխ, չորացրած մանգո',en:'Brewed black tea, mango syrup, mint, dried mango',ru:'Заваренный черный чай, манговый сироп, мята, сушеное манго'}}
+      {img:IMG_DIR+'page24_img123.jpg',x:65,y:65,price:1600,n:{hy:'Սառը մանգոյի թեյ',en:'Cold Mango Tea',ru:'Манговый холодный чай'},d:{hy:'Եած սև թեյ, մանգոյի սիրոպ, անանուխ, չորացրած մանգո',en:'Brewed black tea, mango syrup, mint, dried mango',ru:'Заваренный черный чай, манговый сироп, мята, сушеное манго'}}
     ]},
     {dishes:[
       {img:IMG_DIR+'page25_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սառը դեղձի թեյ',en:'Cold Peach Tea',ru:'Персиковый холодный чай'},d:{hy:'Եփած սև թեյ, պերսիկի պյուրե, անանուխ, լայմ, լիմոն',en:'Brewed black tea, peach puree, mint, lime, lemon',ru:'Заваренный черный чай, персиковое пюре, мята, лайм, лимон'}},
@@ -903,7 +909,7 @@ const MENU = [
       {img:IMG_DIR+'page30_img123.jpg',x:50,y:50,price:'1800 / 4800',n:{hy:'Վարդագույն Լիչի Լիմոնադ',en:'Pink Lychee Lemonade',ru:'Розовый личи лимонад'},d:{hy:'Վարդագույն լիչիի սիրոպ, մորի, կիտրոնի հյութ, անանուխ, գազավորված ջուր',en:'Pink lychee syrup, raspberry, lemon juice, mint, sparkling water',ru:'Сироп розового личи, малина, лимонный сок, мята, газированная вода'}}
     ]},
     {dishes:[
-      {img:IMG_DIR+'page31_img123.jpg',x:35,y:35,price:'1800 / 4800',n:{hy:'Դեղձ-Խնձոր Լիմոնադ',en:'Peach Apple Lemonade',ru:'Персиково-яблочный лимонад'},d:{hy:'Պերսիկի պյուրե, խնձորի հյութ, խնձոր, անանուխ, գազավորված ջուր',en:'Peach puree, apple juice, apple, mint, sparkling water',ru:'Персиковое пюре, яблочный сок, яблоко, мята, газированная вода'}},
+      {img:IMG_DIR+'page31_img123.jpg',x:35,y:35,price:'1800 / 4800',n:{hy:'Դեղձ-նձոր Լիմոնադ',en:'Peach Apple Lemonade',ru:'Персиково-яблочный лимонад'},d:{hy:'Պերսիկի պյուրե, խնձորի հյութ, խնձոր, անանուխ, գազավորված ջուր',en:'Peach puree, apple juice, apple, mint, sparkling water',ru:'Персиковое пюре, яблочный сок, яблоко, мята, газированная вода'}},
       {img:IMG_DIR+'page31_img123.jpg',x:65,y:65,price:'1800 / 4800',n:{hy:'Ելակի Լիմոնադ',en:'Strawberry Lemonade',ru:'Клубничный лимонад'},d:{hy:'Ելակի պյուրե, կիտրոնի հյութ, ելակ, անանուխ, գազավորված ջուր',en:'Strawberry puree, lemon juice, strawberry, mint, sparkling water',ru:'Пюре клубники, лимонный сок, клубника, мята, газированная вода'}}
     ]},
     {dishes:[
@@ -1024,10 +1030,12 @@ const DICT = {
 const fmtPrice = n => (n == null ? '—' : (typeof n === 'number' ? String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' ') : String(n))) + ' ֏';
 const canHover = window.matchMedia('(hover:hover)').matches;
 const isMobile = () => window.matchMedia('(max-width:640px)').matches;
+const branchHidden = item => !!(item && item.no && item.no.includes(currentBranch));
 
 let revealed = false;
 function revealOnce(){
   if (revealed) return;
+  if (document.documentElement.classList.contains('gate')) return;
   revealed = true;
   const l = document.getElementById('loader');
   if (l) l.classList.add('done');
@@ -1079,6 +1087,7 @@ document.getElementById('navRight').addEventListener('click', e => {
 const sceneModal = document.getElementById('sceneModal');
 const sceneModalBody = document.getElementById('sceneModalBody');
 const modalDesc = document.getElementById('modalDesc');
+const modalPills = document.getElementById('modalPills');
 let modalCard = null;
 function fillDesc(dish, lang){
   modalDesc.querySelector('.md-title').textContent = dish.n[lang] || '';
@@ -1087,6 +1096,31 @@ function fillDesc(dish, lang){
   dd.style.display = (dish.d[lang] || '') ? '' : 'none';
   modalDesc.querySelector('.md-price').textContent = fmtPrice(dish.price);
   modalDesc.classList.add('show');
+}
+function centerPill(pill){
+  const target = pill.offsetLeft - modalPills.clientWidth / 2 + pill.clientWidth / 2;
+  modalPills.scrollTo({left: Math.max(0, target), behavior:'smooth'});
+}
+function syncPills(idx){
+  modalPills.querySelectorAll('.modal-pill').forEach(p => {
+    const on = +p.dataset.idx === idx;
+    p.classList.toggle('active', on);
+    if (on) centerPill(p);
+  });
+}
+function buildPills(sc){
+  modalPills.innerHTML = '';
+  sc.querySelectorAll('.dish-row').forEach((row, i) => {
+    const nameEl = row.querySelector('.dish-row-name');
+    const label = (nameEl ? nameEl.textContent : '').replace(/^\s*\d+\.\s*/, '');
+    const pill = document.createElement('button');
+    pill.type = 'button';
+    pill.className = 'modal-pill';
+    pill.dataset.idx = i;
+    pill.textContent = label;
+    pill.addEventListener('click', () => row.click());
+    modalPills.appendChild(pill);
+  });
 }
 function openSceneModal(card){
   const sc = card.querySelector('.scene');
@@ -1098,6 +1132,7 @@ function openSceneModal(card){
   sceneModal.classList.add('open');
   document.body.style.overflow = 'hidden';
   if (isMobile()){
+    buildPills(sc);
     const firstRow = sc.querySelector('.dish-row');
     if (firstRow) firstRow.click();
   }
@@ -1113,6 +1148,7 @@ function closeSceneModal(){
     modalCard = null;
   }
   modalDesc.classList.remove('show');
+  modalPills.innerHTML = '';
   sceneModal.classList.remove('open');
   document.body.style.overflow = '';
 }
@@ -1191,7 +1227,7 @@ function renderMenu(lang, view){
   const root = document.getElementById('menuRoot');
   root.innerHTML = '';
 
-  const categoriesToShow = view === 'pizza'
+  const categoriesToShow = (view === 'pizza'
     ? MENU.filter(cat => cat.id === 'pizza')
     : (view === 'bar'
       ? MENU.filter(cat => cat.id.startsWith('bar_'))
@@ -1199,7 +1235,8 @@ function renderMenu(lang, view){
         ? MENU.filter(cat => cat.id === 'breakfast')
         : (view === 'lunch'
           ? MENU.filter(cat => cat.id === 'lunch')
-          : MENU.filter(cat => !cat.id.startsWith('bar_') && cat.id !== 'pizza' && cat.id !== 'breakfast' && cat.id !== 'lunch'))));
+          : MENU.filter(cat => !cat.id.startsWith('bar_') && cat.id !== 'pizza' && cat.id !== 'breakfast' && cat.id !== 'lunch'))))
+    ).filter(cat => !branchHidden(cat));
 
   buildCatNav(categoriesToShow, lang);
   catSections = [];
@@ -1225,6 +1262,8 @@ function renderMenu(lang, view){
     const grid = sec.querySelector('.menu-grid');
 
     cat.scenes.forEach((sceneData, index) => {
+      const dishes = sceneData.dishes.filter(dz => !branchHidden(dz));
+      if (!dishes.length) return;
       const card = document.createElement('div');
       card.className = 'menu-item';
       card.style.transitionDelay = (index % 4) * 80 + 'ms';
@@ -1233,7 +1272,7 @@ function renderMenu(lang, view){
 
       if (cat.id === 'pizza') {
         scene.className = 'pizza-split';
-        sceneData.dishes.forEach(dish => {
+        dishes.forEach(dish => {
           const leftHalf = document.createElement('div');
           leftHalf.className = 'pizza-half left';
           const leftImg = document.createElement('img');
@@ -1263,7 +1302,7 @@ function renderMenu(lang, view){
         card.appendChild(scene);
       } else {
         scene.className = 'scene';
-        const images = sceneData.dishes.map((dish, imageIndex) => {
+        const images = dishes.map((dish, imageIndex) => {
           const image = document.createElement('img');
           image.className = 'scene-img' + (imageIndex === 0 ? ' active' : '');
           image.src = dish.img;
@@ -1283,7 +1322,7 @@ function renderMenu(lang, view){
         const list = document.createElement('div');
         list.className = 'dish-list-overlay';
 
-        sceneData.dishes.forEach((dish, idx) => {
+        dishes.forEach((dish, idx) => {
           const row = document.createElement('div');
           row.className = 'dish-row';
           row.innerHTML =
@@ -1302,7 +1341,7 @@ function renderMenu(lang, view){
             if (dish.y < 50) { popup.style.top = 'auto'; popup.style.bottom = (list.offsetHeight + 12) + 'px'; }
             else { popup.style.top = '10px'; popup.style.bottom = 'auto'; }
             popup.classList.add('show');
-            if (sceneModal.classList.contains('open')) fillDesc(dish, lang);
+            if (sceneModal.classList.contains('open')){ fillDesc(dish, lang); syncPills(idx); }
           };
           const hide = () => {
             row.classList.remove('active');
@@ -1335,16 +1374,16 @@ function renderMenu(lang, view){
 
       const cap = document.createElement('div');
       cap.className = 'card-cap';
-      sceneData.dishes.slice(0,2).forEach(dish => {
+      dishes.slice(0,2).forEach(dish => {
         const r = document.createElement('span');
         r.className = 'cap-row';
         r.innerHTML = '<span class="cap-name">' + (dish.n[lang] || '') + '</span><span class="cap-price">' + fmtPrice(dish.price) + '</span>';
         cap.appendChild(r);
       });
-      if (sceneData.dishes.length > 2){
+      if (dishes.length > 2){
         const m = document.createElement('span');
         m.className = 'cap-more';
-        m.textContent = '+' + (sceneData.dishes.length - 2);
+        m.textContent = '+' + (dishes.length - 2);
         cap.appendChild(m);
       }
       card.appendChild(cap);
@@ -1424,6 +1463,7 @@ function selectBranch(branch){
   branchToggle.textContent = currentBranch === 'hyusisayin' ? 'Հյուսիսային' : 'Mega Mall';
   document.getElementById('heroActions').style.display = 'flex';
   if (menuRendered) renderMenu(currentLang, currentView);
+  setTimeout(revealOnce, 900);
 }
 
 document.querySelectorAll('.branch-choice').forEach(choice => {
@@ -1437,6 +1477,7 @@ document.querySelectorAll('.rv').forEach(el => io.observe(el));
 
 <script>
   setTimeout(function(){
+    if (document.documentElement.classList.contains('gate')) return;
     var n = document.getElementById('nav');
     var h = document.querySelector('.hero');
     if (n && !n.classList.contains('ready')) n.classList.add('ready');
