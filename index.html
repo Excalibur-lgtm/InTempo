@@ -36,6 +36,7 @@
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
   html{scroll-behavior:smooth;scroll-padding-top:60px;}
   body{background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;overflow-x:hidden;}
+  body.branch-lock{position:fixed;left:0;right:0;overflow:hidden;}
   a{color:inherit;text-decoration:none;} img{display:block;max-width:100%;}
   ::selection{background:var(--red);color:#fff;}
   body::-webkit-scrollbar{width:10px;} body::-webkit-scrollbar-track{background:var(--bg);} body::-webkit-scrollbar-thumb{background:var(--bg-deep);border-radius:99px;}
@@ -380,7 +381,7 @@
   .branch-modal{position:fixed;inset:0;z-index:350;display:none;align-items:center;justify-content:center;background:rgba(20,15,10,.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:opacity .45s ease, visibility .45s ease;}
   .branch-modal.open{display:flex;}
   .branch-modal.closing{opacity:0;visibility:hidden;}
-  .branch-modal-inner{position:relative;z-index:1;max-width:640px;width:100%;text-align:center;max-height:100vh;overflow-y:auto;padding:40px 22px;scrollbar-width:none;}
+  .branch-modal-inner{position:relative;z-index:1;max-width:640px;width:100%;text-align:center;max-height:100vh;max-height:100svh;overflow-y:auto;padding:40px 22px;padding-bottom:calc(40px + env(safe-area-inset-bottom));scrollbar-width:none;}
   .branch-modal-inner::-webkit-scrollbar{display:none;}
   .branch-logo{height:92px;width:auto;margin:0 auto 18px;filter:drop-shadow(0 4px 14px rgba(0,0,0,.5));}
   .branch-modal-inner h2{font-family:var(--serif);font-size:clamp(30px,5vw,46px);color:#fff;margin-bottom:12px;text-shadow:0 2px 18px rgba(0,0,0,.6);}
@@ -440,13 +441,17 @@
     .soc{width:44px;height:44px;}
     footer{padding:32px 5vw 24px;}
     footer .logo-img{height:120px;}
-    .branch-modal-inner{padding:28px 16px;}
-    .branch-logo{height:70px;margin-bottom:14px;}
-    .branch-modal-inner p{font-size:14px;margin-bottom:24px;}
-    .branch-choice{padding:22px 16px;}
+    /* мобильный экран выбора филиала */
+    .branch-modal{padding:0 calc(env(safe-area-inset-left)) 0 calc(env(safe-area-inset-right));}
+    .branch-modal-inner{padding:24px 16px;padding-bottom:calc(24px + env(safe-area-inset-bottom));padding-top:calc(24px + env(safe-area-inset-top));}
+    .branch-logo{height:64px;margin-bottom:12px;}
+    .branch-modal-inner h2{font-size:26px;margin-bottom:8px;}
+    .branch-modal-inner p{font-size:13px;margin-bottom:20px;}
+    .branch-choices{gap:12px;}
+    .branch-choice{padding:26px 16px;border-radius:16px;}
     .branch-choice .name{font-size:20px;}
   }
-  @media (max-width:380px){.nav-tel{display:none;}.lang-btn{padding:5px 8px;font-size:9px;}#loader .logo-img{height:300px;}.cat-chip{font-size:11px;padding:6px 12px;}}
+  @media (max-width:380px){.nav-tel{display:none;}.lang-btn{padding:5px 8px;font-size:9px;}#loader .logo-img{height:300px;}.cat-chip{font-size:11px;padding:6px 12px;}.branch-choice{padding:22px 12px;}.branch-choice .name{font-size:18px;}}
   @media (prefers-reduced-motion:reduce){*{transition-duration:.01ms !important;animation-duration:.01ms !important;}}
 </style>
 </head>
@@ -749,19 +754,19 @@ const MENU = [
       {img:IMG_DIR+'page05_img123.jpg',x:65,y:35,price:2900,n:{hy:'Մանուշակագույն Մարգարիտա',en:'Purple Margarita',ru:'Фиолетовая Маргарита'},d:{hy:'Տեկիլա, Parfait Amour, լայմի հյութ, լավանդայի սիրոպ',en:'Tequila, Parfait Amour, lime juice, lavender syrup',ru:'Текила, ликер Парфе Амур, сок лайма, лавандовый сироп'}}
     ]}
   ]},
-  {id:'bar_mojitos',t:{hy:'Ոչ ալկոհոլային մոխիտո',en:'Non-Alcoholic Mojitos',ru:'Безалкогольные мохито'},scenes:[
+  {id:'bar_mojitos',t:{hy:'Անալկոհոլային մոխիտո',en:'Non-Alcoholic Mojitos',ru:'Безалкогольные мохито'},scenes:[
     {dishes:[
       {img:IMG_DIR+'page06_img123.jpg',x:65,y:65,price:2700,n:{hy:'Կիվի-բազիլիկ Մոխիտո',en:'Kiwi Basil Mojito',ru:'Киви-базиликовый мохито'},d:{hy:'Կիվի պյուրե, լայմ, շագանակագույն շաքար, բազիլիկ, գազավորված ջուր',en:'Kiwi puree, lime, brown sugar, basil, sparkling water',ru:'Киви пюре, лайм, коричневый сахар, базилик, газированная вода'}},
-      {img:IMG_DIR+'page06_img123.jpg',x:35,y:35,price:2800,n:{hy:'Մոխիտո հապալասով և լավանդայով',en:'Blueberry Lavender Mojito',ru:'Мохито с черникой, лавандой и базиликом'},d:{hy:'Հապալասի պյուրե, լավանդայի սիրոպ, լայմ, շագանակագույն շաքար, բազիլիկ',en:'Blueberry puree, lavender syrup, lime, brown sugar, basil',ru:'Пюре из черники, лавандовый сироп, лайм, коричневый сахар, базилик'}}
+      {img:IMG_DIR+'page06_img123.jpg',x:35,y:35,price:2800,n:{hy:'Մոխիտո սև հաղարջով և լավանդայով',en:'Blueberry Lavender Mojito',ru:'Мохито с черникой, лавандой и базиликом'},d:{hy:'Սև հաղարջի պյուրե, լավանդայի սիրոպ, լայմ, շագանակագույն շաքար, բազիլիկ',en:'Blueberry puree, lavender syrup, lime, brown sugar, basil',ru:'Пюре из черники, лавандовый сироп, лайм, коричневый сахар, базилик'}}
     ]},
     {dishes:[
       {img:IMG_DIR+'page07_img123.jpg',x:50,y:50,price:2700,n:{hy:'Անանաս-բազիլիկ Մոխիտո',en:'Pineapple Basil Mojito',ru:'Ананасово-базиликовый мохито'},d:{hy:'Անանասի պյուրե, լայմ, շագանակագույն շաքար, բազիլիկ, գազավորված ջուր',en:'Pineapple puree, lime, brown sugar, basil, sparkling water',ru:'Ананасовое пюре, лайм, коричневый сахар, базилик, газированная вода'}},
-      {img:IMG_DIR+'page07_img123.jpg',x:25,y:25,price:2100,n:{hy:'Մոշ-բազիլիկ Մոխիտո',en:'Blackberry Basil Mojito',ru:'Ежевично-базиликовый мохито'},d:{hy:'Մոշ, լայմ, շագանակագույն շաքար, շաքարի սիրոպ, բազիլիկ',en:'Blackberry, lime, brown sugar, sugar syrup, basil',ru:'Ежевика, лайм, коричневый сахар, сахарный сироп, базилик'}},
+      {img:IMG_DIR+'page07_img123.jpg',x:25,y:25,price:2100,n:{hy:'Ելակ-բազիլիկ Մոխիտո',en:'Blackberry Basil Mojito',ru:'Ежевично-базиликовый мохито'},d:{hy:'Ելակ, լայմ, շագանակագույն շաքար, շաքարի սիրոպ, բազիլիկ',en:'Blackberry, lime, brown sugar, sugar syrup, basil',ru:'Ежевика, лайм, коричневый сахар, сахарный сироп, базилик'}},
       {img:IMG_DIR+'page07_img123.jpg',x:75,y:75,price:2700,n:{hy:'Մոխիտո մանգոյով և մարակույայով',en:'Mango Passionfruit Mojito',ru:'Мохито с манго, маракуйей и базиликом'},d:{hy:'Մարակույայի պյուրե, մանգոյի սիրոպ, լայմ, շագանակագույն շաքար, բազիլիկ',en:'Passionfruit puree, mango syrup, lime, brown sugar, basil',ru:'Пюре маракуйи, сироп манго, лайм, коричневый сахар, базилик'}}
     ]},
     {dishes:[
-      {img:IMG_DIR+'page08_img123.jpg',x:25,y:25,price:2600,n:{hy:'Ելակ-բազիլիկ Մոխիտո',en:'Strawberry Basil Mojito',ru:'Клубнично-базиликовый мохито'},d:{hy:'Ելակի պյուրե, լայմ, շագանակագույն շաքար, բազիլիկ, գազավորված ջուր',en:'Strawberry puree, lime, brown sugar, basil, sparkling water',ru:'Клубничное пюре, лайм, коричневый сахар, базилик, газированная вода'}},
-      {img:IMG_DIR+'page08_img123.jpg',x:50,y:50,price:1800,n:{hy:'Ոչ ալկոհոլային Մոխիտո',en:'Non-Alcoholic Mojito',ru:'Безалкогольный мохито'},d:{hy:'Լայմ, շագանակագույն շաքար, անանուխ, գազավորված ջուր',en:'Lime, brown sugar, mint, sparkling water',ru:'Лайм, коричневый сахар, мята, газированная вода'}},
+      {img:IMG_DIR+'page08_img123.jpg',x:25,y:25,price:2600,n:{hy:'Կլուբնիկա-բազիլիկ Մոխիտո',en:'Strawberry Basil Mojito',ru:'Клубнично-базиликовый мохито'},d:{hy:'Ելակի պյուրե, լայմ, շագանակագույն շաքար, բազիլիկ, գազավորված ջուր',en:'Strawberry puree, lime, brown sugar, basil, sparkling water',ru:'Клубничное пюре, лайм, коричневый сахар, базилик, газированная вода'}},
+      {img:IMG_DIR+'page08_img123.jpg',x:50,y:50,price:1800,n:{hy:'Անալկոհոլային Մոխիտո',en:'Non-Alcoholic Mojito',ru:'Безалкогольный мохито'},d:{hy:'Լայմ, շագանակագույն շաքար, անանուխ, գազավորված ջուր',en:'Lime, brown sugar, mint, sparkling water',ru:'Лайм, коричневый сахар, мята, газированная вода'}},
       {img:IMG_DIR+'page08_img123.jpg',x:75,y:75,price:2500,n:{hy:'Մոխիտո մորի և բազիլիկով',en:'Raspberry Basil Mojito',ru:'Мохито с малиной и базиликом'},d:{hy:'Մորի, լայմ, շագանակագույն շաքար, շաքարի սիրոպ, բազիլիկ',en:'Raspberry, lime, brown sugar, sugar syrup, basil',ru:'Малина, лайм, коричневый сахар, сахарный сироп, базилик'}}
     ]}
   ]},
@@ -823,14 +828,14 @@ const MENU = [
   ]},
   {id:'bar_cold_tea',t:{hy:'Սառը թեյեր',en:'Cold Teas',ru:'Холодные чаи'},scenes:[
     {dishes:[
-      {img:IMG_DIR+'page23_img123.jpg',x:50,y:50,price:1800,n:{hy:'Սառը մոշի թեյ',en:'Cold Blackberry Tea',ru:'Холодный ежевичный чай'},d:{hy:'Եած սև թեյ, մոշի պյուրե, անանուխ, մոշ',en:'Brewed black tea, blackberry puree, mint, blackberry',ru:'Заваренный черный чай, пюре из ежевики, мята, ежевика'}}
+      {img:IMG_DIR+'page23_img123.jpg',x:50,y:50,price:1800,n:{hy:'Սառը մոշի թեյ',en:'Cold Blackberry Tea',ru:'Холодный ежевичный чай'},d:{hy:'Եփած սև թեյ, մոշի պյուրե, անանուխ, մոշ',en:'Brewed black tea, blackberry puree, mint, blackberry',ru:'Заваренный черный чай, пюре из ежевики, мята, ежевика'}}
     ]},
     {dishes:[
-      {img:IMG_DIR+'page24_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սառը ելակի թեյ',en:'Cold Strawberry Tea',ru:'Клубничный холодный чай'},d:{hy:'Եփած սև թեյ, ելակի պյուրե, ելակ, անանուխ',en:'Brewed black tea, strawberry puree, strawberry, mint',ru:'Заваренный черный чай, клубничное пюре, клубника, мята'}},
+      {img:IMG_DIR+'page24_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սառը ելակի թեյ',en:'Cold Strawberry Tea',ru:'Клубничный холодный чай'},d:{hy:'Եած սև թեյ, ելակի պյուրե, ելակ, անանուխ',en:'Brewed black tea, strawberry puree, strawberry, mint',ru:'Заваренный черный чай, клубничное пюре, клубника, мята'}},
       {img:IMG_DIR+'page24_img123.jpg',x:65,y:65,price:1600,n:{hy:'Սառը մանգոյի թեյ',en:'Cold Mango Tea',ru:'Манговый холодный чай'},d:{hy:'Եփած սև թեյ, մանգոյի սիրոպ, անանուխ, չորացրած մանգո',en:'Brewed black tea, mango syrup, mint, dried mango',ru:'Заваренный черный чай, манговый сироп, мята, сушеное манго'}}
     ]},
     {dishes:[
-      {img:IMG_DIR+'page25_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սառը դեղձի թեյ',en:'Cold Peach Tea',ru:'Персиковый холодный чай'},d:{hy:'Եած սև թեյ, պերսիկի պյուրե, անանուխ, լայմ, լիմոն',en:'Brewed black tea, peach puree, mint, lime, lemon',ru:'Заваренный черный чай, персиковое пюре, мята, лайм, лимон'}},
+      {img:IMG_DIR+'page25_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սառը դեղձի թեյ',en:'Cold Peach Tea',ru:'Персиковый холодный чай'},d:{hy:'Եփած սև թեյ, պերսիկի պյուրե, անանուխ, լայմ, լիմոն',en:'Brewed black tea, peach puree, mint, lime, lemon',ru:'Заваренный черный чай, персиковое пюре, мята, лайм, лимон'}},
       {img:IMG_DIR+'page25_img123.jpg',x:65,y:65,price:1700,n:{hy:'Սառը լավանդայի թեյ',en:'Cold Lavender Tea',ru:'Лавандовый холодный чай'},d:{hy:'Լավանդայի սիրոպ, անանուխ, լիմոն, լայմ, ռոզմարին',en:'Lavender syrup, mint, lemon, lime, rosemary',ru:'Лавандовый сироп, мята, лимон, лайм, розмарин'}}
     ]},
     {dishes:[
@@ -859,7 +864,7 @@ const MENU = [
       {img:IMG_DIR+'page30_img123.jpg',x:50,y:50,price:'1800 / 4800',n:{hy:'Վարդագույն Լիչի Լիմոնադ',en:'Pink Lychee Lemonade',ru:'Розовый личи лимонад'},d:{hy:'Վարդագույն լիչիի սիրոպ, մորի, կիտրոնի հյութ, անանուխ, գազավորված ջուր',en:'Pink lychee syrup, raspberry, lemon juice, mint, sparkling water',ru:'Сироп розового личи, малина, лимонный сок, мята, газированная вода'}}
     ]},
     {dishes:[
-      {img:IMG_DIR+'page31_img123.jpg',x:35,y:35,price:'1800 / 4800',n:{hy:'Դեղձ-նձոր Լիմոնադ',en:'Peach Apple Lemonade',ru:'Персиково-яблочный лимонад'},d:{hy:'Պերսիկի պյուրե, խնձորի հյութ, խնձոր, անանուխ, գազավորված ջուր',en:'Peach puree, apple juice, apple, mint, sparkling water',ru:'Персиковое пюре, яблочный сок, яблоко, мята, газированная вода'}},
+      {img:IMG_DIR+'page31_img123.jpg',x:35,y:35,price:'1800 / 4800',n:{hy:'Դեղձ-Խնձոր Լիմոնադ',en:'Peach Apple Lemonade',ru:'Персиково-яблочный лимонад'},d:{hy:'Պերսիկի պյուրե, խնձորի հյութ, խնձոր, անանուխ, գազավորված ջուր',en:'Peach puree, apple juice, apple, mint, sparkling water',ru:'Персиковое пюре, яблочный сок, яблоко, мята, газированная вода'}},
       {img:IMG_DIR+'page31_img123.jpg',x:65,y:65,price:'1800 / 4800',n:{hy:'Ելակի Լիմոնադ',en:'Strawberry Lemonade',ru:'Клубничный лимонад'},d:{hy:'Ելակի պյուրե, կիտրոնի հյութ, ելակ, անանուխ, գազավորված ջուր',en:'Strawberry puree, lemon juice, strawberry, mint, sparkling water',ru:'Пюре клубники, лимонный сок, клубника, мята, газированная вода'}}
     ]},
     {dishes:[
@@ -1028,6 +1033,20 @@ function scrollToCategory(id){
   if (!sec) return;
   const y = sec.getBoundingClientRect().top + window.scrollY - navOffset();
   window.scrollTo({top: Math.max(0, y), behavior:'smooth'});
+}
+
+/* iOS-безопасная блокировка скролла пока открыт выбор филиала */
+let savedScrollY = 0;
+function lockScroll(){
+  savedScrollY = window.scrollY || window.pageYOffset || 0;
+  document.body.classList.add('branch-lock');
+  document.body.style.top = (-savedScrollY) + 'px';
+}
+function unlockScroll(){
+  if (!document.body.classList.contains('branch-lock')) return;
+  document.body.classList.remove('branch-lock');
+  document.body.style.top = '';
+  window.scrollTo(0, savedScrollY);
 }
 
 window.addEventListener('load', () => {
@@ -1365,7 +1384,7 @@ const branchToggle = document.getElementById('branchToggle');
 function openBranchModal(){
   if (branchModal.classList.contains('open')) return;
   branchModal.classList.add('open');
-  document.body.style.overflow = 'hidden'; // скролл заблокирован, пока нет выбора
+  lockScroll();
 }
 function closeBranchModal(){
   if (!branchModal.classList.contains('open')) return;
@@ -1374,7 +1393,7 @@ function closeBranchModal(){
     branchModal.classList.remove('open');
     branchModal.classList.remove('closing');
   }, 460);
-  document.body.style.overflow = '';
+  unlockScroll();
 }
 function selectBranch(branch){
   currentBranch = branch;
