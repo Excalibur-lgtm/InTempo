@@ -387,10 +387,31 @@
   .branch-modal-inner h2{font-family:var(--serif);font-size:clamp(30px,5vw,46px);color:#fff;margin-bottom:12px;text-shadow:0 2px 18px rgba(0,0,0,.6);}
   .branch-modal-inner p{color:rgba(241,239,233,.85);font-size:15px;margin-bottom:34px;text-shadow:0 1px 8px rgba(0,0,0,.5);}
   .branch-choices{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
-  .branch-choice{background:rgba(201,177,138,.96);border:1px solid rgba(241,239,233,.35);border-radius:20px;padding:30px 20px;cursor:pointer;transition:all 0.3s ease;text-align:center;color:var(--ink);box-shadow:0 18px 44px rgba(0,0,0,.35);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
+  .branch-choice{background:rgba(201,177,138,.96);border:1px solid rgba(241,239,233,.35);border-radius:20px;padding:30px 20px;cursor:pointer;transition:all 0.3s ease;text-align:center;color:var(--ink);box-shadow:0 18px 44px rgba(0,0,0,.35);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);position:relative;overflow:hidden;}
   .branch-choice:hover{background:var(--menupage);border-color:var(--red);transform:translateY(-6px);}
   .branch-choice:active{transform:scale(0.96);}
   .branch-choice .name{font-family:var(--serif);font-size:24px;color:var(--ink);font-weight:600;}
+  /* --- эффекты карточек филиалов --- */
+  .branch-choice::before{content:"";position:absolute;top:0;left:-70%;width:50%;height:100%;background:linear-gradient(100deg, transparent 0%, rgba(255,255,255,.55) 50%, transparent 100%);transform:skewX(-20deg);transition:left .7s ease;pointer-events:none;}
+  .branch-choice:hover::before,.branch-choice:active::before{left:130%;}
+  .branch-choice::after{content:"";position:absolute;left:50%;bottom:0;height:3px;width:72%;border-radius:3px 3px 0 0;background:var(--accent-grad);transform:translateX(-50%) scaleX(0);transition:transform .35s cubic-bezier(.22,1,.36,1);pointer-events:none;}
+  .branch-choice:hover::after,.branch-choice:active::after{transform:translateX(-50%) scaleX(1);}
+  .branch-choice:hover{transform:translateY(-8px);border-color:rgba(216,67,42,.55);box-shadow:0 26px 60px rgba(0,0,0,.5), 0 0 0 1px rgba(216,67,42,.25), inset 0 1px 0 rgba(255,255,255,.6);}
+  .branch-choice:active{transform:translateY(-2px) scale(.97);}
+  .bc-ico{width:48px;height:48px;margin:0 auto 12px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--red);background:rgba(216,67,42,.10);border:1.5px solid rgba(216,67,42,.45);box-shadow:0 6px 16px rgba(216,67,42,.18), inset 0 2px 6px rgba(255,255,255,.5);transition:transform .35s cubic-bezier(.22,1,.36,1), background .3s, color .3s, box-shadow .3s, border-color .3s;}
+  .bc-ico svg{width:22px;height:22px;}
+  .branch-choice:hover .bc-ico,.branch-choice:active .bc-ico{transform:translateY(-4px) scale(1.08);background:var(--accent-grad);color:#fff;border-color:transparent;box-shadow:0 10px 24px rgba(216,67,42,.45);}
+  .bc-sub{display:block;margin-top:8px;font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);}
+  /* появление содержимого окна выбора */
+  .branch-modal.open .branch-logo{animation:bcLogo .7s cubic-bezier(.22,1,.36,1) .05s backwards;}
+  .branch-modal.open .branch-modal-inner h2{animation:bcUp .6s ease .12s backwards;}
+  .branch-modal.open .branch-modal-inner p{animation:bcUp .6s ease .2s backwards;}
+  .branch-modal.open .branch-choice{animation:bcIn .65s cubic-bezier(.22,1,.36,1) backwards;}
+  .branch-modal.open .branch-choice:nth-child(1){animation-delay:.28s;}
+  .branch-modal.open .branch-choice:nth-child(2){animation-delay:.4s;}
+  @keyframes bcLogo{from{opacity:0;transform:translateY(-18px) scale(.9);}to{opacity:1;transform:none;}}
+  @keyframes bcUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
+  @keyframes bcIn{from{opacity:0;transform:translateY(30px) scale(.92);}to{opacity:1;transform:none;}}
 
   @media (max-width:900px){.nav{padding:0 4vw;}.nav-right{gap:10px;}}
   @media (max-width:768px){:root{--nav-h:112px;}.nav .logo-img{height:94px;}.nav-link{display:none;}#loader .logo-img{height:400px;}.branch-choices{grid-template-columns:1fr;}}
@@ -442,16 +463,19 @@
     footer{padding:32px 5vw 24px;}
     footer .logo-img{height:120px;}
     /* мобильный экран выбора филиала */
-    .branch-modal{padding:0 calc(env(safe-area-inset-left)) 0 calc(env(safe-area-inset-right));}
+    .branch-modal{padding:0 env(safe-area-inset-right) 0 env(safe-area-inset-left);}
     .branch-modal-inner{padding:24px 16px;padding-bottom:calc(24px + env(safe-area-inset-bottom));padding-top:calc(24px + env(safe-area-inset-top));}
     .branch-logo{height:64px;margin-bottom:12px;}
     .branch-modal-inner h2{font-size:26px;margin-bottom:8px;}
     .branch-modal-inner p{font-size:13px;margin-bottom:20px;}
     .branch-choices{gap:12px;}
-    .branch-choice{padding:26px 16px;border-radius:16px;}
+    .branch-choice{padding:24px 16px;border-radius:16px;}
     .branch-choice .name{font-size:20px;}
+    .bc-ico{width:42px;height:42px;margin-bottom:10px;}
+    .bc-ico svg{width:19px;height:19px;}
+    .bc-sub{font-size:10px;margin-top:6px;letter-spacing:.12em;}
   }
-  @media (max-width:380px){.nav-tel{display:none;}.lang-btn{padding:5px 8px;font-size:9px;}#loader .logo-img{height:300px;}.cat-chip{font-size:11px;padding:6px 12px;}.branch-choice{padding:22px 12px;}.branch-choice .name{font-size:18px;}}
+  @media (max-width:380px){.nav-tel{display:none;}.lang-btn{padding:5px 8px;font-size:9px;}#loader .logo-img{height:300px;}.cat-chip{font-size:11px;padding:6px 12px;}.branch-choice{padding:20px 12px;}.branch-choice .name{font-size:18px;}}
   @media (prefers-reduced-motion:reduce){*{transition-duration:.01ms !important;animation-duration:.01ms !important;}}
 </style>
 </head>
@@ -468,10 +492,14 @@
     <p data-i18n="branch_subtitle">Меню отличается в зависимости от филиала</p>
     <div class="branch-choices">
       <div class="branch-choice" data-branch="hyusisayin">
+        <span class="bc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span>
         <div class="name">Հյուսիսային</div>
+        <span class="bc-sub">+374 77 966 933</span>
       </div>
       <div class="branch-choice" data-branch="mega">
+        <span class="bc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span>
         <div class="name">Mega Mall</div>
+        <span class="bc-sub">+374 77 80 78 07</span>
       </div>
     </div>
   </div>
@@ -514,7 +542,7 @@
     </h1>
     <p class="hero-sub" data-i18n="hero_sub">Բաց է 09:00–24:00</p>
     <div class="hero-actions" id="heroActions">
-      <button class="btn btn-primary" id="showMenuBtn"><span data-i18n="tab_main">Հիմնական մենյու</span></button>
+      <button class="btn btn-ghost" id="showMenuBtn"><span data-i18n="tab_main">Հիմնական մենյու</span></button>
       <button class="btn btn-ghost" id="showBreakfastBtn"><span data-i18n="tab_breakfast">Նախաճաշ</span></button>
       <button class="btn btn-ghost" id="showLunchBtn"><span data-i18n="tab_lunch">Լանչ</span></button>
       <button class="btn btn-ghost" id="showBarBtn"><span data-i18n="tab_bar">Բար</span></button>
@@ -831,7 +859,7 @@ const MENU = [
       {img:IMG_DIR+'page23_img123.jpg',x:50,y:50,price:1800,n:{hy:'Սառը մոշի թեյ',en:'Cold Blackberry Tea',ru:'Холодный ежевичный чай'},d:{hy:'Եփած սև թեյ, մոշի պյուրե, անանուխ, մոշ',en:'Brewed black tea, blackberry puree, mint, blackberry',ru:'Заваренный черный чай, пюре из ежевики, мята, ежевика'}}
     ]},
     {dishes:[
-      {img:IMG_DIR+'page24_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սառը ելակի թեյ',en:'Cold Strawberry Tea',ru:'Клубничный холодный чай'},d:{hy:'Եած սև թեյ, ելակի պյուրե, ելակ, անանուխ',en:'Brewed black tea, strawberry puree, strawberry, mint',ru:'Заваренный черный чай, клубничное пюре, клубника, мята'}},
+      {img:IMG_DIR+'page24_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սառը ելակի թեյ',en:'Cold Strawberry Tea',ru:'Клубничный холодный чай'},d:{hy:'Եփած սև թեյ, ելակի պյուրե, ելակ, անանուխ',en:'Brewed black tea, strawberry puree, strawberry, mint',ru:'Заваренный черный чай, клубничное пюре, клубника, мята'}},
       {img:IMG_DIR+'page24_img123.jpg',x:65,y:65,price:1600,n:{hy:'Սառը մանգոյի թեյ',en:'Cold Mango Tea',ru:'Манговый холодный чай'},d:{hy:'Եփած սև թեյ, մանգոյի սիրոպ, անանուխ, չորացրած մանգո',en:'Brewed black tea, mango syrup, mint, dried mango',ru:'Заваренный черный чай, манговый сироп, мята, сушеное манго'}}
     ]},
     {dishes:[
@@ -840,7 +868,7 @@ const MENU = [
     ]},
     {dishes:[
       {img:IMG_DIR+'page26_img123.jpg',x:35,y:35,price:1700,n:{hy:'Վարդագույն սառը թեյ',en:'Pink Cold Tea',ru:'Розовый холодный чай'},d:{hy:'Եփած սև թեյ, վարդի սիրոպ, անանուխ',en:'Brewed black tea, rose syrup, mint',ru:'Заваренный черный чай, розовый сироп, мята'}},
-      {img:IMG_DIR+'page26_img123.jpg',x:65,y:65,price:1600,n:{hy:'Սառը նարնջի թեյ',en:'Orange Cold Tea',ru:'Апельсиновый холодный чай'},d:{hy:'Եփած սև թեյ, նարնջի հյութ, շաքարի սիրոպ, անանուխ',en:'Brewed black tea, orange juice, sugar syrup, mint',ru:'Заваренный черный чай, апельсиновый сок, сироп с сахаром, мята'}}
+      {img:IMG_DIR+'page26_img123.jpg',x:65,y:65,price:1600,n:{hy:'Սառը նարնջի թեյ',en:'Orange Cold Tea',ru:'Апельсиновый холодный чай'},d:{hy:'Եած սև թեյ, նարնջի հյութ, շաքարի սիրոպ, անանուխ',en:'Brewed black tea, orange juice, sugar syrup, mint',ru:'Заваренный черный чай, апельсиновый сок, сироп с сахаром, мята'}}
     ]}
   ]},
   {id:'bar_detox',t:{hy:'Դետոքս',en:'Detox',ru:'Детокс'},scenes:[
