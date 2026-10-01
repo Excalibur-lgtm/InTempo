@@ -7,7 +7,6 @@
 <meta name="description" content="In Tempo — իտալական խոհանոց Երևանի կենտրոնում։ Բաց է 09:00–24:00։ Time to enjoy.">
 <link rel="preload" href="images/logoIntempo.png" as="image" type="image/png">
 <link rel="preload" as="image" href="Images-final/page03_img1.jpg">
-<link rel="preload" as="image" href="Images-final/page20_img1.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <script>
@@ -377,13 +376,10 @@
   .rv{opacity:0;transform:translateY(30px);transition:opacity .9s ease,transform .9s cubic-bezier(.22,1,.36,1);}
   .rv.in{opacity:1;transform:none;}
 
-  /* экран выбора филиала */
-  .branch-modal{position:fixed;inset:0;z-index:350;display:none;align-items:center;justify-content:center;background:var(--ink);transition:opacity .45s ease, visibility .45s ease;}
+  /* экран выбора филиала: сайт виден позади с blur-затемнением, закрытия нет */
+  .branch-modal{position:fixed;inset:0;z-index:350;display:none;align-items:center;justify-content:center;background:rgba(20,15,10,.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:opacity .45s ease, visibility .45s ease;}
   .branch-modal.open{display:flex;}
   .branch-modal.closing{opacity:0;visibility:hidden;}
-  .branch-media{position:absolute;inset:0;z-index:0;overflow:hidden;}
-  .branch-media img{width:100%;height:100%;object-fit:cover;filter:blur(7px) brightness(.85) saturate(1.05);transform:scale(1.08);}
-  .branch-media::after{content:"";position:absolute;inset:0;background:linear-gradient(to top, rgba(24,18,14,.92) 0%, rgba(24,18,14,.66) 45%, rgba(24,18,14,.78) 100%);}
   .branch-modal-inner{position:relative;z-index:1;max-width:640px;width:100%;text-align:center;max-height:100vh;overflow-y:auto;padding:40px 22px;scrollbar-width:none;}
   .branch-modal-inner::-webkit-scrollbar{display:none;}
   .branch-logo{height:92px;width:auto;margin:0 auto 18px;filter:drop-shadow(0 4px 14px rgba(0,0,0,.5));}
@@ -394,7 +390,6 @@
   .branch-choice:hover{background:var(--menupage);border-color:var(--red);transform:translateY(-6px);}
   .branch-choice:active{transform:scale(0.96);}
   .branch-choice .name{font-family:var(--serif);font-size:24px;color:var(--ink);font-weight:600;}
-  .branch-close{position:fixed;top:calc(14px + env(safe-area-inset-top));right:14px;z-index:2;width:42px;height:42px;border-radius:50%;border:1.5px solid rgba(241,239,233,.5);background:rgba(43,38,34,.5);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:var(--paper);cursor:pointer;display:flex;align-items:center;justify-content:center;}
 
   @media (max-width:900px){.nav{padding:0 4vw;}.nav-right{gap:10px;}}
   @media (max-width:768px){:root{--nav-h:112px;}.nav .logo-img{height:94px;}.nav-link{display:none;}#loader .logo-img{height:400px;}.branch-choices{grid-template-columns:1fr;}}
@@ -462,8 +457,6 @@
 </div>
 
 <div class="branch-modal" id="branchModal">
-  <div class="branch-media"><img src="Images-final/page20_img1.jpg" alt="In Tempo" loading="eager" fetchpriority="high"></div>
-  <button class="branch-close" id="branchClose" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
   <div class="branch-modal-inner">
     <img class="branch-logo" src="images/logoIntempo.png" alt="In Tempo">
     <h2 data-i18n="branch_title">Выберите филиал</h2>
@@ -567,7 +560,7 @@
 <script>
 const IMG_DIR = 'https://cdn.jsdelivr.net/gh/Excalibur-lgtm/InTempo@main/Images-final/';
 let currentBranch = 'hyusisayin';
-let branchChosen = false;
+let branchChosen = false;   /* выбор НЕ запоминаем: каждый визит спрашиваем заново */
 let pendingView = null;
 let pendingCategory = null;
 let previewShown = false;
@@ -576,10 +569,6 @@ let menuRendered = false;
 let currentView = 'all';
 let catSections = [];
 let lastIsMobile = window.matchMedia('(max-width:640px)').matches;
-try{
-  const sb = localStorage.getItem('intempo_branch');
-  if (sb){ currentBranch = sb; branchChosen = true; }
-}catch(e){}
 
 const BRANCH_PHONE = { hyusisayin:'+374 77 966 933', mega:'+374 77 80 78 07' };
 const BRANCH_TEL   = { hyusisayin:'tel:+37477966933', mega:'tel:+37477807807' };
@@ -718,7 +707,7 @@ const MENU = [
     { dishes:[{ img:IMG_DIR+'page45_img1.jpg', x:35, y:35, price:2900, n:{hy:'բիսկոֆ տիրամիսու',en:'biscoff tiramisu',ru:'бискофф тирамису'}, d:{hy:'',en:'',ru:''} },{ img:IMG_DIR+'page45_img1.jpg', x:65, y:68, price:2700, n:{hy:'պիստակով տիրամիսու',en:'pistachio tiramisu',ru:'фисташковый тирамису'}, d:{hy:'',en:'',ru:''} }]},
     { dishes:[{ img:IMG_DIR+'page46_img1.jpg', x:50, y:55, price:2600, n:{hy:'հատապտուղներով տիրամիսու',en:'tiramisu with berries',ru:'тирамису с ягодами'}, d:{hy:'',en:'',ru:''} }]},
     { dishes:[{ img:IMG_DIR+'page47_img1.jpg', x:35, y:35, price:2300, n:{hy:'շոկոլադե չիզքեյք',en:'chocolate cheesecake',ru:'шоколадный чизкейк'}, d:{hy:'',en:'',ru:''} },{ img:IMG_DIR+'page47_img1.jpg', x:65, y:68, price:2100, n:{hy:'շոկոլադային-կարամելային չիզքեյք',en:'chocolate caramel cheesecake',ru:'шоколадно-карамельный чизкейк'}, d:{hy:'',en:'',ru:''} }]},
-    { dishes:[{ img:IMG_DIR+'page48_img1.jpg', x:35, y:35, price:2500, n:{hy:'սան սեբաստիան պիստակի թանրուկով',en:'san sebastian with pistachio sauce',ru:'сан-себастьян с фисташковым соусом'}, d:{hy:'',en:'',ru:''} },{ img:IMG_DIR+'page48_img1.jpg', x:65, y:68, price:1900, n:{hy:'դասական չիզքեյք',en:'classic cheesecake',ru:'классический чизкейк'}, d:{hy:'',en:'',ru:''} }]},
+    { dishes:[{ img:IMG_DIR+'page48_img1.jpg', x:35, y:35, price:2500, n:{hy:'սան սեբաստիան պիստակի թանձրուկով',en:'san sebastian with pistachio sauce',ru:'сан-себастьян с фисташковым соусом'}, d:{hy:'',en:'',ru:''} },{ img:IMG_DIR+'page48_img1.jpg', x:65, y:68, price:1900, n:{hy:'դասական չիզքեյք',en:'classic cheesecake',ru:'классический чизкейк'}, d:{hy:'',en:'',ru:''} }]},
     { dishes:[{ img:IMG_DIR+'page49_img2.jpg', x:30, y:25, price:1900, n:{hy:'բրաունի',en:'brownie',ru:'брауни'}, d:{hy:'',en:'',ru:''} },{ img:IMG_DIR+'page49_img2.jpg', x:30, y:52, price:1300, n:{hy:'հատապտղային տարտ',en:'berry tart',ru:'ягодный тарт'}, d:{hy:'',en:'',ru:''} },{ img:IMG_DIR+'page49_img2.jpg', x:70, y:75, price:1600, n:{hy:'աղի կարամելով տանձ',en:'salted caramel pear',ru:'соленая карамельная груша'}, d:{hy:'',en:'',ru:''} }]},
     { dishes:[{ img:IMG_DIR+'page50_img1.jpg', x:35, y:35, price:1700, n:{hy:'մեղրով տորթ',en:'honey cake',ru:'медовый торт'}, d:{hy:'',en:'',ru:''} },{ img:IMG_DIR+'page50_img1.jpg', x:65, y:68, price:1700, n:{hy:'շոկոլադե հրաբուխ',en:'chocolate volcano',ru:'шоколадный вулкан'}, d:{hy:'',en:'',ru:''} }]}
   ]},
@@ -834,14 +823,14 @@ const MENU = [
   ]},
   {id:'bar_cold_tea',t:{hy:'Սառը թեյեր',en:'Cold Teas',ru:'Холодные чаи'},scenes:[
     {dishes:[
-      {img:IMG_DIR+'page23_img123.jpg',x:50,y:50,price:1800,n:{hy:'Սառը մոշի թեյ',en:'Cold Blackberry Tea',ru:'Холодный ежевичный чай'},d:{hy:'Եփած սև թեյ, մոշի պյուրե, անանուխ, մոշ',en:'Brewed black tea, blackberry puree, mint, blackberry',ru:'Заваренный черный чай, пюре из ежевики, мята, ежевика'}}
+      {img:IMG_DIR+'page23_img123.jpg',x:50,y:50,price:1800,n:{hy:'Սառը մոշի թեյ',en:'Cold Blackberry Tea',ru:'Холодный ежевичный чай'},d:{hy:'Եած սև թեյ, մոշի պյուրե, անանուխ, մոշ',en:'Brewed black tea, blackberry puree, mint, blackberry',ru:'Заваренный черный чай, пюре из ежевики, мята, ежевика'}}
     ]},
     {dishes:[
-      {img:IMG_DIR+'page24_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սառը ելակի թեյ',en:'Cold Strawberry Tea',ru:'Клубничный холодный чай'},d:{hy:'Եած սև թեյ, ելակի պյուրե, ելակ, անանուխ',en:'Brewed black tea, strawberry puree, strawberry, mint',ru:'Заваренный черный чай, клубничное пюре, клубника, мята'}},
+      {img:IMG_DIR+'page24_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սառը ելակի թեյ',en:'Cold Strawberry Tea',ru:'Клубничный холодный чай'},d:{hy:'Եփած սև թեյ, ելակի պյուրե, ելակ, անանուխ',en:'Brewed black tea, strawberry puree, strawberry, mint',ru:'Заваренный черный чай, клубничное пюре, клубника, мята'}},
       {img:IMG_DIR+'page24_img123.jpg',x:65,y:65,price:1600,n:{hy:'Սառը մանգոյի թեյ',en:'Cold Mango Tea',ru:'Манговый холодный чай'},d:{hy:'Եփած սև թեյ, մանգոյի սիրոպ, անանուխ, չորացրած մանգո',en:'Brewed black tea, mango syrup, mint, dried mango',ru:'Заваренный черный чай, манговый сироп, мята, сушеное манго'}}
     ]},
     {dishes:[
-      {img:IMG_DIR+'page25_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սառը դեղձի թեյ',en:'Cold Peach Tea',ru:'Персиковый холодный чай'},d:{hy:'Եփած սև թեյ, պերսիկի պյուրե, անանուխ, լայմ, լիմոն',en:'Brewed black tea, peach puree, mint, lime, lemon',ru:'Заваренный черный чай, персиковое пюре, мята, лайм, лимон'}},
+      {img:IMG_DIR+'page25_img123.jpg',x:35,y:35,price:1700,n:{hy:'Սառը դեղձի թեյ',en:'Cold Peach Tea',ru:'Персиковый холодный чай'},d:{hy:'Եած սև թեյ, պերսիկի պյուրե, անանուխ, լայմ, լիմոն',en:'Brewed black tea, peach puree, mint, lime, lemon',ru:'Заваренный черный чай, персиковое пюре, мята, лайм, лимон'}},
       {img:IMG_DIR+'page25_img123.jpg',x:65,y:65,price:1700,n:{hy:'Սառը լավանդայի թեյ',en:'Cold Lavender Tea',ru:'Лавандовый холодный чай'},d:{hy:'Լավանդայի սիրոպ, անանուխ, լիմոն, լայմ, ռոզմարին',en:'Lavender syrup, mint, lemon, lime, rosemary',ru:'Лавандовый сироп, мята, лимон, лайм, розмарин'}}
     ]},
     {dishes:[
@@ -870,7 +859,7 @@ const MENU = [
       {img:IMG_DIR+'page30_img123.jpg',x:50,y:50,price:'1800 / 4800',n:{hy:'Վարդագույն Լիչի Լիմոնադ',en:'Pink Lychee Lemonade',ru:'Розовый личи лимонад'},d:{hy:'Վարդագույն լիչիի սիրոպ, մորի, կիտրոնի հյութ, անանուխ, գազավորված ջուր',en:'Pink lychee syrup, raspberry, lemon juice, mint, sparkling water',ru:'Сироп розового личи, малина, лимонный сок, мята, газированная вода'}}
     ]},
     {dishes:[
-      {img:IMG_DIR+'page31_img123.jpg',x:35,y:35,price:'1800 / 4800',n:{hy:'Դեղձ-Խնձոր Լիմոնադ',en:'Peach Apple Lemonade',ru:'Персиково-яблочный лимонад'},d:{hy:'Պերսիկի պյուրե, խնձորի հյութ, խնձոր, անանուխ, գազավորված ջուր',en:'Peach puree, apple juice, apple, mint, sparkling water',ru:'Персиковое пюре, яблочный сок, яблоко, мята, газированная вода'}},
+      {img:IMG_DIR+'page31_img123.jpg',x:35,y:35,price:'1800 / 4800',n:{hy:'Դեղձ-նձոր Լիմոնադ',en:'Peach Apple Lemonade',ru:'Персиково-яблочный лимонад'},d:{hy:'Պերսիկի պյուրե, խնձորի հյութ, խնձոր, անանուխ, գազավորված ջուր',en:'Peach puree, apple juice, apple, mint, sparkling water',ru:'Персиковое пюре, яблочный сок, яблоко, мята, газированная вода'}},
       {img:IMG_DIR+'page31_img123.jpg',x:65,y:65,price:'1800 / 4800',n:{hy:'Ելակի Լիմոնադ',en:'Strawberry Lemonade',ru:'Клубничный лимонад'},d:{hy:'Ելակի պյուրե, կիտրոնի հյութ, ելակ, անանուխ, գազավորված ջուր',en:'Strawberry puree, lemon juice, strawberry, mint, sparkling water',ru:'Пюре клубники, лимонный сок, клубника, мята, газированная вода'}}
     ]},
     {dishes:[
@@ -1003,6 +992,8 @@ function revealOnce(){
   if (n) n.classList.add('ready');
   const h = document.querySelector('.hero');
   if (h) h.classList.add('ready');
+  /* клиент вошёл → сразу предлагаем выбрать филиал */
+  if (!branchChosen) setTimeout(openBranchModal, 800);
 }
 
 /* телефон, адрес, часы, подпись переключателя и подсказка — по филиалу/статусу */
@@ -1043,7 +1034,7 @@ window.addEventListener('load', () => {
   window.scrollTo(0, 0);
   setTimeout(revealOnce, 1200);
   refreshBranchUI();
-  if (!branchChosen) renderPreview();
+  renderPreview();
 });
 setTimeout(revealOnce, 4000);
 
@@ -1114,7 +1105,12 @@ function buildCatNav(cats, lang){
         openBranchModal();
         return;
       }
-      scrollToCategory(cat.id);
+      if (!menuRendered){
+        openMenu('all');
+        setTimeout(() => scrollToCategory(cat.id), 450);
+      } else {
+        scrollToCategory(cat.id);
+      }
     });
     track.appendChild(btn);
   });
@@ -1311,7 +1307,7 @@ function renderMenu(lang, view){
 }
 
 function openMenu(view){
-  /* пока филиал не выбран — сначала спрашиваем, меню не открываем */
+  /* страховка: без филиала меню не открываем */
   if (!branchChosen){
     pendingView = view;
     openBranchModal();
@@ -1365,9 +1361,12 @@ applyLang(savedLang);
 
 const branchModal = document.getElementById('branchModal');
 const branchToggle = document.getElementById('branchToggle');
-const branchClose = document.getElementById('branchClose');
 
-function openBranchModal(){ branchModal.classList.add('open'); }
+function openBranchModal(){
+  if (branchModal.classList.contains('open')) return;
+  branchModal.classList.add('open');
+  document.body.style.overflow = 'hidden'; // скролл заблокирован, пока нет выбора
+}
 function closeBranchModal(){
   if (!branchModal.classList.contains('open')) return;
   branchModal.classList.add('closing');
@@ -1375,12 +1374,11 @@ function closeBranchModal(){
     branchModal.classList.remove('open');
     branchModal.classList.remove('closing');
   }, 460);
+  document.body.style.overflow = '';
 }
-function cancelBranchModal(){ pendingView = null; pendingCategory = null; closeBranchModal(); }
 function selectBranch(branch){
   currentBranch = branch;
   branchChosen = true;
-  try{ localStorage.setItem('intempo_branch', branch); }catch(e){}
   closeBranchModal();
   refreshBranchUI();
   if (pendingView){
@@ -1392,7 +1390,7 @@ function selectBranch(branch){
     const c = pendingCategory;
     pendingCategory = null;
     openMenu(currentView || 'all');
-    setTimeout(() => scrollToCategory(c), 400);
+    setTimeout(() => scrollToCategory(c), 450);
   } else if (menuRendered){
     renderMenu(currentLang, currentView);
   }
@@ -1402,8 +1400,7 @@ document.querySelectorAll('.branch-choice').forEach(choice => {
   choice.addEventListener('click', () => selectBranch(choice.dataset.branch));
 });
 branchToggle.addEventListener('click', () => openBranchModal());
-branchClose.addEventListener('click', cancelBranchModal);
-branchModal.addEventListener('click', e => { if (e.target === branchModal) cancelBranchModal(); });
+/* закрытия без выбора нет: фон и ESC не закрывают */
 
 document.querySelectorAll('.rv').forEach(el => io.observe(el));
 </script>
